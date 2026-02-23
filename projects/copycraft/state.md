@@ -2,7 +2,7 @@
 
 ## Текущий стейт: EXECUTION
 ## Фаза: PHASE C
-## Текущий блок: Offer/CTA
+## Текущий блок: Objection Breaker
 ## Формат: landing
 
 ## Пройденные стейты
@@ -22,7 +22,7 @@
 | Story/UMP | ✅ | ✅ | PASS | APPROVED |
 | Mechanism/UMR | ✅ | ✅ | PASS | APPROVED |
 | Meta-proof | ✅ | ✅ | PASS | APPROVED |
-| Offer/CTA | ✅ | — | — | pending |
+| Offer/CTA | ✅ | ✅ | PASS | APPROVED |
 | Objection Breaker | ✅ | — | — | pending |
 | Close | ✅ | — | — | pending |
 
