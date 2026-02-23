@@ -1,8 +1,8 @@
 # Состояние проекта: Copycraft Landing Page
 
 ## Текущий стейт: EXECUTION
-## Фаза: PHASE B
-## Текущий блок: Lead
+## Фаза: PHASE C
+## Текущий блок: Story/UMP
 ## Формат: landing
 
 ## Пройденные стейты
@@ -18,11 +18,13 @@
 ## Блоки EXECUTION
 | Блок | BRIEF | COPY | DEBUGGING | Статус |
 |------|-------|------|-----------|--------|
-| Lead | — | — | — | pending |
-| Story/UMP | — | — | — | pending |
-| Mechanism/UMR | — | — | — | pending |
-| Proof | — | — | — | pending |
-| Offer/CTA | — | — | — | pending |
+| Lead | ✅ | ✅ | PASS | APPROVED |
+| Story/UMP | ✅ | — | — | pending |
+| Mechanism/UMR | ✅ | — | — | pending |
+| Meta-proof | ✅ | — | — | pending |
+| Offer/CTA | ✅ | — | — | pending |
+| Objection Breaker | ✅ | — | — | pending |
+| Close | ✅ | — | — | pending |
 
 ## Счётчик попыток
 | Блок | Попыток FAIL | Последняя причина |
