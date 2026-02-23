@@ -1,13 +1,13 @@
 # Состояние проекта: Copycraft Landing Page
 
-## Текущий стейт: INPUT
+## Текущий стейт: STRATEGY
 ## Фаза: —
 ## Текущий блок: —
 ## Формат: landing
 
 ## Пройденные стейты
-- [ ] INPUT
-- [ ] QUERY
+- [x] INPUT
+- [x] QUERY (BYPASS — данные достаточны)
 - [ ] RESEARCH
 - [ ] STRATEGY
 - [ ] EXECUTION
