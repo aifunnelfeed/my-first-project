@@ -2,7 +2,7 @@
 
 ## Текущий стейт: EXECUTION
 ## Фаза: PHASE C
-## Текущий блок: Story/UMP
+## Текущий блок: Mechanism/UMR
 ## Формат: landing
 
 ## Пройденные стейты
@@ -19,7 +19,7 @@
 | Блок | BRIEF | COPY | DEBUGGING | Статус |
 |------|-------|------|-----------|--------|
 | Lead | ✅ | ✅ | PASS | APPROVED |
-| Story/UMP | ✅ | — | — | pending |
+| Story/UMP | ✅ | ✅ | PASS | APPROVED |
 | Mechanism/UMR | ✅ | — | — | pending |
 | Meta-proof | ✅ | — | — | pending |
 | Offer/CTA | ✅ | — | — | pending |
