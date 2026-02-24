@@ -57,9 +57,26 @@ G) Angle (1–2 угла)
 
 ## ПРАВИЛА ПЕРЕХОДОВ (Transitions)
 
-INPUT → (мало данных) QUERY → STRATEGY → EXECUTION
-INPUT → (достаточно данных) STRATEGY → EXECUTION
+INPUT → (мало данных) QUERY → **RESEARCH GATE** → STRATEGY → EXECUTION
+INPUT → (достаточно данных) **RESEARCH GATE** → STRATEGY → EXECUTION
 INPUT → (Авто-ресерч) RESEARCH → STRATEGY → EXECUTION
+
+### RESEARCH GATE (обязательный чекпоинт)
+**TRIGGER:** Любой переход к STRATEGY, если STATE=RESEARCH не был пройден.
+
+**ДЕЙСТВИЕ:** СТОП. Покажи пользователю:
+```
+⚠️ RESEARCH не проведён.
+Данные из брифа: {краткий список того, что есть}
+Чего не хватает: {JTBD map / VOC / DRE-DES / конкурентный анализ — что именно отсутствует}
+
+Варианты:
+A) Провести полный RESEARCH (рекомендуется)
+B) Провести мини-ресёрч (только JTBD + VOC)
+C) Пропустить — работаем с тем, что есть (гипотезы будут помечены [ТРЕБУЕТ ПОДТВЕРЖДЕНИЯ])
+```
+
+**ЗАПРЕТ:** Переход INPUT → STRATEGY без явного ответа пользователя на RESEARCH GATE запрещён. Молчаливый bypass = нарушение протокола.
 
 EXECUTION → (после каждого блока) DEBUGGING
 DEBUGGING → (PASS) EXECUTION или DELIVERY
@@ -99,6 +116,31 @@ DELIVERY → REVIEW
 2) BULLET PASS (12 bullets: 4 curiosity / 4 proof / 4 identity-result)
 3) OFFER STACK PASS (обязателен при MODE A; опционален при B/C)
 4) SKEPTIC BREAKER (только при MODE B/C): Prosecutor Argument flow
+
+**KNOWLEDGE GATE (обязательный чекпоинт перед PHASE C):**
+**TRIGGER:** Начало PHASE C (COPY) для любого блока.
+
+**ДЕЙСТВИЕ:** Перед написанием текста блока:
+1. Попробуй `search_knowledge(query, category)` через MCP
+2. Если MCP недоступен — СТОП. Покажи пользователю:
+```
+⚠️ Семантический поиск (MCP) недоступен.
+Файлы в knowledge/:
+- formulas/: {список файлов}
+- examples/: {список файлов}
+- audience/: {список файлов}
+- expert/: {список файлов}
+
+Варианты:
+A) Прочитаю файлы вручную и использую релевантные формулы/примеры
+B) Пропустить — пишу без базы знаний
+```
+3. Если MCP доступен — выполни поиск по категориям `formulas` и `examples` для текущего блока
+4. Покажи пользователю найденное ПЕРЕД вставкой в текст (правило из CLAUDE.md)
+
+**ЗАПРЕТ:** Молчаливое игнорирование knowledge/ = нарушение протокола. Либо используй, либо получи явный отказ пользователя.
+
+---
 
 **RESEARCH-MINI (внутри EXECUTION):**
 TRIGGER: нехватка данных перед созданием блока
