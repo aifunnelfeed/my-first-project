@@ -1,8 +1,8 @@
 # Состояние проекта: Copycraft Landing Page v2 (с ресёрчем)
 
-## Текущий стейт: EXECUTION
-## Фаза: PHASE B — COPY
-## Текущий блок: Offer + CTA
+## Текущий стейт: EXECUTION → DELIVERY
+## Фаза: —
+## Текущий блок: —
 ## Формат: landing
 
 ## Пройденные стейты
@@ -10,7 +10,7 @@
 - [x] QUERY (BYPASS — данные достаточны после ресёрча)
 - [x] RESEARCH
 - [x] STRATEGY
-- [ ] EXECUTION
+- [x] EXECUTION
 - [ ] DEBUGGING
 - [ ] DELIVERY
 - [ ] REVIEW
@@ -22,10 +22,11 @@
 | Problem Amplification | done | done | PASS | APPROVED |
 | Mechanism | done | done | PASS | APPROVED |
 | Proof | done | done | PASS | APPROVED |
-| Offer + CTA | done | — | — | next |
+| Offer + CTA | done | done | PASS | APPROVED |
 
 ## Счётчик попыток
 | Блок | Попыток FAIL | Последняя причина |
 |------|-------------|-------------------|
+| Lead | 1 | Не было тизера UMR — исправлено |
 
 ## Последнее обновление: 2026-02-24
