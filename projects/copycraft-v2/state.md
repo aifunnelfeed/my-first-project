@@ -2,7 +2,7 @@
 
 ## Текущий стейт: EXECUTION
 ## Фаза: PHASE B — COPY
-## Текущий блок: Mechanism
+## Текущий блок: Proof
 ## Формат: landing
 
 ## Пройденные стейты
@@ -20,8 +20,8 @@
 |------|-------|------|-----------|--------|
 | Lead | done | done | PASS | APPROVED |
 | Problem Amplification | done | done | PASS | APPROVED |
-| Mechanism | done | — | — | next |
-| Proof | done | — | — | pending |
+| Mechanism | done | done | PASS | APPROVED |
+| Proof | done | — | — | next |
 | Offer + CTA | done | — | — | pending |
 
 ## Счётчик попыток
