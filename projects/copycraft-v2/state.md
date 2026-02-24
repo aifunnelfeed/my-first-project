@@ -1,15 +1,15 @@
 # Состояние проекта: Copycraft Landing Page v2 (с ресёрчем)
 
-## Текущий стейт: RESEARCH (завершён → готов к STRATEGY)
-## Фаза: —
-## Текущий блок: —
+## Текущий стейт: EXECUTION
+## Фаза: PHASE B — COPY
+## Текущий блок: Lead
 ## Формат: landing
 
 ## Пройденные стейты
 - [x] INPUT
 - [x] QUERY (BYPASS — данные достаточны после ресёрча)
 - [x] RESEARCH
-- [ ] STRATEGY
+- [x] STRATEGY
 - [ ] EXECUTION
 - [ ] DEBUGGING
 - [ ] DELIVERY
@@ -18,6 +18,11 @@
 ## Блоки EXECUTION
 | Блок | BRIEF | COPY | DEBUGGING | Статус |
 |------|-------|------|-----------|--------|
+| Lead | done | — | — | next |
+| Problem Amplification | done | — | — | pending |
+| Mechanism | done | — | — | pending |
+| Proof | done | — | — | pending |
+| Offer + CTA | done | — | — | pending |
 
 ## Счётчик попыток
 | Блок | Попыток FAIL | Последняя причина |
