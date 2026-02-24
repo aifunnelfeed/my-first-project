@@ -3,18 +3,25 @@
 
 Provides semantic search over knowledge/ directory using ChromaDB
 and multilingual sentence embeddings.
+
+Heavy components (embedding model, ChromaDB) are lazy-loaded on first
+tool call to ensure fast MCP server startup.
 """
 
 import hashlib
 import json
+import logging
 import os
 import re
 import sys
 from pathlib import Path
 
-import chromadb
-from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 from mcp.server.fastmcp import FastMCP
+
+# Suppress noisy logs from sentence-transformers and httpx during model load
+logging.getLogger("sentence_transformers").setLevel(logging.WARNING)
+logging.getLogger("httpx").setLevel(logging.WARNING)
+logging.getLogger("chromadb").setLevel(logging.WARNING)
 
 # --- Configuration ---
 
@@ -24,6 +31,33 @@ CHROMA_DIR = PROJECT_ROOT / "chroma_data"
 HASH_FILE = CHROMA_DIR / ".file_hashes.json"
 COLLECTION_NAME = "knowledge"
 EMBEDDING_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+
+# --- Lazy-loaded globals ---
+
+_collection = None
+_initialized = False
+
+
+def _ensure_initialized():
+    """Lazy-load embedding model, ChromaDB, and run startup indexing."""
+    global _collection, _initialized
+    if _initialized:
+        return
+    import chromadb
+    from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
+
+    embedding_fn = SentenceTransformerEmbeddingFunction(
+        model_name=EMBEDDING_MODEL,
+    )
+    client = chromadb.PersistentClient(path=str(CHROMA_DIR))
+    _collection = client.get_or_create_collection(
+        name=COLLECTION_NAME,
+        embedding_function=embedding_fn,
+    )
+    stats = index_knowledge(_collection)
+    print(f"Lazy init complete. Indexing: {stats}", file=sys.stderr)
+    _initialized = True
+
 
 # --- Chunking ---
 
@@ -154,20 +188,6 @@ mcp_server = FastMCP(
     instructions="Semantic search over Copycraft knowledge base (formulas, examples, expert materials, audience data).",
 )
 
-# Initialize ChromaDB
-embedding_fn = SentenceTransformerEmbeddingFunction(
-    model_name=EMBEDDING_MODEL,
-)
-client = chromadb.PersistentClient(path=str(CHROMA_DIR))
-collection = client.get_or_create_collection(
-    name=COLLECTION_NAME,
-    embedding_function=embedding_fn,
-)
-
-# Index on startup
-startup_stats = index_knowledge(collection)
-print(f"Startup indexing: {startup_stats}", file=sys.stderr)
-
 
 @mcp_server.tool()
 def search_knowledge(query: str, n_results: int = 5, category: str | None = None) -> str:
@@ -179,10 +199,11 @@ def search_knowledge(query: str, n_results: int = 5, category: str | None = None
         category: Filter by category: formulas, examples, expert, audience.
                   Leave empty to search all categories.
     """
+    _ensure_initialized()
     n_results = min(n_results, 20)
     where = {"category": category} if category else None
 
-    results = collection.query(
+    results = _collection.query(
         query_texts=[query],
         n_results=n_results,
         where=where,
@@ -210,7 +231,8 @@ def search_knowledge(query: str, n_results: int = 5, category: str | None = None
 @mcp_server.tool()
 def list_sources() -> str:
     """List all indexed files and their chunk counts."""
-    all_data = collection.get()
+    _ensure_initialized()
+    all_data = _collection.get()
     if not all_data["ids"]:
         return "Knowledge base is empty. Add .md files to knowledge/ and run reindex."
 
@@ -236,7 +258,8 @@ def reindex(force: bool = False) -> str:
         force: If True, re-index all files regardless of changes.
                If False (default), only re-index changed files.
     """
-    stats = index_knowledge(collection, force=force)
+    _ensure_initialized()
+    stats = index_knowledge(_collection, force=force)
     return (
         f"Reindex complete. "
         f"Indexed: {stats['indexed']}, "
