@@ -1,14 +1,14 @@
 # Состояние проекта: Copycraft Landing Page v2 (с ресёрчем)
 
-## Текущий стейт: INPUT
+## Текущий стейт: RESEARCH (завершён → готов к STRATEGY)
 ## Фаза: —
 ## Текущий блок: —
 ## Формат: landing
 
 ## Пройденные стейты
-- [ ] INPUT
-- [ ] QUERY
-- [ ] RESEARCH
+- [x] INPUT
+- [x] QUERY (BYPASS — данные достаточны после ресёрча)
+- [x] RESEARCH
 - [ ] STRATEGY
 - [ ] EXECUTION
 - [ ] DEBUGGING
