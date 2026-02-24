@@ -2,7 +2,7 @@
 
 ## Текущий стейт: EXECUTION
 ## Фаза: PHASE B — COPY
-## Текущий блок: Lead
+## Текущий блок: Problem Amplification
 ## Формат: landing
 
 ## Пройденные стейты
@@ -18,8 +18,8 @@
 ## Блоки EXECUTION
 | Блок | BRIEF | COPY | DEBUGGING | Статус |
 |------|-------|------|-----------|--------|
-| Lead | done | — | — | next |
-| Problem Amplification | done | — | — | pending |
+| Lead | done | done | PASS | APPROVED |
+| Problem Amplification | done | — | — | next |
 | Mechanism | done | — | — | pending |
 | Proof | done | — | — | pending |
 | Offer + CTA | done | — | — | pending |
