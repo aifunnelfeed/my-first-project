@@ -1,12 +1,12 @@
 # Состояние проекта: Copycraft v3 Landing Page
 
-## Текущий стейт: INPUT
+## Текущий стейт: RESEARCH
 ## Фаза: —
 ## Текущий блок: —
 ## Формат: landing
 
 ## Пройденные стейты
-- [ ] INPUT
+- [x] INPUT
 - [ ] QUERY
 - [ ] RESEARCH
 - [ ] STRATEGY
