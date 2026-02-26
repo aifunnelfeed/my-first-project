@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <style>
+        /* === Reset & Base === */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 18px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                         'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.75;
+            color: #1a1a2e;
+            background: #ffffff;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 72px; /* space for sticky CTA */
+        }
+
+        /* === Container === */
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* === Sections === */
+        .section {
+            padding: 56px 0;
+        }
+
+        .section--light {
+            background: #ffffff;
+        }
+
+        .section--dark {
+            background: #f7f8fa;
+        }
+
+        /* === Section Headings === */
+        .section__heading {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0f0f23;
+            margin-bottom: 24px;
+            line-height: 1.3;
+        }
+
+        .section__heading::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            margin-bottom: 16px;
+            border-radius: 2px;
+        }
+
+        /* === Hero === */
+        .section--hero {
+            padding: 80px 0 56px;
+            text-align: center;
+            background: linear-gradient(180deg, #f0f4ff 0%, #ffffff 100%);
+        }
+
+        .hero__title {
+            font-size: 2.4rem;
+            font-weight: 800;
+            line-height: 1.2;
+            color: #0f0f23;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero__subtitle {
+            font-size: 1.15rem;
+            color: #555;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto 36px;
+        }
+
+        .hero__body {
+            text-align: left;
+        }
+
+        .hero__body p {
+            font-size: 1.05rem;
+            color: #333;
+            margin-bottom: 1em;
+        }
+
+        /* === Body Text === */
+        .section__body p {
+            margin-bottom: 1em;
+            color: #2a2a3c;
+        }
+
+        .section__body strong,
+        .hero__body strong {
+            color: #0f0f23;
+            background: linear-gradient(to top, rgba(102, 126, 234, 0.15) 0%, rgba(102, 126, 234, 0.15) 35%, transparent 35%);
+            padding: 0 2px;
+        }
+
+        .section__body em {
+            color: #555;
+        }
+
+        .section__body ol,
+        .section__body ul {
+            margin: 1em 0;
+            padding-left: 1.5em;
+        }
+
+        .section__body li {
+            margin-bottom: 0.6em;
+            color: #2a2a3c;
+        }
+
+        /* === Callout (italic aside) === */
+        .section--callout {
+            border-left: 4px solid #667eea;
+            background: #f0f4ff;
+        }
+
+        .section--callout .container {
+            padding-top: 4px;
+            padding-bottom: 4px;
+        }
+
+        .callout-text {
+            font-style: italic;
+            color: #444;
+            font-size: 0.95rem;
+        }
+
+        .callout-text p {
+            margin-bottom: 0.5em;
+        }
+
+        /* === CTA Button === */
+        .section--cta {
+            text-align: center;
+            padding: 48px 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #e63946 0%, #c1121f 100%);
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 18px 48px;
+            border-radius: 8px;
+            text-decoration: none;
+            letter-spacing: 0.02em;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 4px 14px rgba(230, 57, 70, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
+        }
+
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        .cta-subtext {
+            margin-top: 16px;
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        /* === Bridge (transition with inline CTA) === */
+        .section--bridge {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .bridge-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #0f0f23;
+            margin-bottom: 24px;
+        }
+
+        .bridge-text p {
+            margin: 0;
+        }
+
+        .cta-button--secondary {
+            display: inline-block;
+            background: transparent;
+            color: #e63946;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 14px 36px;
+            border-radius: 8px;
+            border: 2px solid #e63946;
+            text-decoration: none;
+            transition: all 0.15s ease;
+        }
+
+        .cta-button--secondary:hover {
+            background: #e63946;
+            color: #ffffff;
+        }
+
+        /* === Comparison === */
+        .comparison-intro {
+            margin-bottom: 24px;
+        }
+
+        .comparison-intro p {
+            color: #2a2a3c;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .comparison-card {
+            padding: 24px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+        }
+
+        .comparison-card p {
+            margin-bottom: 0.5em;
+        }
+
+        .comparison-card strong {
+            background: none !important;
+        }
+
+        .comparison-card--bad {
+            background: #fff5f5;
+            border: 1px solid #fecaca;
+            border-top: 4px solid #e63946;
+        }
+
+        .comparison-card--good {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-top: 4px solid #16a34a;
+        }
+
+        .comparison-label {
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .comparison-label--bad {
+            color: #dc2626;
+        }
+
+        .comparison-label--good {
+            color: #16a34a;
+        }
+
+        .comparison-conclusion {
+            margin-top: 8px;
+        }
+
+        .comparison-conclusion p {
+            color: #2a2a3c;
+        }
+
+        /* === FAQ === */
+        .section--faq {
+            background: #f7f8fa;
+        }
+
+        .faq-list {
+            max-width: 720px;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            padding: 20px 24px;
+            background: #ffffff;
+            border-radius: 10px;
+            border: 1px solid #e8e8ee;
+            transition: box-shadow 0.15s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .faq-question {
+            font-weight: 700;
+            color: #0f0f23;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+
+        .faq-answer {
+            color: #444;
+            line-height: 1.7;
+        }
+
+        /* === P.S. Block === */
+        .section--ps {
+            background: #fafafa;
+        }
+
+        .ps-block p {
+            font-style: italic;
+            color: #555;
+            border-left: 3px solid #667eea;
+            padding-left: 16px;
+            margin-bottom: 1em;
+        }
+
+        /* === Sticky CTA === */
+        .sticky-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid #e8e8ee;
+            padding: 12px 24px;
+            text-align: center;
+            z-index: 100;
+        }
+
+        .sticky-cta__button {
+            display: inline-block;
+            background: linear-gradient(135deg, #e63946 0%, #c1121f 100%);
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            padding: 12px 32px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 2px 8px rgba(230, 57, 70, 0.25);
+        }
+
+        .sticky-cta__button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.35);
+        }
+
+        /* === Footer === */
+        .footer {
+            padding: 40px 24px;
+            text-align: center;
+            color: #999;
+            font-size: 0.85rem;
+            border-top: 1px solid #eee;
+            background: #fafafa;
+        }
+
+        /* === Responsive === */
+        @media (max-width: 768px) {
+            html {
+                font-size: 16px;
+            }
+
+            body {
+                padding-bottom: 64px;
+            }
+
+            .section {
+                padding: 40px 0;
+            }
+
+            .section--hero {
+                padding: 56px 0 40px;
+            }
+
+            .hero__title {
+                font-size: 1.8rem;
+            }
+
+            .hero__subtitle {
+                font-size: 1rem;
+            }
+
+            .section__heading {
+                font-size: 1.3rem;
+            }
+
+            .cta-button {
+                display: block;
+                width: 100%;
+                padding: 16px 24px;
+                font-size: 1.1rem;
+            }
+
+            .cta-button--secondary {
+                display: block;
+                width: 100%;
+                padding: 14px 24px;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .faq-item {
+                padding: 16px;
+            }
+
+            .sticky-cta {
+                padding: 10px 16px;
+            }
+
+            .sticky-cta__button {
+                display: block;
+                width: 100%;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% for section in sections %}
+
+    {% if section.type.value == 'hero' %}
+    <section class="section section--hero">
+        <div class="container">
+            <h1 class="hero__title">{{ section.heading }}</h1>
+            {% if section.subtitle %}
+            <p class="hero__subtitle">{{ section.subtitle }}</p>
+            {% endif %}
+            {% if section.html %}
+            <div class="hero__body">{{ section.html }}</div>
+            {% endif %}
+        </div>
+    </section>
+
+    {% elif section.type.value == 'cta' %}
+    <section class="section section--cta {% if section.index % 2 == 0 %}section--light{% else %}section--dark{% endif %}">
+        <div class="container">
+            <a href="{{ cta_url }}" class="cta-button">{{ section.cta_text }}</a>
+            {% if section.cta_subtext %}
+            <p class="cta-subtext">{{ section.cta_subtext }}</p>
+            {% endif %}
+        </div>
+    </section>
+
+    {% elif section.type.value == 'bridge' %}
+    <section class="section section--bridge {% if section.index % 2 == 0 %}section--light{% else %}section--dark{% endif %}">
+        <div class="container">
+            <div class="bridge-text">{{ section.html }}</div>
+            <a href="{{ cta_url }}" class="cta-button--secondary">{{ cta_label }}</a>
+        </div>
+    </section>
+
+    {% elif section.type.value == 'comparison' %}
+    <section class="section {% if section.index % 2 == 0 %}section--light{% else %}section--dark{% endif %}">
+        <div class="container">
+            {% if section.heading %}
+            <h2 class="section__heading">{{ section.heading }}</h2>
+            {% endif %}
+            {% if section.comparison_data.intro %}
+            <div class="comparison-intro">{{ section.comparison_data.intro }}</div>
+            {% endif %}
+            <div class="comparison-grid">
+                <div class="comparison-card comparison-card--bad">
+                    <div class="comparison-label comparison-label--bad">&#x2717; ChatGPT</div>
+                    {{ section.comparison_data.bad }}
+                </div>
+                <div class="comparison-card comparison-card--good">
+                    <div class="comparison-label comparison-label--good">&#x2713; М.О.С.</div>
+                    {{ section.comparison_data.good }}
+                </div>
+            </div>
+            {% if section.comparison_data.conclusion %}
+            <div class="comparison-conclusion">{{ section.comparison_data.conclusion }}</div>
+            {% endif %}
+        </div>
+    </section>
+
+    {% elif section.type.value == 'faq' %}
+    <section class="section section--faq">
+        <div class="container">
+            {% if section.heading %}
+            <h2 class="section__heading">{{ section.heading }}</h2>
+            {% endif %}
+            <div class="faq-list">
+                {% for q, a in section.faq_items %}
+                <div class="faq-item">
+                    <div class="faq-question">{{ q }}</div>
+                    <div class="faq-answer">{{ a }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    {% elif section.type.value == 'ps' %}
+    <section class="section section--ps">
+        <div class="container">
+            <div class="ps-block">{{ section.html }}</div>
+        </div>
+    </section>
+
+    {% elif section.type.value == 'callout' %}
+    <section class="section section--callout {% if section.index % 2 == 0 %}section--light{% else %}section--dark{% endif %}">
+        <div class="container">
+            <div class="callout-text">{{ section.html }}</div>
+        </div>
+    </section>
+
+    {% else %}
+    <section class="section {% if section.index % 2 == 0 %}section--light{% else %}section--dark{% endif %}">
+        <div class="container">
+            {% if section.heading %}
+            <h2 class="section__heading">{{ section.heading }}</h2>
+            {% endif %}
+            <div class="section__body">{{ section.html }}</div>
+        </div>
+    </section>
+    {% endif %}
+
+    {% endfor %}
+
+    <!-- Footer -->
+    <footer class="footer">
+        &copy; {{ title }}
+    </footer>
+
+    <!-- Sticky CTA -->
+    <div class="sticky-cta">
+        <a href="{{ cta_url }}" class="sticky-cta__button">{{ cta_label }}</a>
+    </div>
+</body>
+</html>

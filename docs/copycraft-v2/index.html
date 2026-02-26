@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI умеет писать. Но никто не научил его думать.</title>
+    <style>
+        /* === Reset & Base === */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 18px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                         'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.75;
+            color: #1a1a2e;
+            background: #ffffff;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 72px; /* space for sticky CTA */
+        }
+
+        /* === Container === */
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* === Sections === */
+        .section {
+            padding: 56px 0;
+        }
+
+        .section--light {
+            background: #ffffff;
+        }
+
+        .section--dark {
+            background: #f7f8fa;
+        }
+
+        /* === Section Headings === */
+        .section__heading {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0f0f23;
+            margin-bottom: 24px;
+            line-height: 1.3;
+        }
+
+        .section__heading::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            margin-bottom: 16px;
+            border-radius: 2px;
+        }
+
+        /* === Hero === */
+        .section--hero {
+            padding: 80px 0 56px;
+            text-align: center;
+            background: linear-gradient(180deg, #f0f4ff 0%, #ffffff 100%);
+        }
+
+        .hero__title {
+            font-size: 2.4rem;
+            font-weight: 800;
+            line-height: 1.2;
+            color: #0f0f23;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero__subtitle {
+            font-size: 1.15rem;
+            color: #555;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto 36px;
+        }
+
+        .hero__body {
+            text-align: left;
+        }
+
+        .hero__body p {
+            font-size: 1.05rem;
+            color: #333;
+            margin-bottom: 1em;
+        }
+
+        /* === Body Text === */
+        .section__body p {
+            margin-bottom: 1em;
+            color: #2a2a3c;
+        }
+
+        .section__body strong,
+        .hero__body strong {
+            color: #0f0f23;
+            background: linear-gradient(to top, rgba(102, 126, 234, 0.15) 0%, rgba(102, 126, 234, 0.15) 35%, transparent 35%);
+            padding: 0 2px;
+        }
+
+        .section__body em {
+            color: #555;
+        }
+
+        .section__body ol,
+        .section__body ul {
+            margin: 1em 0;
+            padding-left: 1.5em;
+        }
+
+        .section__body li {
+            margin-bottom: 0.6em;
+            color: #2a2a3c;
+        }
+
+        /* === Callout (italic aside) === */
+        .section--callout {
+            border-left: 4px solid #667eea;
+            background: #f0f4ff;
+        }
+
+        .section--callout .container {
+            padding-top: 4px;
+            padding-bottom: 4px;
+        }
+
+        .callout-text {
+            font-style: italic;
+            color: #444;
+            font-size: 0.95rem;
+        }
+
+        .callout-text p {
+            margin-bottom: 0.5em;
+        }
+
+        /* === CTA Button === */
+        .section--cta {
+            text-align: center;
+            padding: 48px 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #e63946 0%, #c1121f 100%);
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding: 18px 48px;
+            border-radius: 8px;
+            text-decoration: none;
+            letter-spacing: 0.02em;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 4px 14px rgba(230, 57, 70, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
+        }
+
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        .cta-subtext {
+            margin-top: 16px;
+            font-size: 0.95rem;
+            color: #666;
+        }
+
+        /* === Bridge (transition with inline CTA) === */
+        .section--bridge {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .bridge-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #0f0f23;
+            margin-bottom: 24px;
+        }
+
+        .bridge-text p {
+            margin: 0;
+        }
+
+        .cta-button--secondary {
+            display: inline-block;
+            background: transparent;
+            color: #e63946;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 14px 36px;
+            border-radius: 8px;
+            border: 2px solid #e63946;
+            text-decoration: none;
+            transition: all 0.15s ease;
+        }
+
+        .cta-button--secondary:hover {
+            background: #e63946;
+            color: #ffffff;
+        }
+
+        /* === Comparison === */
+        .comparison-intro {
+            margin-bottom: 24px;
+        }
+
+        .comparison-intro p {
+            color: #2a2a3c;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .comparison-card {
+            padding: 24px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+        }
+
+        .comparison-card p {
+            margin-bottom: 0.5em;
+        }
+
+        .comparison-card strong {
+            background: none !important;
+        }
+
+        .comparison-card--bad {
+            background: #fff5f5;
+            border: 1px solid #fecaca;
+            border-top: 4px solid #e63946;
+        }
+
+        .comparison-card--good {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-top: 4px solid #16a34a;
+        }
+
+        .comparison-label {
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .comparison-label--bad {
+            color: #dc2626;
+        }
+
+        .comparison-label--good {
+            color: #16a34a;
+        }
+
+        .comparison-conclusion {
+            margin-top: 8px;
+        }
+
+        .comparison-conclusion p {
+            color: #2a2a3c;
+        }
+
+        /* === FAQ === */
+        .section--faq {
+            background: #f7f8fa;
+        }
+
+        .faq-list {
+            max-width: 720px;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            padding: 20px 24px;
+            background: #ffffff;
+            border-radius: 10px;
+            border: 1px solid #e8e8ee;
+            transition: box-shadow 0.15s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .faq-question {
+            font-weight: 700;
+            color: #0f0f23;
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+        }
+
+        .faq-answer {
+            color: #444;
+            line-height: 1.7;
+        }
+
+        /* === P.S. Block === */
+        .section--ps {
+            background: #fafafa;
+        }
+
+        .ps-block p {
+            font-style: italic;
+            color: #555;
+            border-left: 3px solid #667eea;
+            padding-left: 16px;
+            margin-bottom: 1em;
+        }
+
+        /* === Sticky CTA === */
+        .sticky-cta {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid #e8e8ee;
+            padding: 12px 24px;
+            text-align: center;
+            z-index: 100;
+        }
+
+        .sticky-cta__button {
+            display: inline-block;
+            background: linear-gradient(135deg, #e63946 0%, #c1121f 100%);
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-weight: 700;
+            padding: 12px 32px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 2px 8px rgba(230, 57, 70, 0.25);
+        }
+
+        .sticky-cta__button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.35);
+        }
+
+        /* === Footer === */
+        .footer {
+            padding: 40px 24px;
+            text-align: center;
+            color: #999;
+            font-size: 0.85rem;
+            border-top: 1px solid #eee;
+            background: #fafafa;
+        }
+
+        /* === Responsive === */
+        @media (max-width: 768px) {
+            html {
+                font-size: 16px;
+            }
+
+            body {
+                padding-bottom: 64px;
+            }
+
+            .section {
+                padding: 40px 0;
+            }
+
+            .section--hero {
+                padding: 56px 0 40px;
+            }
+
+            .hero__title {
+                font-size: 1.8rem;
+            }
+
+            .hero__subtitle {
+                font-size: 1rem;
+            }
+
+            .section__heading {
+                font-size: 1.3rem;
+            }
+
+            .cta-button {
+                display: block;
+                width: 100%;
+                padding: 16px 24px;
+                font-size: 1.1rem;
+            }
+
+            .cta-button--secondary {
+                display: block;
+                width: 100%;
+                padding: 14px 24px;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .faq-item {
+                padding: 16px;
+            }
+
+            .sticky-cta {
+                padding: 10px 16px;
+            }
+
+            .sticky-cta__button {
+                display: block;
+                width: 100%;
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+
+    
+    <section class="section section--hero">
+        <div class="container">
+            <h1 class="hero__title">AI умеет писать. Но никто не научил его думать.</h1>
+            
+            <p class="hero__subtitle">50 000 руб. за копирайтера. 0 руб. за ChatGPT. Результат одинаковый. Вот что оба пропускают.</p>
+            
+            
+            <div class="hero__body"><p>Вы просите ChatGPT написать лендинг. Получаете гладкий, грамматически безупречный текст.</p>
+<p>И абсолютно бесполезный.</p>
+<p>«Красивый бессмысленный шум» — так это называют те, кто уже пробовал. Штампы. Клише. «В современном динамично развивающемся мире». Конверсия — ноль.</p>
+<p>Тогда вы нанимаете копирайтера. За 50 тысяч. Ждёте две недели. Получаете текст, который… тоже не продаёт. Правки. Ещё правки. «Всё не то». Переделываете сами. Запускаете что есть. Трафик льётся на лендинг, который не конвертит. Деньги горят.</p>
+<p>Знакомо?</p></div>
+            
+        </div>
+    </section>
+
+    
+
+    
+
+    
+    <section class="section section--dark">
+        <div class="container">
+            
+            <div class="section__body"><p>Вот в чём штука: проблема не в вас. И не в AI. И даже не в копирайтере.</p>
+<p>Проблема в том, что один промпт — это не процесс. Вы даёте AI команду «напиши продающий текст» — и ждёте чуда. Но AI пропускает 7 из 8 шагов, которые делает хороший копирайтер: исследование аудитории, анализ конкурентов, стратегию, выбор механизма, написание по блокам, проверку, доработку.</p>
+<p>Промпт — это не стратегия. Вот почему выходит «вода».</p>
+<p>А что если заменить промпт — на полный процесс? Исследование. Стратегия. Текст по блокам. Критика. 8 шагов, зашитые в одну систему.</p>
+<p><em>(Кстати: текст, который вы сейчас читаете, был создан внутри этой системы. Это не маркетинговое заявление — это факт, который вы можете проверить.)</em></p></div>
+        </div>
+    </section>
+    
+
+    
+
+    
+    <section class="section section--light">
+        <div class="container">
+            
+            <div class="section__body"><p>Вот как выглядит ваш маркетинг прямо сейчас.</p>
+<p><strong>Круг первый: ChatGPT.</strong>
+Пишете промпт. Получаете текст. Читаете — и понимаете: это не про вашего клиента. Это про «инновационные решения в динамично развивающемся мире». Переписываете промпт. Получаете чуть другую воду. Пробуете ещё раз. Та же вода, другой шрифт. В итоге — переделываете сами.</p>
+<p><strong>Круг второй: фрилансер.</strong>
+Находите копирайтера. Договариваетесь на 15–50 тысяч. Ждёте неделю. Две. Получаете текст — «не то». Правки. Ещё правки. Копирайтер обижается. Вы злитесь. Сдаёте что есть. Или ищете нового копирайтера — и начинаете сначала.</p>
+<p><strong>Круг третий: «сам разберусь».</strong>
+Открываете лендинг конкурента. Копируете структуру. Меняете слова. Не понимаете, почему у них конвертит, а у вас — нет. Потому что скопировали текст, а не логику продажи, которая стоит за ним.</p></div>
+        </div>
+    </section>
+    
+
+    
+
+    
+    <section class="section section--dark">
+        <div class="container">
+            
+            <div class="section__body"><p>И пока вы крутитесь в этих кругах — бизнес платит.</p>
+<p>Не за копирайтера. Не за подписку на AI. За время.</p>
+<p>Две недели ожидания текста — это две недели, когда продукт не продаётся. Трафик, который вы уже купили, льётся на лендинг с конверсией 0,8%. Каждый новый запуск — с нуля: никакой базы знаний, никакого накопления. Что сработало в прошлый раз? Никто не помнит.</p>
+<p>Самое обидное: вы не ленивый и не глупый. Вы перепробовали всё, что предлагает рынок. Просто рынок предлагает не то.</p>
+<p>А что если дело не в инструментах — а в том, как они устроены?</p></div>
+        </div>
+    </section>
+    
+
+    
+
+    
+    <section class="section section--light">
+        <div class="container">
+            
+            <div class="section__body"><p>Представьте: вы нанимаете архитектора построить дом. Но вместо проекта, расчётов и поэтапной стройки — даёте ему одну фразу: «построй красивый дом». Без чертежей. Без фундамента. Без надзора.</p>
+<p>Что получите? Что-то стоящее, но кривое. Или красивый фасад без несущих стен.</p>
+<p>Именно это происходит, когда вы даёте AI команду «напиши продающий текст».</p>
+<p>Хороший продающий текст — это не текст. Это <strong>процесс из 8 шагов:</strong> изучение аудитории, анализ конкурентов, карта мотиваций, выбор стратегии, создание механизма убеждения, написание по блокам, проверка каждого блока, сборка финала.</p>
+<p>ChatGPT делает один шаг из восьми. Выдаёт текст — без исследования, без стратегии, без проверки. Фрилансер в лучшем случае делает три. В худшем — тоже один, но дольше.</p>
+<p>Вот почему результат одинаковый: вода.</p></div>
+        </div>
+    </section>
+    
+
+    
+
+    
+    <section class="section section--dark">
+        <div class="container">
+            
+            <h2 class="section__heading">Как это устроено в М.О.С.</h2>
+            
+            <div class="section__body"><p>М.О.С. — Маркетинговая Операционная Система. Не генератор текста. Не «улучшенный промпт». Среда, в которой AI работает по той же методологии, по которой пишут продающие тексты за $10 000+ на западном рынке.</p>
+<p>Внутри — три агента. Каждый делает свою работу:</p>
+<p><strong>Researcher</strong> изучает вашу аудиторию. Не демографию — а мотивацию: зачем покупают, чего боятся, какие слова используют, что пробовали раньше и почему не сработало. Не поверхностный портрет «женщина 35+», а глубокий разбор: какую задачу человек пытается решить, покупая ваш продукт.</p>
+<p>Вот как это выглядит: вы вводите описание проекта. Researcher спрашивает: «Кто ваш клиент? Что он уже пробовал? Какие слова использует, когда жалуется?» — и через 3 минуты выдаёт карту мотиваций. Не шаблон — карту именно вашей аудитории, с дословными формулировками, которые потом лягут в текст.</p>
+<p><strong>Copywriter</strong> пишет текст. Но не весь сразу, а блок за блоком: вступление, история, объяснение, предложение, закрытие. Каждый блок — по стратегии, а не по вдохновению. Как хирург по протоколу операции, а не «по ощущениям».</p>
+<p><strong>Critic</strong> проверяет каждый блок по 10 параметрам. Есть конкретная боль клиента — или общие слова? Раскрыт механизм — или пустое обещание? Язык живой — или канцелярит? Если блок не прошёл — назад на доработку. Без компромиссов.</p>
+<p>Critic — это тот элемент, которого нет нигде. Ни в ChatGPT, ни у фрилансера, ни в Jasper. Встроенный контроль качества, который не пропускает «воду» в финальный текст.</p>
+<p>И ещё одно: система учится. Результаты каждого проекта — конверсии, A/B тесты, обратная связь — возвращаются в базу. Каждый следующий текст опирается на то, что сработало раньше.</p>
+<p>Не генерация. Не магия. Конвейер, где каждый шаг контролируется.</p></div>
+        </div>
+    </section>
+    
+
+    
+
+    
+    <section class="section section--light">
+        <div class="container">
+            
+            <div class="section__body"><p>Звучит как обещание? Есть три причины, почему это не обещание — а факт, который вы можете проверить прямо сейчас.</p></div>
+        </div>
+    </section>
+    
+
+    
+
+    
+    <section class="section section--dark">
+        <div class="container">
+            
+            <h2 class="section__heading">Доказательство №1: вы его уже читаете</h2>
+            
+            <div class="section__body"><p>Текст, который перед вами — не написан копирайтером. И не сгенерирован по промпту.</p>
+<p>Он создан внутри М.О.С. За один диалог. Вот что произошло:</p>
+<ol>
+<li>
+<p><strong>Researcher</strong> собрал данные: проанализировал конкурентов (CopyMonkey, Gerwin, Jasper и ещё 8 сервисов), изучил форумы и статьи на vc.ru, DTF, Хабре, разобрал три главные задачи, которые клиент пытается решить, собрал 25+ дословных цитат аудитории.</p>
+</li>
+<li>
+<p><strong>Copywriter</strong> выстроил стратегию: определил, что аудитория уже знает про AI-инструменты, но разочарована в них (высокий скепсис), — и выбрал подход: не обещать «ещё один AI», а показать, чего не хватает всем остальным. И только потом начал писать. Блок за блоком.</p>
+</li>
+<li>
+<p><strong>Critic</strong> проверил каждый блок по 10 параметрам. Вступление прошло со второй попытки — первая версия слишком рано переходила к продукту, не успев объяснить суть проблемы. Critic поймал это и отправил на доработку.</p>
+</li>
+</ol>
+<p>Вы можете проверить: [скриншот процесса / ссылка на скринкаст].</p>
+<p>Это не портфолио. Это пруф в реальном времени. Ни один AI-инструмент на рынке не может показать вам свой процесс — потому что у них его нет.</p></div>
+        </div>
+    </section>
+    
+
+    
+
+    
+    <section class="section section--light">
+        <div class="container">
+            
+            <h2 class="section__heading">Доказательство №2: разница в одном абзаце</h2>
+            
+            
+            <div class="comparison-intro"><p>Вот один и тот же оффер. Слева — ChatGPT с хорошим промптом. Справа — М.О.С. по методологии.</p></div>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card comparison-card--bad">
+                    <div class="comparison-label comparison-label--bad">&#x2717; ChatGPT</div>
+                    <p><strong>ChatGPT</strong> (промпт: «напиши продающий абзац для онлайн-курса по управлению бизнесом, упомяни выгоды и результат»)<strong>:</strong>
+<em>«Хватит тратить время на хаос в бизнесе. Наш курс даст вам проверенные инструменты и пошаговую систему, чтобы выстроить управление, делегировать рутину и наконец сфокусироваться на росте. Более 500 предпринимателей уже прошли этот путь — теперь ваша очередь.»</em></p>
+                </div>
+                <div class="comparison-card comparison-card--good">
+                    <div class="comparison-label comparison-label--good">&#x2713; М.О.С.</div>
+                    <p><strong>М.О.С.:</strong>
+<em>«Вы тратите 2 недели на текст, который не конвертит. М.О.С. собирает продающий текст за один диалог — по той же методологии, по которой на Западе пишут тексты за $10 000. С проверкой каждого блока. Не потому что быстрее — а потому что 7 из 8 шагов автоматизированы.»</em></p>
+                </div>
+            </div>
+            
+            <div class="comparison-conclusion"><p>Первый — гладкий, приятный, но мог быть про любой курс на планете. Второй — про вашу конкретную боль и конкретный механизм. ChatGPT с хорошим промптом звучит убедительнее, чем с плохим, — но всё равно пишет «про всех», а не «про вас».</p></div>
+            
+        </div>
+    </section>
+
+    
+
+    
+
+    
+    <section class="section section--dark">
+        <div class="container">
+            
+            <h2 class="section__heading">«Но это же тоже AI?»</h2>
+            
+            <div class="section__body"><p>Да. Как и калькулятор — тоже кнопки. Но инженер с методологией расчёта и ребёнок с калькулятором — это разные результаты.</p>
+<p>ChatGPT — это AI без процесса. М.О.С. — это AI внутри процесса из 8 шагов, с тремя агентами и встроенным контролем качества.</p>
+<p>Разница не в технологии. Разница в методологии.</p></div>
+        </div>
+    </section>
+    
+
+    
+
+    
+    <section class="section section--bridge section--light">
+        <div class="container">
+            <div class="bridge-text"><p>Хотите увидеть, как это работает на <strong>вашем</strong> проекте?</p></div>
+            <a href="#demo" class="cta-button--secondary">Записаться на демо</a>
+        </div>
+    </section>
+
+    
+
+    
+
+    
+    <section class="section section--dark">
+        <div class="container">
+            
+            <h2 class="section__heading">Посмотрите сами. 30 минут. Бесплатно. На вашем проекте.</h2>
+            
+            <div class="section__body"><p>Запишитесь на живую демонстрацию М.О.С. Вот что произойдёт за 30 минут:</p>
+<ul>
+<li><strong>Разберём ваш проект.</strong> Не абстрактную презентацию — а ваш конкретный продукт, вашу аудиторию, вашу задачу.</li>
+<li><strong>Покажу весь процесс.</strong> Ресёрч → стратегия → текст → критика. Вы увидите, как 8 шагов работают в реальном времени.</li>
+<li><strong>Вы уйдёте с готовым вступлением для вашего лендинга.</strong> Первый экран — заголовок, подзаголовок, вводный текст — написанный по методологии, проверенный встроенным критиком. Это не «фрагмент». Это рабочий блок, который можно ставить на сайт.</li>
+</ul>
+<p><strong>Бонус:</strong> Получите аудит первого экрана вашего текущего лендинга — что работает, что теряет конверсию, и почему. Даже если после демо вы решите ничего не покупать — аудит останется у вас.</p>
+<p><strong>Гарантия:</strong> Если за 30 минут вы не увидите текст, который сильнее вашего текущего лендинга, — я скажу об этом первым. Без неловких пауз. Без «ну, надо ещё поработать».</p>
+<p>Демо — живые, не автоматические. Каждую я провожу лично. Поэтому в неделю — максимум 5 слотов.</p></div>
+        </div>
+    </section>
+    
+
+    
+
+    
+    <section class="section section--faq">
+        <div class="container">
+            
+            <h2 class="section__heading">Ответы на вопросы, которые вы уже думаете</h2>
+            
+            <div class="faq-list">
+                
+                <div class="faq-item">
+                    <div class="faq-question">Я уже пробовал ChatGPT — будет та же вода.</div>
+                    <div class="faq-answer"><p>На демо вы увидите процесс, а не результат промпта. Разница — как между рецептом и микроволновкой.</p></div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Моя ниша слишком специфическая.</div>
+                    <div class="faq-answer"><p>Именно поэтому Researcher начинает с анализа вашей аудитории. Система адаптируется — не подставляет шаблон.</p></div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Бесплатная демо — потом будут продавать.</div>
+                    <div class="faq-answer"><p>Возможно. Но вы уйдёте с готовым вступлением и аудитом. Даже если скажете «нет» — это была полезная встреча.</p></div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">У меня уже есть копирайтер.</div>
+                    <div class="faq-answer"><p>Отлично. Покажем разницу на одном абзаце. Если ваш копирайтер лучше — я первый это признаю.</p></div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">За 30 минут невозможно сделать нормальный текст.</div>
+                    <div class="faq-answer"><p>За 30 минут — один блок. Полный лендинг — за один диалог. 30 минут потому что шаги автоматизированы, а не потому что пропущены.</p></div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    
+
+    
+
+    
+    <section class="section section--cta section--dark">
+        <div class="container">
+            <a href="#demo" class="cta-button">ЗАПИСАТЬСЯ НА ДЕМО</a>
+            
+            <p class="cta-subtext">Одна демо заменит часы споров с копирайтером. Слотов на эту неделю осталось: [количество].</p>
+            
+        </div>
+    </section>
+
+    
+
+    
+
+    
+    <section class="section section--ps">
+        <div class="container">
+            <div class="ps-block"><p>P.S. Текст выше — от заголовка до этого постскриптума — создан внутри М.О.С. за один диалог. На демо покажу, как именно.</p>
+<p>P.P.S. Каждый день без рабочего лендинга — это трафик, который вы уже купили и который горит впустую. Не «когда-нибудь потом». Запишитесь сейчас.</p></div>
+        </div>
+    </section>
+
+    
+
+    
+
+    <!-- Footer -->
+    <footer class="footer">
+        &copy; AI умеет писать. Но никто не научил его думать.
+    </footer>
+
+    <!-- Sticky CTA -->
+    <div class="sticky-cta">
+        <a href="#demo" class="sticky-cta__button">Записаться на демо</a>
+    </div>
+</body>
+</html>

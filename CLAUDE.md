@@ -150,6 +150,7 @@
 - `draft` — блоки текста (lead, story, mechanism, etc.)
 - `fix` — исправления после DEBUGGING
 - `final` — финальная сборка
+- `html` — сборка HTML-лендинга
 - `results` — данные о результатах
 
 Примеры:
@@ -162,6 +163,7 @@ draft(nutriciologia): lead v1 — solution bridge
 fix(nutriciologia): lead — add UMP per critic feedback
 draft(nutriciologia): lead v2 — approved
 final(nutriciologia): assemble all approved blocks
+html(nutriciologia): build landing page from final
 results(nutriciologia): add A/B test data — headline B won
 ```
 
@@ -178,6 +180,29 @@ results(nutriciologia): add A/B test data — headline B won
 git log --oneline -- projects/{name}/draft.md
 git show {commit}:projects/{name}/draft.md
 ```
+
+## HTML-лендинг (автосборка при DELIVERY)
+
+После сборки `final.md` в STATE=DELIVERY:
+
+1. Спроси: **"Собрать HTML-лендинг для GitHub Pages?"**
+2. Если да — запроси URL для CTA-кнопки (или используй `#` по умолчанию)
+3. Выполни:
+   ```bash
+   python scripts/build_html.py {project_slug} --input final.md --cta-url "URL"
+   ```
+4. Результат: `docs/{project}/index.html`
+5. Коммит: `html({project}): build landing page`
+
+### Деплой на GitHub Pages
+- HTML выкладывается в `docs/{project}/`
+- GitHub Pages настроен на `main` branch → `/docs` folder
+- После `git push` — сайт обновляется автоматически
+
+### Кастомизация
+- Шаблон: `templates/landing.html` (Jinja2 + встроенный CSS)
+- Скрипт: `scripts/build_html.py`
+- Флаги: `--input` (файл), `--cta-url` (ссылка для кнопки), `--title` (заголовок)
 
 ## Обратная связь: results.md
 
@@ -210,7 +235,7 @@ git show {commit}:projects/{name}/draft.md
 - STATE=RESEARCH → `research.md`
 - STATE=STRATEGY → `strategy.md`
 - STATE=EXECUTION → `draft.md` (дописывается блок за блоком)
-- STATE=DELIVERY → `final.md`
+- STATE=DELIVERY → `final.md` + `docs/{project}/index.html` (HTML-лендинг)
 - После публикации → `results.md`
 
 ## База знаний
