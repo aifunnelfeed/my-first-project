@@ -62,39 +62,119 @@ def _ensure_initialized():
 # --- Chunking ---
 
 
+MAX_CHUNK_CHARS = 2000
+
+
+def _assemble_chunks(pieces: list[str], separator: str, heading: str,
+                      source_file: str, category: str) -> list[dict]:
+    """Group text pieces into chunks not exceeding MAX_CHUNK_CHARS."""
+    sub_chunks = []
+    current_buf = []
+    current_len = 0
+
+    for piece in pieces:
+        piece = piece.strip()
+        if not piece:
+            continue
+        piece_len = len(piece)
+
+        if current_buf and current_len + piece_len + len(separator) > MAX_CHUNK_CHARS:
+            body = separator.join(current_buf).strip()
+            if body:
+                part = len(sub_chunks) + 1
+                sub_chunks.append({
+                    "text": body,
+                    "heading": f"{heading} (pt.{part})",
+                    "source": source_file,
+                    "category": category,
+                })
+            current_buf = []
+            current_len = 0
+
+        current_buf.append(piece)
+        current_len += piece_len + len(separator)
+
+    if current_buf:
+        body = separator.join(current_buf).strip()
+        if body:
+            if sub_chunks:
+                part = len(sub_chunks) + 1
+                sub_chunks.append({
+                    "text": body,
+                    "heading": f"{heading} (pt.{part})",
+                    "source": source_file,
+                    "category": category,
+                })
+            else:
+                sub_chunks.append({
+                    "text": body,
+                    "heading": heading,
+                    "source": source_file,
+                    "category": category,
+                })
+
+    return sub_chunks
+
+
+def _split_large_chunk(text: str, heading: str, source_file: str, category: str) -> list[dict]:
+    """Split an oversized chunk into smaller pieces.
+
+    Strategy: try splitting by paragraphs (double newlines) first.
+    If the text has no paragraph breaks, fall back to single newlines.
+    """
+    # Try paragraphs first
+    paragraphs = re.split(r"\n{2,}", text)
+    if len(paragraphs) > 1:
+        return _assemble_chunks(paragraphs, "\n\n", heading, source_file, category)
+
+    # Fallback: split by single newlines
+    lines = text.split("\n")
+    if len(lines) > 1:
+        return _assemble_chunks(lines, "\n", heading, source_file, category)
+
+    # Single block of text with no newlines — return as-is
+    return [{
+        "text": text,
+        "heading": heading,
+        "source": source_file,
+        "category": category,
+    }]
+
+
 def chunk_markdown(text: str, source_file: str, category: str) -> list[dict]:
-    """Split markdown text into chunks by ## and ### headings."""
+    """Split markdown text into chunks by ## and ### headings.
+
+    Chunks larger than MAX_CHUNK_CHARS are further split by paragraphs.
+    """
     chunks = []
     current_heading = source_file
     current_lines = []
 
-    for line in text.split("\n"):
-        if re.match(r"^#{2,3}\s+", line):
-            # Save previous chunk
-            if current_lines:
-                body = "\n".join(current_lines).strip()
-                if body:
-                    chunks.append({
-                        "text": body,
-                        "heading": current_heading,
-                        "source": source_file,
-                        "category": category,
-                    })
-            current_heading = line.lstrip("#").strip()
-            current_lines = []
-        else:
-            current_lines.append(line)
-
-    # Save last chunk
-    if current_lines:
+    def _flush():
+        if not current_lines:
+            return
         body = "\n".join(current_lines).strip()
-        if body:
+        if not body:
+            return
+        if len(body) > MAX_CHUNK_CHARS:
+            chunks.extend(_split_large_chunk(body, current_heading, source_file, category))
+        else:
             chunks.append({
                 "text": body,
                 "heading": current_heading,
                 "source": source_file,
                 "category": category,
             })
+
+    for line in text.split("\n"):
+        if re.match(r"^#{2,3}\s+", line):
+            _flush()
+            current_heading = line.lstrip("#").strip()
+            current_lines = []
+        else:
+            current_lines.append(line)
+
+    _flush()
 
     return chunks
 
