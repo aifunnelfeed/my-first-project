@@ -21,6 +21,7 @@
 | 07 | `07_copywriting_kernel.md` | RMBC, Lead, Story, Mechanism, Product Reveal, Close, Fascinations, FAQ | STATE=EXECUTION |
 | 08 | `08_asset_library.md` | Email, Ads, VSL, Chatbot шаблоны, Subject Lines | STATE=EXECUTION (по формату) |
 | 09 | `09_debugging.md` | Critic Mode, Launch Checklist, Strategy Critic | STATE=STRATEGY, DEBUGGING, DELIVERY |
+| 10 | `10_xray.md` | Рентген текста — X-ray анализ, 8-мерный скоринг, KB-сравнение | Команда «Рентген» (независимый режим) |
 
 ---
 
@@ -37,6 +38,7 @@
 | DEBUGGING | 02 + 09 | ~6k |
 | DELIVERY | 02 + 09 | ~6k |
 | REVIEW | 02 | ~4k |
+| XRAY | 01 + 10 | ~10k |
 
 ---
 
