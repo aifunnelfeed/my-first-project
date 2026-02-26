@@ -38,25 +38,35 @@ _collection = None
 _initialized = False
 
 
+_init_error: str | None = None
+
+
 def _ensure_initialized():
     """Lazy-load embedding model, ChromaDB, and run startup indexing."""
-    global _collection, _initialized
+    global _collection, _initialized, _init_error
     if _initialized:
         return
-    import chromadb
-    from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
+    if _init_error:
+        raise RuntimeError(_init_error)
+    try:
+        import chromadb
+        from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
 
-    embedding_fn = SentenceTransformerEmbeddingFunction(
-        model_name=EMBEDDING_MODEL,
-    )
-    client = chromadb.PersistentClient(path=str(CHROMA_DIR))
-    _collection = client.get_or_create_collection(
-        name=COLLECTION_NAME,
-        embedding_function=embedding_fn,
-    )
-    stats = index_knowledge(_collection)
-    print(f"Lazy init complete. Indexing: {stats}", file=sys.stderr)
-    _initialized = True
+        embedding_fn = SentenceTransformerEmbeddingFunction(
+            model_name=EMBEDDING_MODEL,
+        )
+        client = chromadb.PersistentClient(path=str(CHROMA_DIR))
+        _collection = client.get_or_create_collection(
+            name=COLLECTION_NAME,
+            embedding_function=embedding_fn,
+        )
+        stats = index_knowledge(_collection)
+        print(f"Lazy init complete. Indexing: {stats}", file=sys.stderr)
+        _initialized = True
+    except Exception as exc:
+        _init_error = f"Knowledge base init failed: {exc}"
+        print(_init_error, file=sys.stderr)
+        raise RuntimeError(_init_error) from exc
 
 
 # --- Chunking ---
@@ -279,15 +289,22 @@ def search_knowledge(query: str, n_results: int = 5, category: str | None = None
         category: Filter by category: formulas, examples, expert, audience.
                   Leave empty to search all categories.
     """
-    _ensure_initialized()
+    try:
+        _ensure_initialized()
+    except RuntimeError as exc:
+        return f"ERROR: {exc}"
+
     n_results = min(n_results, 20)
     where = {"category": category} if category else None
 
-    results = _collection.query(
-        query_texts=[query],
-        n_results=n_results,
-        where=where,
-    )
+    try:
+        results = _collection.query(
+            query_texts=[query],
+            n_results=n_results,
+            where=where,
+        )
+    except Exception as exc:
+        return f"ERROR: Search failed: {exc}"
 
     if not results["documents"] or not results["documents"][0]:
         return "No results found."
@@ -311,8 +328,16 @@ def search_knowledge(query: str, n_results: int = 5, category: str | None = None
 @mcp_server.tool()
 def list_sources() -> str:
     """List all indexed files and their chunk counts."""
-    _ensure_initialized()
-    all_data = _collection.get()
+    try:
+        _ensure_initialized()
+    except RuntimeError as exc:
+        return f"ERROR: {exc}"
+
+    try:
+        all_data = _collection.get(include=["metadatas"])
+    except Exception as exc:
+        return f"ERROR: Failed to read collection: {exc}"
+
     if not all_data["ids"]:
         return "Knowledge base is empty. Add .md files to knowledge/ and run reindex."
 
@@ -338,8 +363,16 @@ def reindex(force: bool = False) -> str:
         force: If True, re-index all files regardless of changes.
                If False (default), only re-index changed files.
     """
-    _ensure_initialized()
-    stats = index_knowledge(_collection, force=force)
+    try:
+        _ensure_initialized()
+    except RuntimeError as exc:
+        return f"ERROR: {exc}"
+
+    try:
+        stats = index_knowledge(_collection, force=force)
+    except Exception as exc:
+        return f"ERROR: Reindex failed: {exc}"
+
     return (
         f"Reindex complete. "
         f"Indexed: {stats['indexed']}, "

@@ -45,21 +45,36 @@ copycraft/
 │   └── 09_debugging.md          # Critic Mode, Launch Checklist
 │
 ├── knowledge/                   # База знаний
-│   ├── formulas/                # Формулы и шаблоны копирайтинга
-│   │   ├── headline-formulas.md
-│   │   ├── lead-formulas.md
-│   │   ├── story-formulas.md
-│   │   ├── offer-formulas.md
-│   │   └── cta-formulas.md
+│   ├── formulas/                # Формулы, фреймворки, обзоры методологий
+│   │   ├── breakthrough_advertising_schwartz.md
+│   │   ├── mos_2_0.md
+│   │   ├── rmbc_00_start.md
+│   │   ├── rmbc_01_overview_materials.md
+│   │   ├── rmbc_02_research_overview.md
+│   │   ├── rmbc_03_mechanism_overview.md
+│   │   ├── rmbc_04_brief_overview.md
+│   │   ├── rmbc_06_fascinations_overview.md
+│   │   ├── rmbc_08_headlines.md
+│   │   ├── rmbc_09_subject_lines_matrix_overview.md
+│   │   ├── rmbc_09_writing_creatives.md
+│   │   └── rmbc_10_aov_money_close.md
 │   │
-│   ├── examples/                # Референсные продающие тексты
-│   │   └── {название}.md
+│   ├── examples/                # Референсные продающие тексты (RMBC-разборы)
+│   │   ├── 100_greatest_sales_letters.md
+│   │   ├── ot_long_copy_1.md
+│   │   ├── ot_long_copy_2.md
+│   │   ├── rmbc_02_research_ex_*.md      # примеры ресерча (4 файла)
+│   │   ├── rmbc_03_mechanism_ex_*.md      # примеры механизмов (3 файла)
+│   │   ├── rmbc_04_brief_ex_*.md          # примеры брифов (3 файла)
+│   │   ├── rmbc_05_lead_body_ex_*.md      # примеры лидов (4 файла)
+│   │   ├── rmbc_06_fascinations_ex.md
+│   │   ├── rmbc_07_full_copy_*.md         # полные копирайтинг-тексты (6 файлов)
+│   │   ├── rmbc_09_subject_lines_ex.md
+│   │   └── rmbc_10_aov_close_ex.md
 │   │
-│   ├── expert/                  # Материалы эксперта
-│   │   └── {транскрипт/статья}.md
+│   ├── expert/                  # Материалы эксперта (пока пусто)
 │   │
-│   └── audience/                # Данные об аудитории
-│       └── {источник}.md
+│   └── audience/                # Данные об аудитории (пока пусто)
 │
 ├── projects/                    # Проекты (каждый в своей папке)
 │   └── {project-name}/
@@ -128,7 +143,7 @@ copycraft/
 | INPUT | 01 + 03 + 04 | ~12k |
 | QUERY | 01 + 04 | ~8k |
 | RESEARCH | 01 + 05 | ~8k |
-| STRATEGY | 01 + 03 + 06 + 09 | ~12k |
+| STRATEGY | 01 + 02 + 03 + 06 + 09 | ~16k |
 | EXECUTION | 02 + 07 (или 02 + 08) | ~10k |
 | DEBUGGING | 02 + 09 | ~6k |
 | DELIVERY | 02 + 09 | ~6k |
@@ -153,48 +168,19 @@ copycraft/
 
 Файлы, которые Claude Code читает по запросу через Read tool.
 
-#### Формулы (`knowledge/formulas/`)
+#### Формулы и фреймворки (`knowledge/formulas/`)
 
-Каждый файл — набор формул для конкретного блока текста. Формат:
-
-```markdown
-# Формулы заголовков
-
-## 1. Результат + Срок
-**Шаблон**: [Результат] за [срок] без [типичная боль]
-**Пример**: "Как похудеть на 5 кг за 2 недели без голодания и спортзала"
-**Когда**: Молодой рынок, прямое обещание
-
-## 2. Вопрос-провокация
-**Шаблон**: [Вопрос, который попадает в боль]?
-**Пример**: "Почему 90% диет не работают — и что с этим делать?"
-**Когда**: Зрелый рынок, через любопытство
-```
+Материалы из курса RMBC Стефана Георги + фреймворки Шварца и М.О.С. Файлы содержат обзоры методологий, формулы заголовков, фасцинаций, subject lines, креативов, механизмов и офферов. Каждый файл — отдельная тема (ресерч, механизм, бриф, headlines и т.д.).
 
 #### Примеры текстов (`knowledge/examples/`)
 
-Реальные продающие тексты как референс. Каждый файл — один текст с разметкой блоков:
-
-```markdown
-# [Название/ниша]
-
-## Метаданные
-- Ниша: нутрициология
-- Сегмент: женщины 30-45
-- Уровень рынка: зрелый
-- Результат: конверсия 4.2%
-
-## Lead
-[текст]
-
-## Story
-[текст]
-
-## Mechanism
-[текст]
-
-...
-```
+Разборы реальных продающих текстов по методологии RMBC. Файлы организованы по этапам:
+- `rmbc_02_research_ex_*` — примеры ресерча (weight loss, real estate, high ticket coaching, tax savings)
+- `rmbc_03_mechanism_ex_*` — примеры механизмов (financial, fungus, olive oil)
+- `rmbc_04_brief_ex_*` — примеры брифов (biz opp, olive oil, weight loss)
+- `rmbc_05_lead_body_ex_*` — примеры лидов и body copy (biz opp, gut supplement, survival, weight loss)
+- `rmbc_07_full_copy_*` — полные тексты (cbd, dog food, law of attraction, silver dogs, snoring device, sports betting)
+- Также: 100 Greatest Sales Letters, OT Long Copy, фасцинации, subject lines, AOV/close
 
 #### Материалы эксперта (`knowledge/expert/`)
 
