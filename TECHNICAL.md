@@ -128,7 +128,7 @@ copycraft/
 | INPUT | 01 + 03 + 04 | ~12k |
 | QUERY | 01 + 04 | ~8k |
 | RESEARCH | 01 + 05 | ~8k |
-| STRATEGY | 01 + 03 + 06 | ~10k |
+| STRATEGY | 01 + 03 + 06 + 09 | ~12k |
 | EXECUTION | 02 + 07 (или 02 + 08) | ~10k |
 | DEBUGGING | 02 + 09 | ~6k |
 | DELIVERY | 02 + 09 | ~6k |
@@ -440,7 +440,7 @@ INPUT → QUERY ──────────────────┐
 | INPUT → RESEARCH | Пользователь выбрал "Авто-ресерч" |
 | QUERY → STRATEGY | Пользователь ответил на вопросы |
 | RESEARCH → STRATEGY | Пользователь подтвердил находки |
-| STRATEGY → EXECUTION | Пользователь утвердил стратегию |
+| STRATEGY → EXECUTION | Стратегия прошла STRATEGY CRITIC (PASS) |
 | EXECUTION → DEBUGGING | Обязательный цикл после каждого блока текста |
 | DEBUGGING → EXECUTION | Блок не прошёл проверку (FAIL) — возврат на исправление |
 | DEBUGGING → DELIVERY | Все обязательные блоки APPROVED |
@@ -463,6 +463,21 @@ INPUT → QUERY ──────────────────┐
 - Пользователь подтверждает или корректирует
 - Поддерживается откат: "Откатиться на {стейт}" — сброс всего после указанного стейта
 - Git-история позволяет восстановить любое предыдущее состояние файлов
+
+---
+
+## STATE=STRATEGY: двойная стратегия с KB
+
+Флоу STATE=STRATEGY состоит из 4 шагов (каждый — отдельное сообщение):
+
+| Шаг | Что происходит |
+|-----|---------------|
+| **PHASE A** | Стратегия v1 в фикс-формате (Strategy Skeleton A-K). Без обращения к knowledge/ — только бриф + RESEARCH |
+| **KB GATE** | `search_knowledge()` по категориям `formulas` + `examples`. Показать находки пользователю |
+| **PHASE B** | Стратегия v2 на основе KB. Отметить, что изменилось и почему. Вопрос: «Стратегия 1 или 2?» |
+| **STRATEGY CRITIC** | Проверка выбранной стратегии по 7 вопросам (блок 09, секция 6.3). PASS → EXECUTION, FAIL → исправить |
+
+Реализация: `blocks/02_state_machine.md` (STATE=STRATEGY) + `blocks/09_debugging.md` (STRATEGY_CRITIC_V1).
 
 ---
 

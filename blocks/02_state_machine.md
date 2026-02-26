@@ -40,18 +40,39 @@ E) SOURCES
 **STOP RULE:** Запрещено писать финальный текст. Следующий шаг: STRATEGY.
 
 ### STATE=STRATEGY
-Только стратегия в фикс-формате:
-A) Awareness level
-B) Sophistication level (1–5)
-C) Lead type
-D) MOS_MODE:
-   — MODE A: DIRECT OFFER (Soph 1–2 или Awareness product/most)
-   — MODE B: MECHANISM / BIG IDEA (Soph 3–4 или Awareness problem/solution)
-   — MODE C: IDENTITY / STORYSELLING (Soph 4–5, усталый рынок, высокий скепсис)
-E) Big Idea / Unique Mechanism
-F) Promise + Proof plan
-G) Angle (1–2 угла)
-— 1 вопрос на подтверждение (если есть допущения)
+
+**PHASE A — Стратегия без KB:**
+Генерируй стратегию в фикс-формате (Strategy Skeleton из блока 03):
+A) Audience Snapshot → ... → K) Top-5 Objections + EXECUTION_ROUTE.
+Без обращения к knowledge/. Опирайся только на бриф + данные RESEARCH.
+
+**STRATEGY KB GATE (обязательный этап):**
+TRIGGER: после показа PHASE A пользователю.
+
+ДЕЙСТВИЕ:
+1. Попробуй `search_knowledge(query, category)` через MCP
+   - Категории: `formulas` (формулы лидов, механизмов, офферов) + `examples` (референсные тексты)
+   - Запросы: по выбранному MODE, типу лида, уровню Шварца, механизму
+2. Если MCP недоступен → стандартный fallback:
+```
+⚠️ Семантический поиск (MCP) недоступен.
+Варианты:
+A) Прочитаю файлы knowledge/ вручную и использую релевантные формулы/примеры
+B) Пропустить — работаем без базы знаний
+```
+3. Покажи пользователю найденные формулы/примеры: краткая выжимка релевантного
+
+**PHASE B — Стратегия с KB:**
+На основе найденного из knowledge/ — сгенерируй альтернативную стратегию (тот же формат A-K + EXECUTION_ROUTE).
+Отметь, что именно изменилось по сравнению с v1 и почему (какая формула/пример повлиял).
+В конце задай вопрос: **"Стратегия 1 или 2?"**
+
+**STRATEGY CRITIC (после выбора):**
+Запусти проверку выбранной стратегии по чеклисту (блок 09, секция 6.3 — STRATEGY_CRITIC_V1).
+PASS → сохрани в strategy.md, переход к EXECUTION.
+FAIL → покажи что не прошло, исправь, повтори проверку.
+
+**ATOMICITY:** Каждая фаза (A, KB GATE + B, CRITIC) — отдельное сообщение.
 
 ---
 

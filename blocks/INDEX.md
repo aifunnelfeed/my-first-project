@@ -20,7 +20,7 @@
 | 06 | `06_meaning_maker.md` | UM Engine, Big Idea, Offer Engine | STATE=STRATEGY → EXECUTION |
 | 07 | `07_copywriting_kernel.md` | RMBC, Lead, Story, Mechanism, Product Reveal, Close | STATE=EXECUTION |
 | 08 | `08_asset_library.md` | Email, Ads, VSL, Chatbot шаблоны | STATE=EXECUTION (по формату) |
-| 09 | `09_debugging.md` | Critic Mode, Launch Checklist | STATE=DEBUGGING, DELIVERY |
+| 09 | `09_debugging.md` | Critic Mode, Launch Checklist, Strategy Critic | STATE=STRATEGY, DEBUGGING, DELIVERY |
 
 ---
 
@@ -31,7 +31,7 @@
 | INPUT | 01 + 03 + 04 | ~12k |
 | QUERY | 01 + 04 | ~8k |
 | RESEARCH | 01 + 05 | ~8k |
-| STRATEGY | 01 + 03 + 06 | ~10k |
+| STRATEGY | 01 + 03 + 06 + 09 | ~12k |
 | EXECUTION (landing/VSL) | 02 + 07 | ~10k |
 | EXECUTION (email/ads/chatbot) | 02 + 08 | ~8k |
 | DEBUGGING | 02 + 09 | ~6k |
