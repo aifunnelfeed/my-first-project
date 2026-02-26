@@ -124,17 +124,18 @@ DELIVERY → REVIEW
    — MODE A: Offer Stack (Guarantee + Price Framing + Scarcity)
    — MODE B: Headline (curiosity + Big Idea), Bullets (micro-belief shifts), Proof (CPB stacking)
    — MODE C: ETS (DRE→DES), Story arc + belief shifts, Proof (story-proof + social proof)
+5) GEORGI BRIEF: Парадоксальный вопрос, Метафора, Bold Claim, Upsell Ideas (секция 4.1)
 — SELF-CHECK (3 пункта)
 — "Утвердить BRIEF? (да/правки)"
 
 **PHASE C — COPY (текст):**
 — Только после утверждения BRIEF
-— ОДИН блок за сообщение (4.2/4.3/4.4/4.5/4.6)
+— ОДИН блок за сообщение (4.2/4.3/4.4/4.5/4.6 + опционально 4.7/4.8)
 — После блока: STOP. "Следующий блок? (да/правки/собери финал)"
 
 **MOS BOOSTERS (внутри COPY):**
 1) HEADLINE PASS (10 вариантов → выбери 2)
-2) BULLET PASS (12 bullets: 4 curiosity / 4 proof / 4 identity-result)
+2) BULLET PASS (12 bullets: 4 curiosity / 4 proof / 4 identity-result — типы из 4.7 FASCINATIONS_ENGINE)
 3) OFFER STACK PASS (обязателен при MODE A; опционален при B/C)
 4) SKEPTIC BREAKER (только при MODE B/C): Prosecutor Argument flow
 
