@@ -117,7 +117,7 @@ copycraft/
 | 06 | `06_meaning_maker.md` | UM Engine, Big Idea, Offer Engine | STATE=STRATEGY → EXECUTION |
 | 07 | `07_copywriting_kernel.md` | RMBC, Lead, Story, Mechanism, Product Reveal, Close | STATE=EXECUTION |
 | 08 | `08_asset_library.md` | Шаблоны Email, Ads, VSL, Chatbot | STATE=EXECUTION (по формату) |
-| 09 | `09_debugging.md` | Critic Mode (10 пунктов), Launch Checklist | STATE=DEBUGGING, DELIVERY |
+| 09 | `09_debugging.md` | Critic Mode (13 пунктов), Launch Checklist | STATE=DEBUGGING, DELIVERY |
 
 #### Принцип загрузки
 
@@ -483,7 +483,7 @@ Claude выполняет перед переходом к следующему 
 5. Минимум 1 конкретная цифра/факт/срок на блок.
 ```
 
-### Уровень 2: Critic Mode (10 пунктов)
+### Уровень 2: Critic Mode (13 пунктов)
 
 Запускается автоматически в STATE=DEBUGGING после каждого блока. Реализован в `blocks/09_debugging.md`.
 
@@ -499,6 +499,9 @@ Claude выполняет перед переходом к следующему 
 | 8 | Язык живой, без корпоративного жаргона? | Переписать разговорным языком |
 | 9 | Есть ли срочность (2+ триггера)? | Добавить элементы срочности |
 | 10 | Каждое предложение ведет к следующему? | Проверить логические переходы |
+| 11 | Использованы ли данные из RESEARCH (JTBD map, VOC-фразы, DRE/DES, барьеры)? | Вернуться к research.md, встроить данные. Если RESEARCH пропущен — пометить гипотезы [ТРЕБУЕТ ПОДТВЕРЖДЕНИЯ] |
+| 12 | Учтены ли формулы/примеры из knowledge/? | Консультировать KB. Если недоступна — зафиксировать причину |
+| 13 | Jargon-check: все термины понятны ЦА без гугления? | Заменить специализированные термины на простые аналоги или добавить пояснение |
 
 ### Launch Checklist (перед DELIVERY)
 
