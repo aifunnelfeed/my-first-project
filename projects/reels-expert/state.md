@@ -2,7 +2,7 @@
 
 ## Текущий стейт: EXECUTION
 ## Фаза: PHASE C (COPY)
-## Текущий блок: Close
+## Текущий блок: FAQ
 ## Формат: landing
 
 ## Пройденные стейты
@@ -22,8 +22,8 @@
 | Story/Bridge | PASS | PASS | PASS | APPROVED |
 | Mechanism | PASS | PASS | PASS | APPROVED |
 | Product Reveal | PASS | PASS | PASS | APPROVED |
-| Close | — | — | — | BRIEF next |
-| FAQ | — | — | — | Ожидание |
+| Close | PASS | PASS | PASS | APPROVED |
+| FAQ | — | — | — | BRIEF next |
 
 ## Счётчик попыток
 | Блок | Попыток FAIL | Последняя причина |
