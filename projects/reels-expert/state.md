@@ -2,7 +2,7 @@
 
 ## Текущий стейт: EXECUTION
 ## Фаза: PHASE C (COPY)
-## Текущий блок: Story/Bridge
+## Текущий блок: Mechanism
 ## Формат: landing
 
 ## Пройденные стейты
@@ -19,8 +19,8 @@
 | Блок | BRIEF | COPY | DEBUGGING | Статус |
 |------|-------|------|-----------|--------|
 | Lead | PASS | PASS | PASS | APPROVED |
-| Story/Bridge | — | — | — | BRIEF next |
-| Mechanism | — | — | — | Ожидание |
+| Story/Bridge | PASS | PASS | PASS | APPROVED |
+| Mechanism | — | — | — | BRIEF next |
 | Product Reveal | — | — | — | Ожидание |
 | Close | — | — | — | Ожидание |
 | FAQ | — | — | — | Ожидание |
