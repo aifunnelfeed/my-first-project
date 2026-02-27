@@ -383,6 +383,100 @@
             color: #d0d0de;
         }
 
+        /* === Feature Grid (comparison cards) === */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 32px 0;
+        }
+
+        .feature-card {
+            padding: 24px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .feature-card__title {
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .section--dark .feature-card__title {
+            color: #a0a0b8;
+        }
+
+        .section--light .feature-card__title {
+            color: #555;
+        }
+
+        .feature-card--highlight {
+            border-color: rgba(127, 86, 217, 0.4);
+            background: rgba(127, 86, 217, 0.08);
+            box-shadow: 0 4px 24px rgba(127, 86, 217, 0.12);
+        }
+
+        .feature-card--highlight .feature-card__title {
+            color: #B692F6;
+            border-bottom-color: rgba(127, 86, 217, 0.3);
+        }
+
+        .section--light .feature-card--highlight .feature-card__title {
+            background: linear-gradient(135deg, #7F56D9 0%, #B692F6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-card__list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .feature-card__list dt {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 2px;
+        }
+
+        .section--dark .feature-card__list dt {
+            color: #666;
+        }
+
+        .section--light .feature-card__list dt {
+            color: #999;
+        }
+
+        .feature-card__list dd {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .section--dark .feature-card__list dd {
+            color: #c8c8d8;
+        }
+
+        .section--light .feature-card__list dd {
+            color: #2a2a3c;
+        }
+
+        .feature-card--highlight .feature-card__list dd {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .section--light .feature-card--highlight .feature-card__list dd {
+            color: #1a1a2e;
+            font-weight: 600;
+        }
+
         /* === FAQ === */
         .section--faq {
             background: #0f0f23;
@@ -661,6 +755,10 @@
 
             .comparison-grid,
             .choice-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-grid {
                 grid-template-columns: 1fr;
             }
 

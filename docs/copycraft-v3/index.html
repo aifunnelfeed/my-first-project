@@ -383,6 +383,100 @@
             color: #d0d0de;
         }
 
+        /* === Feature Grid (comparison cards) === */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 32px 0;
+        }
+
+        .feature-card {
+            padding: 24px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .feature-card__title {
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .section--dark .feature-card__title {
+            color: #a0a0b8;
+        }
+
+        .section--light .feature-card__title {
+            color: #555;
+        }
+
+        .feature-card--highlight {
+            border-color: rgba(127, 86, 217, 0.4);
+            background: rgba(127, 86, 217, 0.08);
+            box-shadow: 0 4px 24px rgba(127, 86, 217, 0.12);
+        }
+
+        .feature-card--highlight .feature-card__title {
+            color: #B692F6;
+            border-bottom-color: rgba(127, 86, 217, 0.3);
+        }
+
+        .section--light .feature-card--highlight .feature-card__title {
+            background: linear-gradient(135deg, #7F56D9 0%, #B692F6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-card__list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .feature-card__list dt {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 2px;
+        }
+
+        .section--dark .feature-card__list dt {
+            color: #666;
+        }
+
+        .section--light .feature-card__list dt {
+            color: #999;
+        }
+
+        .feature-card__list dd {
+            margin: 0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .section--dark .feature-card__list dd {
+            color: #c8c8d8;
+        }
+
+        .section--light .feature-card__list dd {
+            color: #2a2a3c;
+        }
+
+        .feature-card--highlight .feature-card__list dd {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .section--light .feature-card--highlight .feature-card__list dd {
+            color: #1a1a2e;
+            font-weight: 600;
+        }
+
         /* === FAQ === */
         .section--faq {
             background: #0f0f23;
@@ -664,6 +758,10 @@
                 grid-template-columns: 1fr;
             }
 
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
             .step {
                 gap: 14px;
             }
@@ -699,8 +797,8 @@
         <div class="container">
             <h1 class="hero__title">Один промпт — это один шаг из восьми. Вот почему ваш AI выдаёт воду вместо продающего текста.</h1>
             
+            <p class="hero__subtitle">Copycraft — не «ещё один AI-копирайтер». Это 8-шаговая система, которая проводит ресёрч, строит стратегию, пишет текст и сама себя проверяет. Результат — лендинг за один диалог. Этот — тоже.</p>
             
-            <div class="hero__body"><p><strong>Copycraft — не «ещё один AI-копирайтер». Это 8-шаговая система, которая проводит ресёрч, строит стратегию, пишет текст и сама себя проверяет. Результат — лендинг за один диалог. Этот — тоже.</strong></p></div>
             
         </div>
     </section>
@@ -856,54 +954,59 @@
 <p>Если блок не проходит проверку — Копирайтер переписывает. Пока не пройдёт.</p>
 <h3>И ещё один элемент: база знаний</h3>
 <p>Система помнит, что работает. Формулы заголовков, типы вступлений, примеры механизмов — всё проиндексировано и доступно через семантический поиск. Каждый новый проект опирается на накопленный опыт.</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>ChatGPT</th>
-<th>Копирайтер</th>
-<th>Copycraft</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Ресёрч аудитории</td>
-<td>Нет</td>
-<td>Иногда</td>
-<td>Всегда, по методологии</td>
-</tr>
-<tr>
-<td>Стратегия</td>
-<td>Нет</td>
-<td>На глаз</td>
-<td>По 5 уровням осведомлённости</td>
-</tr>
-<tr>
-<td>Написание</td>
-<td>По промпту</td>
-<td>По вдохновению</td>
-<td>По структуре: блок за блоком</td>
-</tr>
-<tr>
-<td>Проверка качества</td>
-<td>Нет</td>
-<td>Субъективная</td>
-<td>17 параметров, автоматическая</td>
-</tr>
-<tr>
-<td>Накопление знаний</td>
-<td>Нет</td>
-<td>В голове у одного человека</td>
-<td>База с семантическим поиском</td>
-</tr>
-<tr>
-<td>Скорость</td>
-<td>5 минут</td>
-<td>2-3 недели</td>
-<td>1 диалог</td>
-</tr>
-</tbody>
-</table></div>
+<div class="feature-grid">
+<div class="feature-card">
+<div class="feature-card__title">ChatGPT</div>
+<dl class="feature-card__list">
+<dt>Ресёрч аудитории</dt>
+<dd>Нет</dd>
+<dt>Стратегия</dt>
+<dd>Нет</dd>
+<dt>Написание</dt>
+<dd>По промпту</dd>
+<dt>Проверка качества</dt>
+<dd>Нет</dd>
+<dt>Накопление знаний</dt>
+<dd>Нет</dd>
+<dt>Скорость</dt>
+<dd>5 минут</dd>
+</dl>
+</div>
+<div class="feature-card">
+<div class="feature-card__title">Копирайтер</div>
+<dl class="feature-card__list">
+<dt>Ресёрч аудитории</dt>
+<dd>Иногда</dd>
+<dt>Стратегия</dt>
+<dd>На глаз</dd>
+<dt>Написание</dt>
+<dd>По вдохновению</dd>
+<dt>Проверка качества</dt>
+<dd>Субъективная</dd>
+<dt>Накопление знаний</dt>
+<dd>В голове у одного человека</dd>
+<dt>Скорость</dt>
+<dd>2-3 недели</dd>
+</dl>
+</div>
+<div class="feature-card feature-card--highlight">
+<div class="feature-card__title">Copycraft</div>
+<dl class="feature-card__list">
+<dt>Ресёрч аудитории</dt>
+<dd>Всегда, по методологии</dd>
+<dt>Стратегия</dt>
+<dd>По 5 уровням осведомлённости</dd>
+<dt>Написание</dt>
+<dd>По структуре: блок за блоком</dd>
+<dt>Проверка качества</dt>
+<dd>17 параметров, автоматическая</dd>
+<dt>Накопление знаний</dt>
+<dd>База с семантическим поиском</dd>
+<dt>Скорость</dt>
+<dd>1 диалог</dd>
+</dl>
+</div>
+</div></div>
         </div>
     </section>
     

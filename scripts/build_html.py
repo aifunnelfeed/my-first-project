@@ -58,6 +58,10 @@ RE_PS = re.compile(r"^(P\.S\.|P\.P\.S\.|P\.S\.S\.)\s+", re.MULTILINE)
 RE_CALLOUT = re.compile(r"^\*\((.+)\)\*\s*$", re.MULTILINE)
 RE_COMPARISON = re.compile(r"\*\*ChatGPT\*\*.*?\*\*М\.О\.С\.", re.DOTALL)
 RE_H2 = re.compile(r"^##\s+(.+)$", re.MULTILINE)
+RE_FEATURE_GRID = re.compile(
+    r"<!--\s*feature-grid\s*-->\s*(.+?)\s*<!--\s*/feature-grid\s*-->",
+    re.DOTALL,
+)
 RE_BOLD_ITEM = re.compile(r"^\*\*(.+?)\*\*\s*$", re.MULTILINE)
 RE_CHOICE_A = re.compile(r"^Вариант\s+[АA]:", re.MULTILINE)
 RE_CHOICE_B = re.compile(r"^Вариант\s+[БB]:", re.MULTILINE)
@@ -377,6 +381,158 @@ def _parse_comparison(chunk: str) -> Section:
     return section
 
 
+RE_HTML_TABLE = re.compile(
+    r"<table>\s*<thead>.*?</thead>\s*<tbody>.*?</tbody>\s*</table>",
+    re.DOTALL,
+)
+
+
+def _table_to_feature_grid(html: str) -> str:
+    """Convert HTML <table> to feature-grid cards.
+
+    Expects a table with a header row (column names) and body rows
+    (row label + values per column). Transposes rows into cards
+    (one card per column). Last column gets highlight.
+    """
+    from html.parser import HTMLParser
+
+    class TableParser(HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.headers = []       # column headers
+            self.rows = []          # list of (row_label, [values...])
+            self._in_thead = False
+            self._in_tbody = False
+            self._in_th = False
+            self._in_td = False
+            self._current_row = []
+            self._current_text = ""
+
+        def handle_starttag(self, tag, attrs):
+            if tag == "thead":
+                self._in_thead = True
+            elif tag == "tbody":
+                self._in_tbody = True
+            elif tag == "th":
+                self._in_th = True
+                self._current_text = ""
+            elif tag == "td":
+                self._in_td = True
+                self._current_text = ""
+            elif tag == "tr":
+                self._current_row = []
+
+        def handle_endtag(self, tag):
+            if tag == "thead":
+                self._in_thead = False
+            elif tag == "tbody":
+                self._in_tbody = False
+            elif tag == "th":
+                self._in_th = False
+                if self._in_thead:
+                    self.headers.append(self._current_text.strip())
+            elif tag == "td":
+                self._in_td = False
+                self._current_row.append(self._current_text.strip())
+            elif tag == "tr":
+                if self._in_tbody and self._current_row:
+                    label = self._current_row[0] if self._current_row else ""
+                    values = self._current_row[1:] if len(self._current_row) > 1 else []
+                    self.rows.append((label, values))
+
+        def handle_data(self, data):
+            if self._in_th or self._in_td:
+                self._current_text += data
+
+    parser = TableParser()
+    parser.feed(html)
+
+    headers = parser.headers
+    rows = parser.rows
+
+    # Need at least 2 data columns (skip first empty/label header)
+    data_headers = [h for h in headers if h.strip()]
+    if len(data_headers) < 2:
+        return html  # Not enough columns, keep as table
+
+    # Transpose: one card per data column
+    # headers[0] is row-label column (often empty), headers[1:] are card titles
+    cards = []
+    for col_idx, col_header in enumerate(headers[1:], start=0):
+        items = []
+        for row_label, values in rows:
+            value = values[col_idx] if col_idx < len(values) else ""
+            items.append((row_label, value))
+        cards.append((col_header, items))
+
+    if not cards:
+        return html
+
+    html_parts = ['<div class="feature-grid">']
+    for idx, (title, items) in enumerate(cards):
+        is_highlight = idx == len(cards) - 1
+        cls = "feature-card feature-card--highlight" if is_highlight else "feature-card"
+        html_parts.append(f'<div class="{cls}">')
+        html_parts.append(f'<div class="feature-card__title">{title}</div>')
+        html_parts.append('<dl class="feature-card__list">')
+        for label, value in items:
+            html_parts.append(f"<dt>{label}</dt>")
+            html_parts.append(f"<dd>{value}</dd>")
+        html_parts.append("</dl>")
+        html_parts.append("</div>")
+    html_parts.append("</div>")
+
+    return "\n".join(html_parts)
+
+
+def _parse_feature_grid(block: str) -> str:
+    """Parse feature-grid block into HTML cards."""
+    cards = []
+    current_title = None
+    current_items = []
+
+    for line in block.strip().splitlines():
+        line = line.strip()
+        # Card title: **Title**
+        m = re.match(r"^\*\*(.+?)\*\*$", line)
+        if m:
+            if current_title is not None:
+                cards.append((current_title, current_items))
+            current_title = m.group(1)
+            current_items = []
+        elif line.startswith("- ") and current_title is not None:
+            # Parse "- Label: Value"
+            text = line[2:]
+            if ": " in text:
+                label, value = text.split(": ", 1)
+                current_items.append((label.strip(), value.strip()))
+            else:
+                current_items.append(("", text.strip()))
+
+    if current_title is not None:
+        cards.append((current_title, current_items))
+
+    if not cards:
+        return ""
+
+    # Determine which card is the "winner" (last one gets highlight)
+    html_parts = ['<div class="feature-grid">']
+    for idx, (title, items) in enumerate(cards):
+        is_highlight = idx == len(cards) - 1
+        cls = "feature-card feature-card--highlight" if is_highlight else "feature-card"
+        html_parts.append(f'<div class="{cls}">')
+        html_parts.append(f'<div class="feature-card__title">{title}</div>')
+        html_parts.append('<dl class="feature-card__list">')
+        for label, value in items:
+            html_parts.append(f"<dt>{label}</dt>")
+            html_parts.append(f"<dd>{value}</dd>")
+        html_parts.append("</dl>")
+        html_parts.append("</div>")
+    html_parts.append("</div>")
+
+    return "\n".join(html_parts)
+
+
 def _parse_ps(chunk: str) -> Section:
     """Parse P.S. / P.P.S. section."""
     return Section(type=SectionType.PS, raw_md=chunk)
@@ -403,7 +559,36 @@ def render_sections(sections: list[Section]) -> list[Section]:
     for section in sections:
         if section.type in (SectionType.FAQ, SectionType.CTA, SectionType.COMPARISON):
             continue
-        section.html = _md(section.raw_md)
+
+        raw = section.raw_md
+
+        # Replace feature-grid blocks with card HTML before markdown conversion
+        def _replace_grid(m: re.Match) -> str:
+            return _parse_feature_grid(m.group(1))
+
+        if RE_FEATURE_GRID.search(raw):
+            # Split around feature-grid, convert markdown parts, insert grid HTML
+            parts = RE_FEATURE_GRID.split(raw)
+            # parts: [before, grid_content, after, ...]
+            html_parts = []
+            for i, part in enumerate(parts):
+                if i % 2 == 0:
+                    # Regular markdown
+                    if part.strip():
+                        html_parts.append(_md(part))
+                else:
+                    # Feature grid content
+                    html_parts.append(_parse_feature_grid(part))
+            section.html = "\n".join(html_parts)
+        else:
+            section.html = _md(raw)
+
+        # Auto-convert any remaining <table> to feature-grid cards
+        if RE_HTML_TABLE.search(section.html):
+            section.html = RE_HTML_TABLE.sub(
+                lambda m: _table_to_feature_grid(m.group(0)),
+                section.html,
+            )
 
     return sections
 
