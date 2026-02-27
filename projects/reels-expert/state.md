@@ -1,8 +1,8 @@
 # Состояние проекта: Reels Expert
 
 ## Текущий стейт: EXECUTION
-## Фаза: PHASE B (BRIEF)
-## Текущий блок: Lead
+## Фаза: PHASE C (COPY)
+## Текущий блок: Story/Bridge
 ## Формат: landing
 
 ## Пройденные стейты
@@ -18,8 +18,8 @@
 ## Блоки EXECUTION
 | Блок | BRIEF | COPY | DEBUGGING | Статус |
 |------|-------|------|-----------|--------|
-| Lead | — | — | — | Ожидание |
-| Story/Bridge | — | — | — | Ожидание |
+| Lead | PASS | PASS | PASS | APPROVED |
+| Story/Bridge | — | — | — | BRIEF next |
 | Mechanism | — | — | — | Ожидание |
 | Product Reveal | — | — | — | Ожидание |
 | Close | — | — | — | Ожидание |
