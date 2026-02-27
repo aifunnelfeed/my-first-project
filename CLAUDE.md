@@ -256,6 +256,21 @@ git show {commit}:projects/{name}/draft.md
 Формат: `xray({проект}): {краткое описание — балл и ключевая находка}`
 Пример: `xray(nutriciologia): 72/100 — weak mechanism, strong lead`
 
+### HTML-рентген (автосборка)
+
+После сохранения `xray.md` в проект:
+
+1. Спроси: **"Собрать HTML-рентген для GitHub Pages?"**
+2. Если да — выполни:
+   ```bash
+   python scripts/build_xray.py {project_slug} --input xray.md
+   ```
+3. Результат: `docs/{project}/xray.html`
+4. Коммит: `xray({project}): build HTML report`
+
+Шаблон: `templates/xray.html` (Jinja2 + встроенный CSS, тёмная тема)
+Скрипт: `scripts/build_xray.py`
+
 ## Сохранение файлов проекта
 
 На каждом стейте записывай результаты:
