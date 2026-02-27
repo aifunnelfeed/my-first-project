@@ -158,7 +158,7 @@ def _parse_cta(chunk: str) -> Section:
         type=SectionType.CTA,
         raw_md=chunk,
         cta_text=cta_text,
-        cta_subtext=remaining,
+        cta_subtext=_md(remaining) if remaining else "",
     )
 
 

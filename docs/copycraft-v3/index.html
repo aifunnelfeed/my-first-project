@@ -431,132 +431,6 @@
             margin-bottom: 0.5em;
         }
 
-        /* === How It Works (Steps) === */
-        .steps {
-            display: flex;
-            flex-direction: column;
-            gap: 28px;
-            margin-top: 32px;
-            margin-bottom: 40px;
-        }
-
-        .step {
-            display: flex;
-            gap: 20px;
-            align-items: flex-start;
-        }
-
-        .step__number {
-            flex-shrink: 0;
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, #7F56D9 0%, #B692F6 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: #fff;
-        }
-
-        .step__content {
-            flex: 1;
-        }
-
-        .step__title {
-            font-weight: 700;
-            color: #ffffff;
-            font-size: 1.05rem;
-            margin-bottom: 6px;
-        }
-
-        .step__text {
-            color: #c8c8d8;
-            line-height: 1.7;
-        }
-
-        .no-pressure {
-            text-align: center;
-            color: #a0a0b8;
-            font-style: italic;
-            margin-top: 12px;
-            margin-bottom: 32px;
-            line-height: 1.7;
-        }
-
-        @media (max-width: 768px) {
-            .step {
-                gap: 14px;
-            }
-            .step__number {
-                width: 40px;
-                height: 40px;
-                font-size: 0.95rem;
-            }
-        }
-
-        /* === Choice Grid === */
-        .choice-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-top: 24px;
-        }
-
-        .choice-card {
-            padding: 28px;
-            border-radius: 16px;
-            line-height: 1.7;
-        }
-
-        .choice-card p {
-            margin-bottom: 0.6em;
-            color: inherit;
-        }
-
-        .choice-card--a {
-            background: #fff5f5;
-            border: 1px solid #fecaca;
-            border-top: 4px solid #e63946;
-            color: #4a2020;
-        }
-
-        .choice-card--b {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            border-top: 4px solid #16a34a;
-            color: #1a3a2a;
-        }
-
-        .choice-label {
-            font-weight: 800;
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-        }
-
-        .choice-card--a .choice-label {
-            color: #dc2626;
-        }
-
-        .choice-card--b .choice-label {
-            color: #16a34a;
-        }
-
-        .choice-risk {
-            margin-top: 8px;
-            font-size: 0.95rem;
-            opacity: 0.85;
-        }
-
-        @media (max-width: 768px) {
-            .choice-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
         /* === P.S. Block === */
         .section--ps {
             background: #0f0f23;
@@ -931,41 +805,21 @@
     
 
     
-    <section class="section section--dark">
+    <section class="section section--cta section--dark">
         <div class="container">
-            <h2 class="section__heading">Как это работает для вас</h2>
-            <div class="section__body">
-                <p>Запишитесь на 30-минутную живую демонстрацию. Бесплатно. Без обязательств.</p>
-                <p>Вот что произойдёт:</p>
-            </div>
-
-            <div class="steps">
-                <div class="step">
-                    <div class="step__number">1</div>
-                    <div class="step__content">
-                        <div class="step__title">Минуты 1–10: Разбор вашего проекта</div>
-                        <div class="step__text">Вы называете свой продукт и аудиторию. Система запускает Исследователя — прямо при вас. Вы видите, как AI анализирует нишу, формулирует карту мотивации вашей аудитории, собирает язык клиента.</div>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step__number">2</div>
-                    <div class="step__content">
-                        <div class="step__title">Минуты 10–20: Стратегия + первый блок</div>
-                        <div class="step__text">Система определяет стратегию: уровень осведомлённости, тип вступления, угол подачи. Копирайтер пишет первый блок вашего лендинга. Критик проверяет.</div>
-                    </div>
-                </div>
-                <div class="step">
-                    <div class="step__number">3</div>
-                    <div class="step__content">
-                        <div class="step__title">Минуты 20–30: Результат</div>
-                        <div class="step__text">Вы уходите с готовым фрагментом текста для вашего продукта. Не шаблоном — текстом, написанным на основе анализа вашей аудитории.</div>
-                    </div>
-                </div>
-            </div>
-
-            <p class="no-pressure"><strong>Без продажи.</strong> Если после демо вы скажете «спасибо, но не моё» — ничего не произойдёт. Без звонков, без рассылок, без «менеджер свяжется с вами». Вы увидели систему — и сами решаете.</p>
-
             <a href="#" class="cta-button">ЗАПИСАТЬСЯ НА ДЕМОНСТРАЦИЮ</a>
+            
+            <div class="cta-subtext"><h2>Как это работает для вас</h2>
+<p>Запишитесь на 30-минутную живую демонстрацию. Бесплатно. Без обязательств.</p>
+<p>Вот что произойдёт:</p>
+<p><strong>Минуты 1–10: Разбор вашего проекта.</strong>
+Вы называете свой продукт и аудиторию. Система запускает Исследователя — прямо при вас. Вы видите, как AI анализирует нишу, формулирует карту мотивации вашей аудитории, собирает язык клиента.</p>
+<p><strong>Минуты 10–20: Стратегия + первый блок.</strong>
+Система определяет стратегию: уровень осведомлённости, тип вступления, угол подачи. Копирайтер пишет первый блок вашего лендинга. Критик проверяет.</p>
+<p><strong>Минуты 20–30: Результат.</strong>
+Вы уходите с готовым фрагментом текста для вашего продукта. Не шаблоном — текстом, написанным на основе анализа вашей аудитории.</p>
+<p><strong>Без продажи.</strong> Если после демо вы скажете «спасибо, но не моё» — ничего не произойдёт. Без звонков, без рассылок, без «менеджер свяжется с вами». Вы увидели систему — и сами решаете.</p></div>
+            
         </div>
     </section>
 
@@ -1040,25 +894,17 @@
     
 
     
-    <section class="section section--light">
+    <section class="section section--cta section--light">
         <div class="container">
-            <h2 class="section__heading">Вот ваш выбор</h2>
-            <div class="section__body">
-                <div class="choice-grid">
-                    <div class="choice-card choice-card--a">
-                        <div class="choice-label">Вариант А</div>
-                        <p>Продолжить как сейчас. Нанимать копирайтеров за 30–80К. Ждать две-три недели. Надеяться, что текст сработает. Если не сработает — повторить.</p>
-                        <p class="choice-risk"><strong>Риск:</strong> ещё месяц без работающего лендинга.</p>
-                    </div>
-                    <div class="choice-card choice-card--b">
-                        <div class="choice-label">Вариант Б</div>
-                        <p>Потратить 30 минут. Увидеть, как система создаёт текст для вашего продукта. Уйти с готовым фрагментом. Решить самому, нужно ли вам это.</p>
-                        <p class="choice-risk"><strong>Риск:</strong> полчаса вашего времени.</p>
-                    </div>
-                </div>
-                <p style="text-align: center; margin-top: 24px; color: #555; font-style: italic;">Мы проводим не больше 5 демонстраций в неделю — каждая требует подготовки под конкретный проект. Свободные слоты заканчиваются быстро.</p>
-            </div>
-            <a href="#" class="cta-button" style="margin-top: 32px;">ЗАПИСАТЬСЯ НА БЕСПЛАТНУЮ ДЕМОНСТРАЦИЮ</a>
+            <a href="#" class="cta-button">ЗАПИСАТЬСЯ НА БЕСПЛАТНУЮ ДЕМОНСТРАЦИЮ</a>
+            
+            <div class="cta-subtext"><h2>Вот ваш выбор</h2>
+<p>Вариант А: продолжить как сейчас. Нанимать копирайтеров за 30-80К. Ждать две-три недели. Надеяться, что текст сработает. Если не сработает — повторить.</p>
+<p>Вариант Б: потратить 30 минут. Увидеть, как система создаёт текст для вашего продукта. Уйти с готовым фрагментом. Решить самому, нужно ли вам это.</p>
+<p>Риск варианта А: ещё месяц без работающего лендинга.
+Риск варианта Б: полчаса вашего времени.</p>
+<p>Мы проводим не больше 5 демонстраций в неделю — каждая требует подготовки под конкретный проект. Свободные слоты заканчиваются быстро.</p></div>
+            
         </div>
     </section>
 
@@ -1085,7 +931,7 @@
 
     <!-- Sticky CTA -->
     <div class="sticky-cta">
-        <a href="#" class="sticky-cta__button">Записаться на демо</a>
+        <a href="#" class="sticky-cta__button">Записаться</a>
     </div>
 </body>
 </html>
