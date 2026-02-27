@@ -42,6 +42,7 @@ class Section:
     subtitle: str = ""
     cta_text: str = ""
     cta_subtext: str = ""
+    cta_structured: dict | None = None
     faq_items: list = field(default_factory=list)
     comparison_data: dict = field(default_factory=dict)
     index: int = 0
@@ -56,6 +57,12 @@ RE_FAQ_Q = re.compile(r'^\*\*[«"„](.+?)[»""]\*\*\s*$', re.MULTILINE)
 RE_PS = re.compile(r"^(P\.S\.|P\.P\.S\.|P\.S\.S\.)\s+", re.MULTILINE)
 RE_CALLOUT = re.compile(r"^\*\((.+)\)\*\s*$", re.MULTILINE)
 RE_COMPARISON = re.compile(r"\*\*ChatGPT\*\*.*?\*\*М\.О\.С\.", re.DOTALL)
+RE_H2 = re.compile(r"^##\s+(.+)$", re.MULTILINE)
+RE_BOLD_ITEM = re.compile(r"^\*\*(.+?)\*\*\s*$", re.MULTILINE)
+RE_CHOICE_A = re.compile(r"^Вариант\s+[АA]:", re.MULTILINE)
+RE_CHOICE_B = re.compile(r"^Вариант\s+[БB]:", re.MULTILINE)
+RE_RISK_A = re.compile(r"^Риск\s+варианта\s+[АA]:\s*(.+)$", re.MULTILINE)
+RE_RISK_B = re.compile(r"^Риск\s+варианта\s+[БB]:\s*(.+)$", re.MULTILINE)
 
 MD = markdown.Markdown(extensions=["extra"])
 
@@ -147,19 +154,155 @@ def _parse_hero(chunk: str) -> tuple[Section, str | None]:
 
 
 def _parse_cta(chunk: str) -> Section:
-    """Parse CTA section: ### [BUTTON TEXT] + optional subtext."""
+    """Parse CTA section: ### [BUTTON TEXT] + optional subtext with steps/choice."""
     match = RE_CTA.search(chunk)
     cta_text = match.group(1).strip() if match else "CTA"
 
     remaining = chunk[: match.start()] + chunk[match.end() :]
     remaining = remaining.strip()
 
+    # Try to detect structured subtext patterns
+    structured = None
+    if remaining:
+        if _has_steps(remaining):
+            structured = _parse_steps(remaining)
+        elif _has_choice(remaining):
+            structured = _parse_choice(remaining)
+
     return Section(
         type=SectionType.CTA,
         raw_md=chunk,
         cta_text=cta_text,
-        cta_subtext=_md(remaining) if remaining else "",
+        cta_subtext=_md(remaining) if remaining and not structured else "",
+        cta_structured=structured,
     )
+
+
+def _has_steps(text: str) -> bool:
+    """Detect 2+ bold items with text following them (step pattern)."""
+    items = RE_BOLD_ITEM.findall(text)
+    return len(items) >= 2 and not RE_CHOICE_A.search(text)
+
+
+def _parse_steps(text: str) -> dict:
+    """Parse steps pattern: ## Heading + intro + **Title** + description pairs + outro."""
+    result = {"type": "steps", "heading": "", "intro": "", "steps": [], "outro": ""}
+
+    # Extract ## heading
+    h2 = RE_H2.search(text)
+    if h2:
+        result["heading"] = h2.group(1).strip()
+        text = text[: h2.start()] + text[h2.end() :]
+        text = text.strip()
+
+    # Split by bold items (bold on its own line)
+    parts = RE_BOLD_ITEM.split(text)
+    # parts: [intro_text, bold1_title, after1_text, bold2_title, after2_text, ...]
+
+    if len(parts) >= 3:
+        result["intro"] = _md(parts[0]) if parts[0].strip() else ""
+
+        i = 1
+        while i < len(parts) - 1:
+            title = parts[i].strip()
+            description = parts[i + 1].strip()
+
+            if description:
+                # Split description into paragraphs; last paragraph(s) that
+                # are NOT followed by another bold item may be the outro
+                paragraphs = re.split(r"\n\n+", description)
+
+                # If this is the last bold item, check if trailing paragraphs
+                # look like an outro (contain inline bold like **Без продажи.**)
+                if i + 2 >= len(parts):
+                    step_paras = []
+                    outro_paras = []
+                    for p in paragraphs:
+                        # Paragraph starting with **...** inline (not a standalone bold line)
+                        # is likely an outro/closing statement
+                        if outro_paras or (
+                            step_paras and re.match(r"^\*\*.+?\*\*\s+\S", p)
+                        ):
+                            outro_paras.append(p)
+                        else:
+                            step_paras.append(p)
+
+                    result["steps"].append({
+                        "title": title,
+                        "text": _md("\n\n".join(step_paras)),
+                    })
+                    if outro_paras:
+                        result["outro"] = _md("\n\n".join(outro_paras))
+                else:
+                    result["steps"].append({
+                        "title": title,
+                        "text": _md(description),
+                    })
+            else:
+                result["outro"] = _md(f"**{title}**")
+
+            i += 2
+
+    return result
+
+
+def _has_choice(text: str) -> bool:
+    """Detect Вариант А + Вариант Б pattern."""
+    return bool(RE_CHOICE_A.search(text) and RE_CHOICE_B.search(text))
+
+
+def _parse_choice(text: str) -> dict:
+    """Parse choice A/B pattern with optional risks and outro."""
+    result = {
+        "type": "choice",
+        "heading": "",
+        "option_a": {"label": "Вариант А", "text": "", "risk": ""},
+        "option_b": {"label": "Вариант Б", "text": "", "risk": ""},
+        "outro": "",
+    }
+
+    # Extract ## heading
+    h2 = RE_H2.search(text)
+    if h2:
+        result["heading"] = h2.group(1).strip()
+        text = text[: h2.start()] + text[h2.end() :]
+        text = text.strip()
+
+    # Extract risks before splitting (they may be on separate lines)
+    risk_a = RE_RISK_A.search(text)
+    risk_b = RE_RISK_B.search(text)
+    if risk_a:
+        result["option_a"]["risk"] = risk_a.group(1).strip()
+        text = text[: risk_a.start()] + text[risk_a.end() :]
+    if risk_b:
+        # Re-search after possible text shift
+        risk_b = RE_RISK_B.search(text)
+        if risk_b:
+            result["option_b"]["risk"] = risk_b.group(1).strip()
+            text = text[: risk_b.start()] + text[risk_b.end() :]
+
+    text = text.strip()
+
+    # Split into parts: before A, A content, B content, after B
+    match_a = RE_CHOICE_A.search(text)
+    match_b = RE_CHOICE_B.search(text)
+
+    if match_a and match_b:
+        a_start = match_a.start()
+        b_start = match_b.start()
+
+        a_text = text[a_start + len(match_a.group()):b_start].strip()
+        result["option_a"]["text"] = _md(a_text)
+
+        # Everything after Вариант Б: — split into B content and outro
+        after_b = text[b_start + len(match_b.group()):].strip()
+        paragraphs = re.split(r"\n\n+", after_b)
+        if paragraphs:
+            result["option_b"]["text"] = _md(paragraphs[0])
+            if len(paragraphs) > 1:
+                result["outro"] = _md("\n\n".join(paragraphs[1:]))
+
+    return result
 
 
 def _parse_faq(chunk: str) -> Section:

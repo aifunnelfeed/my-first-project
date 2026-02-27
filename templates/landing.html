@@ -431,6 +431,119 @@
             margin-bottom: 0.5em;
         }
 
+        /* === Steps (CTA subtype) === */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            margin: 32px 0 40px;
+        }
+
+        .step {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .step__number {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #7F56D9 0%, #B692F6 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #fff;
+        }
+
+        .step__content {
+            flex: 1;
+        }
+
+        .step__title {
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+        }
+
+        .section--dark .step__title {
+            color: #ffffff;
+        }
+
+        .section--light .step__title {
+            color: #0f0f23;
+        }
+
+        .step__text {
+            line-height: 1.7;
+        }
+
+        .section--dark .step__text {
+            color: #c8c8d8;
+        }
+
+        .section--light .step__text {
+            color: #2a2a3c;
+        }
+
+        /* === Choice Grid (CTA subtype) === */
+        .choice-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 24px 0;
+        }
+
+        .choice-card {
+            padding: 28px;
+            border-radius: 16px;
+            line-height: 1.7;
+        }
+
+        .choice-card p {
+            margin-bottom: 0.6em;
+            color: inherit;
+        }
+
+        .choice-card--a {
+            background: #fff5f5;
+            border: 1px solid #fecaca;
+            border-top: 4px solid #e63946;
+            color: #4a2020;
+        }
+
+        .choice-card--b {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-top: 4px solid #16a34a;
+            color: #1a3a2a;
+        }
+
+        .choice-label {
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .choice-card--a .choice-label {
+            color: #dc2626;
+        }
+
+        .choice-card--b .choice-label {
+            color: #16a34a;
+        }
+
+        .choice-risk {
+            margin-top: 8px;
+            font-size: 0.95rem;
+            opacity: 0.85;
+        }
+
         /* === P.S. Block === */
         .section--ps {
             background: #0f0f23;
@@ -546,8 +659,19 @@
                 padding: 0 16px;
             }
 
-            .comparison-grid {
+            .comparison-grid,
+            .choice-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .step {
+                gap: 14px;
+            }
+
+            .step__number {
+                width: 40px;
+                height: 40px;
+                font-size: 0.95rem;
             }
 
             .faq-item {
@@ -586,9 +710,59 @@
     {% elif section.type.value == 'cta' %}
     <section class="section section--cta {% if section.index % 2 == 0 %}section--light{% else %}section--dark{% endif %}">
         <div class="container">
+            {% if section.cta_structured and section.cta_structured.type == 'steps' %}
+            {% if section.cta_structured.heading %}
+            <h2 class="section__heading">{{ section.cta_structured.heading }}</h2>
+            {% endif %}
+            {% if section.cta_structured.intro %}
+            <div class="section__body">{{ section.cta_structured.intro }}</div>
+            {% endif %}
+            <div class="steps">
+                {% for step in section.cta_structured.steps %}
+                <div class="step">
+                    <div class="step__number">{{ loop.index }}</div>
+                    <div class="step__content">
+                        <div class="step__title">{{ step.title }}</div>
+                        <div class="step__text">{{ step.text }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% if section.cta_structured.outro %}
+            <div class="section__body" style="text-align:center; font-style:italic; opacity:0.8;">{{ section.cta_structured.outro }}</div>
+            {% endif %}
+            <a href="{{ cta_url }}" class="cta-button">{{ section.cta_text }}</a>
+
+            {% elif section.cta_structured and section.cta_structured.type == 'choice' %}
+            {% if section.cta_structured.heading %}
+            <h2 class="section__heading">{{ section.cta_structured.heading }}</h2>
+            {% endif %}
+            <div class="choice-grid">
+                <div class="choice-card choice-card--a">
+                    <div class="choice-label">{{ section.cta_structured.option_a.label }}</div>
+                    {{ section.cta_structured.option_a.text }}
+                    {% if section.cta_structured.option_a.risk %}
+                    <p class="choice-risk"><strong>Риск:</strong> {{ section.cta_structured.option_a.risk }}</p>
+                    {% endif %}
+                </div>
+                <div class="choice-card choice-card--b">
+                    <div class="choice-label">{{ section.cta_structured.option_b.label }}</div>
+                    {{ section.cta_structured.option_b.text }}
+                    {% if section.cta_structured.option_b.risk %}
+                    <p class="choice-risk"><strong>Риск:</strong> {{ section.cta_structured.option_b.risk }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% if section.cta_structured.outro %}
+            <div class="section__body" style="text-align:center; font-style:italic; opacity:0.8;">{{ section.cta_structured.outro }}</div>
+            {% endif %}
+            <a href="{{ cta_url }}" class="cta-button" style="margin-top:32px;">{{ section.cta_text }}</a>
+
+            {% else %}
             <a href="{{ cta_url }}" class="cta-button">{{ section.cta_text }}</a>
             {% if section.cta_subtext %}
             <div class="cta-subtext">{{ section.cta_subtext }}</div>
+            {% endif %}
             {% endif %}
         </div>
     </section>
