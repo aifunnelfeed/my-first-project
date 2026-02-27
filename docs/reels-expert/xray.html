@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рентген: Почему блогер с 500 подписчиками стабильно набирает 50 000 просмотров...</title>
+    <style>
+        /* === Reset & Base === */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 17px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                         'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            color: #d0d0de;
+            background: #0f0f23;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* === Container === */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* === Hero === */
+        .hero {
+            padding: 80px 0 56px;
+            text-align: center;
+            background: radial-gradient(ellipse at 50% 0%, #2d1b69 0%, #0f0f23 70%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 700px;
+            height: 500px;
+            background: radial-gradient(ellipse, rgba(127, 86, 217, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero__label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #B692F6;
+            margin-bottom: 16px;
+        }
+
+        .hero__title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.3;
+            margin-bottom: 32px;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .score-badge {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 4px;
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+
+        .score-badge__total {
+            font-size: 1.8rem;
+            font-weight: 600;
+            opacity: 0.5;
+        }
+
+        .score-badge--green { color: #4ade80; }
+        .score-badge--yellow { color: #facc15; }
+        .score-badge--red { color: #f87171; }
+
+        /* === Sections === */
+        .report-section {
+            padding: 56px 0;
+            border-top: 1px solid rgba(127, 86, 217, 0.12);
+        }
+
+        .report-section__heading {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 24px;
+        }
+
+        .report-section__heading::before {
+            content: '';
+            display: block;
+            width: 32px;
+            height: 3px;
+            background: linear-gradient(90deg, #7F56D9, #B692F6);
+            margin-bottom: 12px;
+            border-radius: 2px;
+        }
+
+        /* === Summary Cards === */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .summary-card {
+            background: rgba(127, 86, 217, 0.06);
+            border: 1px solid rgba(127, 86, 217, 0.15);
+            border-radius: 12px;
+            padding: 16px 20px;
+        }
+
+        .summary-card__label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        .summary-card__value {
+            font-size: 0.95rem;
+            color: #e8e8f0;
+            font-weight: 600;
+        }
+
+        /* === Structure Table === */
+        .structure-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .structure-table th {
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #888;
+            padding: 8px 12px;
+            border-bottom: 2px solid rgba(127, 86, 217, 0.2);
+        }
+
+        .structure-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+        }
+
+        .structure-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .structure-table .component {
+            font-weight: 600;
+            color: #e8e8f0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-badge--found {
+            background: rgba(74, 222, 128, 0.12);
+            color: #4ade80;
+        }
+
+        .status-badge--weak {
+            background: rgba(250, 204, 21, 0.12);
+            color: #facc15;
+        }
+
+        .status-badge--missing {
+            background: rgba(248, 113, 113, 0.12);
+            color: #f87171;
+        }
+
+        /* === Scores === */
+        .scores-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .score-item {
+            display: grid;
+            grid-template-columns: 2fr 80px 1fr 3fr;
+            gap: 12px;
+            align-items: center;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .score-item__dimension {
+            font-weight: 600;
+            color: #e8e8f0;
+            font-size: 0.95rem;
+        }
+
+        .score-item__score {
+            font-weight: 700;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .score-item__score--green { color: #4ade80; }
+        .score-item__score--yellow { color: #facc15; }
+        .score-item__score--red { color: #f87171; }
+
+        .score-item__bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .score-item__bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.6s ease;
+        }
+
+        .score-item__bar-fill--green { background: linear-gradient(90deg, #22c55e, #4ade80); }
+        .score-item__bar-fill--yellow { background: linear-gradient(90deg, #eab308, #facc15); }
+        .score-item__bar-fill--red { background: linear-gradient(90deg, #dc2626, #f87171); }
+
+        .score-item__comment {
+            font-size: 0.85rem;
+            color: #a0a0b8;
+        }
+
+        /* === Details (accordion) === */
+        .detail-card {
+            margin-bottom: 12px;
+            border: 1px solid rgba(127, 86, 217, 0.15);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .detail-card__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: rgba(127, 86, 217, 0.06);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .detail-card__header:hover {
+            background: rgba(127, 86, 217, 0.1);
+        }
+
+        .detail-card__name {
+            font-weight: 700;
+            color: #e8e8f0;
+            font-size: 1rem;
+        }
+
+        .detail-card__toggle {
+            color: #B692F6;
+            font-size: 1.2rem;
+            transition: transform 0.2s;
+        }
+
+        .detail-card__body {
+            display: none;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .detail-card__body.open {
+            display: block;
+        }
+
+        .detail-card__body p {
+            margin-bottom: 0.8em;
+            color: #c8c8d8;
+        }
+
+        .detail-card__body strong {
+            color: #e8e8f0;
+        }
+
+        .detail-card__body em {
+            color: #a0a0b8;
+        }
+
+        .detail-card__body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+        }
+
+        .detail-card__body th {
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #888;
+            padding: 6px 8px;
+            border-bottom: 1px solid rgba(127, 86, 217, 0.2);
+        }
+
+        .detail-card__body td {
+            padding: 6px 8px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #c8c8d8;
+        }
+
+        .detail-card__body hr {
+            border: none;
+            border-top: 1px solid rgba(127, 86, 217, 0.15);
+            margin: 16px 0;
+        }
+
+        .detail-card__body ol,
+        .detail-card__body ul {
+            margin: 0.8em 0;
+            padding-left: 1.5em;
+        }
+
+        .detail-card__body li {
+            margin-bottom: 0.4em;
+            color: #c8c8d8;
+        }
+
+        .detail-card__body li::marker {
+            color: #7F56D9;
+        }
+
+        /* === Calculation === */
+        .calc-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+        }
+
+        .calc-table th {
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #888;
+            padding: 8px 10px;
+            border-bottom: 2px solid rgba(127, 86, 217, 0.2);
+        }
+
+        .calc-table td {
+            padding: 8px 10px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #c8c8d8;
+        }
+
+        .calc-total {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #B692F6;
+            padding: 12px 0;
+        }
+
+        /* === Recommendations === */
+        .rec-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .rec-card {
+            padding: 20px 24px;
+            border-radius: 12px;
+            border-left: 4px solid;
+        }
+
+        .rec-card--red {
+            background: rgba(248, 113, 113, 0.06);
+            border-left-color: #f87171;
+        }
+
+        .rec-card--yellow {
+            background: rgba(250, 204, 21, 0.06);
+            border-left-color: #facc15;
+        }
+
+        .rec-card__header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .rec-card__num {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #fff;
+        }
+
+        .rec-card--red .rec-card__num { background: #dc2626; }
+        .rec-card--yellow .rec-card__num { background: #ca8a04; }
+
+        .rec-card__title {
+            font-weight: 700;
+            color: #e8e8f0;
+            font-size: 0.95rem;
+        }
+
+        .rec-card__body {
+            font-size: 0.9rem;
+            color: #a0a0b8;
+            line-height: 1.7;
+        }
+
+        .rec-card__body p {
+            margin-bottom: 0.6em;
+        }
+
+        .rec-card__body em {
+            color: #c8c8d8;
+        }
+
+        /* === KB Comparison === */
+        .kb-block {
+            background: rgba(127, 86, 217, 0.06);
+            border: 1px solid rgba(127, 86, 217, 0.15);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .kb-block p {
+            margin-bottom: 0.8em;
+            color: #c8c8d8;
+        }
+
+        .kb-block strong {
+            color: #e8e8f0;
+        }
+
+        .kb-block ul, .kb-block ol {
+            margin: 0.8em 0;
+            padding-left: 1.5em;
+        }
+
+        .kb-block li {
+            margin-bottom: 0.5em;
+            color: #c8c8d8;
+        }
+
+        .kb-block li::marker {
+            color: #7F56D9;
+        }
+
+        .kb-block h3 {
+            color: #B692F6;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        /* === Verdict === */
+        .verdict {
+            background: linear-gradient(135deg, rgba(127, 86, 217, 0.12) 0%, rgba(127, 86, 217, 0.04) 100%);
+            border: 1px solid rgba(127, 86, 217, 0.25);
+            border-radius: 16px;
+            padding: 32px;
+        }
+
+        .verdict p {
+            margin-bottom: 0.8em;
+            color: #e8e8f0;
+            font-size: 1.05rem;
+        }
+
+        .verdict strong {
+            color: #ffffff;
+        }
+
+        .verdict ul, .verdict ol {
+            margin: 0.8em 0;
+            padding-left: 1.5em;
+        }
+
+        .verdict li {
+            margin-bottom: 0.5em;
+            color: #c8c8d8;
+        }
+
+        .verdict li::marker {
+            color: #B692F6;
+        }
+
+        /* === Footer === */
+        .footer {
+            padding: 40px 24px;
+            text-align: center;
+            color: #555;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(127, 86, 217, 0.1);
+        }
+
+        /* === Responsive === */
+        @media (max-width: 768px) {
+            html {
+                font-size: 15px;
+            }
+
+            .hero {
+                padding: 56px 0 40px;
+            }
+
+            .hero__title {
+                font-size: 1.3rem;
+            }
+
+            .score-badge {
+                font-size: 3rem;
+            }
+
+            .report-section {
+                padding: 40px 0;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .score-item {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+
+            .score-item__bar {
+                max-width: 200px;
+            }
+
+            .structure-table {
+                font-size: 0.85rem;
+            }
+
+            .structure-table th,
+            .structure-table td {
+                padding: 8px 6px;
+            }
+
+            .detail-card__body {
+                padding: 14px;
+            }
+
+            .rec-card {
+                padding: 16px;
+            }
+
+            .verdict {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero__label">X-Ray Report</div>
+            <h1 class="hero__title">Почему блогер с 500 подписчиками стабильно набирает 50 000 просмотров...</h1>
+            <div class="score-badge score-badge--green">
+                80<span class="score-badge__total">/100</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+
+        <!-- Summary -->
+        
+        <section class="report-section">
+            <h2 class="report-section__heading">Сводка</h2>
+            <div class="summary-grid">
+                
+                
+                
+                
+                <div class="summary-card">
+                    <div class="summary-card__label">Формат</div>
+                    <div class="summary-card__value">Landing</div>
+                </div>
+                
+                
+                
+                <div class="summary-card">
+                    <div class="summary-card__label">Длина</div>
+                    <div class="summary-card__value">~3 200 слов</div>
+                </div>
+                
+                
+                
+                <div class="summary-card">
+                    <div class="summary-card__label">Уровень рынка (Schwartz)</div>
+                    <div class="summary-card__value">3 — Solution-aware</div>
+                </div>
+                
+                
+                
+                <div class="summary-card">
+                    <div class="summary-card__label">Sophistication Level</div>
+                    <div class="summary-card__value">4 — высокий скепсис</div>
+                </div>
+                
+                
+                
+                <div class="summary-card">
+                    <div class="summary-card__label">Big Idea</div>
+                    <div class="summary-card__value">Discovery: «Алгоритм Instagram = Netflix. 99% снимают одиночные ролики, а алгоритм спроектирован для сериалов»</div>
+                </div>
+                
+                
+            </div>
+        </section>
+        
+
+        <!-- Structure -->
+        
+        <section class="report-section">
+            <h2 class="report-section__heading">Структура текста</h2>
+            <table class="structure-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Компонент</th>
+                        <th>Статус</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td>1</td>
+                        <td class="component">Lead</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>2</td>
+                        <td class="component">Story</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>3</td>
+                        <td class="component">Mechanism</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>4</td>
+                        <td class="component">Product Reveal</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>5</td>
+                        <td class="component">Offer</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>6</td>
+                        <td class="component">Proof</td>
+                        <td><span class="status-badge status-badge--weak">СЛАБЫЙ</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>7</td>
+                        <td class="component">Close</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>8</td>
+                        <td class="component">P.S.</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>9</td>
+                        <td class="component">FAQ</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН</span></td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </section>
+        
+
+        <!-- Scores -->
+        
+        <section class="report-section">
+            <h2 class="report-section__heading">Оценка по измерениям</h2>
+            <div class="scores-list">
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Lead Power (×1.5)</div>
+                    <div class="score-item__score score-item__score--green">8/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--green"
+                             style="width: 80%"></div>
+                    </div>
+                    <div class="score-item__comment">Парадоксальный вопрос цепляет мгновенно, но нет Credibility и Timeframe</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Story Arc</div>
+                    <div class="score-item__score score-item__score--green">9/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--green"
+                             style="width: 90%"></div>
+                    </div>
+                    <div class="score-item__comment">Сильная трёхактная история с конкретными датами и цитатами</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Mechanism Clarity (×1.5)</div>
+                    <div class="score-item__score score-item__score--green">10/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--green"
+                             style="width: 100%"></div>
+                    </div>
+                    <div class="score-item__comment">Метафора Netflix — одна из лучших, логика безупречная</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Offer Strength</div>
+                    <div class="score-item__score score-item__score--yellow">4/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--yellow"
+                             style="width: 40%"></div>
+                    </div>
+                    <div class="score-item__comment">Нет Value Stack, нет бонусов, нет гарантии, нет дедлайна</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Proof Weight</div>
+                    <div class="score-item__score score-item__score--yellow">4/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--yellow"
+                             style="width: 40%"></div>
+                    </div>
+                    <div class="score-item__comment">Только один кейс (Натали), нет отзывов учеников и внешних доказательств</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Language & Flow</div>
+                    <div class="score-item__score score-item__score--green">10/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--green"
+                             style="width: 100%"></div>
+                    </div>
+                    <div class="score-item__comment">Живой разговорный язык, идеальный ритм, VOC-фразы</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Big Idea</div>
+                    <div class="score-item__score score-item__score--green">10/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--green"
+                             style="width: 100%"></div>
+                    </div>
+                    <div class="score-item__comment">Discovery-тип, красной нитью через весь текст, уникальна</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Persuasion Arch.</div>
+                    <div class="score-item__score score-item__score--green">8/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--green"
+                             style="width: 80%"></div>
+                    </div>
+                    <div class="score-item__comment">Структура идеальная, но лид затянут, финал не усиливает</div>
+                </div>
+                
+            </div>
+        </section>
+        
+
+        <!-- Detail Analysis -->
+        
+        <section class="report-section">
+            <h2 class="report-section__heading">Детальный анализ</h2>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Lead (8/10 🟢)</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p><strong>Что работает:</strong>
+- Парадоксальный вопрос в заголовке создаёт мощный Knowledge Gap: «500 подписчиков → 50К просмотров vs 10К подписчиков → 200». Читатель не может не узнать ответ.
+- Подзаголовок сразу даёт конкретику: 5 уроков, 10 сценариев — это Specificity.
+- Агитация боли бьёт точно в Solution-aware аудиторию: не «зачем рилс», а «почему у тебя не работает».
+- Каждый абзац усиливает боль по нарастающей: 200 просмотров → потеря денег → потеря уверенности → выгорание.</p>
+<p><strong>Что можно улучшить:</strong>
+- Лид длинный (~600 слов до появления истории). Для лендинга это допустимо, но есть риск потери читателя — особенно на мобильных. Блоки «самое обидное» и «дело даже не в подписчиках» можно сжать.
+- Нет элемента Credibility в первых экранах. Читатель не знает, кто говорит и почему верить.
+- Нет явного Timeframe в заголовке/подзаголовке.</p>
+<p><strong>Чеклист:</strong>
+- [x] Первое предложение ≤12 слов и цепляет
+- [x] Хук (любопытство + боль)
+- [x] Curiosity — крючок
+- [x] Pain Point — названа боль
+- [x] Solution — обещание решения
+- [x] Specificity — цифры
+- [ ] Credibility — почему верить
+- [ ] Timeframe — срок результата
+- [x] Simplicity — понятно за 3 секунды
+- [x] Schwartz Level Match</p>
+<hr />
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Story (9/10 🟢)</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p><strong>Что работает:</strong>
+- Три чётких акта: дно (развод, 4 детей, 20К на карте) → перелом (подруга: «скажи правду») → результат (11К подписчиков за месяц с конкретными датами).
+- Цитата из сообщения подписчицы: «Я сижу и плачу, потому что у меня всё точно так же» — мощный момент идентификации.
+- Даты по дням (14 дек → 15 дек → 17 дек → 19 дек) создают ощущение документальности.
+- Бэкстори про ковид и решение «собрать тысячу людей к 40 годам» — добавляет глубину.</p>
+<p><strong>Что можно улучшить:</strong>
+- История чуть затянута (~450 слов vs рекомендованных 300). Можно сжать бэкстори про ковид или интегрировать её плотнее.</p>
+<p><strong>Чеклист:</strong>
+- [x] Акт 1 (боль): конкретные провалы
+- [x] Акт 2 (перелом): момент инсайта
+- [x] Акт 3 (результат): конкретный первый успех
+- [ ] Длина ≤300 слов
+- [x] Эмоциональная прогрессия
+- [x] Нет клише
+- [x] Переходная фраза к механизму
+- [x] Идентификация</p>
+<hr />
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Mechanism (10/10 🟢)</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p><strong>Что работает:</strong>
+- UMP через метафору: «Одиночные ролики = листовки с самолёта. Алгоритм = Netflix». Моментально понятно, почему старый подход не работает.
+- UMR: «Сериальная самораспаковка» — три элемента, каждый вытекает из предыдущего (сериальность → личность → математика).
+- Логическая цепочка безупречна: алгоритм продвигает возврат → чтобы возвращались, нужен сериал → чтобы наполнить сериал, нужна личность → чтобы масштабировать, нужна математика.
+- Метафора Netflix — одна из лучших, что я видел для этой ниши. Простая, визуальная, убедительная.</p>
+<p><strong>Чеклист:</strong>
+- [x] UMP: почему стандартный подход не работает
+- [x] UMR: есть название
+- [x] UMR: 3 шага/принципа
+- [x] UMR: отличается от конкурентов
+- [x] WHY + HOW
+- [x] Простота (понятно 12-летнему)
+- [x] Визуальность (Netflix vs листовки)
+- [x] Логика (шаги вытекают один из другого)</p>
+<hr />
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Product Reveal (отдельный балл не считается, входит в Offer)</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p><strong>Что работает:</strong>
+- Каждый урок = конкретный результат на выходе (не «узнаешь», а «получишь»).
+- Формат «На выходе:» после каждого урока — сильный приём.
+- Прямое противопоставление: «Не теория. Не мотивация. Не курс про свет и монтаж.»</p>
+<hr />
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Offer (4/10 🟡)</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p><strong>Что НЕ работает:</strong></p>
+<ol>
+<li>
+<p><strong>Нет Value Stack.</strong> Два тарифа просто перечислены списком. Нет таблицы с денежным эквивалентом каждого элемента. Сравнение «SMM-специалист = 15К + копирайтер = 30К + консультация = 10К = 55К vs 4990₽» спрятано в FAQ-блоке, а должно быть в самом оффере.</p>
+</li>
+<li>
+<p><strong>Нет бонусов.</strong> Упомянуты «все бонусные материалы» и «готовые шаблоны сценариев» — но без раскрытия. Что это? Сколько? Какова ценность? По формуле COS Price Framing: «But today, you also get these 3 conversion multipliers included» — бонусы должны быть названы, описаны и оценены.</p>
+</li>
+<li>
+<p><strong>Нет гарантии.</strong> Это главный пробел. На рынке с Sophistication 4 (высокий скепсис, «я уже покупала курс — не помогло») отсутствие гарантии — серьёзный барьер. По формуле SIN: «Risk Removal» — обязательный элемент Irresistible оффера.</p>
+</li>
+<li>
+<p><strong>Нет дедлайна.</strong> Единственный триггер срочности — «50 мест» для тарифа «С поддержкой». Но для базового тарифа срочности нет вообще. По COS Scarcity Framework: нужны Time-Based + Quantity-Based триггеры.</p>
+</li>
+</ol>
+<p><strong>Чеклист:</strong>
+- [x] Core Outcome конкретный
+- [ ] Value Stack с денежным эквивалентом
+- [ ] Value Stack ≥ 3x цены (формально есть, но спрятан в FAQ)
+- [ ] Бонусы (3-5 шт.)
+- [ ] Гарантия
+- [ ] Триггер срочности — время
+- [x] Триггер срочности — количество (50 мест)
+- [x] Цена бездействия озвучена</p>
+<hr />
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Proof (4/10 🟡)</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p><strong>Что НЕ работает:</strong></p>
+<p>По модели 5-Layer Stacked Proof из базы знаний:</p>
+<ol>
+<li><strong>Mechanism Proof</strong> 🟢 — есть. Метафора Netflix + логика алгоритма.</li>
+<li><strong>Demonstration Proof</strong> 🟡 — частично. Логика сериальности показана, но нет «before/after» скриншотов метрик.</li>
+<li><strong>Social Proof</strong> 🔴 — отсутствует. Нет отзывов учеников, нет скриншотов, нет имён.</li>
+<li><strong>Personal Proof</strong> 🟢 — есть. История Натали.</li>
+<li><strong>Contrarian Proof</strong> 🟢 — есть. «99% делают одиночные ролики — вот почему у них не работает».</li>
+</ol>
+<p>Итого: 3 из 5 слоёв. Критический пробел — Social Proof. На рынке «курсов по рилс» отзывы учеников — это то, что отличает реальный продукт от пустого обещания.</p>
+<p>По Шварцу: доказательства должны быть «вплетены в ткань текста» (Documentation + Mechanization + Verification). Mechanization (логическое доказательство через структуру) — сильная сторона этого текста. Но Documentation (внешние факты, скриншоты, имена) — слабая.</p>
+<p><strong>Чеклист:</strong>
+- [x] Кейсы с конкретными результатами
+- [ ] Отзывы реальной речью
+- [ ] Минимум 2 типа доказательств
+- [~] Источники проверяемые (имя есть, ссылок нет)
+- [x] Доказательства подкрепляют UMR
+- [x] Сравнение «до/после»
+- [ ] Цифры с источником
+- [x] Доказательства ДО запроса денег</p>
+<hr />
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Language & Flow (10/10 🟢)</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p>Исключительно сильная сторона текста.</p>
+<ul>
+<li>Язык живой, разговорный: «Ты снимаешь. Стараешься. Подбираешь музыку. Ловишь свет.»</li>
+<li>Ритм чередует короткие удары и длинные абзацы.</li>
+<li>VOC-фразы точные: «200 просмотров», «еле дотягивает», «залетел», «ролик набрал».</li>
+<li>Pull-эффект: «И вот что происходит дальше», «Через минуту я покажу».</li>
+<li>Переходы между блоками бесшовные: «Именно эту систему Натали упаковала в практикум».</li>
+<li>Нет канцелярита, пассивного залога, корпоративного жаргона.</li>
+</ul>
+<hr />
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Big Idea (10/10 🟢)</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p>По COS Big Idea Scoring Matrix:
+- <strong>Clarity (10/10):</strong> «Алгоритм = Netflix, контент = сериал» — понятно мгновенно.
+- <strong>Newness (9/10):</strong> В русскоязычном Instagram-пространстве эта рамка почти не используется.
+- <strong>Emotional Charge (9/10):</strong> Надежда («вот почему у других работает!») + возмущение («тебе просто никто не сказал!»).
+- <strong>Proofability (8/10):</strong> Подкреплена кейсом Натали + логикой алгоритма.
+- <strong>Curiosity (10/10):</strong> Парадоксальный вопрос создаёт сильнейший Knowledge Gap.
+- <strong>Sophistication Fit (9/10):</strong> Discovery-тип идеален для Sophistication 4 — не обещание, а открытие.
+- <strong>UM Integration (10/10):</strong> Механизм неразрывно связан с Big Idea.</p>
+<p>Оценка по матрице: ~65/70 — уровень «scalable».</p>
+<p>Тип: <strong>Discovery</strong> — «Вот что на самом деле определяет рост, и почти никто этого не знает».</p>
+<hr />
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Persuasion Architecture (8/10 🟢)</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p><strong>Что работает:</strong>
+- Последовательность идеальная: Lead → Story → Mechanism → Product Reveal → Offer → Objections → FAQ → Close.
+- Эмоциональная арка: боль (200 просмотров, выгорание) → надежда (история Натали) → решение (система) → действие (оффер).
+- Возражения сняты до финального CTA.
+- CTA появляется 3 раза.</p>
+<p><strong>Что можно улучшить:</strong>
+- Лид затянут (~600 слов). На мобильном это 3-4 экрана чистой боли без перерыва. Есть риск, что читатель устанет до истории.
+- Финал (P.S.) повторяет аргументы из тела текста, но не усиливает их. Нет нового элемента, который бы «дожал».</p>
+<hr />
+                </div>
+            </div>
+            
+        </section>
+        
+
+        <!-- Calculation -->
+        
+
+        <!-- Recommendations -->
+        
+        <section class="report-section">
+            <h2 class="report-section__heading">Рекомендации</h2>
+            <div class="rec-list">
+                
+                <div class="rec-card rec-card--yellow">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">1</div>
+                        <div class="rec-card__title">Offer: Нет Value Stack с денежным эквивалентом</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: Перенести расчёт «SMM = 15К + копирайтер = 30К + консультация = 10К = 55К» из FAQ в блок оффера. Оформить как таблицу с ценностью каждого элемента.</p>
+<p>→ Формула: COS Price Framing Flow: Anchor High → Introduce Bonuses → Reveal Price → Justify (knowledge/formulas/mos_2_0.md).</p>
+<p>→ Пример: «Что ты получаешь: 5 уроков с системой сериальности (ценность 15 000₽) + 10 готовых сценариев (ценность 30 000₽) + Генератор идей на месяц (ценность 5 000₽) + Упаковка профиля (ценность 15 000₽). Итого: 65 000₽ ценности → Твоя цена: 4 990₽.»</p></div>
+                    
+                </div>
+                
+                <div class="rec-card rec-card--yellow">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">2</div>
+                        <div class="rec-card__title">Offer: Нет гарантии</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: Добавить гарантию, снимающую главный страх: «Я уже покупала курс — не помогло». Условная гарантия (Conditional по Hormozi) сильнее безусловной.</p>
+<p>→ Формула: SIN Framework — Risk Removal (knowledge/formulas/mos_2_0.md).</p>
+<p>→ Пример: «Гарантия "10 сценариев или деньги назад": Пройди все 5 уроков. Если после прохождения у тебя не будет 10 готовых сценариев — напиши, и мы вернём деньги. Без вопросов.» Примечание: уточнить у эксперта, готова ли она давать гарантию.</p></div>
+                    
+                </div>
+                
+                <div class="rec-card rec-card--yellow">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">3</div>
+                        <div class="rec-card__title">Proof: Нет отзывов учеников (Social Proof)</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: Добавить 3-5 отзывов учеников в формате «Struggle → Discovery → Result». Если учеников ещё нет — добавить после первого потока. Если есть — собрать скриншоты из чата поддержки.</p>
+<p>→ Формула: 5-Layer Stacked Proof Model — слой Social Proof (knowledge/formulas/mos_2_0.md). По Шварцу: «Documentation должна быть вплетена в ткань текста».</p>
+<p>→ Пример: Разместить 1-2 отзыва после Product Reveal (перед оффером) и 1-2 после оффера (перед Close). Формат: скриншот сообщения + краткая подпись (имя, ниша, результат).</p></div>
+                    
+                </div>
+                
+                <div class="rec-card rec-card--yellow">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">4</div>
+                        <div class="rec-card__title">Offer: Нет явных бонусов</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: Раскрыть «все бонусные материалы» — дать им названия, описания и ценность. Бонусы должны усиливать основной результат.</p>
+<p>→ Формула: Hormozi — бонусы решают конкретные проблемы на пути к результату.</p>
+<p>→ Пример: «БОНУС 1: "Чек-лист первых 3 секунд" — 7 хуков для начала ролика (ценность 3 000₽). БОНУС 2: "Банк сериальных форматов" — 15 шаблонов серий для разных ниш (ценность 5 000₽). БОНУС 3: "Трекер роста" — таблица для отслеживания метрик (ценность 2 000₽).» Примечание: согласовать с экспертом, какие материалы реально входят в практикум.</p></div>
+                    
+                </div>
+                
+                <div class="rec-card rec-card--yellow">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">5</div>
+                        <div class="rec-card__title">Offer: Нет временного дедлайна</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: Добавить Time-Based триггер срочности. Должен быть реальным и обоснованным.</p>
+<p>→ Формула: COS Scarcity Framework — Time-Based + Bonus-Based (knowledge/formulas/mos_2_0.md).</p>
+<p>→ Пример: «До [дата]: бонус "Разбор 3 твоих роликов лично от Натали" для первых 20 оплативших. После [дата] — бонус убирается.» Примечание: использовать только реальный дедлайн.</p></div>
+                    
+                </div>
+                
+                <div class="rec-card rec-card--yellow">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">6</div>
+                        <div class="rec-card__title">Lead: Можно сжать среднюю часть</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: Блоки «Самое обидное» и «Дело даже не в подписчиках» частично дублируют друг друга. Объединить в один более плотный абзац. Цель: сократить лид с ~600 до ~400 слов.</p>
+<p>→ Пример: Объединить «теряешь не просмотры — теряешь деньги» и «клиенты уходят к другому» в один удар, убрав повторы.</p></div>
+                    
+                </div>
+                
+                <div class="rec-card rec-card--yellow">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">7</div>
+                        <div class="rec-card__title">Close: Финал можно усилить</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: P.S.S. повторяет аргумент из тела текста. Вместо повтора — добавить новый элемент: мини-кейс, цитату, или конкретную цифру, которая ещё не звучала.</p>
+<p>→ Пример: «P.S.S. Натали записала первый "честный" ролик 14 декабря. К 19 декабря у неё было +10 000 подписчиков. Через год — 150 000. Разница — не талант. Одно решение: перестать разбрасывать листовки и начать строить сериал. 5 уроков покажут тебе, как.»</p></div>
+                    
+                </div>
+                
+            </div>
+        </section>
+        
+
+        <!-- KB Comparison -->
+        
+        <section class="report-section">
+            <h2 class="report-section__heading">Сравнение с базой знаний</h2>
+            <div class="kb-block">
+                <h3>Похожие тексты</h3>
+<p>В базе нет прямых аналогов (продающие тексты для Instagram-курсов). База ориентирована на finance/health/biz-opp ниши. Тем не менее, паттерны универсальны.</p>
+<h3>Формулы для усиления</h3>
+<ul>
+<li><strong>Offer:</strong> COS Price Framing Flow + SIN Framework + Hormozi Grand Slam Offer — все три указывают на одно: Value Stack с денежным эквивалентом + гарантия + бонусы = обязательные элементы. Текущий оффер не использует ни одного из этих инструментов в полную силу.</li>
+<li><strong>Proof:</strong> 5-Layer Stacked Proof Model показывает, что текст закрывает 3 из 5 слоёв (Mechanism, Personal, Contrarian), но полностью пропускает Social Proof. По Шварцу, Documentation (внешние факты) должна быть «вплетена в ткань», а не отсутствовать.</li>
+</ul>
+<h3>Паттерн Big Idea</h3>
+<p>Тип Discovery — один из 4 архетипов COS Big Idea. В базе знаний есть примеры Discovery в финансовой нише («Американские Лодыри» — secret investment). Текущий текст следует тому же паттерну: «Вот что 99% не знают — вот открытие — вот как использовать». Реализация сильная (65/70 по COS Scoring Matrix).</p>
+<hr />
+            </div>
+        </section>
+        
+
+        <!-- Verdict -->
+        
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        X-Ray Report &middot; Copycraft М.О.С.
+    </footer>
+
+</body>
+</html>
