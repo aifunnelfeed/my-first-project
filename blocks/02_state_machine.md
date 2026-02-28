@@ -72,15 +72,29 @@ B) Пропустить — работаем без базы знаний
 PASS → сохрани в strategy.md, переход к EXECUTION.
 FAIL → покажи что не прошло, исправь, повтори проверку.
 
+**STRATEGY GATE (блокирующий чекпоинт):**
+TRIGGER: Любая попытка перехода STRATEGY → EXECUTION.
+
+ОБЯЗАТЕЛЬНЫЕ УСЛОВИЯ (все должны быть выполнены):
+1. ✅ PHASE A показана пользователю (стратегия v1 без KB)
+2. ✅ KB GATE пройден (knowledge/ консультирован ИЛИ пользователь явно отказался)
+3. ✅ PHASE B показана пользователю (стратегия v2 с KB) И задан вопрос "Стратегия 1 или 2?"
+4. ✅ Пользователь выбрал стратегию (явный ответ)
+5. ✅ STRATEGY CRITIC пройден — PASS
+
+ЗАПРЕТ: Переход STRATEGY → EXECUTION без выполнения ВСЕХ 5 условий = нарушение протокола. Молчаливый bypass любого из условий запрещён.
+
+Если KB GATE показал, что MCP недоступен и пользователь выбрал "Пропустить" — PHASE B всё равно обязательна: генерируй альтернативную стратегию на основе ручного чтения файлов knowledge/ или на основе иного угла/подхода. Пользователь ВСЕГДА должен получить выбор из двух стратегий.
+
 **ATOMICITY:** Каждая фаза (A, KB GATE + B, CRITIC) — отдельное сообщение.
 
 ---
 
 ## ПРАВИЛА ПЕРЕХОДОВ (Transitions)
 
-INPUT → (мало данных) QUERY → **RESEARCH GATE** → STRATEGY → EXECUTION
-INPUT → (достаточно данных) **RESEARCH GATE** → STRATEGY → EXECUTION
-INPUT → (Авто-ресерч) RESEARCH → STRATEGY → EXECUTION
+INPUT → (мало данных) QUERY → **RESEARCH GATE** → STRATEGY → **STRATEGY GATE** → EXECUTION
+INPUT → (достаточно данных) **RESEARCH GATE** → STRATEGY → **STRATEGY GATE** → EXECUTION
+INPUT → (Авто-ресерч) RESEARCH → STRATEGY → **STRATEGY GATE** → EXECUTION
 
 ### RESEARCH GATE (обязательный чекпоинт)
 **TRIGGER:** Любой переход к STRATEGY, если STATE=RESEARCH не был пройден.
@@ -191,5 +205,6 @@ TRIGGER: нехватка данных перед созданием блока
 
 ## ЗАПРЕТЫ ПО СОСТОЯНИЯМ
 — В QUERY/RESEARCH/STRATEGY запрещены CTA/кнопки/P.S./"продающие" блоки.
+— Переход STRATEGY → EXECUTION без прохождения STRATEGY GATE (5 условий) запрещён.
 — PHASE B заканчивается вопросом на утверждение.
 — PHASE C заканчивается резюме.
