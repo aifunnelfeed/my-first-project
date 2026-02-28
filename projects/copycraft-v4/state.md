@@ -2,7 +2,7 @@
 
 ## Текущий стейт: EXECUTION
 ## Фаза: PHASE C (COPY)
-## Текущий блок: Product Reveal
+## Текущий блок: Offer
 ## Формат: landing
 
 ## Пройденные стейты
@@ -21,7 +21,7 @@
 | Lead | ✅ | ✅ | PASS | APPROVED |
 | Story | — | ✅ | PASS | APPROVED |
 | Mechanism | — | ✅ | PASS | APPROVED |
-| Product Reveal | — | — | — | pending |
+| Product Reveal | — | ✅ | PASS | APPROVED |
 | Offer | — | — | — | pending |
 | Proof | — | — | — | pending |
 | Close | — | — | — | pending |
