@@ -1,6 +1,6 @@
 # Состояние проекта: Copycraft v4 — М.О.С.
 
-## Текущий стейт: RESEARCH
+## Текущий стейт: STRATEGY
 ## Фаза: —
 ## Текущий блок: —
 ## Формат: landing
@@ -8,7 +8,7 @@
 ## Пройденные стейты
 - [x] INPUT
 - [x] QUERY
-- [ ] RESEARCH
+- [x] RESEARCH
 - [ ] STRATEGY
 - [ ] EXECUTION
 - [ ] DEBUGGING
