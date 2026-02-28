@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рентген: Как в 45+ восстановить энергию молодости... (Марафон «Нить Жизни»)</title>
+    <style>
+        /* === Reset & Base === */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 17px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                         'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            color: #d0d0de;
+            background: #0f0f23;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* === Container === */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* === Hero === */
+        .hero {
+            padding: 80px 0 56px;
+            text-align: center;
+            background: radial-gradient(ellipse at 50% 0%, #2d1b69 0%, #0f0f23 70%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 700px;
+            height: 500px;
+            background: radial-gradient(ellipse, rgba(127, 86, 217, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero__label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #B692F6;
+            margin-bottom: 16px;
+        }
+
+        .hero__title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.3;
+            margin-bottom: 32px;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .score-badge {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 4px;
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+
+        .score-badge__total {
+            font-size: 1.8rem;
+            font-weight: 600;
+            opacity: 0.5;
+        }
+
+        .score-badge--green { color: #4ade80; }
+        .score-badge--yellow { color: #facc15; }
+        .score-badge--red { color: #f87171; }
+
+        /* === Sections === */
+        .report-section {
+            padding: 56px 0;
+            border-top: 1px solid rgba(127, 86, 217, 0.12);
+        }
+
+        .report-section__heading {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 24px;
+        }
+
+        .report-section__heading::before {
+            content: '';
+            display: block;
+            width: 32px;
+            height: 3px;
+            background: linear-gradient(90deg, #7F56D9, #B692F6);
+            margin-bottom: 12px;
+            border-radius: 2px;
+        }
+
+        /* === Summary Cards === */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .summary-card {
+            background: rgba(127, 86, 217, 0.06);
+            border: 1px solid rgba(127, 86, 217, 0.15);
+            border-radius: 12px;
+            padding: 16px 20px;
+        }
+
+        .summary-card__label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        .summary-card__value {
+            font-size: 0.95rem;
+            color: #e8e8f0;
+            font-weight: 600;
+        }
+
+        /* === Structure Table === */
+        .structure-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .structure-table th {
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #888;
+            padding: 8px 12px;
+            border-bottom: 2px solid rgba(127, 86, 217, 0.2);
+        }
+
+        .structure-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+        }
+
+        .structure-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .structure-table .component {
+            font-weight: 600;
+            color: #e8e8f0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-badge--found {
+            background: rgba(74, 222, 128, 0.12);
+            color: #4ade80;
+        }
+
+        .status-badge--weak {
+            background: rgba(250, 204, 21, 0.12);
+            color: #facc15;
+        }
+
+        .status-badge--missing {
+            background: rgba(248, 113, 113, 0.12);
+            color: #f87171;
+        }
+
+        /* === Scores === */
+        .scores-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .score-item {
+            display: grid;
+            grid-template-columns: 2fr 80px 1fr 3fr;
+            gap: 12px;
+            align-items: center;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .score-item__dimension {
+            font-weight: 600;
+            color: #e8e8f0;
+            font-size: 0.95rem;
+        }
+
+        .score-item__score {
+            font-weight: 700;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .score-item__score--green { color: #4ade80; }
+        .score-item__score--yellow { color: #facc15; }
+        .score-item__score--red { color: #f87171; }
+
+        .score-item__bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .score-item__bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.6s ease;
+        }
+
+        .score-item__bar-fill--green { background: linear-gradient(90deg, #22c55e, #4ade80); }
+        .score-item__bar-fill--yellow { background: linear-gradient(90deg, #eab308, #facc15); }
+        .score-item__bar-fill--red { background: linear-gradient(90deg, #dc2626, #f87171); }
+
+        .score-item__comment {
+            font-size: 0.85rem;
+            color: #a0a0b8;
+        }
+
+        /* === Details (accordion) === */
+        .detail-card {
+            margin-bottom: 12px;
+            border: 1px solid rgba(127, 86, 217, 0.15);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .detail-card__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: rgba(127, 86, 217, 0.06);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .detail-card__header:hover {
+            background: rgba(127, 86, 217, 0.1);
+        }
+
+        .detail-card__name {
+            font-weight: 700;
+            color: #e8e8f0;
+            font-size: 1rem;
+        }
+
+        .detail-card__toggle {
+            color: #B692F6;
+            font-size: 1.2rem;
+            transition: transform 0.2s;
+        }
+
+        .detail-card__body {
+            display: none;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .detail-card__body.open {
+            display: block;
+        }
+
+        .detail-card__body p {
+            margin-bottom: 0.8em;
+            color: #c8c8d8;
+        }
+
+        .detail-card__body strong {
+            color: #e8e8f0;
+        }
+
+        .detail-card__body em {
+            color: #a0a0b8;
+        }
+
+        .detail-card__body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+        }
+
+        .detail-card__body th {
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #888;
+            padding: 6px 8px;
+            border-bottom: 1px solid rgba(127, 86, 217, 0.2);
+        }
+
+        .detail-card__body td {
+            padding: 6px 8px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #c8c8d8;
+        }
+
+        .detail-card__body hr {
+            border: none;
+            border-top: 1px solid rgba(127, 86, 217, 0.15);
+            margin: 16px 0;
+        }
+
+        .detail-card__body ol,
+        .detail-card__body ul {
+            margin: 0.8em 0;
+            padding-left: 1.5em;
+        }
+
+        .detail-card__body li {
+            margin-bottom: 0.4em;
+            color: #c8c8d8;
+        }
+
+        .detail-card__body li::marker {
+            color: #7F56D9;
+        }
+
+        /* === Calculation === */
+        .calc-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+        }
+
+        .calc-table th {
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #888;
+            padding: 8px 10px;
+            border-bottom: 2px solid rgba(127, 86, 217, 0.2);
+        }
+
+        .calc-table td {
+            padding: 8px 10px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #c8c8d8;
+        }
+
+        .calc-total {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #B692F6;
+            padding: 12px 0;
+        }
+
+        /* === Recommendations === */
+        .rec-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .rec-card {
+            padding: 20px 24px;
+            border-radius: 12px;
+            border-left: 4px solid;
+        }
+
+        .rec-card--red {
+            background: rgba(248, 113, 113, 0.06);
+            border-left-color: #f87171;
+        }
+
+        .rec-card--yellow {
+            background: rgba(250, 204, 21, 0.06);
+            border-left-color: #facc15;
+        }
+
+        .rec-card__header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .rec-card__num {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #fff;
+        }
+
+        .rec-card--red .rec-card__num { background: #dc2626; }
+        .rec-card--yellow .rec-card__num { background: #ca8a04; }
+
+        .rec-card__title {
+            font-weight: 700;
+            color: #e8e8f0;
+            font-size: 0.95rem;
+        }
+
+        .rec-card__body {
+            font-size: 0.9rem;
+            color: #a0a0b8;
+            line-height: 1.7;
+        }
+
+        .rec-card__body p {
+            margin-bottom: 0.6em;
+        }
+
+        .rec-card__body em {
+            color: #c8c8d8;
+        }
+
+        /* === KB Comparison === */
+        .kb-block {
+            background: rgba(127, 86, 217, 0.06);
+            border: 1px solid rgba(127, 86, 217, 0.15);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .kb-block p {
+            margin-bottom: 0.8em;
+            color: #c8c8d8;
+        }
+
+        .kb-block strong {
+            color: #e8e8f0;
+        }
+
+        .kb-block ul, .kb-block ol {
+            margin: 0.8em 0;
+            padding-left: 1.5em;
+        }
+
+        .kb-block li {
+            margin-bottom: 0.5em;
+            color: #c8c8d8;
+        }
+
+        .kb-block li::marker {
+            color: #7F56D9;
+        }
+
+        .kb-block h3 {
+            color: #B692F6;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        /* === Verdict === */
+        .verdict {
+            background: linear-gradient(135deg, rgba(127, 86, 217, 0.12) 0%, rgba(127, 86, 217, 0.04) 100%);
+            border: 1px solid rgba(127, 86, 217, 0.25);
+            border-radius: 16px;
+            padding: 32px;
+        }
+
+        .verdict p {
+            margin-bottom: 0.8em;
+            color: #e8e8f0;
+            font-size: 1.05rem;
+        }
+
+        .verdict strong {
+            color: #ffffff;
+        }
+
+        .verdict ul, .verdict ol {
+            margin: 0.8em 0;
+            padding-left: 1.5em;
+        }
+
+        .verdict li {
+            margin-bottom: 0.5em;
+            color: #c8c8d8;
+        }
+
+        .verdict li::marker {
+            color: #B692F6;
+        }
+
+        /* === Footer === */
+        .footer {
+            padding: 40px 24px;
+            text-align: center;
+            color: #555;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(127, 86, 217, 0.1);
+        }
+
+        /* === Responsive === */
+        @media (max-width: 768px) {
+            html {
+                font-size: 15px;
+            }
+
+            .hero {
+                padding: 56px 0 40px;
+            }
+
+            .hero__title {
+                font-size: 1.3rem;
+            }
+
+            .score-badge {
+                font-size: 3rem;
+            }
+
+            .report-section {
+                padding: 40px 0;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .score-item {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+
+            .score-item__bar {
+                max-width: 200px;
+            }
+
+            .structure-table {
+                font-size: 0.85rem;
+            }
+
+            .structure-table th,
+            .structure-table td {
+                padding: 8px 6px;
+            }
+
+            .detail-card__body {
+                padding: 14px;
+            }
+
+            .rec-card {
+                padding: 16px;
+            }
+
+            .verdict {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero__label">X-Ray Report</div>
+            <h1 class="hero__title">Как в 45+ восстановить энергию молодости... (Марафон «Нить Жизни»)</h1>
+            <div class="score-badge score-badge--yellow">
+                55<span class="score-badge__total">/100</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+
+        <!-- Summary -->
+        
+        <section class="report-section">
+            <h2 class="report-section__heading">Сводка</h2>
+            <div class="summary-grid">
+                
+                
+                
+                
+                <div class="summary-card">
+                    <div class="summary-card__label">Формат</div>
+                    <div class="summary-card__value">Landing (двухстраничная воронка: лонгрид + оффер)</div>
+                </div>
+                
+                
+                
+                <div class="summary-card">
+                    <div class="summary-card__label">Длина</div>
+                    <div class="summary-card__value">~4500+ слов (суммарно 2 страницы)</div>
+                </div>
+                
+                
+                
+                <div class="summary-card">
+                    <div class="summary-card__label">Уровень рынка (Schwartz)</div>
+                    <div class="summary-card__value">3 — Solution Aware (аудитория пробовала йогу, ЛФК, цигун, таблетки)</div>
+                </div>
+                
+                
+                
+                <div class="summary-card">
+                    <div class="summary-card__label">Big Idea</div>
+                    <div class="summary-card__value">Discovery / Secret: «Древнее движение даосских целителей "Нить Жизни" (Чан Сы Цзин) — единственное, что работает как полный цикл привнесения и очищения энергии»</div>
+                </div>
+                
+                
+                
+                <div class="summary-card">
+                    <div class="summary-card__label">URL</div>
+                    <div class="summary-card__value">vladimir-osipov.ru/longridnitka → vladimir-osipov.ru/marafonnitka</div>
+                </div>
+                
+                
+            </div>
+        </section>
+        
+
+        <!-- Structure -->
+        
+        <section class="report-section">
+            <h2 class="report-section__heading">Структура текста</h2>
+            <table class="structure-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Компонент</th>
+                        <th>Статус</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td>1</td>
+                        <td class="component">Lead</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН — вопрос + «секретное оружие», хук через боль и любопытство</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>2</td>
+                        <td class="component">Story</td>
+                        <td><span class="status-badge status-badge--missing">СЛАБЫЙ — нет личной трёхактной истории, есть фрагменты истории метода</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>3</td>
+                        <td class="component">Mechanism</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН — «полный цикл: привнесение + очищение» через Чан Сы Цзин</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>4</td>
+                        <td class="component">Product Reveal</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН — 5 дней марафона с описанием содержания (страница 2)</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>5</td>
+                        <td class="component">Offer</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН — 990 ₽ вместо 3 900 ₽ + 17 бонусов (страница 2)</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>6</td>
+                        <td class="component">Proof</td>
+                        <td><span class="status-badge status-badge--weak">СЛАБЫЙ — 17 000 человек (заявка), скриншоты отзывов на стр. 2, но без конкретных имён/результатов в тексте</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>7</td>
+                        <td class="component">Close</td>
+                        <td><span class="status-badge status-badge--missing">СЛАБЫЙ — 1 CTA на стр. 1, 1 CTA на стр. 2. Нет срочности, нет гарантии</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>8</td>
+                        <td class="component">P.S.</td>
+                        <td><span class="status-badge status-badge--missing">НЕ НАЙДЕН</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>9</td>
+                        <td class="component">FAQ</td>
+                        <td><span class="status-badge status-badge--missing">НЕ НАЙДЕН</span></td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </section>
+        
+
+        <!-- Scores -->
+        
+        <section class="report-section">
+            <h2 class="report-section__heading">Оценка по измерениям</h2>
+            <div class="scores-list">
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Lead Power</div>
+                    <div class="score-item__score score-item__score--green">7/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--green"
+                             style="width: 70%"></div>
+                    </div>
+                    <div class="score-item__comment">Сильный хук (вопрос + «секретное оружие»), но длинноват и без таймфрейма</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Story Arc</div>
+                    <div class="score-item__score score-item__score--yellow">4/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--yellow"
+                             style="width: 40%"></div>
+                    </div>
+                    <div class="score-item__comment">Нет личной истории автора. Есть история метода, но не классическая трёхактная арка</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Mechanism Clarity</div>
+                    <div class="score-item__score score-item__score--green">8/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--green"
+                             style="width: 80%"></div>
+                    </div>
+                    <div class="score-item__comment">Мощный: «полный цикл» vs «только привносят» — сильный дифференциатор</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Offer Strength</div>
+                    <div class="score-item__score score-item__score--yellow">5/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--yellow"
+                             style="width: 50%"></div>
+                    </div>
+                    <div class="score-item__comment">Цена 990 ₽ привлекательна, 17 бонусов, но нет гарантии и нет срочности</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Proof Weight</div>
+                    <div class="score-item__score score-item__score--yellow">4/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--yellow"
+                             style="width: 40%"></div>
+                    </div>
+                    <div class="score-item__comment">17 000 учеников заявлено, скриншоты есть, но нет конкретных кейсов «до/после» в тексте</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Language & Flow</div>
+                    <div class="score-item__score score-item__score--yellow">6/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--yellow"
+                             style="width: 60%"></div>
+                    </div>
+                    <div class="score-item__comment">Живой язык, но перегружен восточной терминологией (Ци, Дань-Тян, Вей-Ци) без пояснений</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Big Idea</div>
+                    <div class="score-item__score score-item__score--green">7/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--green"
+                             style="width: 70%"></div>
+                    </div>
+                    <div class="score-item__comment">Рабочая идея (Discovery/Secret), но формулировка «секретное оружие» клишированна для ниши</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Persuasion Arch.</div>
+                    <div class="score-item__score score-item__score--yellow">4/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--yellow"
+                             style="width: 40%"></div>
+                    </div>
+                    <div class="score-item__comment">Разрыв между страницами ломает арку. Лонгрид затянут, оффер на отдельной странице</div>
+                </div>
+                
+            </div>
+        </section>
+        
+
+        <!-- Detail Analysis -->
+        
+        <section class="report-section">
+            <h2 class="report-section__heading">Детальный анализ</h2>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Lead</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p><strong>Заголовок:</strong> «Как в 45+ восстановить энергию молодости и вернуть контроль над телом, которое начинает "сыпаться"?»
+<strong>Подзаголовок:</strong> «Открыто секретное оружие даосских целителей, способное повернуть вспять процессы старения организма!»</p>
+<p><strong>Что работает:</strong>
+- Вопрос вовлекает — читатель с проблемой сразу узнаёт себя
+- «45+» — точный возрастной якорь
+- «Тело начинает сыпаться» — VOC-фраза, живой язык
+- Блок «что это НЕ является» (6 пунктов) — сильный приём, создаёт любопытство</p>
+<p><strong>Что не работает:</strong>
+- Заголовок 16 слов (оптимально ≤12)
+- «Секретное оружие даосских целителей» — клише в нише здоровья 45+
+- Нет таймфрейма: «за сколько дней/недель?»
+- Нет элемента credibility в хедлайне</p>
+<p><strong>Чеклист:</strong> 7/10 пунктов выполнены.</p>
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Story</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p><strong>Что есть:</strong>
+- Перечисление проблем 45+ (хронические, знакомые читателю) — работает как идентификация
+- Фрагменты истории метода: «жил в Китае 2007-2011», «6-8 часов ежедневной практики»
+- История восстановления утраченного знания</p>
+<p><strong>Что не работает:</strong>
+- Нет классической трёхактной личной истории автора (дно → перелом → результат)
+- Нет момента «инсайта» — когда и как Осипов открыл эффект «Нити Жизни»
+- Истории разбросаны по тексту, не собраны в единый нарратив
+- Клише: «секреты мастеров», «древние знания»
+- Нет конкретного первого успеха (какой конкретный результат получил он сам или его первый ученик?)</p>
+<p><strong>Чеклист:</strong> 4/8 пунктов выполнены.</p>
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Mechanism</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p><strong>Что работает (сильная сторона текста):</strong>
+- <strong>УМ Проблемы:</strong> Чётко объяснено, почему таблетки, йога, массаж не работают — «привносят, но не выводят». Патогенная энергия остаётся внутри
+- <strong>УМ Решения:</strong> Есть название — «Нить Жизни» / «Чан Сы Цзин» / «Наматывание шёлковой нити»
+- <strong>Ключевой дифференциатор:</strong> «Полный цикл» — прямое движение (привнесение) + обратное движение (очищение). У конкурентов нет второго
+- <strong>7 признаков исцеляющего движения</strong> — мощный блок, создающий фреймворк
+- Метафора «наматывание шёлковой нити» — визуальная и запоминается</p>
+<p><strong>Что не работает:</strong>
+- Перегружен: десятки эффектов подряд (от давления до онкологии до деменции) — обесценивает каждый отдельный
+- Некоторые заявки не подкреплены: «справиться с онкологией», «профилактика болезни Паркинсона» — смелые утверждения без доказательств
+- Восточная терминология без пояснений: Ци, Дань-Тян, Вей-Ци, Цзин Ци — барьер для скептичного читателя</p>
+<p><strong>Чеклист:</strong> 7/8 пунктов выполнены. Минус за простоту (не понятно 12-летнему из-за терминологии).</p>
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Product Reveal (страница 2)</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p><strong>Что работает:</strong>
+- Чёткая структура: 5 дней с описанием каждого
+- Конкретика: «5 занятий по 1,5-2 часа», «9 часов контента»
+- Каждый день привязан к конкретной проблеме (спина, мочеполовая система, гормоны, давление, энергия)</p>
+<p><strong>Что не работает:</strong>
+- День 5 («Счастливая судьба и предназначение») выбивается из медицинской/здоровья тематики — уходит в эзотерику
+- Нет чёткого пути трансформации (Day 1 → Day 5: от какого состояния к какому)
+- Product Reveal на ОТДЕЛЬНОЙ странице от лонгрида — разрыв внимания</p>
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Offer (страница 2)</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p><strong>Что работает:</strong>
+- Цена 990 ₽ (вместо 3 900 ₽) — привлекательный порог входа
+- 17 бонусов — количество внушительное
+- Ценовой стек: сравнение с альтернативами (остеопат 6 000-12 000 ₽, массаж 2 500-6 000 ₽)
+- Объяснение низкой цены через миссию</p>
+<p><strong>Что не работает:</strong>
+- Нет гарантии (возврат денег, «без вопросов»)
+- Нет срочности (ни дедлайна, ни ограничения мест)
+- Бонусы не имеют денежного эквивалента (не посчитана общая стоимость)
+- Value Stack не подсчитан: «17 подарков, каждый мог бы стоить 1 000-5 000 ₽» — расплывчато
+- Бонусы разрозненные: от акупунктурных точек до медитации «Прощение родителей» — не все усиливают Core Outcome</p>
+<p><strong>Чеклист:</strong> 4/8 пунктов выполнены.</p>
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Proof</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p><strong>Что работает:</strong>
+- Цифра «17 000 человек» — масштаб
+- «400 страниц отзывов» — социальное доказательство
+- Биография автора конкретна (45 лет опыта, жил в Китае, конкретные школы)
+- Скриншоты отзывов на странице 2</p>
+<p><strong>Что не работает:</strong>
+- В лонгриде (стр. 1) — ни одного конкретного отзыва/кейса
+- «17 000 человек» и «400 страниц отзывов» — заявки без подтверждения
+- Нет кейсов «до/после» с именем, возрастом, конкретным результатом
+- Отзывы на стр. 2 — скриншоты (не встроены в текст, не работают как нарратив)
+- Нет сравнения «без метода vs с методом» в цифрах</p>
+<p><strong>Чеклист:</strong> 3/8 пунктов выполнены.</p>
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Close</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p><strong>Что работает:</strong>
+- Эмоциональный выбор: «согласиться с пессимистичным сценарием старения или выбрать здоровье»
+- Блок «даже если вы никогда не занимались здоровьем»</p>
+<p><strong>Что не работает:</strong>
+- Только 1 CTA на каждой странице (оптимально 2-3)
+- Нет срочности — «приходите когда хотите»
+- Нет гарантии
+- Нет P.S. — потеря последнего шанса убедить
+- Финал слабее начала — нет крещендо</p>
+<p><strong>Чеклист:</strong> 2/8 пунктов выполнены.</p>
+                </div>
+            </div>
+            
+        </section>
+        
+
+        <!-- Calculation -->
+        
+        <section class="report-section">
+            <h2 class="report-section__heading">Расчёт</h2>
+            <table class="calc-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Измерение</th>
+                        <th>Балл</th>
+                        <th>Вес</th>
+                        <th>Взвешенный</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td>1</td>
+                        <td>Lead Power</td>
+                        <td>7</td>
+                        <td>1.5</td>
+                        <td>10.5</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>2</td>
+                        <td>Story Arc</td>
+                        <td>4</td>
+                        <td>1.0</td>
+                        <td>4.0</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>3</td>
+                        <td>Mechanism Clarity</td>
+                        <td>8</td>
+                        <td>1.5</td>
+                        <td>12.0</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>4</td>
+                        <td>Offer Strength</td>
+                        <td>5</td>
+                        <td>1.0</td>
+                        <td>5.0</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>5</td>
+                        <td>Proof Weight</td>
+                        <td>4</td>
+                        <td>1.0</td>
+                        <td>4.0</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>6</td>
+                        <td>Language & Flow</td>
+                        <td>6</td>
+                        <td>1.0</td>
+                        <td>6.0</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>7</td>
+                        <td>Big Idea</td>
+                        <td>7</td>
+                        <td>1.0</td>
+                        <td>7.0</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>8</td>
+                        <td>Persuasion Arch.</td>
+                        <td>4</td>
+                        <td>1.0</td>
+                        <td>4.0</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            
+            <div class="calc-total">Общий балл = (10.5 + 4.0 + 12.0 + 5.0 + 4.0 + 6.0 + 7.0 + 4.0) / 9.0 × 10 = 52.5 / 9.0 × 10 ≈ **58/100**</div>
+            
+        </section>
+        
+
+        <!-- Recommendations -->
+        
+        <section class="report-section">
+            <h2 class="report-section__heading">Рекомендации</h2>
+            <div class="rec-list">
+                
+                <div class="rec-card rec-card--red">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">1</div>
+                        <div class="rec-card__title">Proof: добавить 3-5 конкретных кейса «до/после»</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: встроить в лонгрид (стр. 1) минимум 3 отзыва с именем, возрастом, конкретной проблемой и результатом. Формат: «Ирина, 58 лет, Москва. Гипертония 15 лет. Через 3 недели давление стабилизировалось на 130/85 без таблеток.»
+   → Размещение: после блока «7 признаков исцеляющего движения» — в момент максимального интереса
+   → Пример: Вынести 3 самых сильных кейса из «400 страниц отзывов» и переписать их как мини-истории</p></div>
+                    
+                </div>
+                
+                <div class="rec-card rec-card--red">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">2</div>
+                        <div class="rec-card__title">Close: добавить срочность и гарантию</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: добавить дедлайн («Марафон стартует [дата]», ограниченное количество мест) + гарантию возврата (7 дней без вопросов)
+   → На страницу оффера добавить минимум 2 CTA (после ценового стека и после отзывов)
+   → Пример гарантии: «Если после 5 дней марафона вы не почувствуете разницу — верну 100% оплаты без единого вопроса»</p></div>
+                    
+                </div>
+                
+                <div class="rec-card rec-card--red">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">3</div>
+                        <div class="rec-card__title">Persuasion Architecture: убрать разрыв воронки</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: объединить лонгрид и оффер на одну страницу ИЛИ сделать плавный переход (сейчас кнопка «Продолжить чтение» теряет часть аудитории)
+   → Если оставить 2 страницы — добавить мини-CTA в конце лонгрида со словами «Узнайте, как получить доступ к полной системе "Нить Жизни" за [цену]»</p></div>
+                    
+                </div>
+                
+                <div class="rec-card rec-card--yellow">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">4</div>
+                        <div class="rec-card__title">Story: добавить личную трёхактную историю автора</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: в начало лонгрида (после блока проблем) — 200-300 слов личной истории Осипова. Акт 1: какой была его жизнь до метода. Акт 2: момент открытия в Китае. Акт 3: первый конкретный результат
+   → Пример начала: «В 1980 году мне было 25, и я уже чувствовал, как тело сдаёт. Пока однажды мой учитель в Ченьцзягоу не показал мне одно движение...»</p></div>
+                    
+                </div>
+                
+                <div class="rec-card rec-card--yellow">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">5</div>
+                        <div class="rec-card__title">Mechanism: сократить список эффектов, убрать сверхзаявки</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: выбрать 3-5 главных эффектов (спина/суставы, давление, энергия) и дать им глубину. Убрать заявки про онкологию и деменцию — они вызывают скептицизм и могут нарушать закон о рекламе
+   → Восточную терминологию (Ци, Дань-Тян) — либо убрать, либо дать пояснения в скобках при первом упоминании</p></div>
+                    
+                </div>
+                
+                <div class="rec-card rec-card--yellow">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">6</div>
+                        <div class="rec-card__title">Offer: посчитать Value Stack в цифрах</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: каждому из 17 бонусов присвоить конкретную стоимость. Подсчитать итог: «Общая стоимость: 47 000 ₽. Ваша цена: 990 ₽. Вы экономите 46 010 ₽»
+   → Убрать бонусы, не связанные с Core Outcome (медитация «Прощение родителей» — отвлекает от темы здоровья)</p></div>
+                    
+                </div>
+                
+                <div class="rec-card rec-card--yellow">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">7</div>
+                        <div class="rec-card__title">Big Idea: заменить «секретное оружие» на более оригинальную формулировку</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: «секретное оружие даосских целителей» — клише. Сама Big Idea (полный цикл привнесения + очищения) сильная, но подана слабо
+   → Пример переформулировки: «Почему любое упражнение для здоровья работает только наполовину — и какое древнее движение завершает цикл»</p></div>
+                    
+                </div>
+                
+            </div>
+        </section>
+        
+
+        <!-- KB Comparison -->
+        
+
+        <!-- Verdict -->
+        
+        <section class="report-section">
+            <h2 class="report-section__heading">Итоговый вердикт</h2>
+            <div class="verdict">
+                <p><strong>55/100 — текст с мощным механизмом, но слабой продающей архитектурой.</strong></p>
+<p><strong>Главная сила:</strong> Mechanism Clarity (8/10). «Полный цикл привнесения и очищения» — это настоящий Unique Mechanism, который отстраивает от конкурентов. Формулировка «другие методы привносят, но не выводят» — точное попадание для Solution Aware аудитории.</p>
+<p><strong>Главная слабость:</strong> отсутствие proof (конкретных кейсов) и разорванная архитектура убеждения. Лонгрид прекрасно объясняет «почему», но не доводит до покупки. Оффер на отдельной странице — потеря конверсии.</p>
+<p><strong>Приоритет исправлений:</strong>
+1. Встроить 3-5 конкретных кейсов «до/после» в лонгрид
+2. Добавить гарантию и срочность в оффер
+3. Объединить воронку или сделать плавный переход
+4. Сократить список обещаний до 3-5 ключевых (убрать онкологию, деменцию)</p>
+            </div>
+        </section>
+        
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        X-Ray Report &middot; Copycraft М.О.С.
+    </footer>
+
+</body>
+</html>
