@@ -13,6 +13,7 @@ from jinja2 import Environment, FileSystemLoader
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PROJECTS_DIR = PROJECT_ROOT / "projects"
+XRAYS_DIR = PROJECT_ROOT / "xrays"
 TEMPLATES_DIR = PROJECT_ROOT / "templates"
 DOCS_DIR = PROJECT_ROOT / "docs"
 
@@ -313,9 +314,12 @@ def _parse_recommendations(body: str, report: XrayReport):
 # --- Build ---
 
 
-def build(project: str, input_file: str):
-    """Build HTML X-ray report from project markdown."""
-    md_path = PROJECTS_DIR / project / input_file
+def build(project: str, input_file: str, source: str = "projects"):
+    """Build HTML X-ray report from project or external xrays markdown."""
+    if source == "xrays":
+        md_path = XRAYS_DIR / project / input_file
+    else:
+        md_path = PROJECTS_DIR / project / input_file
     if not md_path.exists():
         print(f"ERROR: {md_path} not found")
         return
@@ -354,13 +358,17 @@ def main():
     parser = argparse.ArgumentParser(
         description="Build HTML X-ray report from xray.md"
     )
-    parser.add_argument("project", help="Project slug (folder name in projects/)")
+    parser.add_argument("project", help="Project slug (folder name in projects/ or xrays/)")
     parser.add_argument(
         "--input", default="xray.md", help="Markdown file name (default: xray.md)"
     )
+    parser.add_argument(
+        "--source", default="projects", choices=["projects", "xrays"],
+        help="Source directory: 'projects' (default) or 'xrays' for external site reports"
+    )
     args = parser.parse_args()
 
-    build(args.project, args.input)
+    build(args.project, args.input, args.source)
 
 
 if __name__ == "__main__":
