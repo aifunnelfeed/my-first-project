@@ -11,7 +11,13 @@
       "command": "/Library/Frameworks/Python.framework/Versions/3.11/bin/python3",
       "args": ["scripts/knowledge_server.py"],
       "cwd": "/Users/ilaija/Documents/ my-first-project",
-      "timeout": 60
+      "env": {
+        "TRANSFORMERS_OFFLINE": "1",
+        "HF_HUB_OFFLINE": "1",
+        "TQDM_DISABLE": "1",
+        "HF_HUB_DISABLE_PROGRESS_BARS": "1"
+      },
+      "timeout": 120
     }
   }
 }

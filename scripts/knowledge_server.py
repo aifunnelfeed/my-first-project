@@ -23,6 +23,10 @@ logging.getLogger("sentence_transformers").setLevel(logging.WARNING)
 logging.getLogger("httpx").setLevel(logging.WARNING)
 logging.getLogger("chromadb").setLevel(logging.WARNING)
 
+# Suppress tqdm progress bars that flood stderr and can cause MCP pipe issues
+os.environ.setdefault("TQDM_DISABLE", "1")
+os.environ.setdefault("HF_HUB_DISABLE_PROGRESS_BARS", "1")
+
 # --- Configuration ---
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -38,16 +42,14 @@ _collection = None
 _initialized = False
 
 
-_init_error: str | None = None
-
-
 def _ensure_initialized():
-    """Lazy-load embedding model, ChromaDB, and run startup indexing."""
-    global _collection, _initialized, _init_error
+    """Load embedding model, ChromaDB, and run startup indexing.
+
+    No error caching — retries on every call until successful.
+    """
+    global _collection, _initialized
     if _initialized:
         return
-    if _init_error:
-        raise RuntimeError(_init_error)
     try:
         import chromadb
         from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
@@ -61,12 +63,12 @@ def _ensure_initialized():
             embedding_function=embedding_fn,
         )
         stats = index_knowledge(_collection)
-        print(f"Lazy init complete. Indexing: {stats}", file=sys.stderr)
+        print(f"Init complete. Indexing: {stats}", file=sys.stderr)
         _initialized = True
     except Exception as exc:
-        _init_error = f"Knowledge base init failed: {exc}"
-        print(_init_error, file=sys.stderr)
-        raise RuntimeError(_init_error) from exc
+        msg = f"Knowledge base init failed: {exc}"
+        print(msg, file=sys.stderr)
+        raise RuntimeError(msg) from exc
 
 
 # --- Chunking ---
@@ -382,4 +384,10 @@ def reindex(force: bool = False) -> str:
 
 
 if __name__ == "__main__":
+    # Eager init: load model and index before accepting MCP requests.
+    # This prevents timeouts on the first tool call.
+    try:
+        _ensure_initialized()
+    except RuntimeError:
+        pass  # Error already logged; tools will retry on each call
     mcp_server.run()
