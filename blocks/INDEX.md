@@ -16,7 +16,7 @@
 | 02 | `02_state_machine.md` | States, Transitions, Execution Rules | **Всегда** — как работает процесс |
 | 03 | `03_evidence_strategy.md` | Evidence Map + Strategy Skeleton | STATE=INPUT → STRATEGY |
 | 04 | `04_protocols.md` | Operational Loop, Truth Protocol, Query Protocol | STATE=INPUT, QUERY |
-| 05 | `05_research_engine.md` | JTBD, Schwartz Matrix, Unfair Advantage, Curiosity Mining, Corruption Mining, Research Sources | STATE=RESEARCH |
+| 05 | `05_research_engine.md` | JTBD, Schwartz Matrix, Unfair Advantage, Curiosity Mining, Corruption Mining, Research Sources, Source Priority, Fact Tagging, Triple Source Rule, Search Templates, Research Subagent Dispatch, Double Filter | STATE=RESEARCH |
 | 06 | `06_meaning_maker.md` | UM Engine, Big Idea, Offer Engine | STATE=STRATEGY → EXECUTION |
 | 07 | `07_copywriting_kernel.md` | RMBC, Lead, Story, Mechanism, Product Reveal, Close, Fascinations, FAQ, Proof Engine (incl. Proof Research) | STATE=EXECUTION |
 | 08 | `08_asset_library.md` | Email, Ads, VSL, Chatbot шаблоны, Subject Lines | STATE=EXECUTION (по формату) |
