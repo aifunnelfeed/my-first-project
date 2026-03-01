@@ -1,13 +1,13 @@
 # Состояние проекта: Blog Growth Expert
 
-## Текущий стейт: INPUT
+## Текущий стейт: QUERY_DONE
 ## Фаза: —
 ## Текущий блок: —
 ## Формат: landing
 
 ## Пройденные стейты
-- [ ] INPUT
-- [ ] QUERY
+- [x] INPUT
+- [x] QUERY
 - [ ] RESEARCH
 - [ ] STRATEGY
 - [ ] EXECUTION
