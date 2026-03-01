@@ -22,7 +22,7 @@
 | 08 | `08_asset_library.md` | Email, Ads, VSL, Chatbot шаблоны, Subject Lines | STATE=EXECUTION (по формату) |
 | 09 | `09_debugging.md` | Critic Mode, Launch Checklist, Strategy Critic | STATE=STRATEGY, DEBUGGING, DELIVERY |
 | 10 | `10_xray.md` | Рентген текста — X-ray анализ, 8-мерный скоринг, KB-сравнение | Команда «Рентген» (независимый режим) |
-| 11 | `11_agents_orchestrator.md` | Subagent Rules, Registry, Dispatch, Prompt Templates (Research A-E + Critic F,G), Result Pipelines | STATE=RESEARCH, DEBUGGING, DELIVERY |
+| 11 | `11_agents_orchestrator.md` | Subagent Rules, Registry, Dispatch, Prompt Templates (Research A-E + Assembler H + Critic F,G), Result Pipelines | STATE=RESEARCH, DEBUGGING, DELIVERY |
 
 ---
 

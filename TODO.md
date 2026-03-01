@@ -66,6 +66,15 @@
 - [x] Обновить CLAUDE.md: autoload table (RESEARCH, DEBUGGING, DELIVERY + 11)
 - [x] Обновить INDEX.md: карта блоков + autoload
 
+### 4.5 Субагент H — Research Assembler (DONE)
+
+- [x] Добавить H в реестр (7.2)
+- [x] Обновить dispatch rules (7.3) — STATE=RESEARCH + fallback
+- [x] Создать промпт-шаблон (7.12) [SUBAGENT_H_ASSEMBLER_V1]
+- [x] Обновить Research Pipeline (7.11A) — H вместо ручной сборки
+- [x] Обновить блок 02: STATE=RESEARCH шаги 4-5
+- [x] Обновить INDEX.md: описание блока 11
+
 ### 4.3 Двойной фильтр ресерча (DONE)
 
 - [x] Описать пайплайн: research_raw.md → показ пользователю → research.md — [RESEARCH_FILTER_V1] (секция 2.12)

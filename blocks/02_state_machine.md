@@ -38,8 +38,8 @@ STATE: INPUT | QUERY | RESEARCH | STRATEGY | EXECUTION | DEBUGGING | DELIVERY | 
 1. Прочитай brief.md, сформируй краткий контекст (3-5 предложений)
 2. Запусти субагентов A, B, C параллельно (через Agent tool, `subagent_type="general-purpose"`)
 3. Пока субагенты работают — выполни JTBD_DECODER + SCHWARTZ_MATRIX (они требуют brief.md напрямую)
-4. Получи результаты субагентов → собери в `research_raw.md`
-5. Покажи пользователю для одобрения ([RESULT_PIPELINE_V1], блок 11, секция 7.11)
+4. Получи результаты субагентов A+B+C → dispatch H (Research Assembler) с выходами A+B+C → блок 11, секция 7.12
+5. Получи готовый `research_raw.md` от H → покажи пользователю для одобрения ([RESULT_PIPELINE_V1], блок 11, секция 7.11)
 6. Одобренные данные → `research.md` (финальный формат с тегами)
 7. Заполни UNFAIR_ADVANTAGE_MINER на основе всех собранных данных
 
