@@ -2,7 +2,7 @@
 
 ## Текущий стейт: EXECUTION
 ## Фаза: PHASE C (COPY)
-## Текущий блок: Product Reveal
+## Текущий блок: Offer
 ## Формат: landing
 
 ## Пройденные стейты
@@ -26,7 +26,7 @@
 | UMR | ✅ | ✅ | ✅ PASS (87%) | Утверждён |
 | Result Projection | ✅ | ✅ | ✅ PASS (86%) | Утверждён |
 | Mini-Proof | ✅ | ⏳ PLACEHOLDER | — | Плейсхолдер (пользователь заполнит) |
-| Product Reveal | ✅ | — | — | Ожидает |
+| Product Reveal | ✅ | ✅ | ✅ PASS (82%) | Утверждён |
 | Offer | ✅ | — | — | Ожидает |
 | CTA + Urgency | ✅ | — | — | Ожидает |
 | FAQ | ✅ | — | — | Ожидает |
