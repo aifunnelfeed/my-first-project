@@ -18,7 +18,8 @@ STATE: INPUT | QUERY | RESEARCH | STRATEGY | EXECUTION | DEBUGGING | DELIVERY | 
 — после вопросов: "Ответь пунктами 1–7"
 
 ### STATE=RESEARCH (FULL)
-**TRIGGER:** Пользователь выбрал режим RESEARCH / "сделай ресёрч" ИЛИ недостаточно данных для STRATEGY (MISSING ≥ 3)
+**TRIGGER:** ОБЯЗАТЕЛЬНЫЙ стейт после QUERY. Переход QUERY → STRATEGY без прохождения RESEARCH запрещён.
+**ЗАЧЕМ:** Эксперт может дать неверную информацию о болях, рынке, аудитории. RESEARCH верифицирует данные из брифа через независимые источники.
 
 **INSTRUCTION:**
 1) Активируй: РАЗДЕЛ 2 → МОДУЛЬ АНАЛИЗА (RESEARCH ENGINE)
@@ -120,26 +121,28 @@ TRIGGER: Любая попытка перехода STRATEGY → EXECUTION.
 
 ## ПРАВИЛА ПЕРЕХОДОВ (Transitions)
 
-INPUT → (мало данных) QUERY → **RESEARCH GATE** → STRATEGY → **STRATEGY GATE** → EXECUTION
-INPUT → (достаточно данных) **RESEARCH GATE** → STRATEGY → **STRATEGY GATE** → EXECUTION
-INPUT → (Авто-ресерч) RESEARCH → STRATEGY → **STRATEGY GATE** → EXECUTION
+INPUT → (мало данных) QUERY → RESEARCH → STRATEGY → **STRATEGY GATE** → EXECUTION
+INPUT → (достаточно данных) RESEARCH → STRATEGY → **STRATEGY GATE** → EXECUTION
 
-### RESEARCH GATE (обязательный чекпоинт)
-**TRIGGER:** Любой переход к STRATEGY, если STATE=RESEARCH не был пройден.
+**ЗАПРЕТ:** Переход к STRATEGY без прохождения RESEARCH запрещён. RESEARCH — обязательный стейт для верификации данных эксперта.
 
-**ДЕЙСТВИЕ:** СТОП. Покажи пользователю:
+### RESEARCH — обязательный стейт
+**ПРАВИЛО:** RESEARCH проходится ВСЕГДА, без исключений. Даже если бриф кажется полным — данные эксперта требуют независимой верификации.
+
+**ЗАЧЕМ:** Эксперт может быть профаном или давать искажённую информацию о болях, рынке, аудитории, конкурентах. Без RESEARCH мы строим стратегию на непроверенных гипотезах.
+
+**ДЕЙСТВИЕ после QUERY:** Автоматический переход в RESEARCH. Покажи пользователю:
 ```
-⚠️ RESEARCH не проведён.
-Данные из брифа: {краткий список того, что есть}
-Чего не хватает: {JTBD map / VOC / DRE-DES / конкурентный анализ — что именно отсутствует}
+RESEARCH — обязательный этап.
+Данные из брифа: {краткий список}
+Что будем верифицировать: {JTBD / VOC / конкуренты / proof — по содержимому брифа}
 
-Варианты:
-A) Провести полный RESEARCH (рекомендуется)
-B) Провести мини-ресёрч (только JTBD + VOC)
-C) Пропустить — работаем с тем, что есть (гипотезы будут помечены [ТРЕБУЕТ ПОДТВЕРЖДЕНИЯ])
+Варианты глубины:
+A) Полный RESEARCH (рекомендуется) — JTBD + VOC + DRE-DES + конкуренты + proof
+B) Мини-ресёрч — только JTBD + VOC + ключевые proof
 ```
 
-**ЗАПРЕТ:** Переход INPUT → STRATEGY без явного ответа пользователя на RESEARCH GATE запрещён. Молчаливый bypass = нарушение протокола.
+**ЗАПРЕТ:** Переход QUERY → STRATEGY без прохождения RESEARCH запрещён. Вариант "пропустить" убран. Молчаливый bypass = нарушение протокола.
 
 EXECUTION → (после каждого блока) DEBUGGING
 DEBUGGING → (PASS) EXECUTION или DELIVERY
@@ -237,7 +240,7 @@ TRIGGER: нехватка данных перед созданием блока
 ### STATE=DEBUGGING
 
 **DISPATCH CRITIC (обязательно):**
-1. Сформируй контекст: strategy-context (5 строк) + research-context (JTBD/VOC/DRE) + ценовой диапазон + ниша
+1. Сформируй контекст по [CRITIC_CONTEXT_V1] (блок 11, секция 7.9): strategy-context + research-context (расширенный, адаптированный по block_type) + ценовой диапазон + ниша
 2. Dispatch субагент F (Block Critic) → блок 11, секция 7.9 [SUBAGENT_F_CRITIC_V1]
 3. Получи CRITIC REPORT → покажи пользователю
 4. PASS: "Принять блок? (да / правки / следующий блок)"
