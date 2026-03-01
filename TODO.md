@@ -75,6 +75,15 @@
 - [x] Обновить блок 02: STATE=RESEARCH шаги 4-5
 - [x] Обновить INDEX.md: описание блока 11
 
+### 4.6 Субагент I — KB-Scout (DONE)
+
+- [x] Добавить I в реестр (7.2)
+- [x] Обновить dispatch rules (7.3) — STATE=EXECUTION PHASE C + Proof exclusion
+- [x] Создать промпт-шаблон (7.13) [SUBAGENT_I_KBSCOUT_V1] с таблицей запросов
+- [x] Создать KB-Scout Pipeline (7.11D)
+- [x] Обновить KNOWLEDGE GATE в блоке 02 (два параллельных потока: скаут + основной агент)
+- [x] Обновить INDEX.md: описание блока 11 + EXECUTION
+
 ### 4.3 Двойной фильтр ресерча (DONE)
 
 - [x] Описать пайплайн: research_raw.md → показ пользователю → research.md — [RESEARCH_FILTER_V1] (секция 2.12)
