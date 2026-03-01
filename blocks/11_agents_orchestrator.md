@@ -28,8 +28,8 @@
 | C  | Curiosity + Corruption | STATE=RESEARCH | brief-context + проблема | Углы для Big Idea | → research_raw.md → DOUBLE FILTER → research.md |
 | D  | Proof Research | EXECUTION (PROOF_MINING gap) | strategy-context + UMR claims | Исследования + Insider Knowledge | → показать пользователю → интегрировать в proof block |
 | E  | Research-Mini | EXECUTION (data gap) | краткий контекст + конкретный пробел | Точечные данные | → показать пользователю → интегрировать в блок |
-| F  | Block Critic | DEBUGGING (после каждого блока COPY) | текст + контекст + 26 критериев | CRITIC REPORT (PASS/FAIL + corrections) | → показать пользователю → rewrite если FAIL |
-| G  | Launch Critic | DELIVERY (перед сборкой) | final.md + контекст + 19 критериев | LAUNCH REPORT (PASS/FAIL + corrections) | → показать пользователю → fix если FAIL |
+| F  | Block Critic | DEBUGGING (после каждого блока COPY) | текст + контекст + 27 критериев | CRITIC REPORT (PASS/FAIL + corrections) | → показать пользователю → rewrite если FAIL |
+| G  | Launch Critic | DELIVERY (перед сборкой) | final.md + контекст + 20 критериев | LAUNCH REPORT (PASS/FAIL + corrections) | → показать пользователю → fix если FAIL |
 | H  | Research Assembler | STATE=RESEARCH (после A+B+C) | выходы субагентов A+B+C | Готовый research_raw.md + SUMMARY | → показать пользователю → research.md |
 | I  | KB-Scout | EXECUTION (PHASE C, перед блоком COPY кроме Proof) | block_type + strategy-context (Awareness, Sophistication, ниша) | Top-3 формулы + Top-2 примера (отфильтрованные) | → показать пользователю → основной агент учитывает при написании |
 
@@ -69,8 +69,8 @@
 
 **FALLBACK (всегда):**
 Если Agent tool недоступен → выполнять проверки in-context (блок 09):
-- F → 26 вопросов CRITIC_MODE_V1 (секция 6.1)
-- G → 19 вопросов LAUNCH_CHECKLIST_V1 (секция 6.2)
+- F → 27 вопросов CRITIC_MODE_V1 (секция 6.1)
+- G → 20 вопросов LAUNCH_CHECKLIST_V1 (секция 6.2)
 - H → главный агент собирает research_raw.md вручную (текущее поведение)
 - A-E → серийный ресерч в основном агенте
 - I → основной агент выполняет KNOWLEDGE GATE самостоятельно (search_knowledge / чтение файлов — текущее поведение)
@@ -446,6 +446,18 @@ VOC-цитаты (CORE, дословные — по 2-3 из каждой тем
 2. ...
 {2-4 записи из research.md секции 3.1}
 
+--- СЕКЦИЯ R6: EXPERT AUTHORITY (→ Q27) ---
+Критику: для Q27 — проверь, вплетены ли credentials в нарратив по паттернам [AUTHORITY_WEAVING_V1] (блок 07, секция 4.3f).
+Если strategy.md секция L пуста или помечена «Эксперт: отсутствует» → Q27 = Н/П.
+
+Credentials (из strategy.md секция L):
+- Имя, должность: {имя + позиция}
+- Топ-3 регалии: {#1, #2, #3 — по впечатляемости}
+- Track record: {числа — клиенты, результаты, стаж}
+- Origin story summary: {1-2 предложения}
+- Роль в тексте: {протагонист / третья сторона / несколько}
+- Anti-credentials: {уязвимости — для проверки на Trust Killers}
+
 --- СЕКЦИЯ S1: PROOF PLAN (→ Q22, Q23, Q25, Q26) ---
 Proof-элементы по стратегии (F1):
 | Тип | Элемент | Статус |
@@ -475,27 +487,27 @@ Angles:
 
 Определяет, какие секции [CRITIC_CONTEXT_V1] включать для каждого типа блока:
 
-| block_type | R1 | R2 | R3 | R4 | R5 | S1 | S2 | S3 |
-|------------|----|----|----|----|----|----|----|----|
-| Headline | FULL | SHORT | SKIP | SKIP | SKIP | SKIP | SHORT | SKIP |
-| Lead | FULL | FULL | SHORT | SHORT | SHORT | SHORT | FULL | FULL |
-| Story | FULL | FULL | SKIP | SKIP | SKIP | SKIP | SHORT | SHORT |
-| Pain Deep Dive | FULL | FULL | SHORT | SKIP | SKIP | SKIP | SHORT | SHORT |
-| Bridge / UMP | FULL | SHORT | SHORT | FULL | SHORT | SKIP | FULL | SHORT |
-| UMR / Mechanism | FULL | SHORT | SKIP | SHORT | FULL | FULL | SHORT | SHORT |
-| Result Projection | FULL | FULL | SKIP | SKIP | SHORT | FULL | SHORT | SHORT |
-| Mini-Proof | SHORT | SKIP | SKIP | SKIP | FULL | FULL | SHORT | SKIP |
-| Product Reveal | SHORT | SKIP | SHORT | SHORT | SKIP | SHORT | SHORT | SHORT |
-| Offer + Close | SHORT | SKIP | FULL | SHORT | SKIP | FULL | FULL | SHORT |
-| Fascinations | SHORT | SHORT | SHORT | SKIP | SHORT | SHORT | SHORT | SKIP |
-| FAQ | SHORT | SHORT | FULL | SHORT | SHORT | SKIP | FULL | SKIP |
+| block_type | R1 | R2 | R3 | R4 | R5 | R6 | S1 | S2 | S3 |
+|------------|----|----|----|----|----|----|----|----|----|
+| Headline | FULL | SHORT | SKIP | SKIP | SKIP | SKIP | SKIP | SHORT | SKIP |
+| Lead | FULL | FULL | SHORT | SHORT | SHORT | FULL | SHORT | FULL | FULL |
+| Story | FULL | FULL | SKIP | SKIP | SKIP | FULL | SKIP | SHORT | SHORT |
+| Pain Deep Dive | FULL | FULL | SHORT | SKIP | SKIP | SKIP | SKIP | SHORT | SHORT |
+| Bridge / UMP | FULL | SHORT | SHORT | FULL | SHORT | SHORT | SKIP | FULL | SHORT |
+| UMR / Mechanism | FULL | SHORT | SKIP | SHORT | FULL | SHORT | FULL | SHORT | SHORT |
+| Result Projection | FULL | FULL | SKIP | SKIP | SHORT | SKIP | FULL | SHORT | SHORT |
+| Mini-Proof | SHORT | SKIP | SKIP | SKIP | FULL | SHORT | FULL | SHORT | SKIP |
+| Product Reveal | SHORT | SKIP | SHORT | SHORT | SKIP | SHORT | SHORT | SHORT | SHORT |
+| Offer + Close | SHORT | SKIP | FULL | SHORT | SKIP | SKIP | FULL | FULL | SHORT |
+| Fascinations | SHORT | SHORT | SHORT | SKIP | SHORT | SKIP | SHORT | SHORT | SKIP |
+| FAQ | SHORT | SHORT | FULL | SHORT | SHORT | SKIP | SKIP | FULL | SKIP |
 
 ---
 
 **ПРОМПТ-ШАБЛОН:**
 
 ```
-ЗАДАЧА: Проверь блок копирайтинга "{block_name}" по 26 критериям качества. Для каждого критерия ответь ДА/НЕТ/Н/П (не применимо к данному блоку). Для каждого НЕТ — опиши проблему и предложи 1-3 конкретных исправления.
+ЗАДАЧА: Проверь блок копирайтинга "{block_name}" по 27 критериям качества. Для каждого критерия ответь ДА/НЕТ/Н/П (не применимо к данному блоку). Для каждого НЕТ — опиши проблему и предложи 1-3 конкретных исправления.
 
 КОНТЕКСТ ПРОЕКТА:
 - Продукт: {1-2 предложения из brief.md}
@@ -602,6 +614,12 @@ Angles:
     Корректировки: Sophistication >= 3 → +5 элементов. Ниша Health/Finance → +5 элементов.
     Если значительно ниже нормы → FAIL.
 26. **Mechanism-Research Validation:** Содержит ли Mechanism хотя бы 1 внешнее исследование / инсайдерский факт, подкрепляющий UMR? Если Sophistication >= 3 — есть ли Mechanism-Proof Fusion (одновременно объясняет КАК + доказывает ЧТО)? Если ниша Health/Finance и нет внешнего research → FAIL.
+27. **Authority Weaving:** Если в тексте упоминается эксперт:
+    - Credentials вплетены в нарратив (НЕ отдельный блок «Об авторе»)?
+    - Используется паттерн, подходящий для Awareness {awareness} / Sophistication {sophistication} (по матрице 4.3f)?
+    - Credentials появляются минимум в 2 точках текста?
+    - Каждый credential ПРИВЯЗАН к окружающему контексту (не висит в воздухе)?
+    Если credentials одним списком или нерелевантны → FAIL. Если эксперта нет → Н/П.
 
 ==============================
 ПРАВИЛА ОЦЕНКИ
@@ -613,6 +631,7 @@ Angles:
 - Блок НЕ содержит Mechanism → вопрос 26 = Н/П
 - Блок НЕ содержит Offer → вопросы 6, 7, 9 = Н/П
 - Big Idea не требуется (Sophistication < 3) → вопрос 5 = Н/П
+- Блок НЕ содержит упоминаний эксперта и strategy.md L = «Эксперт: отсутствует» → вопрос 27 = Н/П
 
 **Порог PASS:** Из ПРИМЕНИМЫХ вопросов >= 80% должны быть ДА.
 
@@ -633,6 +652,7 @@ Angles:
 | 2 | UMP | ✓ / ✗ / Н/П | {комментарий} |
 | ... | ... | ... | ... |
 | 26 | Mechanism-Research | ✓ / ✗ / Н/П | {комментарий} |
+| 27 | Authority Weaving | ✓ / ✗ / Н/П | {комментарий} |
 
 ### CORRECTIONS (для каждого ✗)
 **Q{N} — {название критерия}**
@@ -675,7 +695,7 @@ Angles:
 **ПРОМПТ-ШАБЛОН:**
 
 ```
-ЗАДАЧА: Проверь полный собранный текст (final.md) по 19 критериям Launch Checklist. ВСЕ 19 должны быть ДА для прохождения. Для каждого НЕТ — опиши проблему и предложи исправление.
+ЗАДАЧА: Проверь полный собранный текст (final.md) по 20 критериям Launch Checklist. ВСЕ 20 должны быть ДА для прохождения. Для каждого НЕТ — опиши проблему и предложи исправление.
 
 КОНТЕКСТ ПРОЕКТА:
 - Продукт: {1-2 предложения из brief.md}
@@ -695,7 +715,7 @@ Angles:
 ---
 
 ==============================
-19 КРИТЕРИЕВ LAUNCH CHECKLIST
+20 КРИТЕРИЕВ LAUNCH CHECKLIST
 ==============================
 
 1. **ЦА через JTBD:** ЦА чётко определена через JTBD (не через соцдем)?
@@ -719,6 +739,7 @@ Angles:
 17. **Proof Placement:** Доказательства размещены ДО первого запроса денег (CTA #1)?
 18. **Proof Specificity:** Каждый proof-элемент содержит конкретное имя/число/дату?
 19. **Mechanism-Research:** Если Sophistication >= 3 или ниша Health/Finance — есть минимум 1 внешнее исследование, подкрепляющее UMR?
+20. **Authority Weaving:** Credentials эксперта появляются в тексте минимум в 2 точках (Lead/Story + Mechanism/Proof/Close)? Нет «резюме-стиля» (отдельный блок регалий без привязки к проблеме)? Если эксперта нет → Н/П.
 
 ==============================
 ДОПОЛНИТЕЛЬНЫЕ ПРОВЕРКИ
@@ -742,7 +763,7 @@ Angles:
 
 ## LAUNCH REPORT: {project_name}
 
-### VERDICT: PASS / FAIL ({кол-во ДА}/19)
+### VERDICT: PASS / FAIL ({кол-во ДА}/20)
 
 ### DETAILED CHECK
 | # | Критерий | Результат | Комментарий |
@@ -750,6 +771,7 @@ Angles:
 | 1 | ЦА через JTBD | ✓ / ✗ | {комментарий} |
 | ... | ... | ... | ... |
 | 19 | Mechanism-Research | ✓ / ✗ | {комментарий} |
+| 20 | Authority Weaving | ✓ / ✗ / Н/П | {комментарий} |
 
 ### CROSS-BLOCK CONSISTENCY
 | Проверка | Результат | Деталь |
@@ -779,7 +801,7 @@ Angles:
 {2-3 предложения: готов ли текст к запуску, главные приоритеты}
 
 ПРАВИЛА:
-- Все 19 = ДА для PASS. Даже 1 НЕТ = FAIL.
+- Все 20 = ДА для PASS. Даже 1 НЕТ = FAIL. Для Q20: если эксперта нет → Н/П (не считается).
 - Cross-Block Consistency и Flow Check — дополнительные (не влияют на PASS/FAIL основных 19, но показываются пользователю).
 - Цитируй конкретные фрагменты текста при указании на проблемы.
 - STRENGTHS обязательны — покажи, что в тексте уже хорошо.

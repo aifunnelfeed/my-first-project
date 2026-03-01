@@ -84,6 +84,15 @@
 - [x] Обновить KNOWLEDGE GATE в блоке 02 (два параллельных потока: скаут + основной агент)
 - [x] Обновить INDEX.md: описание блока 11 + EXECUTION
 
+### 4.7 Authority Weaving Protocol (DONE)
+
+- [x] Создать [AUTHORITY_WEAVING_V1] секция 4.3f в блоке 07 — 5 паттернов, матрица выбора, калибровка, антипаттерны, шаблоны
+- [x] Расширить Strategy Skeleton (блок 03) — секция L) Expert Authority Profile (8 полей)
+- [x] Добавить Q27 в Critic Mode и Q20 в Launch Checklist (блок 09)
+- [x] Добавить R6 в CRITIC_CONTEXT_V1 + обновить таблицу адаптации (блок 11)
+- [x] Обновить промпты Block Critic (26→27) и Launch Critic (19→20) в блоке 11
+- [x] Обновить INDEX.md
+
 ### 4.3 Двойной фильтр ресерча (DONE)
 
 - [x] Описать пайплайн: research_raw.md → показ пользователю → research.md — [RESEARCH_FILTER_V1] (секция 2.12)
