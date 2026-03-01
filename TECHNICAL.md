@@ -9,7 +9,7 @@ Copycraft работает **внутри Claude Code** — без отдель�
 | Функция Copycraft | Реализация | Компонент Claude Code |
 |-------------------|-----------|----------------------|
 | Системный промпт | `CLAUDE.md` в корне проекта — компактная инструкция (~4000 токенов) | Загружается автоматически при старте сессии |
-| Модульные инструкции | `blocks/` — 9 блоков, загружаются по задаче через Read tool | Read tool (встроен в Claude Code) |
+| Модульные инструкции | `blocks/` — 10 блоков, загружаются по задаче через Read tool | Read tool (встроен в Claude Code) |
 | База знаний (формулы, примеры, материалы) | Файлы в папках `knowledge/` | Read tool (встроен в Claude Code) |
 | RAG по большим объёмам данных | MCP-сервер с ChromaDB (векторный поиск по `knowledge/`) | MCP Protocol — настраивается в `.claude/settings.local.json` |
 | Внешний ресерч | Встроенный Web Search | Web Search tool (встроен в Claude Code) |
@@ -18,7 +18,9 @@ Copycraft работает **внутри Claude Code** — без отдель�
 | Обратная связь | `projects/{name}/results.md` — метрики, A/B тесты, выводы | Write/Read tool |
 | Обработка тупиков | Deadlock Recovery протокол в `CLAUDE.md` | Автоматический счётчик в `state.md` |
 | Экспорт | Запись в нужном формате через Write tool | Write tool (встроен в Claude Code) |
-| Критерии качества | Critic Mode в `blocks/09_debugging.md` + формальные метрики | Claude проверяет автоматически в STATE=DEBUGGING |
+| Критерии качества | Critic Mode (26 вопросов) в `blocks/09_debugging.md` + формальные метрики | Claude проверяет автоматически в STATE=DEBUGGING |
+| Рентген текста (X-ray) | Независимый анализ любого продающего текста по XRAY_PROTOCOL_V1 | Блок 10 (`blocks/10_xray.md`) |
+| HTML-сборка | Автосборка лендингов и рентген-отчётов для GitHub Pages | `scripts/build_html.py`, `scripts/build_xray.py` → `docs/` |
 
 ---
 
@@ -27,7 +29,7 @@ Copycraft работает **внутри Claude Code** — без отдель�
 ```
 copycraft/
 │
-├── CLAUDE.md                    # Компактный системный промпт (~4000 токенов)
+├── CLAUDE.md                    # Системный промпт (ссылки на блоки, протоколы)
 │
 ├── PROJECT.md                   # Продуктовая документация
 ├── TECHNICAL.md                 # Эта документация
@@ -40,41 +42,34 @@ copycraft/
 │   ├── 04_protocols.md          # Operational Loop, Truth Protocol, Query Protocol
 │   ├── 05_research_engine.md    # JTBD, Schwartz Matrix, Unfair Advantage
 │   ├── 06_meaning_maker.md      # UM Engine, Big Idea, Offer Engine
-│   ├── 07_copywriting_kernel.md # RMBC, Lead, Story, Mechanism, Product Reveal, Close
+│   ├── 07_copywriting_kernel.md # RMBC, Lead, Story Engine, Mechanism, Proof Engine, Close
 │   ├── 08_asset_library.md      # Email, Ads, VSL, Chatbot шаблоны
-│   └── 09_debugging.md          # Critic Mode, Launch Checklist
+│   ├── 09_debugging.md          # Critic Mode (26), Launch Checklist (19), Strategy Critic (7)
+│   └── 10_xray.md               # X-ray — рентген-анализ продающих текстов
 │
-├── knowledge/                   # База знаний
-│   ├── formulas/                # Формулы, фреймворки, обзоры методологий
+├── knowledge/                   # База знаний (2257 чанков в ChromaDB)
+│   ├── formulas/                # Формулы, фреймворки, паттерны (21 файл)
 │   │   ├── breakthrough_advertising_schwartz.md
 │   │   ├── mos_2_0.md
-│   │   ├── rmbc_00_start.md
-│   │   ├── rmbc_01_overview_materials.md
-│   │   ├── rmbc_02_research_overview.md
-│   │   ├── rmbc_03_mechanism_overview.md
-│   │   ├── rmbc_04_brief_overview.md
-│   │   ├── rmbc_06_fascinations_overview.md
-│   │   ├── rmbc_08_headlines.md
-│   │   ├── rmbc_09_subject_lines_matrix_overview.md
-│   │   ├── rmbc_09_writing_creatives.md
-│   │   └── rmbc_10_aov_money_close.md
+│   │   ├── rmbc_*.md                      # 8 RMBC-обзоров
+│   │   ├── big_ideas_active_reading.md    # Big Ideas из 26 sales letters
+│   │   ├── headlines_active_reading.md    # Паттерны заголовков
+│   │   ├── leads_active_reading.md        # Паттерны лидов
+│   │   ├── mechanisms_active_reading.md   # Паттерны механизмов
+│   │   ├── transitions_active_reading.md  # Паттерны переходов
+│   │   ├── offers_active_reading.md       # Паттерны офферов
+│   │   ├── proof_active_reading.md        # Паттерны доказательств
+│   │   ├── fascinators_active_reading.md  # Паттерны фасцинаций
+│   │   └── emotion_arcs_active_reading.md # Эмоциональные дуги
 │   │
-│   ├── examples/                # Референсные продающие тексты (RMBC-разборы)
+│   ├── examples/                # Референсные тексты (52 файла)
+│   │   ├── active_reading_*.md            # 26 sales letters (активное чтение)
 │   │   ├── 100_greatest_sales_letters.md
-│   │   ├── ot_long_copy_1.md
-│   │   ├── ot_long_copy_2.md
-│   │   ├── rmbc_02_research_ex_*.md      # примеры ресерча (4 файла)
-│   │   ├── rmbc_03_mechanism_ex_*.md      # примеры механизмов (3 файла)
-│   │   ├── rmbc_04_brief_ex_*.md          # примеры брифов (3 файла)
-│   │   ├── rmbc_05_lead_body_ex_*.md      # примеры лидов (4 файла)
-│   │   ├── rmbc_06_fascinations_ex.md
-│   │   ├── rmbc_07_full_copy_*.md         # полные копирайтинг-тексты (6 файлов)
-│   │   ├── rmbc_09_subject_lines_ex.md
-│   │   └── rmbc_10_aov_close_ex.md
+│   │   ├── ot_long_copy_1.md / ot_long_copy_2.md
+│   │   └── rmbc_*_ex_*.md                # RMBC-разборы по этапам (24 файла)
 │   │
-│   ├── expert/                  # Материалы эксперта (пока пусто)
-│   │
-│   └── audience/                # Данные об аудитории (пока пусто)
+│   ├── expert/                  # Материалы эксперта
+│   └── audience/                # Данные об аудитории
 │
 ├── projects/                    # Проекты (каждый в своей папке)
 │   └── {project-name}/
@@ -84,7 +79,25 @@ copycraft/
 │       ├── research.md          # Результаты ресерча (JTBD Map)
 │       ├── draft.md             # Текущий черновик (все блоки вместе)
 │       ├── final.md             # Финальная версия
-│       └── results.md           # Метрики, A/B тесты, выводы (после публикации)
+│       ├── results.md           # Метрики, A/B тесты, выводы
+│       └── xray.md              # Рентген-анализ (опционально)
+│
+├── xrays/                       # Рентгены внешних текстов/сайтов
+│   └── {slug}/xray.md
+│
+├── scripts/                     # Утилиты
+│   ├── knowledge_server.py      # MCP-сервер (ChromaDB + семантический поиск)
+│   ├── build_html.py            # Сборка HTML-лендингов из final.md
+│   ├── build_xray.py            # Сборка HTML-рентген-отчётов
+│   └── convert_to_md.py         # Конвертация PDF/DOCX → markdown
+│
+├── templates/                   # Jinja2-шаблоны
+│   ├── landing.html             # Шаблон лендинга (адаптивный, светлая/тёмная секции)
+│   └── xray.html                # Шаблон рентгена (тёмная тема, collapsible cards)
+│
+├── docs/                        # Собранные HTML для GitHub Pages
+│   ├── .nojekyll
+│   └── {project}/index.html     # Лендинги и xray.html
 │
 └── .claude/
     └── settings.local.json      # Настройки Claude Code + MCP-серверы
@@ -107,7 +120,7 @@ copycraft/
 - **Базовые правила**: лимиты, запреты, формат ответов
 - **Инструкция по работе с `knowledge/`**: когда и как обращаться к файлам
 
-**Размер**: CLAUDE.md не должен превышать ~4000 токенов. Вся детальная логика вынесена в `blocks/` — CLAUDE.md только ссылается на нужные блоки.
+**Размер**: CLAUDE.md содержит протокол запуска, стейт-таблицу, git-стратегию, X-ray протокол, HTML-сборку и Knowledge Base инструкции. Детальная логика вынесена в `blocks/`.
 
 **Протокол запуска сессии** (ключевое отличие от ручного подхода):
 1. Claude читает `projects/` → находит проект(ы)
@@ -124,15 +137,16 @@ copycraft/
 
 | # | Файл | Содержимое | Когда загружать |
 |---|------|-----------|-----------------|
-| 01 | `01_system_core.md` | Identity, Philosophy, 7 Laws М.О.С. | **Всегда** — основа системы |
-| 02 | `02_state_machine.md` | Стейты, переходы, правила EXECUTION | **Всегда** — как работает процесс |
-| 03 | `03_evidence_strategy.md` | Evidence Map + Strategy Skeleton | STATE=INPUT → STRATEGY |
+| 01 | `01_system_core.md` | Identity, Philosophy, 7 Laws М.О.С., RAG Security | INPUT–STRATEGY, XRAY |
+| 02 | `02_state_machine.md` | Стейты, переходы, правила EXECUTION | Все стейты кроме INPUT–RESEARCH |
+| 03 | `03_evidence_strategy.md` | Evidence Map + Strategy Skeleton + Proof Plan | STATE=INPUT → STRATEGY |
 | 04 | `04_protocols.md` | Operational Loop, Truth Protocol, Query Protocol | STATE=INPUT, QUERY |
 | 05 | `05_research_engine.md` | JTBD-фреймворк, матрица Шварца, Unfair Advantage | STATE=RESEARCH |
-| 06 | `06_meaning_maker.md` | UM Engine, Big Idea, Offer Engine | STATE=STRATEGY → EXECUTION |
-| 07 | `07_copywriting_kernel.md` | RMBC, Lead, Story, Mechanism, Product Reveal, Close | STATE=EXECUTION |
-| 08 | `08_asset_library.md` | Шаблоны Email, Ads, VSL, Chatbot | STATE=EXECUTION (по формату) |
-| 09 | `09_debugging.md` | Critic Mode (13 пунктов), Launch Checklist | STATE=DEBUGGING, DELIVERY |
+| 06 | `06_meaning_maker.md` | UM Engine, Big Idea, Offer Engine | STATE=STRATEGY |
+| 07 | `07_copywriting_kernel.md` | RMBC, Lead Engine, Story Engine, Mechanism, Product Reveal, Proof Engine, Close | STATE=EXECUTION |
+| 08 | `08_asset_library.md` | Шаблоны Email, Ads, VSL, Chatbot | STATE=EXECUTION (для email/ads/vsl/chatbot) |
+| 09 | `09_debugging.md` | Critic Mode (26), Launch Checklist (19), Strategy Critic (7) | STATE=DEBUGGING, DELIVERY, STRATEGY |
+| 10 | `10_xray.md` | X-ray — рентген-анализ продающих текстов (балл 0–100) | STATE=XRAY (независимый режим) |
 
 #### Принцип загрузки
 
@@ -168,19 +182,29 @@ copycraft/
 
 Файлы, которые Claude Code читает по запросу через Read tool.
 
-#### Формулы и фреймворки (`knowledge/formulas/`)
+#### Формулы и фреймворки (`knowledge/formulas/`) — 21 файл
 
-Материалы из курса RMBC Стефана Георги + фреймворки Шварца и М.О.С. Файлы содержат обзоры методологий, формулы заголовков, фасцинаций, subject lines, креативов, механизмов и офферов. Каждый файл — отдельная тема (ресерч, механизм, бриф, headlines и т.д.).
+Два слоя:
+1. **Методологии** — RMBC Стефана Георги (8 обзоров по этапам), Breakthrough Advertising Шварца, М.О.С. 2.0
+2. **Паттерны из 26 sales letters** — извлечены через active reading и синтезированы в 8+1 файлов:
+   - `big_ideas_active_reading.md` — Big Ideas
+   - `headlines_active_reading.md` — заголовки
+   - `leads_active_reading.md` — лиды
+   - `mechanisms_active_reading.md` — механизмы
+   - `transitions_active_reading.md` — переходы
+   - `offers_active_reading.md` — офферы
+   - `proof_active_reading.md` — доказательства
+   - `fascinators_active_reading.md` — фасцинации
+   - `emotion_arcs_active_reading.md` — эмоциональные дуги
 
-#### Примеры текстов (`knowledge/examples/`)
+Каждый файл содержит вербатим-цитаты + сводные таблицы паттернов.
 
-Разборы реальных продающих текстов по методологии RMBC. Файлы организованы по этапам:
-- `rmbc_02_research_ex_*` — примеры ресерча (weight loss, real estate, high ticket coaching, tax savings)
-- `rmbc_03_mechanism_ex_*` — примеры механизмов (financial, fungus, olive oil)
-- `rmbc_04_brief_ex_*` — примеры брифов (biz opp, olive oil, weight loss)
-- `rmbc_05_lead_body_ex_*` — примеры лидов и body copy (biz opp, gut supplement, survival, weight loss)
-- `rmbc_07_full_copy_*` — полные тексты (cbd, dog food, law of attraction, silver dogs, snoring device, sports betting)
-- Также: 100 Greatest Sales Letters, OT Long Copy, фасцинации, subject lines, AOV/close
+#### Примеры текстов (`knowledge/examples/`) — 52 файла
+
+Два слоя:
+1. **26 sales letters** (active reading) — `active_reading_*.md`. Полные тексты реальных продающих писем, размеченных по блокам RMBC
+2. **RMBC-разборы** — примеры по этапам: ресерч (4), механизмы (3), брифы (3), лиды (4), фасцинации, полные тексты (6), subject lines, AOV/close
+3. **Референсы** — 100 Greatest Sales Letters, OT Long Copy (2 файла)
 
 #### Материалы эксперта (`knowledge/expert/`)
 
@@ -271,10 +295,11 @@ copycraft/
 
 ```
 1. Пользователь: "Новый проект — курс по нутрициологии"
-2. Claude создаёт: projects/nutriciologia-kurs/
-3. На каждом стейте — записывает результаты в файлы
-4. Версии блоков — в подпапку versions/
+2. Claude создаёт: projects/nutriciologia-kurs/ (state.md, brief.md, results.md)
+3. На каждом стейте — записывает результаты в файлы + git-коммит
+4. Версионность — через git (конвенция: {тип}({проект}): {описание})
 5. Финальный текст — в final.md
+6. HTML-лендинг — в docs/{project}/index.html (автосборка)
 ```
 
 #### Формат brief.md
@@ -402,13 +427,13 @@ INPUT → QUERY ──────────────────┐
 ## Блоки EXECUTION
 | Блок | BRIEF | COPY | DEBUGGING | Статус |
 |------|-------|------|-----------|--------|
-| Lead | APPROVED | APPROVED | PASS | APPROVED |
-| Story | APPROVED | in progress | — | PENDING |
-| Mechanism | — | — | — | PENDING |
-| Product Reveal | — | — | — | PENDING |
-| Offer + Close | — | — | — | PENDING |
-| Гарантия | — | — | — | PENDING |
-| P.S. | — | — | — | PENDING |
+| Lead | ✅ | ✅ | PASS | APPROVED |
+| Story | — | in progress | — | pending |
+| Mechanism | — | — | — | pending |
+| Product Reveal | — | — | — | pending |
+| Offer | — | — | — | pending |
+| Proof | — | — | — | pending |
+| Close | — | — | — | pending |
 
 ## Счётчик попыток
 | Блок | Попыток FAIL | Последняя причина |
@@ -461,7 +486,7 @@ INPUT → QUERY ──────────────────┐
 | **PHASE A** | Стратегия v1 в фикс-формате (Strategy Skeleton A-K). Без обращения к knowledge/ — только бриф + RESEARCH |
 | **KB GATE** | `search_knowledge()` по категориям `formulas` + `examples`. Показать находки пользователю |
 | **PHASE B** | Стратегия v2 на основе KB. Отметить, что изменилось и почему. Вопрос: «Стратегия 1 или 2?» |
-| **STRATEGY CRITIC** | Проверка выбранной стратегии по 7 вопросам (блок 09, секция 6.3). PASS → EXECUTION, FAIL → исправить |
+| **STRATEGY CRITIC** | Проверка выбранной стратегии по 7 вопросам (блок 09, секция 6.3). Все 7 = YES → EXECUTION, иначе FAIL → исправить. Включает Proof Plan (F1–F4), External Research Plan, калибровку по нише/цене |
 
 Реализация: `blocks/02_state_machine.md` (STATE=STRATEGY) + `blocks/09_debugging.md` (STRATEGY_CRITIC_V1).
 
@@ -484,40 +509,30 @@ Claude выполняет перед переходом к следующему 
 5. Минимум 1 конкретная цифра/факт/срок на блок.
 ```
 
-### Уровень 2: Critic Mode (13 пунктов)
+### Уровень 2: Critic Mode (26 пунктов)
 
-Запускается автоматически в STATE=DEBUGGING после каждого блока. Реализован в `blocks/09_debugging.md`.
+Запускается автоматически в STATE=DEBUGGING после каждого блока. Реализован в `blocks/09_debugging.md`. Все 26 вопросов должны быть "Да" (Q11–12 допускают объективные исключения).
 
-| # | Вопрос | Если "нет" |
-|---|--------|-----------|
-| 1 | Есть ли конкретная боль из JTBD, а не общие слова? | Переписать с опорой на JTBD Map |
-| 2 | Раскрыт ли УМ Проблемы (почему раньше не работало)? | Добавить UMP |
-| 3 | Есть ли УМ Решения с названием и объяснением? | Добавить UMR |
-| 4 | Соответствует ли Лид уровню осведомленности Шварца? | Сменить тип лида |
-| 5 | Есть ли Большая Идея (если рынок перенасыщен)? | Добавить Big Idea (для Soph 3+) |
-| 6 | Есть ли Value Stack с цифрами? | Добавить Value Stack |
-| 7 | Гарантия снимает главный риск? | Переработать гарантию |
-| 8 | Язык живой, без корпоративного жаргона? | Переписать разговорным языком |
-| 9 | Есть ли срочность (2+ триггера)? | Добавить элементы срочности |
-| 10 | Каждое предложение ведет к следующему? | Проверить логические переходы |
-| 11 | Использованы ли данные из RESEARCH (JTBD map, VOC-фразы, DRE/DES, барьеры)? | Вернуться к research.md, встроить данные. Если RESEARCH пропущен — пометить гипотезы [ТРЕБУЕТ ПОДТВЕРЖДЕНИЯ] |
-| 12 | Учтены ли формулы/примеры из knowledge/? | Консультировать KB. Если недоступна — зафиксировать причину |
-| 13 | Jargon-check: все термины понятны ЦА без гугления? | Заменить специализированные термины на простые аналоги или добавить пояснение |
+| Группа | Вопросы | Что проверяет |
+|--------|---------|---------------|
+| Базовые | #1–13 | JTBD, UMP/UMR, лид, Big Idea, Value Stack, гарантия, язык, срочность, логика, RESEARCH, KB, жаргон |
+| Brief + Pain | #14–17 | Парадоксальный вопрос, DRE Depth (4 слоя), заслуженное решение, Pain Budget |
+| Story | #18–21 | Stakes Checklist (4+/6), Emotion Layer, Inception Steps, Trust Account (5/3/2) |
+| Proof | #22–26 | Diversity (3+ типа), Escalation, Specificity, Price Calibration, Mechanism-Research |
+
+Полный список вопросов: `blocks/09_debugging.md`, секция 6.1 CRITIC_MODE_V1.
 
 ### Launch Checklist (перед DELIVERY)
 
-Все 10 вопросов должны быть "Да". Если хоть один "Нет" — доработать:
+Все 19 вопросов должны быть "Да". Если хоть один "Нет" — доработать:
 
-1. ЦА четко определена через JTBD?
-2. Уровень Шварца выбран правильно?
-3. UMP снимает вину с клиента?
-4. UMR имеет название и 3 шага объяснения?
-5. Большая Идея пробивает рекламную слепоту?
-6. Оффер бьет в текущую боль, за которую платят сейчас?
-7. Value Stack в 3–5 раз превышает цену?
-8. Гарантия покрывает главный риск клиента?
-9. Есть 2+ триггера срочности?
-10. Язык звучит как разговор двух людей?
+| Группа | Вопросы | Что проверяет |
+|--------|---------|---------------|
+| Базовые | #1–10 | JTBD, Шварц, UMP/UMR, Big Idea, оффер, Value Stack, гарантия, срочность, язык |
+| Story + Pain | #11–15 | FAQ, DRE Depth, Pain Budget, Stakes, Trust Account |
+| Proof | #16–19 | Diversity, Placement (до CTA), Specificity, Mechanism-Research |
+
+Полный список вопросов: `blocks/09_debugging.md`, секция 6.2 LAUNCH_CHECKLIST_V1.
 
 ### Ручные проверки
 
@@ -610,15 +625,32 @@ git show {commit}:projects/{name}/draft.md       # показать версию
 
 ## Экспорт: техническая реализация
 
-Claude формирует финальный текст и записывает в нужном формате:
+### Markdown → final.md
 
-| Формат | Как реализовано |
-|--------|----------------|
-| **Markdown** | `projects/{name}/final.md` — записывается через Write tool |
-| **HTML** | Claude генерирует HTML из markdown и записывает в `final.html` |
-| **PDF** | Через Bash: `npx md-to-pdf projects/{name}/final.md` (требует установки) |
-| **Google Docs** | Через MCP-сервер Google Docs API (опционально) |
-| **Буфер обмена** | Claude выводит текст в чат — пользователь копирует |
+Claude формирует финальный текст и записывает в `projects/{name}/final.md` через Write tool.
+
+### HTML-лендинг (автосборка при DELIVERY)
+
+После сборки `final.md`:
+
+```bash
+python scripts/build_html.py {project_slug} --input final.md --cta-url "URL"
+```
+
+- **Скрипт:** `scripts/build_html.py` (673 строки) — парсит markdown в секции (HERO, BODY, CTA, FAQ, BRIDGE, COMPARISON, CALLOUT, PS), рендерит через Jinja2
+- **Шаблон:** `templates/landing.html` — адаптивный дизайн, анимации fadeInUp, мобильные breakpoints
+- **Результат:** `docs/{project}/index.html`
+- **Деплой:** GitHub Pages → `main` branch → `/docs` folder
+
+### HTML-рентген
+
+```bash
+python scripts/build_xray.py {project_slug} --input xray.md [--source xrays]
+```
+
+- **Скрипт:** `scripts/build_xray.py` (376 строк) — парсит xray.md в структурированные данные, рендерит через Jinja2
+- **Шаблон:** `templates/xray.html` — тёмная тема, collapsible detail cards, цветовая кодировка (green/yellow/red)
+- **Результат:** `docs/{project}/xray.html`
 
 ---
 
@@ -640,32 +672,19 @@ Claude формирует финальный текст и записывает 
 
 ## Работа с несколькими сегментами: техническая реализация
 
+На практике мульти-сегмент реализуется через отдельные проекты (версии):
+
 ```
 projects/
-  nutriciologia-kurs/
-    segment-women-30-45/       ← основной сегмент
-      state.md
-      brief.md
-      strategy.md
-      draft.md
-      final.md
-      results.md
-    segment-men-25-35/          ← адаптация
-      state.md
-      brief.md                  ← свой бриф (свой JTBD)
-      strategy.md               ← своя стратегия (свой MOS_MODE)
-      adaptation-notes.md       ← что изменено и почему
-      draft.md
-      final.md
-      results.md
+  nutriciologia/           ← основной сегмент (v1)
+  nutriciologia-v2/        ← адаптация для другого сегмента
 ```
 
 При адаптации Claude:
-1. Читает `final.md` основного сегмента
-2. Читает новый бриф (с новым JTBD Map)
+1. Читает `final.md` основного проекта + его `results.md` (для обучения)
+2. Создаёт новый проект со своим брифом (свой JTBD Map)
 3. Определяет какие блоки нужно переписать (лид, история, возражения — зависят от сегмента)
-4. Генерирует `adaptation-notes.md` с планом изменений
-5. После подтверждения — создаёт новый `draft.md`
+4. Проходит стандартную стейт-машину (STRATEGY → EXECUTION → DEBUGGING → DELIVERY)
 
 ---
 
@@ -673,30 +692,33 @@ projects/
 
 ### Фаза 1 — Каркас системы (DONE)
 
-1. ~~**CLAUDE.md** — написать компактный системный промпт со ссылками на блоки~~ ГОТОВО
-2. ~~**blocks/** — подготовить 9 блоков инструкций (из PROJECT.md)~~ ГОТОВО
-3. ~~**Структура папок** — создать `projects/`~~ ГОТОВО
+1. ~~CLAUDE.md — системный промпт со ссылками на блоки~~ ГОТОВО
+2. ~~blocks/ — 10 блоков инструкций~~ ГОТОВО
+3. ~~Структура папок — projects/, knowledge/, scripts/, templates/, docs/~~ ГОТОВО
 
 ### Фаза 2 — RAG-инфраструктура (DONE)
 
-4. ~~**ChromaDB + MCP-сервер** — `scripts/knowledge_server.py`~~ ГОТОВО
-5. ~~**Настроить** `.claude/settings.local.json`~~ ГОТОВО
-6. ~~**Создать** структуру `knowledge/` (formulas, examples, expert, audience)~~ ГОТОВО
+4. ~~ChromaDB + MCP-сервер (`scripts/knowledge_server.py`)~~ ГОТОВО
+5. ~~`.claude/settings.local.json` настроен~~ ГОТОВО
+6. ~~Структура `knowledge/` (formulas, examples, expert, audience)~~ ГОТОВО
 
-### Фаза 3 — Наполнение базы знаний
+### Фаза 3 — Наполнение базы знаний (DONE)
 
-7. **knowledge/formulas/** — формулы заголовков, лидов, историй, офферов, CTA
-8. **knowledge/examples/** — референсные продающие тексты
-9. **knowledge/expert/** — материалы экспертов
-10. **knowledge/audience/** — отзывы, комментарии, опросы
-11. **Проиндексировать** все загруженные файлы (`reindex()`)
+7. ~~knowledge/formulas/ — 21 файл (RMBC, Schwartz, паттерны из 26 sales letters)~~ ГОТОВО
+8. ~~knowledge/examples/ — 52 файла (26 active reading + RMBC-разборы)~~ ГОТОВО
+9. ~~Проиндексировано — 2257 чанков в ChromaDB~~ ГОТОВО
+10. knowledge/expert/ — пока пусто (заполняется per-project)
+11. knowledge/audience/ — пока пусто (заполняется per-project)
 
-### Фаза 4 — Умный ресерч
+### Фаза 4 — Расширение ядра (DONE)
 
-12. Обновить блок 05 (research engine)
-13. Субагент-ресёрчер (orchestrator-worker)
+12. ~~Story Engine V1 (блок 07, секция 4.3) — Emotion Layer, Stakes, Inception, Trust Protocol~~ ГОТОВО
+13. ~~Proof Engine V1 (блок 07, секция 4.9) — Taxonomy, Mining, Selector, Stacking, Placement, Check~~ ГОТОВО
+14. ~~Proof Research V1 (блок 07, секция 4.9b-ext) — внешние исследования, Mechanism-Proof Fusion~~ ГОТОВО
+15. ~~X-ray Mode (блок 10) — анализ продающих текстов, балл 0–100~~ ГОТОВО
+16. ~~HTML-сборка — build_html.py, build_xray.py, templates/, docs/~~ ГОТОВО
 
-### Фаза 5 — Удобства
+### Фаза 5 — Следующие шаги
 
-14. **Экспорт в PDF** — настроить конвертер (`md-to-pdf`)
-15. **Google Docs** — подключить MCP-сервер (опционально)
+17. Субагент-ресёрчер (orchestrator-worker)
+18. Расширение knowledge/expert/ и knowledge/audience/ per-project
