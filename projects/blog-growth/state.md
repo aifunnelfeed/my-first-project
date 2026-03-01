@@ -1,7 +1,7 @@
 # Состояние проекта: Blog Growth Expert
 
-## Текущий стейт: STRATEGY
-## Фаза: —
+## Текущий стейт: EXECUTION
+## Фаза: PHASE B (BRIEF)
 ## Текущий блок: —
 ## Формат: landing
 
@@ -9,7 +9,7 @@
 - [x] INPUT
 - [x] QUERY
 - [x] RESEARCH
-- [ ] STRATEGY
+- [x] STRATEGY
 - [ ] EXECUTION
 - [ ] DEBUGGING
 - [ ] DELIVERY
