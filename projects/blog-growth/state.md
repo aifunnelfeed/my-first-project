@@ -2,7 +2,7 @@
 
 ## Текущий стейт: EXECUTION
 ## Фаза: PHASE C (COPY)
-## Текущий блок: Offer
+## Текущий блок: CTA + Urgency
 ## Формат: landing
 
 ## Пройденные стейты
@@ -27,7 +27,7 @@
 | Result Projection | ✅ | ✅ | ✅ PASS (86%) | Утверждён |
 | Mini-Proof | ✅ | ⏳ PLACEHOLDER | — | Плейсхолдер (пользователь заполнит) |
 | Product Reveal | ✅ | ✅ | ✅ PASS (82%) | Утверждён |
-| Offer | ✅ | — | — | Ожидает |
+| Offer | ✅ | ✅ | ✅ PASS (86%) | Утверждён |
 | CTA + Urgency | ✅ | — | — | Ожидает |
 | FAQ | ✅ | — | — | Ожидает |
 
