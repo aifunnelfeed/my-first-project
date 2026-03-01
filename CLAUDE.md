@@ -45,11 +45,11 @@
 |-------|-------------------|
 | INPUT | 01 + 03 + 04 |
 | QUERY | 01 + 04 |
-| RESEARCH | 01 + 05 |
+| RESEARCH | 01 + 05 + 11 |
 | STRATEGY | 01 + 02 + 03 + 06 + 09 |
 | EXECUTION | 02 + 07 (или 02 + 08 для email/ads/vsl/chatbot) |
-| DEBUGGING | 02 + 09 |
-| DELIVERY | 02 + 09 |
+| DEBUGGING | 02 + 09 + 11 |
+| DELIVERY | 02 + 09 + 11 |
 | REVIEW | 02 |
 | XRAY | 01 + 10 |
 
