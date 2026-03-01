@@ -481,10 +481,13 @@ Angles:
 | Lead | FULL | FULL | SHORT | SHORT | SHORT | SHORT | FULL | FULL |
 | Story | FULL | FULL | SKIP | SKIP | SKIP | SKIP | SHORT | SHORT |
 | Pain Deep Dive | FULL | FULL | SHORT | SKIP | SKIP | SKIP | SHORT | SHORT |
-| UMP | FULL | SHORT | SHORT | FULL | SHORT | SKIP | FULL | SHORT |
+| Bridge / UMP | FULL | SHORT | SHORT | FULL | SHORT | SKIP | FULL | SHORT |
 | UMR / Mechanism | FULL | SHORT | SKIP | SHORT | FULL | FULL | SHORT | SHORT |
+| Result Projection | FULL | FULL | SKIP | SKIP | SHORT | FULL | SHORT | SHORT |
+| Mini-Proof | SHORT | SKIP | SKIP | SKIP | FULL | FULL | SHORT | SKIP |
 | Product Reveal | SHORT | SKIP | SHORT | SHORT | SKIP | SHORT | SHORT | SHORT |
 | Offer + Close | SHORT | SKIP | FULL | SHORT | SKIP | FULL | FULL | SHORT |
+| Fascinations | SHORT | SHORT | SHORT | SKIP | SHORT | SHORT | SHORT | SKIP |
 | FAQ | SHORT | SHORT | FULL | SHORT | SHORT | SKIP | FULL | SKIP |
 
 ---
