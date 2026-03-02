@@ -249,16 +249,34 @@
         }
 
         .cta-subtext {
-            margin-top: 16px;
-            font-size: 0.95rem;
+            margin-bottom: 36px;
+            font-size: 1rem;
+            text-align: left;
+            line-height: 1.75;
+        }
+
+        .cta-subtext p {
+            margin-bottom: 1em;
         }
 
         .section--light .cta-subtext {
-            color: #666;
+            color: #2a2a3c;
         }
 
         .section--dark .cta-subtext {
-            color: #a0a0b8;
+            color: #d0d0de;
+        }
+
+        .section--light .cta-subtext strong {
+            color: #0f0f23;
+            background: linear-gradient(to top, rgba(127, 86, 217, 0.15) 0%, rgba(127, 86, 217, 0.15) 35%, transparent 35%);
+            padding: 0 2px;
+        }
+
+        .section--dark .cta-subtext strong {
+            color: #ffffff;
+            background: linear-gradient(to top, rgba(182, 146, 246, 0.25) 0%, rgba(182, 146, 246, 0.25) 35%, transparent 35%);
+            padding: 0 2px;
         }
 
         /* === Bridge (transition with inline CTA) === */
@@ -857,10 +875,10 @@
             <a href="{{ cta_url }}" class="cta-button" style="margin-top:32px;">{{ section.cta_text }}</a>
 
             {% else %}
-            <a href="{{ cta_url }}" class="cta-button">{{ section.cta_text }}</a>
             {% if section.cta_subtext %}
             <div class="cta-subtext">{{ section.cta_subtext }}</div>
             {% endif %}
+            <a href="{{ cta_url }}" class="cta-button">{{ section.cta_text }}</a>
             {% endif %}
         </div>
     </section>
