@@ -21,7 +21,7 @@
 | 07 | `07_copywriting_kernel.md` | RMBC, Lead, Story, Mechanism, Product Reveal, Close, Fascinations, FAQ, Proof Engine (incl. Proof Research), Authority Weaving | STATE=EXECUTION |
 | 08 | `08_asset_library.md` | Email, Ads, VSL, Chatbot шаблоны, Subject Lines | STATE=EXECUTION (по формату) |
 | 09 | `09_debugging.md` | Critic Mode, Launch Checklist, Strategy Critic | STATE=STRATEGY, DEBUGGING, DELIVERY |
-| 10 | `10_xray.md` | Рентген текста — X-ray анализ, 8-мерный скоринг, KB-сравнение | Команда «Рентген» (независимый режим) |
+| 10 | `10_xray.md` | Рентген текста — X-ray V2: 9-мерный скоринг (Lead/Story/Mechanism/Offer/Proof/Language/BigIdea/Architecture/Trust), N/A логика, Awareness/Sophistication-адаптация, KB-сравнение V2 | Команда «Рентген» (независимый режим) |
 | 11 | `11_agents_orchestrator.md` | Subagent Rules, Registry, Dispatch, Prompt Templates (Research A-E + Assembler H + Critic F,G + KB-Scout I), Critic Context, Result Pipelines | STATE=RESEARCH, EXECUTION, DEBUGGING, DELIVERY |
 
 ---
