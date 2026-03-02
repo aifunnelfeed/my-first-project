@@ -611,7 +611,7 @@
             <div class="hero__label">X-Ray Report</div>
             <h1 class="hero__title">«Сценарий Реальности» — финальный лендинг (blog-growth)</h1>
             <div class="score-badge score-badge--green">
-                84<span class="score-badge__total">/100</span>
+                88<span class="score-badge__total">/100</span>
             </div>
         </div>
     </section>
@@ -1066,14 +1066,30 @@
         <section class="report-section">
             <h2 class="report-section__heading">Сравнение с базой знаний</h2>
             <div class="kb-block">
-                <p><strong>Примечание:</strong> MCP-инструмент <code>search_knowledge()</code> недоступен в текущей сессии. Сравнение на основе кросс-референса с strategy.md → KB GATE.</p>
-<ul>
-<li><strong>Lead:</strong> Использует Confessional opener (паттерн из <code>leads_active_reading.md</code> — встречается в 12% корпуса). Совпадает с рекомендацией для S3-S4: story-first или mechanism-first. Сильнее, чем типичный Problem-Agitate lead.</li>
-<li><strong>Mechanism:</strong> Трёхслойная структура UMR (имя + процесс + наука) — соответствует 100% именованных механизмов в корпусе (<code>mechanisms_active_reading.md</code>). Метафора торта = контрастная аналогия «Старое vs Новое» (62% корпуса).</li>
-<li><strong>Big Idea:</strong> Тип Discovery / Secret Method — 19%+15% в корпусе (<code>big_ideas_active_reading.md</code>). «Скрытый ингредиент, который у тебя уже есть» — сильный паттерн.</li>
-<li><strong>Offer:</strong> Value Stack 9x (корпус: 2-4x типично). Превышает норму. Но отсутствие гарантии — аномалия: 58%+ текстов в корпусе содержат гарантию.</li>
-<li><strong>Proof:</strong> Mechanism-Proof Fusion через Zak — соответствует <code>[PROOF_RESEARCH_V1]</code>. Но общее количество proof ниже нормы для корпуса ($50-99 range).</li>
-</ul>
+                <p><strong>Источник:</strong> ChromaDB (2257 чанков), мульти-ракурсный поиск по 5 направлениям.</p>
+<h3>Похожие тексты в корпусе</h3>
+<p>Прямых аналогов (ниша: блогинг/мамы/соцсети) в <code>knowledge/examples/</code> нет — корпус преимущественно finance/health/survival. Ближайший структурный аналог: <code>rmbc_05_lead_body_ex_biz_opp.md</code> — 12-секционная архитектура Эмоция↔Логика со скептическим входом и вшитыми возражениями. Blog-growth повторяет эту архитектуру почти точно (12 секций, чередование, скептический хук).</p>
+<h3>Lead</h3>
+<p>Confessional opener (тип Story-first) встречается в 12% корпуса (<code>leads_active_reading.md</code>). Текст использует его правильно: VOC-хук → сенсорика → контраст. В корпусе лучшие confessional openers сочетают vulnerability + specificity — здесь это реализовано («как горит лицо», «два часа лежишь и смотришь в потолок»).</p>
+<h3>Mechanism</h3>
+<p>Трёхслойная структура UMR (имя + процесс + наука) — соответствует 100% именованных механизмов в корпусе (<code>mechanisms_active_reading.md</code>). Метафора торта = контраст «Старое vs Новое» (62% корпуса). Mechanism-Proof Fusion через Zak соответствует модели из <code>mos_2_0.md</code> (5-Layer Stacked Proof, первый слой = Mechanism Proof).</p>
+<h3>Big Idea</h3>
+<p>Тип Discovery / Secret Method — 19%+15% в корпусе (<code>big_ideas_active_reading.md</code>). Паттерн «скрытый ингредиент, который у тебя уже есть» усилен ownership framing — читатель УЖЕ владеет ресурсом. По <code>mos_2_0.md</code>: «A Big Idea is the central promise, mechanism, and emotional hook that creates instant desire and belief» — здесь все три компонента присутствуют. Риск: «vulnerability = content» движется к мейнстриму; в корпусе устойчивые Big Ideas добавляют СИСТЕМУ к идее — что уже реализовано через «Сценарий Реальности».</p>
+<h3>Proof</h3>
+<p>По <code>proof_active_reading.md</code>, лучшие тексты корпуса используют <strong>ротацию типов proof</strong>: testimonial → track record → authority → testimonial (не кластерами одного типа). В blog-growth proof сконцентрирован вокруг одного кейса (Натали) + научные данные, без ротации. <code>breakthrough_advertising_schwartz.md</code> описывает <strong>Градулизацию</strong> — прогрессивное наращивание proof; в тексте revenue proof (2M) появляется в середине, а не в финале.</p>
+<p>По <code>mos_2_0.md</code> (5-Layer Stacked Proof Model):
+- ✅ Layer 1 (Mechanism Proof): Zak / Nielsen / Sprout Social
+- ✅ Layer 2 (Demonstration): история Натали
+- ❌ Layer 3 (Social Proof): testimonials = [ЗАПОЛНИТЬ]
+- ✅ Layer 4 (Authority): научные источники
+- ❌ Layer 5 (Risk Reversal): нет гарантии</p>
+<p>Два из пяти слоёв отсутствуют — критический пробел для S4.</p>
+<h3>Trust &amp; Guarantee</h3>
+<p>По <code>offers_active_reading.md</code>: <strong>50% корпуса</strong> используют безусловный money-back, <strong>29%</strong> — двойную гарантию. Отсутствие гарантии = аномалия (только 8% корпуса без гарантии).</p>
+<p><code>transitions_active_reading.md</code> описывает паттерн <strong>«двойной удар»</strong> в close: снятие риска (гарантия) → давление (urgency/identity). В blog-growth второй элемент присутствует («каждый день без своих денег…»), но первый (guarantee) отсутствует, ослабляя конструкцию.</p>
+<h3>Offer / Close</h3>
+<p>По <code>offers_active_reading.md</code>, типы urgency в корпусе: угроза внешних событий (27%), дефицит мест (23%), временной дедлайн (19%). Blog-growth использует «ограничение мест» (P.S.#1) — 23% корпуса. Отсутствие временного дедлайна ослабляет конструкцию.</p>
+<p>По <code>mos_2_0.md</code>, Close должен содержать «Scarcity logic + additional proof + final push». Финальный proof (callbacks к Натали) слабее opening proof (847 комментариев + VOC), что нарушает принцип крещендо.</p>
 <hr />
             </div>
         </section>
