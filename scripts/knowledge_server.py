@@ -26,6 +26,9 @@ logging.getLogger("chromadb").setLevel(logging.WARNING)
 # Suppress tqdm progress bars that flood stderr and can cause MCP pipe issues
 os.environ.setdefault("TQDM_DISABLE", "1")
 os.environ.setdefault("HF_HUB_DISABLE_PROGRESS_BARS", "1")
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+os.environ.setdefault("HF_HUB_DISABLE_TELEMETRY", "1")
+os.environ.setdefault("NO_COLOR", "1")
 
 # --- Configuration ---
 

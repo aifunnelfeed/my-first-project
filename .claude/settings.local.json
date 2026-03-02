@@ -3,19 +3,30 @@
     "allow": [
       "Bash(npm run dev:*)",
       "WebSearch",
-      "WebFetch"
+      "WebFetch",
+      "Bash(python3 *)",
+      "Bash(git *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(cd *)",
+      "Bash(mkdir *)"
     ]
   },
   "mcpServers": {
     "knowledge-base": {
       "command": "/Library/Frameworks/Python.framework/Versions/3.11/bin/python3",
-      "args": ["scripts/knowledge_server.py"],
+      "args": [
+        "scripts/knowledge_server.py"
+      ],
       "cwd": "/Users/ilaija/Documents/ my-first-project",
       "env": {
         "TRANSFORMERS_OFFLINE": "1",
         "HF_HUB_OFFLINE": "1",
         "TQDM_DISABLE": "1",
-        "HF_HUB_DISABLE_PROGRESS_BARS": "1"
+        "HF_HUB_DISABLE_PROGRESS_BARS": "1",
+        "TOKENIZERS_PARALLELISM": "false",
+        "HF_HUB_DISABLE_TELEMETRY": "1",
+        "NO_COLOR": "1"
       },
       "timeout": 120
     }
