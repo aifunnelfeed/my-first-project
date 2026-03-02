@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рентген: «Сценарий Реальности» — финальный лендинг (blog-growth)</title>
+    <style>
+        /* === Reset & Base === */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            font-size: 17px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+                         'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.7;
+            color: #d0d0de;
+            background: #0f0f23;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* === Container === */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* === Hero === */
+        .hero {
+            padding: 80px 0 56px;
+            text-align: center;
+            background: radial-gradient(ellipse at 50% 0%, #2d1b69 0%, #0f0f23 70%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 700px;
+            height: 500px;
+            background: radial-gradient(ellipse, rgba(127, 86, 217, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero__label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #B692F6;
+            margin-bottom: 16px;
+        }
+
+        .hero__title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.3;
+            margin-bottom: 32px;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .score-badge {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 4px;
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+
+        .score-badge__total {
+            font-size: 1.8rem;
+            font-weight: 600;
+            opacity: 0.5;
+        }
+
+        .score-badge--green { color: #4ade80; }
+        .score-badge--yellow { color: #facc15; }
+        .score-badge--red { color: #f87171; }
+
+        /* === Sections === */
+        .report-section {
+            padding: 56px 0;
+            border-top: 1px solid rgba(127, 86, 217, 0.12);
+        }
+
+        .report-section__heading {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 24px;
+        }
+
+        .report-section__heading::before {
+            content: '';
+            display: block;
+            width: 32px;
+            height: 3px;
+            background: linear-gradient(90deg, #7F56D9, #B692F6);
+            margin-bottom: 12px;
+            border-radius: 2px;
+        }
+
+        /* === Summary Cards === */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .summary-card {
+            background: rgba(127, 86, 217, 0.06);
+            border: 1px solid rgba(127, 86, 217, 0.15);
+            border-radius: 12px;
+            padding: 16px 20px;
+        }
+
+        .summary-card__label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        .summary-card__value {
+            font-size: 0.95rem;
+            color: #e8e8f0;
+            font-weight: 600;
+        }
+
+        /* === Structure Table === */
+        .structure-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .structure-table th {
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #888;
+            padding: 8px 12px;
+            border-bottom: 2px solid rgba(127, 86, 217, 0.2);
+        }
+
+        .structure-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.9rem;
+        }
+
+        .structure-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .structure-table .component {
+            font-weight: 600;
+            color: #e8e8f0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-badge--found {
+            background: rgba(74, 222, 128, 0.12);
+            color: #4ade80;
+        }
+
+        .status-badge--weak {
+            background: rgba(250, 204, 21, 0.12);
+            color: #facc15;
+        }
+
+        .status-badge--missing {
+            background: rgba(248, 113, 113, 0.12);
+            color: #f87171;
+        }
+
+        /* === Scores === */
+        .scores-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .score-item {
+            display: grid;
+            grid-template-columns: 2fr 80px 1fr 3fr;
+            gap: 12px;
+            align-items: center;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .score-item__dimension {
+            font-weight: 600;
+            color: #e8e8f0;
+            font-size: 0.95rem;
+        }
+
+        .score-item__score {
+            font-weight: 700;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .score-item__score--green { color: #4ade80; }
+        .score-item__score--yellow { color: #facc15; }
+        .score-item__score--red { color: #f87171; }
+
+        .score-item__bar {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .score-item__bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.6s ease;
+        }
+
+        .score-item__bar-fill--green { background: linear-gradient(90deg, #22c55e, #4ade80); }
+        .score-item__bar-fill--yellow { background: linear-gradient(90deg, #eab308, #facc15); }
+        .score-item__bar-fill--red { background: linear-gradient(90deg, #dc2626, #f87171); }
+
+        .score-item__comment {
+            font-size: 0.85rem;
+            color: #a0a0b8;
+        }
+
+        /* === Details (accordion) === */
+        .detail-card {
+            margin-bottom: 12px;
+            border: 1px solid rgba(127, 86, 217, 0.15);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .detail-card__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: rgba(127, 86, 217, 0.06);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .detail-card__header:hover {
+            background: rgba(127, 86, 217, 0.1);
+        }
+
+        .detail-card__name {
+            font-weight: 700;
+            color: #e8e8f0;
+            font-size: 1rem;
+        }
+
+        .detail-card__toggle {
+            color: #B692F6;
+            font-size: 1.2rem;
+            transition: transform 0.2s;
+        }
+
+        .detail-card__body {
+            display: none;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .detail-card__body.open {
+            display: block;
+        }
+
+        .detail-card__body p {
+            margin-bottom: 0.8em;
+            color: #c8c8d8;
+        }
+
+        .detail-card__body strong {
+            color: #e8e8f0;
+        }
+
+        .detail-card__body em {
+            color: #a0a0b8;
+        }
+
+        .detail-card__body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+        }
+
+        .detail-card__body th {
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #888;
+            padding: 6px 8px;
+            border-bottom: 1px solid rgba(127, 86, 217, 0.2);
+        }
+
+        .detail-card__body td {
+            padding: 6px 8px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #c8c8d8;
+        }
+
+        .detail-card__body hr {
+            border: none;
+            border-top: 1px solid rgba(127, 86, 217, 0.15);
+            margin: 16px 0;
+        }
+
+        .detail-card__body ol,
+        .detail-card__body ul {
+            margin: 0.8em 0;
+            padding-left: 1.5em;
+        }
+
+        .detail-card__body li {
+            margin-bottom: 0.4em;
+            color: #c8c8d8;
+        }
+
+        .detail-card__body li::marker {
+            color: #7F56D9;
+        }
+
+        /* === Calculation === */
+        .calc-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+        }
+
+        .calc-table th {
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #888;
+            padding: 8px 10px;
+            border-bottom: 2px solid rgba(127, 86, 217, 0.2);
+        }
+
+        .calc-table td {
+            padding: 8px 10px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #c8c8d8;
+        }
+
+        .calc-total {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #B692F6;
+            padding: 12px 0;
+        }
+
+        /* === Recommendations === */
+        .rec-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .rec-card {
+            padding: 20px 24px;
+            border-radius: 12px;
+            border-left: 4px solid;
+        }
+
+        .rec-card--red {
+            background: rgba(248, 113, 113, 0.06);
+            border-left-color: #f87171;
+        }
+
+        .rec-card--yellow {
+            background: rgba(250, 204, 21, 0.06);
+            border-left-color: #facc15;
+        }
+
+        .rec-card__header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .rec-card__num {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            color: #fff;
+        }
+
+        .rec-card--red .rec-card__num { background: #dc2626; }
+        .rec-card--yellow .rec-card__num { background: #ca8a04; }
+
+        .rec-card__title {
+            font-weight: 700;
+            color: #e8e8f0;
+            font-size: 0.95rem;
+        }
+
+        .rec-card__body {
+            font-size: 0.9rem;
+            color: #a0a0b8;
+            line-height: 1.7;
+        }
+
+        .rec-card__body p {
+            margin-bottom: 0.6em;
+        }
+
+        .rec-card__body em {
+            color: #c8c8d8;
+        }
+
+        /* === KB Comparison === */
+        .kb-block {
+            background: rgba(127, 86, 217, 0.06);
+            border: 1px solid rgba(127, 86, 217, 0.15);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .kb-block p {
+            margin-bottom: 0.8em;
+            color: #c8c8d8;
+        }
+
+        .kb-block strong {
+            color: #e8e8f0;
+        }
+
+        .kb-block ul, .kb-block ol {
+            margin: 0.8em 0;
+            padding-left: 1.5em;
+        }
+
+        .kb-block li {
+            margin-bottom: 0.5em;
+            color: #c8c8d8;
+        }
+
+        .kb-block li::marker {
+            color: #7F56D9;
+        }
+
+        .kb-block h3 {
+            color: #B692F6;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        /* === Verdict === */
+        .verdict {
+            background: linear-gradient(135deg, rgba(127, 86, 217, 0.12) 0%, rgba(127, 86, 217, 0.04) 100%);
+            border: 1px solid rgba(127, 86, 217, 0.25);
+            border-radius: 16px;
+            padding: 32px;
+        }
+
+        .verdict p {
+            margin-bottom: 0.8em;
+            color: #e8e8f0;
+            font-size: 1.05rem;
+        }
+
+        .verdict strong {
+            color: #ffffff;
+        }
+
+        .verdict ul, .verdict ol {
+            margin: 0.8em 0;
+            padding-left: 1.5em;
+        }
+
+        .verdict li {
+            margin-bottom: 0.5em;
+            color: #c8c8d8;
+        }
+
+        .verdict li::marker {
+            color: #B692F6;
+        }
+
+        /* === Footer === */
+        .footer {
+            padding: 40px 24px;
+            text-align: center;
+            color: #555;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(127, 86, 217, 0.1);
+        }
+
+        /* === Responsive === */
+        @media (max-width: 768px) {
+            html {
+                font-size: 15px;
+            }
+
+            .hero {
+                padding: 56px 0 40px;
+            }
+
+            .hero__title {
+                font-size: 1.3rem;
+            }
+
+            .score-badge {
+                font-size: 3rem;
+            }
+
+            .report-section {
+                padding: 40px 0;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .score-item {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+
+            .score-item__bar {
+                max-width: 200px;
+            }
+
+            .structure-table {
+                font-size: 0.85rem;
+            }
+
+            .structure-table th,
+            .structure-table td {
+                padding: 8px 6px;
+            }
+
+            .detail-card__body {
+                padding: 14px;
+            }
+
+            .rec-card {
+                padding: 16px;
+            }
+
+            .verdict {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero__label">X-Ray Report</div>
+            <h1 class="hero__title">«Сценарий Реальности» — финальный лендинг (blog-growth)</h1>
+            <div class="score-badge score-badge--green">
+                84<span class="score-badge__total">/100</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+
+        <!-- Summary -->
+        
+        <section class="report-section">
+            <h2 class="report-section__heading">Сводка</h2>
+            <div class="summary-grid">
+                
+                
+                
+                
+                <div class="summary-card">
+                    <div class="summary-card__label">Формат</div>
+                    <div class="summary-card__value">Landing</div>
+                </div>
+                
+                
+                
+                <div class="summary-card">
+                    <div class="summary-card__label">Длина</div>
+                    <div class="summary-card__value">~4 000 слов</div>
+                </div>
+                
+                
+                
+                <div class="summary-card">
+                    <div class="summary-card__label">Awareness (Schwartz)</div>
+                    <div class="summary-card__value">3 — Solution-aware (FROM STRATEGY)</div>
+                </div>
+                
+                
+                
+                <div class="summary-card">
+                    <div class="summary-card__label">Sophistication</div>
+                    <div class="summary-card__value">Stage 4 (FROM STRATEGY)</div>
+                </div>
+                
+                
+                
+                <div class="summary-card">
+                    <div class="summary-card__label">Тип лида</div>
+                    <div class="summary-card__value">Story-first (Confessional opener → VOC-хук → Curiosity)</div>
+                </div>
+                
+                
+                
+                <div class="summary-card">
+                    <div class="summary-card__label">Big Idea</div>
+                    <div class="summary-card__value">Discovery: «Твоя настоящая жизнь — это контент, который невозможно пролистнуть. А тебе годами говорили его прятать.»</div>
+                </div>
+                
+                
+            </div>
+        </section>
+        
+
+        <!-- Structure -->
+        
+        <section class="report-section">
+            <h2 class="report-section__heading">Структура текста</h2>
+            <table class="structure-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Компонент</th>
+                        <th>Статус</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr>
+                        <td>1</td>
+                        <td class="component">Lead</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН — мощный VOC-хук + двухуровневый headline + статистика + тизер Натали</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>2</td>
+                        <td class="component">Story</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН — полноценная 3-актная история Натали (~800 слов)</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>3</td>
+                        <td class="component">Pain Amplification</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН — 4 слоя DRE, отдельный блок ~650 слов</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>4</td>
+                        <td class="component">Mechanism</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН — UMP (торт-метафора) + UMR «Сценарий Реальности» (3 шага + наука)</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>5</td>
+                        <td class="component">Results / Proof</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН — цифры Натали + The Honest Mom + научные данные</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>6</td>
+                        <td class="component">Testimonials</td>
+                        <td><span class="status-badge status-badge--missing">**НЕ НАЙДЕН** — 3 слота [ЗАПОЛНИТЬ], пустые</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>7</td>
+                        <td class="component">Product Reveal</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН — 3 урока + 5 бонусов</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>8</td>
+                        <td class="component">Offer</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН — Value Stack (46К ₽), два тарифа, сравнение с рынком</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>9</td>
+                        <td class="component">Close</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН — 3 CTA, цена бездействия, эмоциональный крещендо</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>10</td>
+                        <td class="component">P.S.</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН — 2 постскриптума (ограничение мест + рефрейм времени)</span></td>
+                    </tr>
+                    
+                    <tr>
+                        <td>11</td>
+                        <td class="component">FAQ</td>
+                        <td><span class="status-badge status-badge--found">НАЙДЕН — 8 вопросов с развёрнутыми ответами</span></td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </section>
+        
+
+        <!-- Scores -->
+        
+        <section class="report-section">
+            <h2 class="report-section__heading">Оценка по измерениям</h2>
+            <div class="scores-list">
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Lead Power (×1.5)</div>
+                    <div class="score-item__score score-item__score--green">9/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--green"
+                             style="width: 90%"></div>
+                    </div>
+                    <div class="score-item__comment">Killer VOC-хук, все 4 слоя DRE, но Pain Budget ~1.1:1 при нужных 1.5:1 для S4</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Story Arc (×1.0)</div>
+                    <div class="score-item__score score-item__score--green">10/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--green"
+                             style="width: 100%"></div>
+                    </div>
+                    <div class="score-item__comment">Образцовая 3-актная история — сенсорика, stakes 6/6, inception с разрывом</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Mechanism Clarity (×1.5)</div>
+                    <div class="score-item__score score-item__score--green">10/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--green"
+                             style="width: 100%"></div>
+                    </div>
+                    <div class="score-item__comment">Метафора торта, Mechanism-Proof Fusion через Zak, 3-слойный UMR</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Offer Strength (×1.0)</div>
+                    <div class="score-item__score score-item__score--green">8/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--green"
+                             style="width: 80%"></div>
+                    </div>
+                    <div class="score-item__comment">Value Stack 9x, 5 бонусов, но нет гарантии и нет дедлайна</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Proof Weight (×1.5)</div>
+                    <div class="score-item__score score-item__score--green">8/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--green"
+                             style="width: 80%"></div>
+                    </div>
+                    <div class="score-item__comment">4 типа proof, источники названы, но 3 testimonials = [ЗАПОЛНИТЬ] и количество ниже порога для S4</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Language & Flow (×1.0)</div>
+                    <div class="score-item__score score-item__score--green">10/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--green"
+                             style="width: 100%"></div>
+                    </div>
+                    <div class="score-item__comment">Безупречный разговорный тон, VOC вшит, ритм, pull-эффект на каждом абзаце</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Big Idea (×1.0)</div>
+                    <div class="score-item__score score-item__score--green">9/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--green"
+                             style="width: 90%"></div>
+                    </div>
+                    <div class="score-item__comment">Контринтуитивная Discovery, красная нить, но «vulnerability = content» становится мейнстримом</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Persuasion Arch. (×1.0)</div>
+                    <div class="score-item__score score-item__score--green">9/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--green"
+                             style="width: 90%"></div>
+                    </div>
+                    <div class="score-item__comment">Логичная архитектура, DRE→DES арка, Authority Weaving через нарратив, но финал ≈ началу по силе</div>
+                </div>
+                
+                <div class="score-item">
+                    <div class="score-item__dimension">Trust Account (×1.0)</div>
+                    <div class="score-item__score score-item__score--yellow">6/10</div>
+                    <div class="score-item__bar">
+                        <div class="score-item__bar-fill score-item__bar-fill--yellow"
+                             style="width: 60%"></div>
+                    </div>
+                    <div class="score-item__comment">5+ deposits до CTA, но нет гарантии, пустые testimonials, мало deposits между CTA</div>
+                </div>
+                
+            </div>
+        </section>
+        
+
+        <!-- Detail Analysis -->
+        
+        <section class="report-section">
+            <h2 class="report-section__heading">Детальный анализ</h2>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Lead</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p><strong>Тип:</strong> Story-first с Confessional opener.</p>
+<p>Текст открывается VOC-ударом — «А ты их заработала?» — и мгновенно погружает в боль через сенсорику: «как горит лицо», «два часа лежишь и смотришь в потолок». Затем — контрастный ход: «Я не буду предлагать тебе стать блогером» (Contrarian Honesty deposit).</p>
+<p>Headline B — образцовый: 6 слов-хук + конкретика (847, 11K, 2M, 9 мес) + субхед с названием механизма. Проходит 7/7 критериев headline.</p>
+<p><strong>DRE-анализ:</strong>
+- Layer 1 (Surface): ✅ — финансовая зависимость, стыд, провал курсов
+- Layer 2 (Cost): ✅ — 8 лет впустую, деньги на курсы
+- Layer 3 (Emotion): ✅ — «холодеет внутри», «вещи в пакетах, младший плачет» — показано через сцены
+- Layer 4 (Identity): ✅ — «финансово не отличаешься от подростка», «может, я ничего не стою»</p>
+<p><strong>Единственный минус:</strong> Pain Budget. При Stage 4 нужно соотношение боли к механизму ≥1.5:1. Текущее: ~1.1:1. Механизм получил столько же (или чуть больше) пространства, сколько боль. Для S4-аудитории, которая скептична и нуждается в глубокой эмоциональной обработке перед логикой, стоит усилить Pain Amplification на ~30%.</p>
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Story</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p><strong>Оценка: 10/10 — лучший компонент текста.</strong></p>
+<p>3-актная структура безупречна:
+- <strong>Акт 1 (Дно, ~50%):</strong> 8 лет маски, 30-40 лайков, «будто говоришь в пустоту». Кульминация: развод, 4 детей, 20К на карте. «Представь: ты стоишь посреди чужой кухни.» — сенсорика высочайшего уровня.
+- <strong>Акт 2 (Перелом, ~25%):</strong> Палец завис над камерой. «Не потому что решила. А потому что больше не могла молчать.» Нажала «запись».
+- <strong>Акт 3 (Результат, ~25%):</strong> 847 комментариев. Прогрессия подписчиков по дням (14 дек → 15 → 17 → 19 → 11K). Инсайт: «нужно было показать лицо».</p>
+<p><strong>Emotion Layer:</strong> показывает, не называет. «Руки тряслись», «было уже всё равно», «телефон не переставал вибрировать».</p>
+<p><strong>Stakes:</strong> 6/6 — Personal Investment (развод с 4 детьми), Relatable Moment (чужая кухня), Irreversible (ушла), Inevitable (деньги кончатся), Intimate (плачет в ванной), «Why do I care?» (читательница видит себя).</p>
+<p><strong>Inception:</strong> Информационный разрыв между «И вот тут случилось то, что ни один курс не предусматривал» (загадка) и раскрытием через ~25 строк.</p>
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Mechanism</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p><strong>UMP (Уникальный Механизм Проблемы):</strong> Блестящая метафора торта — «Тебе дали идеальный рецепт свадебного торта. А гости пришли на детский день рождения.» Курсы учили КАК снимать (технику), но не О ЧЁМ (содержание). Рецепт был правильный, но для другого стола.</p>
+<p><strong>UMR «Сценарий Реальности»:</strong>
+- Название: ✅ — запоминаемое, метафоричное
+- 3 шага: (1) событие дня → (2) шаблон арки → (3) съёмка за 15 мин
+- Научное обоснование: Пол Зак (окситоцин, +56% готовности отдать деньги), Nielsen (92%), Sprout Social (77%)</p>
+<p><strong>Mechanism-Proof Fusion:</strong> Встроен в объяснение механизма — «Конфликт создаёт напряжение. Кризис — узнавание. Маленькая победа — выброс окситоцина.» Наука одновременно объясняет КАК работает система и доказывает ПОЧЕМУ. Образцовое исполнение.</p>
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Proof</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p><strong>Найденные типы (PROOF_TAXONOMY):</strong>
+1. <strong>Personal Case Study:</strong> Натали — 0→11K за месяц, 300K/мес к 3-му, 2M к 9-му
+2. <strong>Scientific Study:</strong> Paul Zak (PMC4445577) — истории борьбы → окситоцин → +56%
+3. <strong>Statistics:</strong> Nielsen (92%, 28K респондентов, 56 стран), Sprout Social (77%)
+4. <strong>Third-Party Case:</strong> The Honest Mom — 0→600K за год на искренности</p>
+<p><strong>Что работает:</strong>
+- Все факты имеют именованные источники (Nielsen, Sprout Social, Пол Зак)
+- Конкретика: 847 комментариев, прогрессия по дням, 28K респондентов
+- Proof интегрирован в нарратив, а не вынесен в отдельный блок
+- Научные данные поддерживают UMR, а не абстрактное «продукт хороший»</p>
+<p><strong>Что не работает:</strong>
+- ❌ <strong>3 слота testimonials = [ЗАПОЛНИТЬ]</strong> — это критический пробел. В brief указаны «30+ кейсов учениц», но ни один не раскрыт
+- ❌ <strong>Количество:</strong> 7 proof-элементов для ценового диапазона $50-99 (нужно 10-20 по PROOF_SELECTOR). При S4 proof должен быть основным аргументом
+- ❌ <strong>Сильнейший proof не в Close:</strong> Revenue proof (2M/9мес) в середине текста. Close содержит только callback</p>
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Trust</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p><strong>Deposits найдены (до CTA #1):</strong>
+1. Specificity — «данные Nielsen на 28 000 респондентов в 56 странах»
+2. Vulnerability — история Натали (развод, плач, 20K)
+3. Contrarian Honesty — «Я не буду предлагать тебе стать блогером»
+4. Third-party Validation — исследования Зак, Nielsen, Sprout Social
+5. Proof — 847 комментариев, прогрессия подписчиков</p>
+<p><strong>Trust Killers:</strong>
+- ❌ Нет гарантии вообще — при S4 это серьёзный пробел. «Это не гарантия. Это арифметика» — эффектная фраза, но не снимает страх потери денег
+- ⚠️ Headline «2 млн ₽ за 9 месяцев» — единственный кейс без дисклеймера может звучать как обещание
+- ❌ [ЗАПОЛНИТЬ] секции — если отображаются на live-странице, это катастрофический Trust Killer</p>
+<p><strong>Balance между CTA:</strong> 3 CTA расположены в строках 508, 524, 540. Между ними — по 1-2 deposits (callbacks, визуализация). Для S4-аудитории мало: нужно минимум 3 дополнительных deposits между CTA.</p>
+                </div>
+            </div>
+            
+            <div class="detail-card">
+                <div class="detail-card__header" onclick="this.nextElementSibling.classList.toggle('open'); this.querySelector('.detail-card__toggle').textContent = this.nextElementSibling.classList.contains('open') ? '−' : '+';">
+                    <span class="detail-card__name">Authority Weaving</span>
+                    <span class="detail-card__toggle">+</span>
+                </div>
+                <div class="detail-card__body">
+                    <p>Натали вплетена в нарратив через Discovery Narrative — её авторитет строится через историю, не через резюме. Появляется в 3+ местах: тизер в лиде, полная история, revenue-результаты, «300+ видео и десятки учениц». Паттерн соответствует Awareness 3 / Sophistication 4. Без «resume-style» блоков.</p>
+<hr />
+                </div>
+            </div>
+            
+        </section>
+        
+
+        <!-- Calculation -->
+        
+
+        <!-- Recommendations -->
+        
+        <section class="report-section">
+            <h2 class="report-section__heading">Рекомендации</h2>
+            <div class="rec-list">
+                
+                <div class="rec-card rec-card--red">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">1</div>
+                        <div class="rec-card__title">🔴 **Proof (Testimonials): 3 пустых слота [ЗАПОЛНИТЬ]**</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: Заполнить 3 кейса учениц из имеющихся 30+ по шаблону strategy.md (скептик, из отчаяния, шокирована простотой). Каждый кейс: ситуация (2 предложения) → действие → результат (подписчики/доход) → цитата.
+   → Формула: <code>[PROOF_STACKING_V1]</code> — диверсификация (3 разных ситуации), эскалация (от малого к крупному результату).
+   → Пример: «Ирина, 32 года. Двое детей, кредит за стиральную машину. Думала — кому я нужна, у меня даже нет истории. Первое видео — про то, как плакала в машине после работы. 2 300 подписчиков за неделю. Через месяц — первый заработок 47 000 ₽. "Я купила дочке самокат. Без звонка мужу."»</p></div>
+                    
+                </div>
+                
+                <div class="rec-card rec-card--red">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">2</div>
+                        <div class="rec-card__title">🔴 **Trust Account: Нет гарантии**</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: Добавить адресную гарантию, снимающую главный страх — «опять потрачу деньги впустую». Вариант: «Если после прохождения 3 уроков ты не будешь знать, о чём снимать — напиши, вернём деньги в течение 7 дней. Без вопросов.»
+   → Формула: <code>[PROOF_TAXONOMY_V1]</code> — Guarantee как тип proof. Гарантия должна быть адресной (снимает конкретный страх), а не дженерик «100% money back».
+   → Почему важно: S4-аудитория уже обожглась на курсах. Отсутствие гарантии подкрепляет их страх «опять деньги на ветер». Даже условная гарантия (привязанная к действию) снимает паралич.</p></div>
+                    
+                </div>
+                
+                <div class="rec-card rec-card--yellow">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">3</div>
+                        <div class="rec-card__title">🟡 **Lead Power: Pain Budget ниже нормы для S4**</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: Увеличить Pain Amplification на ~30%. Текущее соотношение боль:механизм ≈ 1.1:1, нужно ≥1.5:1. Добавить 2-3 абзаца в секцию «А ты их заработала?» — ещё 1-2 VOC-сцены или расширить DRE Layer 4 (Identity).
+   → Пример дополнения: Сцена в магазине — ребёнок берёт что-то с полки, ты ставишь обратно и говоришь «не сейчас», а он спрашивает «а когда?». И ты не знаешь, что ответить. Потому что «когда» зависит не от тебя.</p></div>
+                    
+                </div>
+                
+                <div class="rec-card rec-card--yellow">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">4</div>
+                        <div class="rec-card__title">🟡 **Trust Account: Мало deposits между CTA**</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: Между CTA #1 и CTA #2 (строки 508-524) добавить 2-3 trust deposits. Варианты: (a) мини-кейс ученицы с конкретной цифрой, (b) Ethical Gate — «Это не для всех. Если ты не готова нажать «запись» — не покупай», (c) Social Proof — «1 200+ женщин уже прошли практикум».
+   → Формула: <code>[TRUST_PROTOCOL_V1]</code> — минимум 3 deposits между CTA.</p></div>
+                    
+                </div>
+                
+                <div class="rec-card rec-card--yellow">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">5</div>
+                        <div class="rec-card__title">🟡 **Proof Weight: Количество ниже порога для ценовой категории**</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: Довести количество proof-элементов с 7 до 12-15. Помимо 3 testimonials (#1), добавить: скриншоты комментариев (Social Proof), статистику учениц в агрегате («из 30 учениц, 24 набрали первые 1000 подписчиков за 2 месяца»), ещё 1 Third-Party Case (Glennon Doyle — из brief/research).
+   → Формула: <code>[PROOF_SELECTOR_V1]</code> — для $50-99 диапазона нужно 10-20 элементов.</p></div>
+                    
+                </div>
+                
+                <div class="rec-card rec-card--yellow">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">6</div>
+                        <div class="rec-card__title">🟡 **Close: Финал не сильнее начала**</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: Усилить Close сильным proof-элементом, который не появлялся раньше. Например, цитата ученицы в P.S. или агрегированная статистика. Финал должен быть крещендо — сильнейший момент текста. Сейчас открытие (847 комментариев + VOC-хук) сильнее закрытия.
+   → Пример: P.S.#3 — «За последние 3 месяца 24 женщины, прошедшие практикум, заработали свои первые деньги с блога. Самый маленький результат — 12 000 ₽. Самый большой — 340 000 ₽. Средний — 87 000 ₽. И каждая начинала с одного нажатия.»</p></div>
+                    
+                </div>
+                
+                <div class="rec-card rec-card--yellow">
+                    <div class="rec-card__header">
+                        <div class="rec-card__num">7</div>
+                        <div class="rec-card__title">🟡 **Big Idea: «Vulnerability = content» становится мейнстримом**</div>
+                    </div>
+                    
+                    <div class="rec-card__body"><p>→ Что сделать: Усилить уникальность через СИСТЕМАТИЗАЦИЮ уязвимости. Не просто «будь искренней» (что говорят многие), а «готовая формула: событие + арка + 15 минут = контент». Акцент на СИСТЕМЕ, а не на идее искренности. В headline можно добавить «формула» или «система» как отстройку от общих советов про аутентичность.</p>
+<hr /></div>
+                    
+                </div>
+                
+            </div>
+        </section>
+        
+
+        <!-- KB Comparison -->
+        
+        <section class="report-section">
+            <h2 class="report-section__heading">Сравнение с базой знаний</h2>
+            <div class="kb-block">
+                <p><strong>Примечание:</strong> MCP-инструмент <code>search_knowledge()</code> недоступен в текущей сессии. Сравнение на основе кросс-референса с strategy.md → KB GATE.</p>
+<ul>
+<li><strong>Lead:</strong> Использует Confessional opener (паттерн из <code>leads_active_reading.md</code> — встречается в 12% корпуса). Совпадает с рекомендацией для S3-S4: story-first или mechanism-first. Сильнее, чем типичный Problem-Agitate lead.</li>
+<li><strong>Mechanism:</strong> Трёхслойная структура UMR (имя + процесс + наука) — соответствует 100% именованных механизмов в корпусе (<code>mechanisms_active_reading.md</code>). Метафора торта = контрастная аналогия «Старое vs Новое» (62% корпуса).</li>
+<li><strong>Big Idea:</strong> Тип Discovery / Secret Method — 19%+15% в корпусе (<code>big_ideas_active_reading.md</code>). «Скрытый ингредиент, который у тебя уже есть» — сильный паттерн.</li>
+<li><strong>Offer:</strong> Value Stack 9x (корпус: 2-4x типично). Превышает норму. Но отсутствие гарантии — аномалия: 58%+ текстов в корпусе содержат гарантию.</li>
+<li><strong>Proof:</strong> Mechanism-Proof Fusion через Zak — соответствует <code>[PROOF_RESEARCH_V1]</code>. Но общее количество proof ниже нормы для корпуса ($50-99 range).</li>
+</ul>
+<hr />
+            </div>
+        </section>
+        
+
+        <!-- Verdict -->
+        
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        X-Ray Report &middot; Copycraft М.О.С.
+    </footer>
+
+</body>
+</html>
