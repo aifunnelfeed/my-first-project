@@ -62,7 +62,13 @@ D) MISSING (1–5 пунктов) + что спросить
 E) SOURCES
 
 — DRE (Dominant Resident Emotion): 1 эмоция сейчас
+— DRE Depth (4 слоя): Поверхность / Цена / Эмоция / Идентичность (краткие формулировки + VOC)
 — DES (Desired Emotional State): 1 эмоция "после"
+— DES Depth (4 слоя по [DES_DEPTH_V1], блок 07 секция 4.2b):
+  - Конкретный результат: {что конкретно изменится — цифры, действия}
+  - Ценность для жизни: {как улучшится повседневность — время/деньги/свобода}
+  - Эмоциональная награда: {что почувствует — гордость/уверенность/спокойствие}
+  - Обновление идентичности: {кем себя ощутит — новый статус/роль}
 — Emotional path (3 шага): DRE → (curiosity/hope) → DES
 — VOC lines: 5–10 фраз "словами клиента"
 
@@ -184,7 +190,7 @@ DELIVERY → REVIEW
 
 **PHASE B — BRIEF (каркас):**
 1) Тип Лида (по Awareness)
-2) Порядок блоков (Lead → Story → Mechanism → Product Reveal → Offer → Proof → Close)
+2) Порядок блоков (Lead → Story → Mechanism → [Result Projection если Awareness ≤ 3] → Product Reveal → Offer → Proof → Close)
 3) Где Mini-Proof
 4) MOS BOOSTERS PLAN (по MOS_MODE):
    — MODE A: Offer Stack (Guarantee + Price Framing + Scarcity)
