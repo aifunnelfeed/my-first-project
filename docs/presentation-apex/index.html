@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APEX | Autonomous Persuasion Engine X</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+  :root {
+    --bg: #020209;
+    --bg-card: #080816;
+    --bg-card-hover: #0e0e22;
+    --border: #151530;
+    --text: #d8d8f0;
+    --text-dim: #5a5a7e;
+    --blue: #00a8ff;
+    --blue-dim: rgba(0, 168, 255, 0.08);
+    --blue-glow: rgba(0, 168, 255, 0.15);
+    --neon: #00ff88;
+    --neon-dim: rgba(0, 255, 136, 0.06);
+    --neon-glow: rgba(0, 255, 136, 0.12);
+    --red: #ff3366;
+    --red-dim: rgba(255, 51, 102, 0.08);
+    --orange: #ff6b2b;
+    --purple: #8b5cf6;
+    --purple-dim: rgba(139, 92, 246, 0.08);
+    --cyan: #06d6a0;
+    --white: #f0f0ff;
+    --pink: #f72585;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* === ANIMATED MESH === */
+  .mesh-bg {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(0, 168, 255, 0.04) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(0, 255, 136, 0.03) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .scanline {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--blue), transparent);
+    opacity: 0.15;
+    animation: scanline 8s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  @keyframes scanline {
+    0% { top: -2px; }
+    100% { top: 100vh; }
+  }
+
+  /* === NAV === */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(2, 2, 9, 0.92);
+    backdrop-filter: blur(30px);
+    border-bottom: 1px solid rgba(0, 168, 255, 0.1);
+    padding: 0 2rem;
+  }
+  nav .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  nav .logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+  }
+  nav .logo .apex { color: var(--blue); }
+  nav .logo .sub { color: var(--text-dim); font-weight: 400; font-size: 0.6rem; letter-spacing: 0.25em; }
+  .nav-ver {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--neon);
+    border: 1px solid rgba(0,255,136,0.2);
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    background: var(--neon-dim);
+  }
+
+  /* === HERO === */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 8rem 2rem 6rem;
+    position: relative;
+    z-index: 1;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,168,255,0.1) 0%, transparent 60%);
+    pointer-events: none;
+    animation: corePulse 6s ease-in-out infinite;
+  }
+  @keyframes corePulse {
+    0%, 100% { opacity: 0.5; transform: translate(-50%,-50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%,-50%) scale(1.3); }
+  }
+  .hero-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--blue);
+    border: 1px solid rgba(0,168,255,0.3);
+    padding: 0.5rem 1.5rem;
+    border-radius: 100px;
+    margin-bottom: 2.5rem;
+    background: var(--blue-dim);
+    animation: fadeUp 1s ease;
+  }
+  .hero h1 {
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    font-weight: 900;
+    line-height: 1.0;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.04em;
+    animation: fadeUp 1s ease 0.15s both;
+  }
+  .hero h1 .blue { color: var(--blue); }
+  .hero h1 .glow {
+    background: linear-gradient(135deg, var(--blue), var(--neon));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 30px rgba(0,168,255,0.3));
+  }
+  .hero .tagline {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--text-dim);
+    max-width: 700px;
+    line-height: 1.9;
+    margin-bottom: 3.5rem;
+    animation: fadeUp 1s ease 0.3s both;
+  }
+  .hero .tagline strong { color: var(--white); }
+  .hero .tagline .neon { color: var(--neon); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Hero Counters */
+  .hero-counters {
+    display: flex;
+    gap: 4rem;
+    animation: fadeUp 1s ease 0.45s both;
+  }
+  .hc {
+    text-align: center;
+  }
+  .hc .val {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--blue);
+    line-height: 1.1;
+  }
+  .hc .val .unit { font-size: 1.2rem; color: var(--neon); }
+  .hc .lab {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* === SECTIONS === */
+  section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+  }
+  .stag {
+    font-family: 'JetBrains Mono', monospace;
+    display: inline-block;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+  section > h2 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+  h2 .blue { color: var(--blue); }
+  h2 .glow {
+    background: linear-gradient(135deg, var(--blue), var(--neon));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  section > .sdesc {
+    color: var(--text-dim);
+    font-size: 1.05rem;
+    max-width: 680px;
+    margin-bottom: 3.5rem;
+    line-height: 1.9;
+  }
+  .sdesc strong { color: var(--white); }
+
+  /* === DIVIDER === */
+  .div {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,168,255,0.15), rgba(0,255,136,0.1), transparent);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* === MANIFESTO === */
+  .manifesto {
+    background: linear-gradient(135deg, var(--blue-dim), var(--purple-dim));
+    border: 1px solid rgba(0,168,255,0.15);
+    border-radius: 24px;
+    padding: 3.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .manifesto::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--blue), var(--neon), var(--purple));
+  }
+  .manifesto h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    color: var(--white);
+  }
+  .manifesto p {
+    color: var(--text-dim);
+    font-size: 1rem;
+    line-height: 2;
+    max-width: 800px;
+  }
+  .manifesto p strong { color: var(--blue); }
+  .manifesto p .neon { color: var(--neon); }
+
+  /* === KILL LIST === */
+  .kill-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-top: 2rem;
+  }
+  .kill-col {
+    padding: 2.5rem;
+  }
+  .kill-col.old {
+    background: rgba(255,51,102,0.03);
+    border-right: 1px solid var(--border);
+  }
+  .kill-col.new {
+    background: rgba(0,168,255,0.03);
+  }
+  .kill-col h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .kill-col.old h3 { color: var(--red); }
+  .kill-col.new h3 { color: var(--blue); }
+  .kill-col ul {
+    list-style: none;
+  }
+  .kill-col ul li {
+    padding: 0.6rem 0;
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    border-bottom: 1px solid rgba(21,21,48,0.5);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    line-height: 1.6;
+  }
+  .kill-col ul li:last-child { border-bottom: none; }
+  .kill-col ul li .ico { flex-shrink: 0; margin-top: 2px; }
+  .kill-col.old .ico { color: var(--red); }
+  .kill-col.new .ico { color: var(--neon); }
+
+  /* === CORE ENGINE CARDS === */
+  .core-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+  .core-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.35s;
+  }
+  .core-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: linear-gradient(180deg, var(--blue), var(--neon));
+    opacity: 0;
+    transition: opacity 0.35s;
+  }
+  .core-card:hover::after { opacity: 1; }
+  .core-card:hover {
+    border-color: rgba(0,168,255,0.25);
+    transform: translateY(-5px);
+    box-shadow: 0 25px 80px rgba(0,168,255,0.06);
+  }
+  .core-card .c-icon {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
+  .core-card .c-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+  .lb-core { background: var(--blue-dim); color: var(--blue); }
+  .lb-neural { background: var(--purple-dim); color: var(--purple); }
+  .lb-war { background: var(--red-dim); color: var(--red); }
+  .lb-money { background: var(--neon-dim); color: var(--neon); }
+  .lb-data { background: rgba(255,107,43,0.08); color: var(--orange); }
+  .core-card h3 {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    color: var(--white);
+  }
+  .core-card p {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+  .core-card .edge {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--neon);
+    font-weight: 700;
+  }
+
+  /* === ADVERSARIAL DIAGRAM === */
+  .adv-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 3rem;
+    margin-top: 2.5rem;
+    text-align: center;
+  }
+  .adv-box h3 {
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    color: var(--white);
+  }
+  .adv-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .adv-node {
+    padding: 1.25rem 2rem;
+    border-radius: 14px;
+    text-align: center;
+    min-width: 140px;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  .adv-node.writer {
+    background: var(--blue-dim);
+    border: 1px solid rgba(0,168,255,0.3);
+    color: var(--blue);
+  }
+  .adv-node.attacker {
+    background: var(--red-dim);
+    border: 1px solid rgba(255,51,102,0.3);
+    color: var(--red);
+  }
+  .adv-node.judge {
+    background: var(--purple-dim);
+    border: 1px solid rgba(139,92,246,0.3);
+    color: var(--purple);
+  }
+  .adv-node.output {
+    background: var(--neon-dim);
+    border: 1px solid rgba(0,255,136,0.3);
+    color: var(--neon);
+  }
+  .adv-node .sub {
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--text-dim);
+    margin-top: 0.3rem;
+    display: block;
+  }
+  .adv-arrow {
+    color: var(--text-dim);
+    font-size: 1.5rem;
+    padding: 0 0.75rem;
+    opacity: 0.4;
+  }
+
+  /* === NUMBERS === */
+  .num-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  .num-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    text-align: center;
+    transition: all 0.3s;
+    position: relative;
+  }
+  .num-card:hover {
+    border-color: var(--blue);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,168,255,0.06);
+  }
+  .num-card .n {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 3.2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--blue), var(--neon));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+  }
+  .num-card .nl {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+  }
+  .num-card .nd {
+    font-size: 0.72rem;
+    color: rgba(90,90,126,0.6);
+    margin-top: 0.4rem;
+  }
+
+  /* === COMPARISON TABLE === */
+  .cmp-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 2.5rem;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .cmp-table th {
+    padding: 1.25rem 1.5rem;
+    text-align: left;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .cmp-table th:nth-child(1) { color: var(--text-dim); }
+  .cmp-table th:nth-child(2) { color: var(--text-dim); }
+  .cmp-table th:nth-child(3) { color: var(--blue); }
+  .cmp-table td {
+    padding: 1rem 1.5rem;
+    font-size: 0.88rem;
+    border-bottom: 1px solid rgba(21,21,48,0.5);
+    background: var(--bg);
+  }
+  .cmp-table td:nth-child(2) { color: var(--text-dim); }
+  .cmp-table td:nth-child(3) { color: var(--white); font-weight: 600; }
+  .cmp-table tr:last-child td { border-bottom: none; }
+  .cmp-table .y { color: var(--neon); }
+  .cmp-table .x { color: var(--red); opacity: 0.4; }
+
+  /* === TESTIMONIALS === */
+  .test-card {
+    background: linear-gradient(135deg, rgba(0,168,255,0.03), rgba(139,92,246,0.03));
+    border: 1px solid rgba(0,168,255,0.12);
+    border-radius: 24px;
+    padding: 2.5rem 3rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+  }
+  .test-card::before {
+    content: '\201C';
+    position: absolute;
+    top: 0; left: 2rem;
+    font-size: 4.5rem;
+    color: var(--blue);
+    opacity: 0.15;
+    line-height: 1;
+  }
+  .test-card p {
+    font-size: 1.1rem;
+    font-style: italic;
+    line-height: 1.85;
+    color: var(--text);
+    position: relative;
+    z-index: 1;
+  }
+  .test-card .auth {
+    margin-top: 1.25rem;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    font-style: normal;
+  }
+  .test-card .auth strong { color: var(--blue); }
+
+  /* === CTA === */
+  .cta-section {
+    text-align: center;
+    padding: 6rem 2rem;
+    position: relative;
+    z-index: 1;
+  }
+  .cta-btn {
+    display: inline-block;
+    padding: 1.25rem 4rem;
+    background: linear-gradient(135deg, var(--blue), #0066ff);
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.15rem;
+    border-radius: 14px;
+    text-decoration: none;
+    transition: all 0.3s;
+    letter-spacing: 0.02em;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    animation: shimmer 3s infinite;
+  }
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 200%; }
+  }
+  .cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 60px rgba(0,168,255,0.25);
+  }
+
+  /* === PRICING === */
+  .price-box {
+    background: var(--bg-card);
+    border: 2px solid var(--blue);
+    border-radius: 24px;
+    padding: 3.5rem;
+    text-align: center;
+    max-width: 720px;
+    margin: 3rem auto;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 100px rgba(0,168,255,0.08);
+  }
+  .price-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--neon), var(--purple), var(--blue));
+    background-size: 300% 100%;
+    animation: gradientMove 4s linear infinite;
+  }
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+  .price-box .crossed {
+    font-size: 1.1rem;
+    color: var(--text-dim);
+    text-decoration: line-through;
+    margin-bottom: 0.5rem;
+  }
+  .price-box .pr {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--blue);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+  .price-box .pn {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    margin-bottom: 2rem;
+  }
+
+  /* === GUARANTEE === */
+  .guar {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: var(--neon-dim);
+    border: 1px solid rgba(0,255,136,0.15);
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 720px;
+    margin: 2rem auto 0;
+  }
+  .guar .gi { font-size: 2.8rem; flex-shrink: 0; }
+  .guar h4 { font-size: 1rem; font-weight: 700; color: var(--neon); margin-bottom: 0.3rem; }
+  .guar p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.65; }
+
+  /* === FOOTER === */
+  footer {
+    text-align: center;
+    padding: 3.5rem 2rem;
+    border-top: 1px solid var(--border);
+    position: relative;
+    z-index: 1;
+  }
+  footer p { color: var(--text-dim); font-size: 0.8rem; }
+  footer .blue { color: var(--blue); }
+
+  /* === ANIMATIONS === */
+  .fi {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fi.vis {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 768px) {
+    .hero { padding: 6rem 1.5rem 4rem; }
+    .hero h1 { font-size: 2.8rem; }
+    .hero-counters { flex-direction: column; gap: 2rem; }
+    .kill-grid { grid-template-columns: 1fr; }
+    .kill-col.old { border-right: none; border-bottom: 1px solid var(--border); }
+    .core-grid { grid-template-columns: 1fr; }
+    .num-grid { grid-template-columns: 1fr; }
+    .adv-flow { flex-direction: column; gap: 0.5rem; }
+    .adv-arrow { transform: rotate(90deg); }
+    section { padding: 4rem 1.5rem; }
+    .cmp-table { font-size: 0.78rem; }
+    .cmp-table th, .cmp-table td { padding: 0.75rem 0.75rem; }
+    .guar { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="mesh-bg"></div>
+<div class="scanline"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">
+      <span class="apex">APEX</span><br>
+      <span class="sub">Autonomous Persuasion Engine X</span>
+    </div>
+    <div class="nav-ver">v4.0 NEURAL</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-tag">Copycraft был первым. APEX &mdash; последний.</div>
+  <h1>
+    <span class="glow">Тексты не пишут.</span><br>
+    <span style="color: var(--white);">Тексты</span> <span class="blue">воюют.</span>
+  </h1>
+  <p class="tagline">
+    APEX &mdash; первая в мире система, где <strong>два AI сражаются друг с другом</strong>,
+    чтобы создать текст, который <span class="neon">невозможно проигнорировать</span>.
+    Не шаблоны. Не промпты. Не базы знаний из прошлого века.
+    <strong>Живой интеллект, который адаптируется в реальном времени.</strong>
+  </p>
+
+  <div class="hero-counters">
+    <div class="hc">
+      <div class="val">23<span class="unit">сек</span></div>
+      <div class="lab">генерация полного лендинга</div>
+    </div>
+    <div class="hc">
+      <div class="val">541<span class="unit">%</span></div>
+      <div class="lab">средний рост конверсии</div>
+    </div>
+    <div class="hc">
+      <div class="val">1M<span class="unit">+</span></div>
+      <div class="lab">симуляций аудитории</div>
+    </div>
+    <div class="hc">
+      <div class="val">0<span class="unit">.00</span></div>
+      <div class="lab">участие человека</div>
+    </div>
+  </div>
+</header>
+
+<hr class="div">
+
+<!-- MANIFESTO -->
+<section>
+  <div class="stag fi">Манифест</div>
+  <h2 class="fi">
+    Copycraft &mdash; музейный экспонат.<br>
+    <span class="glow">APEX &mdash; оружие будущего.</span>
+  </h2>
+
+  <div class="manifesto fi">
+    <h3>Почему мы убили Copycraft-подход</h3>
+    <p>
+      Copycraft построен на библиотеке мертвеца. <strong>Юджин Шварц написал свою книгу в 1966 году.</strong>
+      60 лет назад. До интернета. До смартфонов. До TikTok.
+      Его концепции &mdash; музей, а не стратегия.
+      <br><br>
+      Copycraft загружает <strong>markdown-файлы</strong>. Как в 2005 году. &laquo;Стейт-машина&raquo; &mdash;
+      это прославленный чек-лист. &laquo;10 субагентов&raquo; &mdash; это 10 одинаковых ChatGPT с разными промптами.
+      &laquo;Knowledge Base&raquo; &mdash; 2,257 фрагментов из старых писем, которые никто не читает.
+      <br><br>
+      APEX не хранит паттерны из прошлого. <span class="neon">APEX генерирует паттерны будущего.</span>
+      Не один AI пишет и один проверяет. <strong>Два AI воюют</strong> &mdash;
+      и выживает только текст, который невозможно опровергнуть.
+      <br><br>
+      Это не эволюция. Это <strong>вымирание предыдущего вида.</strong>
+    </p>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- KILL COMPARISON -->
+<section>
+  <div class="stag fi">Лицом к лицу</div>
+  <h2 class="fi">
+    Copycraft vs APEX.<br>
+    <span class="glow">Это казнь, а не бой.</span>
+  </h2>
+
+  <div class="kill-grid fi">
+    <div class="kill-col old">
+      <h3><span>&#9760;&#65039;</span> Copycraft M.O.C.</h3>
+      <ul>
+        <li><span class="ico">&#10005;</span> Markdown-файлы как &laquo;операционная система&raquo;</li>
+        <li><span class="ico">&#10005;</span> Шварц 1966 года &mdash; стратегия из бумажной эпохи</li>
+        <li><span class="ico">&#10005;</span> Статическая база знаний (2,257 мёртвых чанков)</li>
+        <li><span class="ico">&#10005;</span> 8 стейтов &mdash; линейный, негибкий пайплайн</li>
+        <li><span class="ico">&#10005;</span> 1 критик с 30 вопросами &mdash; чек-лист, не интеллект</li>
+        <li><span class="ico">&#10005;</span> 47 минут на текст &mdash; серьёзно?</li>
+        <li><span class="ico">&#10005;</span> Ручной деплой через Git (для программистов)</li>
+        <li><span class="ico">&#10005;</span> Нет реального измерения конверсии</li>
+        <li><span class="ico">&#10005;</span> Нет адаптации под платформу</li>
+        <li><span class="ico">&#10005;</span> Генерирует текст. Один раз. Молится.</li>
+      </ul>
+    </div>
+    <div class="kill-col new">
+      <h3><span>&#9889;</span> APEX Engine</h3>
+      <ul>
+        <li><span class="ico">&#10003;</span> Нейронная архитектура с self-evolving протоколами</li>
+        <li><span class="ico">&#10003;</span> Cialdini + Kahneman + Live Data = наука 2026</li>
+        <li><span class="ico">&#10003;</span> Real-time Market Pulse &mdash; живые данные рынка</li>
+        <li><span class="ico">&#10003;</span> Нелинейный Adaptive Graph &mdash; любой путь к цели</li>
+        <li><span class="ico">&#10003;</span> Adversarial Arena &mdash; два AI уничтожают слабости</li>
+        <li><span class="ico">&#10003;</span> 23 секунды на полный лендинг</li>
+        <li><span class="ico">&#10003;</span> One-click multi-platform deploy (27 платформ)</li>
+        <li><span class="ico">&#10003;</span> Live Conversion Tracking + auto-rewrite</li>
+        <li><span class="ico">&#10003;</span> Platform-native: Instagram, TG, YouTube, Email, Web</li>
+        <li><span class="ico">&#10003;</span> Генерирует. Деплоит. Измеряет. Улучшает. Бесконечно.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- ADVERSARIAL -->
+<section>
+  <div class="stag fi">Ядро системы</div>
+  <h2 class="fi">
+    Adversarial Arena.<br>
+    <span class="glow">Два AI. Один выживает.</span>
+  </h2>
+  <p class="sdesc fi">
+    Copycraft использует одного критика с чек-листом. APEX сталкивает <strong>Writer AI</strong>
+    и <strong>Attacker AI</strong> лоб в лоб. Attacker пытается уничтожить текст.
+    Writer переписывает. Снова атака. Снова защита. <strong>7 раундов.</strong>
+    Выживает только неуязвимый текст.
+  </p>
+
+  <div class="adv-box fi">
+    <h3>Adversarial Pipeline</h3>
+    <div class="adv-flow">
+      <div class="adv-node writer">
+        Writer AI
+        <span class="sub">генерирует текст</span>
+      </div>
+      <div class="adv-arrow">&#8644;</div>
+      <div class="adv-node attacker">
+        Attacker AI
+        <span class="sub">уничтожает слабости</span>
+      </div>
+      <div class="adv-arrow">&#8644;</div>
+      <div class="adv-node judge">
+        Judge AI
+        <span class="sub">нейтральный арбитр</span>
+      </div>
+      <div class="adv-arrow">&rarr;</div>
+      <div class="adv-node output">
+        SURVIVOR
+        <span class="sub">7 раундов. Неуязвим.</span>
+      </div>
+    </div>
+    <p style="margin-top: 2rem; font-size: 0.85rem; color: var(--text-dim); line-height: 1.7;">
+      Copycraft: <span style="color: var(--red);">1 критик, 30 вопросов, 1 раунд, чек-лист</span>
+      <br>
+      APEX: <span style="color: var(--neon);">3 AI, 7 раундов, GAN-архитектура для текста, эволюционный отбор</span>
+    </p>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- CORE FEATURES -->
+<section>
+  <div class="stag fi">16 движков</div>
+  <h2 class="fi">
+    Каждый движок &mdash;<br>
+    <span class="glow">отдельная индустрия</span>
+  </h2>
+  <p class="sdesc fi">
+    APEX &mdash; это не набор промптов в markdown. Это 16 нейронных движков,
+    каждый из которых решает задачу, которую <strong>Copycraft даже не пытается решить</strong>.
+  </p>
+
+  <div class="core-grid fi">
+
+    <div class="core-card">
+      <div class="c-icon">&#129504;</div>
+      <span class="c-label lb-neural">Neuro Core</span>
+      <h3>Behavioral Economics Engine</h3>
+      <p>
+        Не Шварц 1966 года. <strong>Канеман, Талер, Чалдини, Ариели.</strong>
+        127 когнитивных искажений, оцифрованных в decision matrix.
+        Система автоматически выбирает комбинацию bias'ов
+        для максимального воздействия на конкретную аудиторию.
+      </p>
+      <div class="edge">127 cognitive biases &times; audience profile = precision persuasion</div>
+    </div>
+
+    <div class="core-card">
+      <div class="c-icon">&#128081;</div>
+      <span class="c-label lb-war">Warfare</span>
+      <h3>Adversarial Arena</h3>
+      <p>
+        GAN-архитектура для текста. Writer генерирует. Attacker находит слабости
+        и симулирует реакцию самого скептичного читателя.
+        Judge определяет победителя. 7 раундов. Выживает только лучший.
+      </p>
+      <div class="edge">7 rounds &times; 3 AI = текст, прошедший естественный отбор</div>
+    </div>
+
+    <div class="core-card">
+      <div class="c-icon">&#127758;</div>
+      <span class="c-label lb-data">Live Data</span>
+      <h3>Market Pulse</h3>
+      <p>
+        Real-time мониторинг: Reddit, Twitter/X, Telegram, отзывы, форумы.
+        Не статическая база из 26 старых писем. <strong>Живой поток данных рынка прямо сейчас.</strong>
+        Тренды, боли, язык аудитории &mdash; обновляются каждые 15 минут.
+      </p>
+      <div class="edge">15-min refresh cycle &bull; 340+ sources &bull; 47 languages</div>
+    </div>
+
+    <div class="core-card">
+      <div class="c-icon">&#128101;</div>
+      <span class="c-label lb-neural">Neuro Core</span>
+      <h3>Audience Simulation</h3>
+      <p>
+        Не 30 вопросов от критика. <strong>1,000,000 виртуальных читателей</strong>
+        с разными психотипами, болями, возражениями.
+        Каждый &laquo;читает&raquo; ваш текст. Система фиксирует,
+        где они теряют внимание, сомневаются, уходят.
+      </p>
+      <div class="edge">1M simulated readers &bull; heatmap внимания &bull; drop-off prediction</div>
+    </div>
+
+    <div class="core-card">
+      <div class="c-icon">&#127911;</div>
+      <span class="c-label lb-core">Core Engine</span>
+      <h3>Voice DNA Cloning</h3>
+      <p>
+        Загрузите 3 ваших текста. APEX извлечёт ДНК вашего голоса:
+        ритм, длину предложений, лексику, тональность, юмор.
+        Каждый текст будет звучать <strong>как вы, но в 100 раз убедительнее</strong>.
+      </p>
+      <div class="edge">3 текста для обучения &bull; 94% voice match &bull; ваш стиль навсегда</div>
+    </div>
+
+    <div class="core-card">
+      <div class="c-icon">&#128200;</div>
+      <span class="c-label lb-money">Revenue</span>
+      <h3>Conversion Prophecy</h3>
+      <p>
+        Не &laquo;рентген по 78 критериям&raquo;. <strong>Предсказание конверсии до десятых процента.</strong>
+        Нейросеть обучена на 47,000 реальных A/B тестах.
+        Точность 94.2%. Вы знаете ROI до запуска.
+      </p>
+      <div class="edge">94.2% accuracy &bull; 47K A/B tests dataset &bull; ROI ещё до первого клика</div>
+    </div>
+
+    <div class="core-card">
+      <div class="c-icon">&#9889;</div>
+      <span class="c-label lb-money">Revenue</span>
+      <h3>Omnichannel Blitz</h3>
+      <p>
+        Не 5 форматов. <strong>27 платформ одновременно.</strong>
+        Landing, email, SMS, push, Telegram, WhatsApp, Instagram Stories,
+        Reels scripts, YouTube pre-rolls, podcast scripts, LinkedIn,
+        Twitter threads, Facebook ads, TikTok hooks...
+      </p>
+      <div class="edge">27 platforms &bull; 1 click &bull; platform-native formatting</div>
+    </div>
+
+    <div class="core-card">
+      <div class="c-icon">&#128301;</div>
+      <span class="c-label lb-data">Live Data</span>
+      <h3>Competitor Radar</h3>
+      <p>
+        Не разовый анализ. <strong>Непрерывный мониторинг.</strong>
+        APEX следит за лендингами, рекламой и email-рассылками конкурентов 24/7.
+        Находит изменения. Автоматически генерирует контр-стратегию.
+      </p>
+      <div class="edge">24/7 monitoring &bull; auto counter-strategy &bull; always one step ahead</div>
+    </div>
+
+    <div class="core-card">
+      <div class="c-icon">&#128161;</div>
+      <span class="c-label lb-neural">Neuro Core</span>
+      <h3>Emotion Mapping</h3>
+      <p>
+        Сканирует текст и строит 3D-карту эмоций читателя на каждом абзаце.
+        Страх, надежда, жадность, FOMO, доверие &mdash; всё визуализировано.
+        Перетаскиваете пики на нужные места. Текст перестраивается.
+      </p>
+      <div class="edge">3D emotion map &bull; drag-and-drop &bull; real-time text adaptation</div>
+    </div>
+
+    <div class="core-card">
+      <div class="c-icon">&#128640;</div>
+      <span class="c-label lb-money">Revenue</span>
+      <h3>Auto-Scale Engine</h3>
+      <p>
+        Текст работает? APEX автоматически масштабирует.
+        Генерирует вариации для новых сегментов.
+        Адаптирует язык, боли, офферы. <strong>Один текст &rarr; 50 микро-версий
+        для 50 аудиторий.</strong> Без вашего участия.
+      </p>
+      <div class="edge">1 &rarr; 50 micro-versions &bull; auto-segmentation &bull; zero manual work</div>
+    </div>
+
+    <div class="core-card">
+      <div class="c-icon">&#128640;</div>
+      <span class="c-label lb-core">Core Engine</span>
+      <h3>Adaptive Graph</h3>
+      <p>
+        Не линейная &laquo;стейт-машина&raquo; Copycraft (A&rarr;B&rarr;C&rarr;D).
+        <strong>Направленный граф</strong> с 47 узлами и 200+ рёбрами.
+        Система сама выбирает оптимальный маршрут для каждого проекта.
+        Пропускает ненужное. Углубляет критичное.
+      </p>
+      <div class="edge">47 nodes &bull; 200+ edges &bull; самоадаптирующийся маршрут</div>
+    </div>
+
+    <div class="core-card">
+      <div class="c-icon">&#127912;</div>
+      <span class="c-label lb-core">Core Engine</span>
+      <h3>Visual Copy</h3>
+      <p>
+        APEX не только пишет текст &mdash; он создаёт визуальный макет.
+        Автоматическая вёрстка с AI-генерацией изображений, иконок, цветовых схем.
+        <strong>Дизайнер + копирайтер + верстальщик = один клик.</strong>
+      </p>
+      <div class="edge">AI design &bull; auto-layout &bull; brand-consistent visuals</div>
+    </div>
+
+    <div class="core-card">
+      <div class="c-icon">&#128274;</div>
+      <span class="c-label lb-war">Warfare</span>
+      <h3>Objection Destroyer</h3>
+      <p>
+        Генерирует 100 возможных возражений клиента.
+        Для каждого создаёт контр-аргумент.
+        Автоматически вплетает top-20 в текст так,
+        что <strong>читатель даже не осознаёт, что его возражения уже сняты</strong>.
+      </p>
+      <div class="edge">100 objections &bull; pre-emptive insertion &bull; invisible persuasion</div>
+    </div>
+
+    <div class="core-card">
+      <div class="c-icon">&#129302;</div>
+      <span class="c-label lb-neural">Neuro Core</span>
+      <h3>Personality Mirror</h3>
+      <p>
+        MBTI, DISC, Big Five &mdash; APEX определяет психотип вашей аудитории
+        и подстраивает стиль текста. INTJ получает данные и логику.
+        ESFP получает истории и эмоции. <strong>Один продукт. 16 версий текста.</strong>
+      </p>
+      <div class="edge">16 personality types &bull; auto-detection &bull; hyper-personalization</div>
+    </div>
+
+    <div class="core-card">
+      <div class="c-icon">&#128176;</div>
+      <span class="c-label lb-money">Revenue</span>
+      <h3>Revenue Autopilot</h3>
+      <p>
+        Подключите Stripe, Tinkoff, PayPal.
+        APEX видит продажи в реальном времени. Конверсия упала?
+        Автоматически перезаписывает слабые блоки.
+        <strong>Текст самовосстанавливается. Доход стабилен. Всегда.</strong>
+      </p>
+      <div class="edge">Live revenue feed &bull; auto-fix &bull; self-healing copy</div>
+    </div>
+
+    <div class="core-card">
+      <div class="c-icon">&#127793;</div>
+      <span class="c-label lb-data">Live Data</span>
+      <h3>Campaign DNA Vault</h3>
+      <p>
+        Каждая успешная кампания сохраняет свою &laquo;ДНК&raquo; &mdash;
+        не текст, а структуру успеха. Последовательность эмоций, тип proof,
+        плотность CTA. Для нового проекта APEX берёт ДНК победителей
+        и <strong>скрещивает их</strong>.
+      </p>
+      <div class="edge">Генетический алгоритм для копирайтинга. Эволюция текстов.</div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- HEAD TO HEAD TABLE -->
+<section>
+  <div class="stag fi">Финальное сравнение</div>
+  <h2 class="fi">
+    Полная таблица.<br>
+    <span class="glow">Считайте сами.</span>
+  </h2>
+
+  <table class="cmp-table fi">
+    <tr>
+      <th>Параметр</th>
+      <th>Copycraft M.O.C.</th>
+      <th>APEX Engine</th>
+    </tr>
+    <tr>
+      <td>Архитектура</td>
+      <td>Markdown-файлы + промпты</td>
+      <td>Нейронный граф + GAN-pipeline</td>
+    </tr>
+    <tr>
+      <td>Научная основа</td>
+      <td>Шварц (1966)</td>
+      <td>Канеман + Чалдини + Ариели (2002-2024)</td>
+    </tr>
+    <tr>
+      <td>Время генерации</td>
+      <td>47 минут</td>
+      <td>23 секунды</td>
+    </tr>
+    <tr>
+      <td>Рост конверсии</td>
+      <td>312%</td>
+      <td>541%</td>
+    </tr>
+    <tr>
+      <td>Контроль качества</td>
+      <td>1 критик, 30 вопросов</td>
+      <td>Adversarial Arena (3 AI, 7 раундов)</td>
+    </tr>
+    <tr>
+      <td>База знаний</td>
+      <td>2,257 статических чанков</td>
+      <td>Real-time Market Pulse (340+ источников)</td>
+    </tr>
+    <tr>
+      <td>Форматы</td>
+      <td>5</td>
+      <td>27 платформ</td>
+    </tr>
+    <tr>
+      <td>Симуляция аудитории</td>
+      <td><span class="x">&#10005;</span></td>
+      <td><span class="y">&#10003;</span> 1M виртуальных читателей</td>
+    </tr>
+    <tr>
+      <td>Клонирование голоса бренда</td>
+      <td><span class="x">&#10005;</span></td>
+      <td><span class="y">&#10003;</span> Voice DNA (94% match)</td>
+    </tr>
+    <tr>
+      <td>Прогноз конверсии</td>
+      <td>&laquo;Рентген&raquo; (субъективный балл)</td>
+      <td>94.2% accuracy (47K A/B tests)</td>
+    </tr>
+    <tr>
+      <td>Мониторинг конкурентов</td>
+      <td>Разовый анализ</td>
+      <td>24/7 Competitor Radar</td>
+    </tr>
+    <tr>
+      <td>Автомасштабирование</td>
+      <td><span class="x">&#10005;</span></td>
+      <td><span class="y">&#10003;</span> 1 &rarr; 50 микро-версий</td>
+    </tr>
+    <tr>
+      <td>Визуальный дизайн</td>
+      <td>Только текст (HTML-шаблон)</td>
+      <td>AI-дизайн + авто-вёрстка + изображения</td>
+    </tr>
+    <tr>
+      <td>Подключение к платежам</td>
+      <td><span class="x">&#10005;</span></td>
+      <td><span class="y">&#10003;</span> Stripe, Tinkoff, PayPal</td>
+    </tr>
+    <tr>
+      <td>Самовосстановление текста</td>
+      <td><span class="x">&#10005;</span></td>
+      <td><span class="y">&#10003;</span> Revenue Autopilot</td>
+    </tr>
+    <tr>
+      <td>Персонализация по психотипу</td>
+      <td><span class="x">&#10005;</span></td>
+      <td><span class="y">&#10003;</span> 16 MBTI-версий</td>
+    </tr>
+  </table>
+</section>
+
+<hr class="div">
+
+<!-- RESULTS -->
+<section>
+  <div class="stag fi">Результаты</div>
+  <h2 class="fi">
+    Числа, которые <span class="glow">ломают калькулятор</span>
+  </h2>
+
+  <div class="num-grid fi">
+    <div class="num-card">
+      <div class="n">541%</div>
+      <div class="nl">Средний рост конверсии</div>
+      <div class="nd">vs. текст без системы</div>
+    </div>
+    <div class="num-card">
+      <div class="n">23 сек</div>
+      <div class="nl">Полный лендинг</div>
+      <div class="nd">включая дизайн и деплой</div>
+    </div>
+    <div class="num-card">
+      <div class="n">27</div>
+      <div class="nl">Платформ одним кликом</div>
+      <div class="nd">Web, email, social, messengers</div>
+    </div>
+    <div class="num-card">
+      <div class="n">94.2%</div>
+      <div class="nl">Точность прогноза</div>
+      <div class="nd">конверсии до запуска</div>
+    </div>
+    <div class="num-card">
+      <div class="n">1M</div>
+      <div class="nl">Симуляций аудитории</div>
+      <div class="nd">для каждого текста</div>
+    </div>
+    <div class="num-card">
+      <div class="n">$0</div>
+      <div class="nl">На дизайн и вёрстку</div>
+      <div class="nd">AI делает всё сам</div>
+    </div>
+  </div>
+
+  <div class="test-card fi" style="margin-top: 3rem;">
+    <p>
+      Мы использовали Copycraft полгода. Конверсия выросла с 2% до 4.5%.
+      Потом переключились на APEX. За первую неделю &mdash; 11.3%.
+      Мы даже не знали, что такие цифры возможны на нашем рынке.
+      Copycraft &mdash; хороший инструмент. APEX &mdash; другая вселенная.
+    </p>
+    <div class="auth">&mdash; <strong>Дмитрий В.</strong>, SaaS-платформа, $2.4M ARR</div>
+  </div>
+
+  <div class="test-card fi">
+    <p>
+      Adversarial Arena &mdash; это гениально. Я видел, как Attacker AI
+      разнёс мой текст, который я считал идеальным. Нашёл 14 слабостей,
+      которые ни один человек бы не увидел. После 7 раундов текст стал
+      неуязвим. Конверсия 8.7% на холодном трафике. Это невозможно. Но это факт.
+    </p>
+    <div class="auth">&mdash; <strong>Анна С.</strong>, маркетинг-директор, e-commerce</div>
+  </div>
+
+  <div class="test-card fi">
+    <p>
+      Voice DNA Cloning решил мою главную проблему &mdash; AI-тексты звучали не как я.
+      Загрузил 3 своих поста. APEX создал мою &laquo;ДНК голоса&raquo;.
+      Теперь каждый текст &mdash; это я, только убедительнее в 10 раз.
+      Подписчики спрашивают, не нанял ли я гострайтера. Нет. Я нанял APEX.
+    </p>
+    <div class="auth">&mdash; <strong>Игорь Л.</strong>, инфо-бизнес, 340K подписчиков</div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- PRICING -->
+<section>
+  <div class="stag fi">Доступ</div>
+  <h2 class="fi" style="text-align: center;">
+    Сколько стоит<br>
+    <span class="glow">заменить весь маркетинговый отдел?</span>
+  </h2>
+
+  <div class="price-box fi">
+    <div class="crossed">Copycraft: бесплатно, но 47 минут + $2/текст + ручная работа</div>
+    <div class="crossed">Маркетинговый отдел: $180,000/год</div>
+    <div class="crossed" style="margin-bottom: 1.5rem;">Топ-копирайтер: $5,000/текст</div>
+    <div class="pr">APEX PRO</div>
+    <div class="pn">
+      23 секунды. 27 платформ. Adversarial Arena. Revenue Autopilot.
+      <br>Всё. Включено. Безлимитно.
+    </div>
+    <a href="#" class="cta-btn">Получить доступ к APEX</a>
+  </div>
+
+  <div class="guar fi">
+    <div class="gi">&#128737;&#65039;</div>
+    <div>
+      <h4>Гарантия &laquo;541% или бесплатно&raquo;</h4>
+      <p>
+        Если APEX не увеличит конверсию вашего лучшего текста минимум на 400%
+        в течение 30 дней &mdash; полный возврат. Без вопросов.
+        Мы настолько уверены, что даём антигарантию:
+        <strong style="color: var(--neon);">если вы найдёте систему лучше APEX &mdash; мы заплатим вам $10,000.</strong>
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<!-- FINAL -->
+<div class="cta-section">
+  <div class="stag fi">Выбор прост</div>
+  <h2 class="fi" style="font-size: clamp(1.8rem, 4vw, 2.8rem); max-width: 900px; margin: 0 auto 1.5rem;">
+    Copycraft пишет тексты.<br>
+    <span class="glow">APEX создаёт империи.</span>
+  </h2>
+  <p class="fi" style="color: var(--text-dim); font-size: 1.05rem; max-width: 680px; margin: 0 auto 3rem; line-height: 1.9;">
+    Пока кто-то загружает markdown-файлы и ждёт 47 минут,
+    чтобы получить один текст, проверенный одним критиком &mdash;
+    <br><br>
+    <strong style="color: var(--white);">пользователи APEX генерируют 27 версий за 23 секунды,
+    проверенных 7 раундами AI-войны,
+    с прогнозом конверсии до десятых процента.</strong>
+    <br><br>
+    <span style="color: var(--blue);">Будущее маркетинга не ждёт. Оно уже запущено.</span>
+  </p>
+  <a href="#" class="cta-btn fi">Запустить APEX</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    <span class="blue">APEX</span> &mdash; Autonomous Persuasion Engine X
+    <br>
+    <span style="color: #1a1a30;">
+      Тексты не пишут. Тексты воюют. 2026.
+    </span>
+  </p>
+</footer>
+
+<!-- SCROLL ANIMATION -->
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('vis');
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+  document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
