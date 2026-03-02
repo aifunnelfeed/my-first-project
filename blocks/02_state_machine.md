@@ -190,8 +190,9 @@ DELIVERY → REVIEW
 
 **PHASE B — BRIEF (каркас):**
 1) Тип Лида (по Awareness)
-2) Порядок блоков (Lead → Story → Mechanism → [Result Projection если Awareness ≤ 3] → Product Reveal → Offer → Proof → Close)
+2) Порядок блоков: базовый скелет RMBC (секция 4.1) + ARRANGEMENT_MODS если применимы (см. [ARRANGEMENT_MODS_V1], секция 4.1). Зафиксировать: какие MOD применены и почему
 3) Где Mini-Proof
+3b) ARRANGEMENT MODS (по [ARRANGEMENT_MODS_V1]): какие модификаторы применены? Если ни один — записать "дефолт RMBC"
 4) MOS BOOSTERS PLAN (по MOS_MODE):
    — MODE A: Offer Stack (Guarantee + Price Framing + Scarcity)
    — MODE B: Headline (curiosity + Big Idea), Bullets (micro-belief shifts), Proof (CPB stacking)

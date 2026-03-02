@@ -88,6 +88,7 @@
 21. **Zero Placeholders:** Содержит ли final.md неразрешённые плейсхолдеры `[ВСТАВИТЬ:...]`? Если ДА — FAIL (перечислить каждый). Исключение: если пользователь дал PLACEHOLDER_OVERRIDE в state.md — пометить WARNING, не FAIL.
 22. **Pain Density:** Каждый абзац pain section вносит новый ракурс (слой DRE / ситуация / цифра / голос / следствие)? Нет ли 2+ подряд абзацев с повтором одной мысли? Если 5+ абзацев боли — есть micro-relief (момент эмпатии/нормализации каждые 3-4 абзаца)?
 23. **Push:Pull Balance:** В тексте работают оба двигателя — push (боль/DRE) и pull (желание/DES)? Push ≠ 0: есть pain section с 4 слоями DRE. Pull ≠ 0: есть Dream State в Close (шаг 16) и/или Result Projection после Mechanism, с минимум 3 слоями DES. Если один из двигателей = 0 (только боль без картинки будущего, или только обещания без боли) → FAIL.
+24. **Arrangement Coherence:** Если в BRIEF указаны ARRANGEMENT_MODS (по [ARRANGEMENT_MODS_V1]) — выполнены ли они в тексте? (MOD-1: есть ли Mini-Proof после Mechanism и Product Reveal? MOD-2: есть ли расширенный Authority блок? MOD-3: proof действительно минимален? MOD-4: proof и promise переплетены? MOD-5: текст начинается с образа, не с боли?) Если MODs не указаны или "дефолт RMBC" → Н/П.
 
 Если хоть один «нет» — доработать перед тестом.
 
