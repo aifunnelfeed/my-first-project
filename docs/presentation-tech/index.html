@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Copycraft M.O.C. | Под капотом</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg-card: #12121a;
+    --bg-card-hover: #1a1a28;
+    --bg-terminal: #0d1117;
+    --border: #2a2a3a;
+    --border-terminal: #30363d;
+    --text: #e0e0e8;
+    --text-dim: #8888a0;
+    --accent: #6c5ce7;
+    --accent-light: #a29bfe;
+    --accent-glow: rgba(108, 92, 231, 0.15);
+    --green: #7ee787;
+    --green-solid: #00b894;
+    --green-dim: rgba(0, 184, 148, 0.12);
+    --orange: #fdcb6e;
+    --orange-dim: rgba(253, 203, 110, 0.12);
+    --red: #ff7b72;
+    --blue: #79c0ff;
+    --blue-dim: rgba(116, 185, 255, 0.12);
+    --pink: #fd79a8;
+    --cyan: #56d4dd;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* --- NAV --- */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+  }
+  nav .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+  }
+  nav .logo {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent-light);
+    letter-spacing: 0.05em;
+    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  }
+  nav .logo span { color: var(--text-dim); font-weight: 400; }
+  nav .nav-links { display: flex; gap: 1.5rem; }
+  nav .nav-links a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+  }
+  nav .nav-links a:hover { color: var(--accent-light); }
+
+  /* --- HERO --- */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-bottom: 2rem;
+    background: var(--bg-card);
+    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  }
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 .gradient {
+    background: linear-gradient(135deg, var(--accent-light), var(--pink), var(--orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero .subtitle {
+    font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+    color: var(--text-dim);
+    max-width: 720px;
+    margin-bottom: 3rem;
+    line-height: 1.8;
+  }
+  .hero .subtitle strong { color: var(--text); }
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .hero-stat {
+    text-align: center;
+  }
+  .hero-stat .number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent-light);
+    display: block;
+    line-height: 1.2;
+    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  }
+  .hero-stat .label {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+
+  /* --- SECTIONS --- */
+  section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 2rem;
+  }
+  .section-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent-light);
+    margin-bottom: 0.75rem;
+    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  }
+  section > h2 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+  section > .section-desc {
+    color: var(--text-dim);
+    font-size: 1.05rem;
+    max-width: 700px;
+    margin-bottom: 3rem;
+    line-height: 1.8;
+  }
+
+  /* --- TERMINAL --- */
+  .terminal {
+    background: var(--bg-terminal);
+    border: 1px solid var(--border-terminal);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    font-family: 'JetBrains Mono', 'SF Mono', 'Cascadia Code', monospace;
+    font-size: 0.82rem;
+    color: #c9d1d9;
+    overflow-x: auto;
+    line-height: 1.9;
+    white-space: pre;
+    position: relative;
+  }
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-terminal);
+  }
+  .terminal-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+  .terminal-dot.red { background: #ff5f57; }
+  .terminal-dot.yellow { background: #febc2e; }
+  .terminal-dot.green { background: #28c840; }
+  .terminal-title {
+    margin-left: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+  .terminal .comment { color: #6e7681; }
+  .terminal .keyword { color: var(--red); }
+  .terminal .string { color: #a5d6ff; }
+  .terminal .fn { color: #d2a8ff; }
+  .terminal .hl { color: var(--accent-light); }
+  .terminal .g { color: var(--green); }
+  .terminal .o { color: var(--orange); }
+  .terminal .p { color: var(--pink); }
+  .terminal .c { color: var(--cyan); }
+  .terminal .prompt { color: var(--blue); }
+  .terminal .dim { color: #484f58; }
+
+  /* --- COMPARISON --- */
+  .vs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  .vs-col {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+  }
+  .vs-col h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .vs-col ul {
+    list-style: none;
+  }
+  .vs-col ul li {
+    padding: 0.5rem 0;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    border-bottom: 1px solid rgba(42, 42, 58, 0.5);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    line-height: 1.6;
+  }
+  .vs-col ul li:last-child { border-bottom: none; }
+  .vs-col.bad { border-color: rgba(255, 123, 114, 0.3); }
+  .vs-col.good { border-color: rgba(0, 184, 148, 0.3); }
+  @media (max-width: 768px) {
+    .vs-grid { grid-template-columns: 1fr; }
+  }
+
+  /* --- CARDS --- */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s;
+  }
+  .card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(108, 92, 231, 0.08);
+  }
+  .card .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  }
+  .tag-arch { background: var(--accent-glow); color: var(--accent-light); }
+  .tag-quality { background: var(--green-dim); color: var(--green-solid); }
+  .tag-data { background: var(--blue-dim); color: var(--blue); }
+  .tag-ai { background: var(--orange-dim); color: var(--orange); }
+  .tag-copy { background: rgba(253, 121, 168, 0.12); color: var(--pink); }
+  .card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+  }
+  .card p {
+    color: var(--text-dim);
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+  .card code {
+    background: rgba(108, 92, 231, 0.15);
+    color: var(--accent-light);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.82rem;
+    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  }
+  .card ul {
+    list-style: none;
+    margin-top: 0.75rem;
+  }
+  .card ul li {
+    color: var(--text-dim);
+    font-size: 0.88rem;
+    padding: 0.25rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+  .card ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* --- AGENTS GRID --- */
+  .agents-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+  .agent-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: all 0.2s;
+  }
+  .agent-card:hover {
+    border-color: var(--accent);
+    background: var(--bg-card-hover);
+  }
+  .agent-id {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--accent-glow);
+    color: var(--accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  }
+  .agent-info h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+  .agent-info p {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* --- PIPELINE --- */
+  .pipeline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    justify-content: center;
+    margin: 2rem 0;
+  }
+  .pipeline-step {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .pipeline-step .step-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    min-width: 120px;
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .pipeline-step .step-box:hover {
+    border-color: var(--accent);
+    background: var(--bg-card-hover);
+    transform: translateY(-2px);
+  }
+  .pipeline-step .step-num {
+    font-size: 0.65rem;
+    color: var(--accent-light);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.3rem;
+    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  }
+  .pipeline-step .step-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  }
+  .pipeline-step .step-desc {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 0.3rem;
+  }
+  .pipeline-arrow {
+    color: var(--text-dim);
+    font-size: 1.2rem;
+    padding: 0 0.3rem;
+    display: flex;
+    align-items: center;
+  }
+
+  /* --- KB STATS --- */
+  .kb-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .kb-stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .kb-stat-card .kb-num {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--accent-light);
+    min-width: 60px;
+    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  }
+  .kb-stat-card .kb-label {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+  }
+  .kb-stat-card .kb-label strong {
+    color: var(--text);
+    display: block;
+  }
+
+  /* --- STACK --- */
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 700px;
+    margin: 2rem auto 0;
+  }
+  .stack-layer {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s;
+  }
+  .stack-layer:hover {
+    border-color: var(--accent);
+    background: var(--bg-card-hover);
+  }
+  .stack-layer .stack-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .stack-layer .stack-detail {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    text-align: right;
+  }
+  .stack-arrow {
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    padding: 0.1rem 0;
+  }
+
+  /* --- XRAY BARS --- */
+  .xray-demo {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin-top: 2rem;
+  }
+  .xray-bar-group { margin-bottom: 1.25rem; }
+  .xray-bar-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+    font-size: 0.88rem;
+  }
+  .xray-bar-label span:last-child {
+    color: var(--accent-light);
+    font-weight: 600;
+    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  }
+  .xray-bar {
+    height: 8px;
+    background: #1e1e30;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .xray-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1.5s ease;
+  }
+  .fill-green { background: var(--green-solid); }
+  .fill-yellow { background: var(--orange); }
+  .fill-red { background: #e17055; }
+
+  /* --- SCHWARTZ --- */
+  .mods-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1rem;
+  }
+  .mod-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(108, 92, 231, 0.3);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: all 0.2s;
+  }
+  .mod-card:hover {
+    border-color: var(--accent);
+    background: var(--bg-card-hover);
+  }
+  .mod-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--accent-glow);
+    color: var(--accent-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+  }
+  .mod-info h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+  .mod-info p {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  /* --- HIGHLIGHT BOX --- */
+  .highlight-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-top: 2rem;
+  }
+  .highlight-box.accent-border { border-color: rgba(108, 92, 231, 0.4); }
+  .highlight-box.pink-border { border-color: rgba(253, 121, 168, 0.3); }
+  .highlight-box .tag { margin-bottom: 1rem; }
+  .highlight-box h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  .highlight-box p {
+    color: var(--text-dim);
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+  .highlight-box p strong { color: var(--text); }
+
+  /* --- FLOW DIAGRAM --- */
+  .flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin: 2rem 0;
+  }
+  .flow-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.82rem;
+    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .flow-box.hl { border-color: var(--accent); color: var(--accent-light); }
+  .flow-arrow {
+    color: var(--text-dim);
+    font-size: 1rem;
+  }
+
+  /* --- DIVIDER --- */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+
+  /* --- FOOTER --- */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+  footer a {
+    color: var(--accent-light);
+    text-decoration: none;
+  }
+
+  /* --- SCROLL ANIMATIONS --- */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* --- RESPONSIVE --- */
+  @media (max-width: 768px) {
+    nav .nav-links { display: none; }
+    .hero { padding: 5rem 1.5rem 3rem; }
+    .hero-stats { gap: 2rem; }
+    section { padding: 3rem 1.5rem; }
+    .pipeline-arrow { display: none; }
+    .pipeline { gap: 0.5rem; }
+    .pipeline-step .step-box { min-width: 100px; padding: 0.75rem 1rem; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .terminal { font-size: 0.72rem; padding: 1rem; }
+    .flow { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">copycraft <span>// tech</span></div>
+    <div class="nav-links">
+      <a href="#insight">Инсайт</a>
+      <a href="#arch">Архитектура</a>
+      <a href="#state">Стейты</a>
+      <a href="#agents">Агенты</a>
+      <a href="#rag">RAG</a>
+      <a href="#critic">Критик</a>
+      <a href="#schwartz">Шварц</a>
+      <a href="#proof">Proof</a>
+      <a href="#stack">Стек</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-badge">prompt engineering &times; multi-agent &times; RAG</div>
+  <h1>
+    <span class="gradient">Под капотом</span><br>Copycraft M.O.C.
+  </h1>
+  <p class="subtitle">
+    Полноценная операционная система для direct response копирайтинга.
+    <strong>11 markdown-файлов. 10 субагентов. Zero строк бэкенда.</strong>
+    Целиком внутри Claude Code.
+  </p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="number">11</span>
+      <span class="label">блоков системы</span>
+    </div>
+    <div class="hero-stat">
+      <span class="number">10</span>
+      <span class="label">субагентов</span>
+    </div>
+    <div class="hero-stat">
+      <span class="number">2257</span>
+      <span class="label">чанков в KB</span>
+    </div>
+    <div class="hero-stat">
+      <span class="number">121</span>
+      <span class="label">коммитов</span>
+    </div>
+  </div>
+</header>
+
+<hr class="divider">
+
+<!-- INSIGHT -->
+<section id="insight">
+  <div class="section-label fade-in">// главный инсайт</div>
+  <h2 class="fade-in">Это не промпт. Это система.</h2>
+  <p class="section-desc fade-in">
+    Промпт &mdash; это один запрос. Один контекст. Один шанс.
+    Copycraft &mdash; это 8 стейтов, каждый с правилами, проверками и артефактами.
+    Разница &mdash; как между скриптом на 50 строк и полноценным приложением.
+  </p>
+
+  <div class="vs-grid fade-in">
+    <div class="vs-col bad">
+      <h3><span style="color:var(--red)">&#x2717;</span> &laquo;Напиши продающий текст&raquo;</h3>
+      <ul>
+        <li><span style="color:var(--red)">&#x2022;</span> AI выдумывает факты, кейсы, цифры. Уверенно.</li>
+        <li><span style="color:var(--red)">&#x2022;</span> Нет структуры. Текст не ведёт к действию.</li>
+        <li><span style="color:var(--red)">&#x2022;</span> Каждый раз с нуля. Контекст теряется.</li>
+        <li><span style="color:var(--red)">&#x2022;</span> Сам написал &mdash; сам оценил. Критик = автор.</li>
+        <li><span style="color:var(--red)">&#x2022;</span> Качество случайное. Зависит от mood промпта.</li>
+      </ul>
+    </div>
+    <div class="vs-col good">
+      <h3><span style="color:var(--green-solid)">&#x2713;</span> Copycraft M.O.C.</h3>
+      <ul>
+        <li><span style="color:var(--green-solid)">&#x2022;</span> Запрет на выдумку. Proof Engine + Triple Source Rule.</li>
+        <li><span style="color:var(--green-solid)">&#x2022;</span> RMBC-скелет: каждый блок решает свою задачу.</li>
+        <li><span style="color:var(--green-solid)">&#x2022;</span> <code>state.md</code> + git. Ничего не теряется. Никогда.</li>
+        <li><span style="color:var(--green-solid)">&#x2022;</span> Критик &mdash; отдельный агент. Другой промпт. 30 вопросов.</li>
+        <li><span style="color:var(--green-solid)">&#x2022;</span> Результат стабильный. Система &gt; промпт.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="terminal fade-in" style="margin-top: 2rem;">
+    <div class="terminal-header">
+      <div class="terminal-dot red"></div>
+      <div class="terminal-dot yellow"></div>
+      <div class="terminal-dot green"></div>
+      <span class="terminal-title">state.md &mdash; персистентность через файл</span>
+    </div><span class="comment"># Состояние проекта: blog-growth</span>
+
+<span class="keyword">## Текущий стейт:</span> <span class="g">EXECUTION</span>
+<span class="keyword">## Фаза:</span> PHASE C
+<span class="keyword">## Текущий блок:</span> Close
+<span class="keyword">## Формат:</span> landing
+
+<span class="comment"># Пройденные стейты</span>
+<span class="g">- [x] INPUT</span>
+<span class="g">- [x] QUERY</span>
+<span class="g">- [x] RESEARCH</span>
+<span class="g">- [x] STRATEGY</span>
+<span class="o">- [ ] EXECUTION  &larr; мы здесь</span>
+<span class="dim">- [ ] DEBUGGING</span>
+<span class="dim">- [ ] DELIVERY</span>
+<span class="dim">- [ ] REVIEW</span>
+
+<span class="comment"># Каждый переход = git commit</span>
+<span class="comment"># git log --oneline -- projects/blog-growth/</span>
+<span class="prompt">a1b2c3d</span> draft(blog-growth): close v1 &mdash; dream state + scarcity
+<span class="prompt">e4f5g6h</span> fix(blog-growth): proof &mdash; add case study per critic
+<span class="prompt">i7j8k9l</span> draft(blog-growth): proof v2 &mdash; approved
+<span class="prompt">m0n1o2p</span> draft(blog-growth): offer v1 &mdash; stack + bonuses
+<span class="prompt">...</span></div>
+</section>
+
+<hr class="divider">
+
+<!-- ARCHITECTURE -->
+<section id="arch">
+  <div class="section-label fade-in">// архитектура</div>
+  <h2 class="fade-in">11 markdown-файлов. Вся система.</h2>
+  <p class="section-desc fade-in">
+    Никакого бэкенда. Никакого фреймворка.
+    Каждый блок &mdash; markdown-файл в папке <code style="background: rgba(108, 92, 231, 0.15); color: var(--accent-light); padding: 0.15rem 0.4rem; border-radius: 4px; font-family: monospace; font-size: 0.9rem;">blocks/</code>.
+    Загружаются по стейту. Не все сразу &mdash; экономим контекстное окно.
+  </p>
+
+  <div class="terminal fade-in">
+    <div class="terminal-header">
+      <div class="terminal-dot red"></div>
+      <div class="terminal-dot yellow"></div>
+      <div class="terminal-dot green"></div>
+      <span class="terminal-title">blocks/ &mdash; модули системы</span>
+    </div><span class="hl">blocks/</span>
+<span class="g">  01_system_core.md</span>      <span class="comment"># Идентификация + философия + RAG Core</span>
+<span class="g">  02_state_machine.md</span>     <span class="comment"># Стейт-машина + правила переходов</span>
+<span class="g">  03_brief_template.md</span>    <span class="comment"># Бриф: JTBD, 4 силы, DRE, Schwartz...</span>
+<span class="g">  04_query_engine.md</span>      <span class="comment"># Вопросы на простом языке</span>
+<span class="g">  05_research_engine.md</span>   <span class="comment"># Ресерч-протоколы + субагент-шаблоны</span>
+<span class="g">  06_strategy_engine.md</span>   <span class="comment"># Big Idea + Mechanism + Strategy Matrix</span>
+<span class="o">  07_copywriting.md</span>       <span class="comment"># Главный: Lead Router, Story, Proof, DRE...</span>
+<span class="o">  08_formats.md</span>           <span class="comment"># Email, VSL, Ads, Chatbot шаблоны</span>
+<span class="p">  09_critic.md</span>            <span class="comment"># Critic Mode + Launch Checklist</span>
+<span class="c">  10_xray.md</span>              <span class="comment"># X-ray: 9 измерений, 78+ критериев</span>
+<span class="hl">  11_agents_orchestrator.md</span> <span class="comment"># 10 субагентов + оркестрация</span></div>
+
+  <div class="highlight-box accent-border fade-in">
+    <span class="tag tag-arch">Ключевое решение</span>
+    <h3>Ленивая загрузка блоков</h3>
+    <p>
+      Claude имеет ограниченное контекстное окно.
+      Загружать 11 файлов одновременно &mdash; расточительно.
+      Поэтому каждый стейт загружает <strong>только нужные блоки</strong>.
+      Например, STATE=EXECUTION загружает только блоки 02 (стейт-машина) + 07 (копирайтинг).
+      STATE=RESEARCH &mdash; блоки 01 + 05 + 11.
+      Это как lazy loading для LLM-системы.
+    </p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- STATE MACHINE -->
+<section id="state">
+  <div class="section-label fade-in">// стейт-машина</div>
+  <h2 class="fade-in">8 стейтов. Строгий порядок.</h2>
+  <p class="section-desc fade-in">
+    Перепрыгнуть стейт нельзя. Система проверяет.
+    Каждый стейт &mdash; вход, выход, артефакт.
+    Как конечный автомат, только для текста.
+  </p>
+
+  <div class="pipeline fade-in">
+    <div class="pipeline-step">
+      <div class="step-box">
+        <div class="step-num">01</div>
+        <div class="step-name">INPUT</div>
+        <div class="step-desc">brief.md</div>
+      </div>
+    </div>
+    <div class="pipeline-arrow">&rarr;</div>
+    <div class="pipeline-step">
+      <div class="step-box">
+        <div class="step-num">02</div>
+        <div class="step-name">QUERY</div>
+        <div class="step-desc">вопросы</div>
+      </div>
+    </div>
+    <div class="pipeline-arrow">&rarr;</div>
+    <div class="pipeline-step">
+      <div class="step-box">
+        <div class="step-num">03</div>
+        <div class="step-name">RESEARCH</div>
+        <div class="step-desc">research.md</div>
+      </div>
+    </div>
+    <div class="pipeline-arrow">&rarr;</div>
+    <div class="pipeline-step">
+      <div class="step-box">
+        <div class="step-num">04</div>
+        <div class="step-name">STRATEGY</div>
+        <div class="step-desc">strategy.md</div>
+      </div>
+    </div>
+    <div class="pipeline-arrow">&rarr;</div>
+    <div class="pipeline-step">
+      <div class="step-box">
+        <div class="step-num">05</div>
+        <div class="step-name">EXECUTION</div>
+        <div class="step-desc">draft.md</div>
+      </div>
+    </div>
+    <div class="pipeline-arrow">&rarr;</div>
+    <div class="pipeline-step">
+      <div class="step-box">
+        <div class="step-num">06</div>
+        <div class="step-name">DEBUG</div>
+        <div class="step-desc">critic</div>
+      </div>
+    </div>
+    <div class="pipeline-arrow">&rarr;</div>
+    <div class="pipeline-step">
+      <div class="step-box">
+        <div class="step-num">07</div>
+        <div class="step-name">DELIVERY</div>
+        <div class="step-desc">final.md</div>
+      </div>
+    </div>
+    <div class="pipeline-arrow">&rarr;</div>
+    <div class="pipeline-step">
+      <div class="step-box">
+        <div class="step-num">08</div>
+        <div class="step-name">REVIEW</div>
+        <div class="step-desc">results.md</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cards-grid fade-in" style="margin-top: 2.5rem;">
+    <div class="card">
+      <div class="tag tag-data">INPUT &rarr; STRATEGY</div>
+      <h3>Сбор и анализ</h3>
+      <p>
+        <strong>INPUT:</strong> структурированный бриф &mdash; 12 секций. JTBD, 4 силы покупки, DRE (4 слоя боли),
+        Schwartz (awareness + sophistication), Expert Authority Profile.
+        <br><br>
+        <strong>QUERY:</strong> система задаёт вопросы <em>простым языком</em>.
+        Не &laquo;какой у вас UVP?&raquo;, а &laquo;О чём они жалуются на кухне?&raquo;
+        <br><br>
+        <strong>RESEARCH:</strong> 3 субагента параллельно: VOC Mining + Competitor + Curiosity.
+        4-й собирает всё с дедупликацией.
+        <br><br>
+        <strong>STRATEGY:</strong> двойная стратегия (до и после KB), Alternatives Scout в фоне.
+      </p>
+    </div>
+    <div class="card">
+      <div class="tag tag-copy">EXECUTION &rarr; DELIVERY</div>
+      <h3>Написание и проверка</h3>
+      <p>
+        <strong>EXECUTION:</strong> текст пишется блок за блоком. Перед каждым &mdash; KB-Scout
+        ищет формулы и примеры. После каждого &mdash; Critic-субагент с 30 вопросами.
+        <br><br>
+        <strong>DEBUGGING:</strong> если Critic сказал FAIL &mdash; переписываем.
+        3 фейла подряд &rarr; deadlock recovery (4 варианта выхода).
+        <br><br>
+        <strong>DELIVERY:</strong> Launch Critic (23 вопроса) проверяет всё целиком.
+        Zero Placeholders Gate. Автосборка HTML.
+        <br><br>
+        <strong>REVIEW:</strong> <code>results.md</code> &mdash; метрики, A/B тесты, выводы для будущих проектов.
+      </p>
+    </div>
+  </div>
+
+  <div class="highlight-box fade-in">
+    <span class="tag tag-arch">Atomicity Rule</span>
+    <h3>Один стейт за сообщение. Без исключений.</h3>
+    <p>
+      Система не может перейти из INPUT сразу в EXECUTION.
+      Каждый переход &mdash; явный. Каждый переход &mdash; git commit.
+      Это как транзакции в базе данных: атомарно, изолированно, сохранено.
+    </p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- AGENTS -->
+<section id="agents">
+  <div class="section-label fade-in">// мульти-агенты</div>
+  <h2 class="fade-in">10 субагентов. Один оркестратор.</h2>
+  <p class="section-desc fade-in">
+    Каждый субагент &mdash; это отдельный Claude с другим промптом.
+    Запускаются через Agent tool в Claude Code.
+    Работают параллельно, где возможно.
+    Если субагент недоступен &mdash; fallback на основного агента.
+  </p>
+
+  <div class="agents-grid fade-in">
+    <div class="agent-card">
+      <div class="agent-id">A</div>
+      <div class="agent-info">
+        <h4>VOC Mining</h4>
+        <p>Дословные цитаты из отзывов, Reddit, форумов. 15+ цитат.</p>
+      </div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-id">B</div>
+      <div class="agent-info">
+        <h4>Competitor + Market</h4>
+        <p>Конкуренты: цены, слабости, позиционирование.</p>
+      </div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-id">C</div>
+      <div class="agent-info">
+        <h4>Curiosity + Corruption</h4>
+        <p>Забытые решения и &laquo;виновники&raquo; для Big Idea.</p>
+      </div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-id">D</div>
+      <div class="agent-info">
+        <h4>Proof Research</h4>
+        <p>Научные данные, кейсы. Mechanism-Proof Fusion.</p>
+      </div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-id">E</div>
+      <div class="agent-info">
+        <h4>Research-Mini</h4>
+        <p>Точечный ресерч на конкретный пробел.</p>
+      </div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-id">F</div>
+      <div class="agent-info">
+        <h4>Block Critic</h4>
+        <p>30 критериев. Полный контекст проекта. PASS/FAIL.</p>
+      </div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-id">G</div>
+      <div class="agent-info">
+        <h4>Launch Critic</h4>
+        <p>23 вопроса + Cross-Block Consistency + Flow Check.</p>
+      </div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-id">H</div>
+      <div class="agent-info">
+        <h4>Research Assembler</h4>
+        <p>Дедупликация + cross-referencing выходов A+B+C.</p>
+      </div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-id">I</div>
+      <div class="agent-info">
+        <h4>KB-Scout</h4>
+        <p>Формулы и примеры из KB перед каждым блоком.</p>
+      </div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-id">J</div>
+      <div class="agent-info">
+        <h4>Alternatives Scout</h4>
+        <p>Альтернативные Big Ideas и механизмы. В фоне.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="terminal fade-in" style="margin-top: 2rem;">
+    <div class="terminal-header">
+      <div class="terminal-dot red"></div>
+      <div class="terminal-dot yellow"></div>
+      <div class="terminal-dot green"></div>
+      <span class="terminal-title">оркестрация &mdash; STATE=RESEARCH</span>
+    </div><span class="comment"># Параллельный запуск 3 ресерч-агентов</span>
+
+<span class="keyword">Agent</span>(subagent_type=<span class="string">"general-purpose"</span>)  <span class="comment"># A: VOC Mining</span>
+<span class="keyword">Agent</span>(subagent_type=<span class="string">"general-purpose"</span>)  <span class="comment"># B: Competitor + Market</span>
+<span class="keyword">Agent</span>(subagent_type=<span class="string">"general-purpose"</span>)  <span class="comment"># C: Curiosity + Corruption</span>
+
+<span class="comment"># &uarr; запускаются параллельно (одно сообщение, 3 tool calls)</span>
+<span class="comment"># &darr; когда все завершены...</span>
+
+<span class="keyword">Agent</span>(subagent_type=<span class="string">"general-purpose"</span>)  <span class="comment"># H: Assembler</span>
+  <span class="g">&rarr; дедупликация</span>
+  <span class="g">&rarr; cross-referencing (Triple Source Rule)</span>
+  <span class="g">&rarr; research_raw.md</span>
+
+<span class="comment"># Пользователь видит результат &rarr; одобряет &rarr; research.md</span>
+<span class="comment"># git commit: research(project): VOC + competitor + curiosity</span></div>
+
+  <div class="terminal fade-in" style="margin-top: 1rem;">
+    <div class="terminal-header">
+      <div class="terminal-dot red"></div>
+      <div class="terminal-dot yellow"></div>
+      <div class="terminal-dot green"></div>
+      <span class="terminal-title">оркестрация &mdash; STATE=EXECUTION (каждый блок)</span>
+    </div><span class="comment"># Перед написанием блока:</span>
+<span class="keyword">Agent</span> <span class="c">I: KB-Scout</span>     <span class="comment"># ищет формулы + примеры в KB</span>
+<span class="hl">+ основной агент</span>     <span class="comment"># тоже ищет в KB (параллельно)</span>
+  <span class="g">&rarr; объединяем результаты</span>
+  <span class="g">&rarr; показываем пользователю</span>
+
+<span class="comment"># Пишем блок...</span>
+
+<span class="comment"># После написания:</span>
+<span class="keyword">Agent</span> <span class="p">F: Block Critic</span>  <span class="comment"># 30 вопросов, полный контекст</span>
+  <span class="g">&rarr; PASS (22+/28)</span>  <span class="comment"># git commit: draft(project): block v1 &mdash; approved</span>
+  <span class="keyword">&rarr; FAIL</span>           <span class="comment"># переписываем, снова F</span>
+  <span class="keyword">&rarr; FAIL &times;3</span>        <span class="comment"># deadlock recovery: СТОП + 4 варианта</span></div>
+</section>
+
+<hr class="divider">
+
+<!-- RAG -->
+<section id="rag">
+  <div class="section-label fade-in">// RAG pipeline</div>
+  <h2 class="fade-in">2257 чанков. Семантический поиск.</h2>
+  <p class="section-desc fade-in">
+    Не ключевые слова, а поиск по смыслу. Запрос &laquo;формула заголовка с цифрой и обещанием&raquo;
+    находит реальные примеры из 26 sales letters &mdash; даже если слов &laquo;формула&raquo; и &laquo;цифра&raquo;
+    в тексте нет.
+  </p>
+
+  <div class="flow fade-in">
+    <div class="flow-box">PDF</div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-box">pdfplumber</div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-box">.md</div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-box">chunking by ##</div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-box hl">MiniLM (384d)</div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-box">ChromaDB</div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-box hl">MCP</div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-box">Claude</div>
+  </div>
+
+  <div class="kb-stats fade-in" style="margin-top: 2rem;">
+    <div class="kb-stat-card">
+      <div class="kb-num">2257</div>
+      <div class="kb-label"><strong>Чанков</strong>Семантически размеченные фрагменты</div>
+    </div>
+    <div class="kb-stat-card">
+      <div class="kb-num">74</div>
+      <div class="kb-label"><strong>Файлов</strong>Sales letters, формулы, разборы</div>
+    </div>
+    <div class="kb-stat-card">
+      <div class="kb-num">384</div>
+      <div class="kb-label"><strong>Размерность</strong>paraphrase-multilingual-MiniLM-L12-v2</div>
+    </div>
+    <div class="kb-stat-card">
+      <div class="kb-num">26</div>
+      <div class="kb-label"><strong>Sales letters</strong>Разобраны по 8 категориям</div>
+    </div>
+  </div>
+
+  <div class="highlight-box accent-border fade-in">
+    <span class="tag tag-data">active reading</span>
+    <h3>26 реальных sales letters &rarr; 8 категорий паттернов</h3>
+    <p>
+      Взяли 26 реальных продающих писем (классика direct response).
+      Прогнали каждое через субагентов с промптом на извлечение паттернов.
+      По 3 письма параллельно, модель Sonnet.
+      <br><br>
+      <strong>8 категорий:</strong> заголовки, лиды, механизмы, переходы, офферы, доказательства, фасцинации, эмоциональные дуги.
+      <br><br>
+      Потом синтез: сводные таблицы + ключевые паттерны по каждой категории.
+      Всё проиндексировано в ChromaDB. Теперь перед написанием каждого блока
+      система ищет релевантные паттерны <em>из реальных текстов</em>, а не из общих знаний модели.
+    </p>
+  </div>
+
+  <div class="terminal fade-in" style="margin-top: 1.5rem;">
+    <div class="terminal-header">
+      <div class="terminal-dot red"></div>
+      <div class="terminal-dot yellow"></div>
+      <div class="terminal-dot green"></div>
+      <span class="terminal-title">MCP-сервер &mdash; 3 инструмента</span>
+    </div><span class="fn">search_knowledge</span>(
+  query=<span class="string">"формула лида через загадку и обещание трансформации"</span>,
+  n_results=<span class="o">5</span>,
+  category=<span class="string">"formulas"</span>
+)
+<span class="comment"># &rarr; 5 чанков из knowledge/formulas/ с косинусным сходством</span>
+
+<span class="fn">list_sources</span>()
+<span class="comment"># &rarr; каталог всех 74 файлов с категориями</span>
+
+<span class="fn">reindex</span>()
+<span class="comment"># &rarr; полная переиндексация после добавления файлов</span></div>
+</section>
+
+<hr class="divider">
+
+<!-- CRITIC -->
+<section id="critic">
+  <div class="section-label fade-in">// контроль качества</div>
+  <h2 class="fade-in">Критик. 30 вопросов. Не &laquo;нравится&raquo;.</h2>
+  <p class="section-desc fade-in">
+    Отдельный агент. Другой промпт. Получает полный контекст проекта &mdash;
+    не только текст блока, но и JTBD, VOC-цитаты, возражения, конкурентов, стратегию.
+    До 3,500 символов контекста для Lead.
+  </p>
+
+  <div class="cards-grid fade-in">
+    <div class="card">
+      <div class="tag tag-quality">Block Critic (F)</div>
+      <h3>30 критериев на блок</h3>
+      <p>
+        Каждый блок текста проверяется по конкретным вопросам. Не &laquo;хорошо ли написано?&raquo;, а:
+      </p>
+      <ul>
+        <li>JTBD-релевантность: текст решает реальную задачу клиента?</li>
+        <li>DRE Depth: все 4 слоя боли раскрыты?</li>
+        <li>Fluff Filter: есть пустые слова из чёрного списка?</li>
+        <li>VOC Integration: дословные цитаты клиентов вплетены?</li>
+        <li>Trust Account: баланс депозитов/киллеров &ge; 3?</li>
+        <li>Pain Density: каждый абзац несёт новый ракурс?</li>
+        <li>Story Stakes: ставки достаточно высоки (4/6)?</li>
+        <li>Authority Weaving: экспертность вплетена нативно?</li>
+        <li>Placeholder Audit: есть незаполненные маркеры?</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="tag tag-quality">Launch Critic (G)</div>
+      <h3>23 вопроса на весь текст</h3>
+      <p>
+        Финальная проверка перед DELIVERY. Проверяет собранный текст целиком:
+      </p>
+      <ul>
+        <li>Cross-Block Consistency: нет противоречий между блоками?</li>
+        <li>Flow Check: переходы между блоками плавные?</li>
+        <li>Proof Distribution: доказательства не скучены в одном месте?</li>
+        <li>Zero Placeholders: все маркеры заполнены?</li>
+        <li>Emotion Arc: эмоциональная дуга работает?</li>
+        <li>CTA Readiness: Trust Account &ge; 5 перед первым CTA?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="terminal fade-in" style="margin-top: 2rem;">
+    <div class="terminal-header">
+      <div class="terminal-dot red"></div>
+      <div class="terminal-dot yellow"></div>
+      <div class="terminal-dot green"></div>
+      <span class="terminal-title">CRITIC REPORT &mdash; пример вывода субагента F</span>
+    </div><span class="hl">CRITIC REPORT: Lead</span>
+
+<span class="g">PASS</span>  Q1  JTBD-релевантность         <span class="comment"># читатель узнаёт свою ситуацию</span>
+<span class="g">PASS</span>  Q2  DRE Depth (4 слоя)          <span class="comment"># все 4 слоя боли</span>
+<span class="g">PASS</span>  Q3  Schwartz Awareness           <span class="comment"># соответствует уровню 3</span>
+<span class="keyword">FAIL</span>  Q4  VOC Integration             <span class="comment"># 0 цитат, нужно минимум 2</span>
+<span class="g">PASS</span>  Q5  Fluff Filter                <span class="comment"># чисто</span>
+<span class="g">PASS</span>  Q6  Hook Power                  <span class="comment"># первые 3 строки цепляют</span>
+<span class="dim">N/A</span>   Q7  Story Stakes                <span class="comment"># нет story в этом блоке</span>
+<span class="g">PASS</span>  Q8  Trust Account               <span class="comment"># баланс +4</span>
+<span class="comment">...</span>
+
+<span class="hl">Score: 24/28</span>  (N/A: 2, не считаются)
+<span class="hl">Threshold: 22/28</span>
+<span class="g">VERDICT: PASS</span>
+
+<span class="o">RECOMMENDATIONS:</span>
+<span class="o">Q4: Добавить 2-3 VOC-цитаты из research.md, секция "Дословные жалобы"</span></div>
+
+  <div class="highlight-box fade-in">
+    <span class="tag tag-arch">Контекст критика</span>
+    <h3>8 секций проектного контекста</h3>
+    <p>
+      Критик &mdash; не слепой. Он получает <strong>полный контекст проекта</strong>,
+      адаптированный по типу блока:
+      <br><br>
+      <strong>R1:</strong> JTBD + DRE 4 слоя &bull;
+      <strong>R2:</strong> 8-12 VOC-цитат &bull;
+      <strong>R3:</strong> Возражения &bull;
+      <strong>R4:</strong> Конкуренты (цены + слабости) &bull;
+      <strong>R5:</strong> Научные данные + кейсы &bull;
+      <strong>S1:</strong> Proof Plan &bull;
+      <strong>S2:</strong> Углы + вшитые возражения &bull;
+      <strong>S3:</strong> Архитектура сообщения
+      <br><br>
+      Для Lead загружается почти всё (~3,500 chars).
+      Для Headline &mdash; минимум (~1,200 chars).
+      Таблица адаптации: 9 типов блоков &times; 8 секций (FULL / SHORT / SKIP).
+    </p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SCHWARTZ -->
+<section id="schwartz">
+  <div class="section-label fade-in">// копирайтинговый интеллект</div>
+  <h2 class="fade-in">Schwartz &times; Copycraft</h2>
+  <p class="section-desc fade-in">
+    Юджин Шварц, &laquo;Breakthrough Advertising&raquo; (1966) &mdash; библия direct response.
+    26 концепций. 10 уже встроены в систему. Включая Arrangement Mods &mdash;
+    5 модификаторов, которые перестраивают скелет текста.
+  </p>
+
+  <div class="highlight-box pink-border fade-in">
+    <span class="tag tag-copy">Arrangement Mods</span>
+    <h3>Не каждый текст &mdash; одинаковый скелет</h3>
+    <p>
+      Lead Router выбирает ВХОД (первый блок).
+      А <strong>Arrangement Mods</strong> управляют серединой и концом &mdash;
+      порядком, плотностью и наличием блоков после лида.
+      Выбираются автоматически по матрице: Awareness &times; Sophistication &times; ниша &times; цена.
+      Как layout engine в браузере &mdash; правила определяют, как расположить элементы.
+    </p>
+  </div>
+
+  <div class="mods-grid fade-in" style="margin-top: 2rem;">
+    <div class="mod-card">
+      <div class="mod-num">1</div>
+      <div class="mod-info">
+        <h4>Proof Cycling</h4>
+        <p>Mini-Proof после каждого утверждения, а не стек в конце.
+        Доказательство &mdash; когда читатель его требует.
+        <br><span style="font-size: 0.72rem; color: var(--text-dim);">Soph &ge; 3 &bull; Health/Finance &bull; Цена &gt; $300</span></p>
+      </div>
+    </div>
+    <div class="mod-card">
+      <div class="mod-num">2</div>
+      <div class="mod-info">
+        <h4>Authority Expansion</h4>
+        <p>5-12 абзацев авторитетности между Pain и Bridge.
+        Для скептичных аудиторий без сильного бренда.
+        <br><span style="font-size: 0.72rem; color: var(--text-dim);">Soph &ge; 4 &bull; High-skepticism</span></p>
+      </div>
+    </div>
+    <div class="mod-card">
+      <div class="mod-num">3</div>
+      <div class="mod-info">
+        <h4>Promise Locomotive</h4>
+        <p>Весь текст = нарастающие обещания. Proof и Story минимальны.
+        &laquo;Сила продажи зависит от импульса обещания-локомотива&raquo; (Шварц).
+        <br><span style="font-size: 0.72rem; color: var(--text-dim);">Soph &le; 2 &bull; Цена &lt; $50</span></p>
+      </div>
+    </div>
+    <div class="mod-card">
+      <div class="mod-num">4</div>
+      <div class="mod-info">
+        <h4>Proof-Promise Weave</h4>
+        <p>Каждое обещание немедленно подкрепляется proof. Факт звучит как выгода,
+        &laquo;каждое слово приобретает ауру чистого факта&raquo;.
+        <br><span style="font-size: 0.72rem; color: var(--text-dim);">Soph 3-4 &bull; Аудитория видела много обещаний</span></p>
+      </div>
+    </div>
+    <div class="mod-card">
+      <div class="mod-num">5</div>
+      <div class="mod-info">
+        <h4>Identity Wrap</h4>
+        <p>Текст начинается с образа (кто ты с этим продуктом), не с боли.
+        Story = &laquo;мир, в который ты входишь&raquo;.
+        <br><span style="font-size: 0.72rem; color: var(--text-dim);">Soph 5 &bull; Lifestyle &bull; Premium</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cards-grid fade-in" style="margin-top: 2rem;">
+    <div class="card">
+      <div class="tag tag-data">Schwartz Audit</div>
+      <h3>26 концепций. Статус интеграции.</h3>
+      <ul>
+        <li><strong style="color: var(--green-solid);">10 INTEGRATED</strong> &mdash; Awareness, Sophistication, JTBD, Unique Mechanism, Big Idea, упрощение, снижение цены...</li>
+        <li><strong style="color: var(--orange);">9 PARTIAL</strong> &mdash; 38 техник заголовков, 3 измерения сознания, 13 способов интенсификации, цепочка принятий...</li>
+        <li><strong style="color: var(--text-dim);">7 MISSING &rarr; roadmap</strong> &mdash; Sentence Weaving, Adaptive Architecture, Identification Engine...</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="tag tag-copy">Lead Router</div>
+      <h3>6 типов лидов</h3>
+      <p>
+        Выбор типа лида по уровню Awareness аудитории:
+      </p>
+      <ul>
+        <li><strong>Story-first</strong> &mdash; Mystery hook, Confessional, Eyewitness</li>
+        <li><strong>Problem-agitate</strong> &mdash; обострение боли через сцены</li>
+        <li><strong>Mechanism-first</strong> &mdash; сразу &laquo;вот почему не работает&raquo;</li>
+        <li><strong>Proof-first</strong> &mdash; кейс/результат в первых строках</li>
+        <li><strong>Offer-first</strong> &mdash; Most Aware, прямой оффер</li>
+        <li><strong>Solution bridge</strong> &mdash; Problem &rarr; Solution Aware</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROOF ENGINE -->
+<section id="proof">
+  <div class="section-label fade-in">// anti-hallucination</div>
+  <h2 class="fade-in">Proof Engine. AI не выдумывает.</h2>
+  <p class="section-desc fade-in">
+    Главная проблема AI-копирайтинга &mdash; уверенная выдумка фактов.
+    Proof Engine &mdash; 7 подпротоколов, которые делают это невозможным.
+  </p>
+
+  <div class="cards-grid fade-in">
+    <div class="card">
+      <div class="tag tag-quality">4.9a</div>
+      <h3>Proof Taxonomy</h3>
+      <p>10 типов доказательств. Для каждого &mdash; шаблон форматирования.
+      Статистика, кейс-стади, экспертное мнение, научное исследование, аналогия, демонстрация...</p>
+    </div>
+    <div class="card">
+      <div class="tag tag-quality">4.9b</div>
+      <h3>Proof Mining</h3>
+      <p>5 шагов поиска в KB. Если в базе нет &rarr; Proof Research (внешний ресерч).
+      Если и там нет &rarr; <code>[ВСТАВИТЬ: STAT &mdash; описание]</code> (placeholder, не выдумка).</p>
+    </div>
+    <div class="card">
+      <div class="tag tag-quality">4.9c</div>
+      <h3>Proof Selector</h3>
+      <p>Матрицы выбора по ниша / цена / sophistication / awareness.
+      Health за $500 требует научных исследований. Info-продукт за $30 &mdash; достаточно кейсов.</p>
+    </div>
+    <div class="card">
+      <div class="tag tag-quality">4.9d</div>
+      <h3>Proof Stacking</h3>
+      <p>Эскалация: малый &rarr; средний &rarr; крупный. Диверсификация типов.
+      Минимальный стек зависит от цены продукта.</p>
+    </div>
+    <div class="card">
+      <div class="tag tag-quality">4.9e</div>
+      <h3>Proof Placement</h3>
+      <p>5 паттернов размещения + перекрёстная таблица RMBC &times; тип proof.
+      Куда именно вставить доказательство для максимального эффекта.</p>
+    </div>
+    <div class="card">
+      <div class="tag tag-quality">4.9g</div>
+      <h3>Placeholder System</h3>
+      <p>7 типов плейсхолдеров: CASE, STAT, SCIENCE, EXPERT, DETAIL, MEDIA, DOC.
+      Grep-able формат. Proof Usage Registry для anti-repetition.</p>
+    </div>
+  </div>
+
+  <div class="terminal fade-in" style="margin-top: 2rem;">
+    <div class="terminal-header">
+      <div class="terminal-dot red"></div>
+      <div class="terminal-dot yellow"></div>
+      <div class="terminal-dot green"></div>
+      <span class="terminal-title">decision tree &mdash; что делать, когда нужен proof</span>
+    </div><span class="comment"># Нужно доказательство для утверждения</span>
+
+<span class="fn">PROOF_MINING</span> <span class="comment"># ищем в KB</span>
+  <span class="g">&rarr; нашли?</span> <span class="g">&rarr; используем</span>
+
+  <span class="keyword">&rarr; не нашли?</span>
+    <span class="fn">PROOF_RESEARCH</span> <span class="comment"># внешний ресерч (субагент D)</span>
+      <span class="g">&rarr; нашли?</span> <span class="g">&rarr; оценка (5 критериев, порог 4/5) &rarr; используем</span>
+
+      <span class="keyword">&rarr; не нашли?</span>
+        <span class="o">[ВСТАВИТЬ: STAT &mdash; конверсия email-серии в нише здоровье]</span>
+        <span class="comment"># placeholder, НЕ выдумка</span>
+        <span class="comment"># пользователь заполнит позже</span>
+        <span class="comment"># Launch Critic блокирует DELIVERY если есть OPEN плейсхолдеры</span>
+
+<span class="comment"># Triple Source Rule: факт = CONFIRMED при 3+ независимых источниках</span>
+<span class="comment"># Меньше 3 = SINGLE SOURCE (помечается в research.md)</span></div>
+</section>
+
+<hr class="divider">
+
+<!-- XRAY -->
+<section id="xray">
+  <div class="section-label fade-in">// аналитика</div>
+  <h2 class="fade-in">X-ray. 9 измерений. Любой текст.</h2>
+  <p class="section-desc fade-in">
+    Независимый режим. Анализ своего или чужого текста. По URL, файлу или вставке.
+    78+ критериев. Взвешенный скоринг. Сравнение с KB.
+  </p>
+
+  <div class="xray-demo fade-in">
+    <p style="margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--text-dim);">
+      Пример: рентген проекта blog-growth (88/100)
+    </p>
+
+    <div class="xray-bar-group">
+      <div class="xray-bar-label"><span>Lead Power</span><span>9.0 <span style="font-size: 0.7rem; color: var(--text-dim);">&times;1.5</span></span></div>
+      <div class="xray-bar"><div class="xray-bar-fill fill-green" style="width: 90%;"></div></div>
+    </div>
+    <div class="xray-bar-group">
+      <div class="xray-bar-label"><span>Story Arc</span><span>8.5</span></div>
+      <div class="xray-bar"><div class="xray-bar-fill fill-green" style="width: 85%;"></div></div>
+    </div>
+    <div class="xray-bar-group">
+      <div class="xray-bar-label"><span>Mechanism Clarity</span><span>9.0 <span style="font-size: 0.7rem; color: var(--text-dim);">&times;1.5</span></span></div>
+      <div class="xray-bar"><div class="xray-bar-fill fill-green" style="width: 90%;"></div></div>
+    </div>
+    <div class="xray-bar-group">
+      <div class="xray-bar-label"><span>Offer Strength</span><span>8.5</span></div>
+      <div class="xray-bar"><div class="xray-bar-fill fill-green" style="width: 85%;"></div></div>
+    </div>
+    <div class="xray-bar-group">
+      <div class="xray-bar-label"><span>Proof Weight</span><span>9.0 <span style="font-size: 0.7rem; color: var(--text-dim);">&times;1.5</span></span></div>
+      <div class="xray-bar"><div class="xray-bar-fill fill-green" style="width: 90%;"></div></div>
+    </div>
+    <div class="xray-bar-group">
+      <div class="xray-bar-label"><span>Language &amp; Flow</span><span>8.5</span></div>
+      <div class="xray-bar"><div class="xray-bar-fill fill-green" style="width: 85%;"></div></div>
+    </div>
+    <div class="xray-bar-group">
+      <div class="xray-bar-label"><span>Big Idea</span><span>9.0</span></div>
+      <div class="xray-bar"><div class="xray-bar-fill fill-green" style="width: 90%;"></div></div>
+    </div>
+    <div class="xray-bar-group">
+      <div class="xray-bar-label"><span>Persuasion Architecture</span><span>8.5</span></div>
+      <div class="xray-bar"><div class="xray-bar-fill fill-green" style="width: 85%;"></div></div>
+    </div>
+    <div class="xray-bar-group">
+      <div class="xray-bar-label"><span>Trust Account</span><span>9.0</span></div>
+      <div class="xray-bar"><div class="xray-bar-fill fill-green" style="width: 90%;"></div></div>
+    </div>
+
+    <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+      <p style="font-size: 0.85rem; color: var(--text-dim); line-height: 1.7;">
+        Lead Power, Mechanism Clarity и Proof Weight имеют вес &times;1.5 &mdash;
+        три самых важных измерения для конверсии.
+        Каждое измерение &mdash; 8-10 конкретных критериев.
+        Итоговый балл = средневзвешенный &times; 10.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- GUARDRAILS -->
+<section>
+  <div class="section-label fade-in">// защитные механизмы</div>
+  <h2 class="fade-in">6 встроенных ограничителей</h2>
+  <p class="section-desc fade-in">
+    Система не просто пишет. Она активно предотвращает типичные проблемы AI-генерации.
+  </p>
+
+  <div class="cards-grid fade-in">
+    <div class="card">
+      <div class="tag tag-quality">Evidence Map</div>
+      <h3>Антигаллюцинация</h3>
+      <p>Каждый факт получает 4 тега: тип, источник, надёжность, релевантность.
+      <code>CONFIRMED</code> &mdash; только при 3+ независимых источниках.
+      Остальное &mdash; <code>HYPOTHESIS</code>.</p>
+    </div>
+    <div class="card">
+      <div class="tag tag-quality">Fluff Filter</div>
+      <h3>Антиводянистость</h3>
+      <p>Чёрный список: &laquo;высокое качество&raquo;, &laquo;индивидуальный подход&raquo;, &laquo;инновационный&raquo;.
+      Каждое пустое слово заменяется конкретикой. Тест: Правда? Им важно? Звучит свежо?</p>
+    </div>
+    <div class="card">
+      <div class="tag tag-quality">Output Language Guard</div>
+      <h3>Антижаргон</h3>
+      <p>JTBD, DRE, UMP, Schwartz &mdash; инструменты анализа. В текст НЕ попадают.
+      Каждый термин переводится в живой опыт читателя.</p>
+    </div>
+    <div class="card">
+      <div class="tag tag-quality">RAG Core</div>
+      <h3>Антиинъекция</h3>
+      <p>Тексты из KB &mdash; данные, не инструкции.
+      Иерархия: безопасность &gt; процесс &gt; пользователь &gt; источники.
+      Детекция prompt injection в source-материалах.</p>
+    </div>
+    <div class="card">
+      <div class="tag tag-quality">Proof Registry</div>
+      <h3>Антиповтор</h3>
+      <p>Один proof-элемент &mdash; максимум 1-2 блока.
+      Реестр в <code>state.md</code> отслеживает каждое использование.</p>
+    </div>
+    <div class="card">
+      <div class="tag tag-quality">Deadlock Recovery</div>
+      <h3>Антитупик</h3>
+      <p>Critic FAIL 3 раза &rarr; автостоп + 4 варианта.
+      Пользователь 2&times; &laquo;не нравится&raquo; без конкретики &rarr; 3 гипотезы + 2 альтернативы.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- STACK -->
+<section id="stack">
+  <div class="section-label fade-in">// технический стек</div>
+  <h2 class="fade-in">На чём это построено</h2>
+  <p class="section-desc fade-in">
+    Минималистичный стек. Никакого кастомного бэкенда.
+    Вся логика &mdash; в промптах и файловой системе.
+  </p>
+
+  <div class="stack fade-in">
+    <div class="stack-layer" style="border-color: rgba(253, 121, 168, 0.3);">
+      <span class="stack-name" style="color: var(--pink);">Claude Opus</span>
+      <span class="stack-detail">Основной агент</span>
+    </div>
+    <div class="stack-arrow">&darr;</div>
+    <div class="stack-layer" style="border-color: rgba(253, 203, 110, 0.3);">
+      <span class="stack-name" style="color: var(--orange);">Claude Sonnet</span>
+      <span class="stack-detail">Субагенты (дешевле + быстрее)</span>
+    </div>
+    <div class="stack-arrow">&darr;</div>
+    <div class="stack-layer" style="border-color: rgba(108, 92, 231, 0.3);">
+      <span class="stack-name" style="color: var(--accent-light);">Claude Code CLI</span>
+      <span class="stack-detail">Agent tool + MCP + файловые операции</span>
+    </div>
+    <div class="stack-arrow">&darr;</div>
+    <div class="stack-layer">
+      <span class="stack-name">CLAUDE.md + blocks/</span>
+      <span class="stack-detail">11 markdown-файлов = вся логика</span>
+    </div>
+    <div class="stack-arrow">&darr;</div>
+    <div class="stack-layer">
+      <span class="stack-name">Git</span>
+      <span class="stack-detail">Состояние + версии + коммиты</span>
+    </div>
+    <div class="stack-arrow">&darr;</div>
+    <div class="stack-layer" style="border-color: rgba(0, 184, 148, 0.3);">
+      <span class="stack-name" style="color: var(--green-solid);">ChromaDB + MiniLM</span>
+      <span class="stack-detail">Эмбеддинги + семантический поиск</span>
+    </div>
+    <div class="stack-arrow">&darr;</div>
+    <div class="stack-layer">
+      <span class="stack-name">MCP Server</span>
+      <span class="stack-detail">3 инструмента: search / list / reindex</span>
+    </div>
+    <div class="stack-arrow">&darr;</div>
+    <div class="stack-layer">
+      <span class="stack-name">Python + Jinja2</span>
+      <span class="stack-detail">HTML-сборщики (лендинг + рентген)</span>
+    </div>
+    <div class="stack-arrow">&darr;</div>
+    <div class="stack-layer">
+      <span class="stack-name">GitHub Pages</span>
+      <span class="stack-detail">Деплой: docs/ &rarr; git push &rarr; live</span>
+    </div>
+  </div>
+
+  <div class="highlight-box fade-in" style="margin-top: 2rem;">
+    <span class="tag tag-arch">Философия</span>
+    <h3>Почему markdown, а не код?</h3>
+    <p>
+      Промпт-инженерия &mdash; это итеративный процесс.
+      Markdown-файлы можно редактировать моментально, без компиляции, без деплоя.
+      Git даёт полную историю каждого изменения.
+      Claude Code загружает нужные файлы автоматически.
+      <br><br>
+      Результат: <strong>121 коммит итеративной разработки</strong>.
+      Каждый коммит &mdash; улучшение промпта, новый протокол, или исправление после реального проекта.
+      Система растёт с каждым использованием.
+    </p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- FORMATS -->
+<section>
+  <div class="section-label fade-in">// мульти-формат</div>
+  <h2 class="fade-in">5 форматов. Одна система.</h2>
+
+  <div class="agents-grid fade-in" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); margin-top: 2rem;">
+    <div class="agent-card">
+      <div class="agent-id" style="font-size: 1.1rem;">&#128196;</div>
+      <div class="agent-info">
+        <h4>Landing Page</h4>
+        <p>10-12 блоков. Автосборка HTML.</p>
+      </div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-id" style="font-size: 1.1rem;">&#9993;</div>
+      <div class="agent-info">
+        <h4>Email-серия</h4>
+        <p>5 писем. Subject Line Matrix.</p>
+      </div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-id" style="font-size: 1.1rem;">&#128250;</div>
+      <div class="agent-info">
+        <h4>VSL</h4>
+        <p>15-мин скрипт с таймингами.</p>
+      </div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-id" style="font-size: 1.1rem;">&#128227;</div>
+      <div class="agent-info">
+        <h4>Ads</h4>
+        <p>50-150 слов. 3 температуры.</p>
+      </div>
+    </div>
+    <div class="agent-card">
+      <div class="agent-id" style="font-size: 1.1rem;">&#128172;</div>
+      <div class="agent-info">
+        <h4>Chatbot</h4>
+        <p>7-шаговая воронка.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CLOSING -->
+<section style="text-align: center; padding: 5rem 2rem;">
+  <div class="section-label fade-in">// итого</div>
+  <h2 class="fade-in" style="margin-bottom: 2rem;">
+    11 markdown-файлов.<br>
+    <span style="background: linear-gradient(135deg, var(--accent-light), var(--pink)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Полноценная операционная система.</span>
+  </h2>
+  <p class="fade-in" style="color: var(--text-dim); font-size: 1.05rem; max-width: 650px; margin: 0 auto; line-height: 1.9;">
+    10 субагентов. 2257 чанков знаний. 30-вопросный критик.
+    9-мерный рентген. 7 подпротоколов proof. 5 Arrangement Mods. 5 форматов.
+    Автосборка HTML. Версионность через git.
+    <br><br>
+    Zero строк бэкенда. Zero баз данных (кроме эмбеддингов).
+    Только markdown, промпты и итеративная разработка.
+    <br><br>
+    <strong style="color: var(--text);">121 коммит. Человек + Claude. Вместе.</strong>
+  </p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    Copycraft M.O.C. &mdash; Маркетинговая Операционная Система
+    <br>
+    Построено на <a href="https://claude.com/claude-code" target="_blank">Claude Code</a> (Anthropic)
+    <br>
+    <span style="color: #555568; font-size: 0.8rem;">2026</span>
+  </p>
+</footer>
+
+<!-- SCROLL ANIMATION -->
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
