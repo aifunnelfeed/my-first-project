@@ -264,6 +264,16 @@ FALLBACK: Если Agent tool недоступен → 20 вопросов in-co
 — FINAL SELF-CHECK (5 пунктов) + выдача результата
 — запрещено изобретать новые смыслы/офферы/механизмы
 
+**HTML-ЛЕНДИНГ (после FINAL SELF-CHECK):**
+После выдачи final.md спроси: **"Собрать HTML-лендинг для GitHub Pages?"**
+— Если да → запроси URL для CTA-кнопки (или `#` по умолчанию) → `python scripts/build_html.py {slug} --input final.md --cta-url "URL"` → `docs/{project}/index.html` → коммит `html({project}): build landing page`
+— Если нет → пропустить
+
+**ПЕРЕХОД В REVIEW (после HTML или отказа):**
+Спроси: **"Переходим в REVIEW? (10 точечных правок + A/B предложения)"**
+— Если да → обнови state.md (STATE=REVIEW, DELIVERY ✅) → переход в STATE=REVIEW
+— Если нет → остаёмся в DELIVERY для дополнительных правок
+
 ### STATE=REVIEW
 — только: 10 точечных правок + 3 предложения A/B
 — Confidence (Высокая/Средняя/Низкая)

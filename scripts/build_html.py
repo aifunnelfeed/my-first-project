@@ -78,11 +78,69 @@ def _md(text: str) -> str:
     return html
 
 
+# --- Preprocessing ---
+
+
+def _preprocess(text: str) -> str:
+    """Normalize final.md formatting for the HTML parser.
+
+    Handles common patterns from project final.md files:
+    - Meta-title block (# Title\\n---) at file start
+    - ## HEADLINE with A/B variants → # heading + ### subtitle
+    - **[CTA TEXT]** → ### [CTA TEXT]
+    - **P.S.**/**P.P.S.** → P.S./P.P.S.
+    - ## FAQ → ### FAQ
+    """
+    # 1. Strip meta-title block at start of file
+    text = re.sub(r"^#[^\n]+\n+---\n+", "", text)
+
+    # 2. Convert ## HEADLINE with A/B variants to # heading
+    m = re.search(r"##\s+HEADLINE\s*\n+(.*?)(?=\n---)", text, re.DOTALL)
+    if m:
+        block = m.group(1)
+        hero = ""
+        # Try variant B first (two-level dramatic headline)
+        b = re.search(
+            r"\*\*Двухуровневый[^*]*\*\*\s*\n(.+?)(?:\n\*([^*\n]+)\*)?$",
+            block,
+            re.MULTILINE,
+        )
+        if b:
+            title = b.group(1).strip()
+            subtitle = b.group(2).strip() if b.group(2) else ""
+            hero = f"# {title}"
+            if subtitle:
+                hero += f"\n\n### {subtitle}"
+        else:
+            # Fallback: variant A
+            a = re.search(
+                r"\*\*Основной[^*]*\*\*\s*\n(.+?)$", block, re.MULTILINE
+            )
+            if a:
+                hero = f"# {a.group(1).strip()}"
+        text = hero + text[m.end() :]
+
+    # 3. Convert **[CTA TEXT]** → ### [CTA TEXT]
+    text = re.sub(
+        r"^\*\*\[(.+?)\]\*\*\s*$", r"### [\1]", text, flags=re.MULTILINE
+    )
+
+    # 4. Convert bold P.S./P.P.S. to plain (P.P.S. before P.S. to avoid partial match)
+    text = re.sub(r"\*\*(P\.P\.S\.)\*\*", r"\1", text)
+    text = re.sub(r"\*\*(P\.S\.)\*\*", r"\1", text)
+
+    # 5. Convert ## FAQ → ### FAQ
+    text = re.sub(r"^##\s+(FAQ)\s*$", r"### \1", text, flags=re.MULTILINE)
+
+    return text.strip()
+
+
 # --- Parsing ---
 
 
 def parse_final_md(text: str) -> list[Section]:
     """Parse final.md into typed sections."""
+    text = _preprocess(text)
     raw_chunks = re.split(r"\n---\n", text.strip())
     sections = []
 
