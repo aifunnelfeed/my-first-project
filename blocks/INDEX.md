@@ -22,7 +22,7 @@
 | 08 | `08_asset_library.md` | Email, Ads, VSL, Chatbot шаблоны, Subject Lines | STATE=EXECUTION (по формату) |
 | 09 | `09_debugging.md` | Critic Mode, Launch Checklist, Strategy Critic | STATE=STRATEGY, DEBUGGING, DELIVERY |
 | 10 | `10_xray.md` | Рентген текста — X-ray V2: 9-мерный скоринг (Lead/Story/Mechanism/Offer/Proof/Language/BigIdea/Architecture/Trust), N/A логика, Awareness/Sophistication-адаптация, KB-сравнение V2 | Команда «Рентген» (независимый режим) |
-| 11 | `11_agents_orchestrator.md` | Subagent Rules, Registry, Dispatch, Prompt Templates (Research A-E + Assembler H + Critic F,G + KB-Scout I), Critic Context, Result Pipelines | STATE=RESEARCH, EXECUTION, DEBUGGING, DELIVERY |
+| 11 | `11_agents_orchestrator.md` | Subagent Rules, Registry, Dispatch, Prompt Templates (Research A-E + Assembler H + Critic F,G + KB-Scout I + Alternatives Scout J), Critic Context, Result Pipelines | STATE=RESEARCH, STRATEGY, EXECUTION, DEBUGGING, DELIVERY |
 
 ---
 
@@ -33,7 +33,7 @@
 | INPUT | 01 + 03 + 04 | ~12k |
 | QUERY | 01 + 04 | ~8k |
 | RESEARCH | 01 + 05 + 11 | ~18k |
-| STRATEGY | 01 + 03 + 06 + 09 | ~13k |
+| STRATEGY | 01 + 02 + 03 + 06 + 09 + 11 | ~18k |
 | EXECUTION (landing/VSL) | 02 + 07 | ~14k |
 | EXECUTION (email/ads/chatbot) | 02 + 08 | ~10k |
 | DEBUGGING | 02 + 09 + 11 | ~14k |

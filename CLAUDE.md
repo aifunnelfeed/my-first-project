@@ -46,7 +46,7 @@
 | INPUT | 01 + 03 + 04 |
 | QUERY | 01 + 04 |
 | RESEARCH | 01 + 05 + 11 |
-| STRATEGY | 01 + 02 + 03 + 06 + 09 |
+| STRATEGY | 01 + 02 + 03 + 06 + 09 + 11 |
 | EXECUTION | 02 + 07 (или 02 + 08 для email/ads/vsl/chatbot) |
 | DEBUGGING | 02 + 09 + 11 |
 | DELIVERY | 02 + 09 + 11 |
@@ -161,6 +161,7 @@
 - `final` — финальная сборка
 - `html` — сборка HTML-лендинга
 - `xray` — результаты рентгена текста
+- `alt` — альтернативные идеи (Alternatives Scout)
 - `results` — данные о результатах
 
 Примеры:
@@ -174,6 +175,8 @@ fix(nutriciologia): lead — add UMP per critic feedback
 draft(nutriciologia): lead v2 — approved
 final(nutriciologia): assemble all approved blocks
 html(nutriciologia): build landing page from final
+alt(nutriciologia): auto — 12 alternatives, best: loss-aversion Big Idea
+alt(nutriciologia): manual — headlines for Lead, 3 variants
 results(nutriciologia): add A/B test data — headline B won
 ```
 
@@ -302,7 +305,7 @@ git show {commit}:projects/{name}/draft.md
 На каждом стейте записывай результаты:
 - STATE=INPUT → `brief.md`
 - STATE=RESEARCH → `research.md`
-- STATE=STRATEGY → `strategy.md`
+- STATE=STRATEGY → `strategy.md` + `alternatives.md` (если J запущен)
 - STATE=EXECUTION → `draft.md` (дописывается блок за блоком)
 - STATE=DELIVERY → `final.md` + `docs/{project}/index.html` (HTML-лендинг)
 - После публикации → `results.md`
