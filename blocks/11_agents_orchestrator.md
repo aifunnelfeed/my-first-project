@@ -28,8 +28,8 @@
 | C  | Curiosity + Corruption | STATE=RESEARCH | brief-context + проблема | Углы для Big Idea | → research_raw.md → DOUBLE FILTER → research.md |
 | D  | Proof Research | EXECUTION (PROOF_MINING gap) | strategy-context + UMR claims | Исследования + Insider Knowledge | → показать пользователю → интегрировать в proof block |
 | E  | Research-Mini | EXECUTION (data gap) | краткий контекст + конкретный пробел | Точечные данные | → показать пользователю → интегрировать в блок |
-| F  | Block Critic | DEBUGGING (после каждого блока COPY) | текст + контекст + 27 критериев | CRITIC REPORT (PASS/FAIL + corrections) | → показать пользователю → rewrite если FAIL |
-| G  | Launch Critic | DELIVERY (перед сборкой) | final.md + контекст + 20 критериев | LAUNCH REPORT (PASS/FAIL + corrections) | → показать пользователю → fix если FAIL |
+| F  | Block Critic | DEBUGGING (после каждого блока COPY) | текст + контекст + 28 критериев | CRITIC REPORT (PASS/FAIL + corrections + placeholder audit) | → показать пользователю → rewrite если FAIL |
+| G  | Launch Critic | DELIVERY (перед сборкой) | final.md + контекст + 21 критерий | LAUNCH REPORT (PASS/FAIL + corrections + placeholder status) | → показать пользователю → fix если FAIL |
 | H  | Research Assembler | STATE=RESEARCH (после A+B+C) | выходы субагентов A+B+C | Готовый research_raw.md + SUMMARY | → показать пользователю → research.md |
 | I  | KB-Scout | EXECUTION (PHASE C, перед блоком COPY кроме Proof) | block_type + strategy-context (Awareness, Sophistication, ниша) | Top-3 формулы + Top-2 примера (отфильтрованные) | → показать пользователю → основной агент учитывает при написании |
 
@@ -69,8 +69,8 @@
 
 **FALLBACK (всегда):**
 Если Agent tool недоступен → выполнять проверки in-context (блок 09):
-- F → 27 вопросов CRITIC_MODE_V1 (секция 6.1)
-- G → 20 вопросов LAUNCH_CHECKLIST_V1 (секция 6.2)
+- F → 28 вопросов CRITIC_MODE_V1 (секция 6.1)
+- G → 21 вопрос LAUNCH_CHECKLIST_V1 (секция 6.2)
 - H → главный агент собирает research_raw.md вручную (текущее поведение)
 - A-E → серийный ресерч в основном агенте
 - I → основной агент выполняет KNOWLEDGE GATE самостоятельно (search_knowledge / чтение файлов — текущее поведение)
@@ -479,6 +479,10 @@ Angles:
 --- СЕКЦИЯ S3: АРХИТЕКТУРА СООБЩЕНИЯ (→ Q10, Q16, Q17) ---
 {таблица I из strategy.md: # | Секция | Тип (Эмоция/Логика) | Что делает}
 {12 строк — критик видит, где текущий блок в общей структуре}
+
+--- СЕКЦИЯ S4: PROOF USAGE REGISTRY (→ Q28) ---
+{таблица Proof Usage Registry из state.md — все использованные proof-элементы в предыдущих блоках}
+Критику: для Q28 — сверяй proof в текущем блоке с этим реестром. Если элемент уже в реестре — отметить дублирование.
 ```
 
 ---
@@ -487,27 +491,27 @@ Angles:
 
 Определяет, какие секции [CRITIC_CONTEXT_V1] включать для каждого типа блока:
 
-| block_type | R1 | R2 | R3 | R4 | R5 | R6 | S1 | S2 | S3 |
-|------------|----|----|----|----|----|----|----|----|----|
-| Headline | FULL | SHORT | SKIP | SKIP | SKIP | SKIP | SKIP | SHORT | SKIP |
-| Lead | FULL | FULL | SHORT | SHORT | SHORT | FULL | SHORT | FULL | FULL |
-| Story | FULL | FULL | SKIP | SKIP | SKIP | FULL | SKIP | SHORT | SHORT |
-| Pain Deep Dive | FULL | FULL | SHORT | SKIP | SKIP | SKIP | SKIP | SHORT | SHORT |
-| Bridge / UMP | FULL | SHORT | SHORT | FULL | SHORT | SHORT | SKIP | FULL | SHORT |
-| UMR / Mechanism | FULL | SHORT | SKIP | SHORT | FULL | SHORT | FULL | SHORT | SHORT |
-| Result Projection | FULL | FULL | SKIP | SKIP | SHORT | SKIP | FULL | SHORT | SHORT |
-| Mini-Proof | SHORT | SKIP | SKIP | SKIP | FULL | SHORT | FULL | SHORT | SKIP |
-| Product Reveal | SHORT | SKIP | SHORT | SHORT | SKIP | SHORT | SHORT | SHORT | SHORT |
-| Offer + Close | SHORT | SKIP | FULL | SHORT | SKIP | SKIP | FULL | FULL | SHORT |
-| Fascinations | SHORT | SHORT | SHORT | SKIP | SHORT | SKIP | SHORT | SHORT | SKIP |
-| FAQ | SHORT | SHORT | FULL | SHORT | SHORT | SKIP | SKIP | FULL | SKIP |
+| block_type | R1 | R2 | R3 | R4 | R5 | R6 | S1 | S2 | S3 | S4 |
+|------------|----|----|----|----|----|----|----|----|----|----|
+| Headline | FULL | SHORT | SKIP | SKIP | SKIP | SKIP | SKIP | SHORT | SKIP | SKIP |
+| Lead | FULL | FULL | SHORT | SHORT | SHORT | FULL | SHORT | FULL | FULL | FULL |
+| Story | FULL | FULL | SKIP | SKIP | SKIP | FULL | SKIP | SHORT | SHORT | SHORT |
+| Pain Deep Dive | FULL | FULL | SHORT | SKIP | SKIP | SKIP | SKIP | SHORT | SHORT | SHORT |
+| Bridge / UMP | FULL | SHORT | SHORT | FULL | SHORT | SHORT | SKIP | FULL | SHORT | SHORT |
+| UMR / Mechanism | FULL | SHORT | SKIP | SHORT | FULL | SHORT | FULL | SHORT | SHORT | FULL |
+| Result Projection | FULL | FULL | SKIP | SKIP | SHORT | SKIP | FULL | SHORT | SHORT | FULL |
+| Mini-Proof | SHORT | SKIP | SKIP | SKIP | FULL | SHORT | FULL | SHORT | SKIP | FULL |
+| Product Reveal | SHORT | SKIP | SHORT | SHORT | SKIP | SHORT | SHORT | SHORT | SHORT | SHORT |
+| Offer + Close | SHORT | SKIP | FULL | SHORT | SKIP | SKIP | FULL | FULL | SHORT | FULL |
+| Fascinations | SHORT | SHORT | SHORT | SKIP | SHORT | SKIP | SHORT | SHORT | SKIP | SKIP |
+| FAQ | SHORT | SHORT | FULL | SHORT | SHORT | SKIP | SKIP | FULL | SKIP | SKIP |
 
 ---
 
 **ПРОМПТ-ШАБЛОН:**
 
 ```
-ЗАДАЧА: Проверь блок копирайтинга "{block_name}" по 27 критериям качества. Для каждого критерия ответь ДА/НЕТ/Н/П (не применимо к данному блоку). Для каждого НЕТ — опиши проблему и предложи 1-3 конкретных исправления.
+ЗАДАЧА: Проверь блок копирайтинга "{block_name}" по 28 критериям качества. Для каждого критерия ответь ДА/НЕТ/Н/П (не применимо к данному блоку). Для каждого НЕТ — опиши проблему и предложи 1-3 конкретных исправления. Вопрос 28 (Placeholder Audit) — INFO, не влияет на PASS/FAIL.
 
 КОНТЕКСТ ПРОЕКТА:
 - Продукт: {1-2 предложения из brief.md}
@@ -530,7 +534,7 @@ Angles:
 ---
 
 ==============================
-26 КРИТЕРИЕВ ПРОВЕРКИ
+28 КРИТЕРИЕВ ПРОВЕРКИ
 ==============================
 
 ГРУППА 1: БАЗОВЫЕ (1-13)
@@ -621,6 +625,13 @@ Angles:
     - Каждый credential ПРИВЯЗАН к окружающему контексту (не висит в воздухе)?
     Если credentials одним списком или нерелевантны → FAIL. Если эксперта нет → Н/П.
 
+ГРУППА 6: PLACEHOLDER (28)
+
+28. **Placeholder Audit:** Содержит ли блок плейсхолдеры `[ВСТАВИТЬ:...]`?
+    - Если да — перечисли каждый: тип, описание, позиция в тексте.
+    - Проверь: (a) логичное размещение (нарративный контекст до и после), (b) конкретное описание (не "нужен кейс" а "нужен кейс клиента с ростом конверсии в цифрах"), (c) нет дублирования proof с Proof Usage Registry.
+    - ВАЖНО: Плейсхолдеры НЕ считаются как FAIL. Они выводятся в отдельной секции PLACEHOLDER AUDIT отчёта.
+
 ==============================
 ПРАВИЛА ОЦЕНКИ
 ==============================
@@ -632,6 +643,7 @@ Angles:
 - Блок НЕ содержит Offer → вопросы 6, 7, 9 = Н/П
 - Big Idea не требуется (Sophistication < 3) → вопрос 5 = Н/П
 - Блок НЕ содержит упоминаний эксперта и strategy.md L = «Эксперт: отсутствует» → вопрос 27 = Н/П
+- Вопрос 28 (Placeholder Audit) = всегда INFO (не влияет на PASS/FAIL, выводится в отдельной секции)
 
 **Порог PASS:** Из ПРИМЕНИМЫХ вопросов >= 80% должны быть ДА.
 
@@ -653,6 +665,7 @@ Angles:
 | ... | ... | ... | ... |
 | 26 | Mechanism-Research | ✓ / ✗ / Н/П | {комментарий} |
 | 27 | Authority Weaving | ✓ / ✗ / Н/П | {комментарий} |
+| 28 | Placeholder Audit | INFO | {кол-во плейсхолдеров, описание если есть} |
 
 ### CORRECTIONS (для каждого ✗)
 **Q{N} — {название критерия}**
@@ -665,6 +678,13 @@ Angles:
 - {что в тексте сильно — конкретно, с примером}
 - {что работает хорошо}
 - {что стоит сохранить при доработке}
+
+### PLACEHOLDER AUDIT
+| # | Тип | Описание | Позиция в тексте | Оценка |
+|---|-----|----------|------------------|--------|
+| P1 | {тип} | {описание} | {после какого абзаца/секции} | OK / Нечёткое описание / Нелогичное размещение |
+
+Плейсхолдеров в блоке: {N} (если 0 — написать "Плейсхолдеров нет")
 
 ### SUMMARY
 {1-2 предложения: общая оценка + главный приоритет для исправления}
@@ -695,7 +715,7 @@ Angles:
 **ПРОМПТ-ШАБЛОН:**
 
 ```
-ЗАДАЧА: Проверь полный собранный текст (final.md) по 20 критериям Launch Checklist. ВСЕ 20 должны быть ДА для прохождения. Для каждого НЕТ — опиши проблему и предложи исправление.
+ЗАДАЧА: Проверь полный собранный текст (final.md) по 21 критерию Launch Checklist. ВСЕ 21 должны быть ДА для прохождения. Для каждого НЕТ — опиши проблему и предложи исправление.
 
 КОНТЕКСТ ПРОЕКТА:
 - Продукт: {1-2 предложения из brief.md}
@@ -715,7 +735,7 @@ Angles:
 ---
 
 ==============================
-20 КРИТЕРИЕВ LAUNCH CHECKLIST
+21 КРИТЕРИЙ LAUNCH CHECKLIST
 ==============================
 
 1. **ЦА через JTBD:** ЦА чётко определена через JTBD (не через соцдем)?
@@ -740,6 +760,7 @@ Angles:
 18. **Proof Specificity:** Каждый proof-элемент содержит конкретное имя/число/дату?
 19. **Mechanism-Research:** Если Sophistication >= 3 или ниша Health/Finance — есть минимум 1 внешнее исследование, подкрепляющее UMR?
 20. **Authority Weaving:** Credentials эксперта появляются в тексте минимум в 2 точках (Lead/Story + Mechanism/Proof/Close)? Нет «резюме-стиля» (отдельный блок регалий без привязки к проблеме)? Если эксперта нет → Н/П.
+21. **Zero Placeholders:** Содержит ли final.md неразрешённые плейсхолдеры `[ВСТАВИТЬ:...]`? Если ДА — перечисли каждый (тип, описание, блок). Это FAIL. Исключение: если в state.md есть PLACEHOLDER_OVERRIDE от пользователя — пометить WARNING, не FAIL.
 
 ==============================
 ДОПОЛНИТЕЛЬНЫЕ ПРОВЕРКИ
@@ -763,7 +784,7 @@ Angles:
 
 ## LAUNCH REPORT: {project_name}
 
-### VERDICT: PASS / FAIL ({кол-во ДА}/20)
+### VERDICT: PASS / FAIL ({кол-во ДА}/21)
 
 ### DETAILED CHECK
 | # | Критерий | Результат | Комментарий |
@@ -772,6 +793,7 @@ Angles:
 | ... | ... | ... | ... |
 | 19 | Mechanism-Research | ✓ / ✗ | {комментарий} |
 | 20 | Authority Weaving | ✓ / ✗ / Н/П | {комментарий} |
+| 21 | Zero Placeholders | ✓ / ✗ / ⚠️ | {кол-во плейсхолдеров; ⚠️ если OVERRIDE} |
 
 ### CROSS-BLOCK CONSISTENCY
 | Проверка | Результат | Деталь |
@@ -797,12 +819,17 @@ Angles:
 ### STRENGTHS (3-5 пунктов)
 - {сильные стороны текста в целом}
 
+### PLACEHOLDER STATUS
+- Неразрешённых плейсхолдеров: {N}
+- PLACEHOLDER_OVERRIDE: {YES/NO}
+{список если N > 0: тип, описание, блок}
+
 ### SUMMARY
 {2-3 предложения: готов ли текст к запуску, главные приоритеты}
 
 ПРАВИЛА:
-- Все 20 = ДА для PASS. Даже 1 НЕТ = FAIL. Для Q20: если эксперта нет → Н/П (не считается).
-- Cross-Block Consistency и Flow Check — дополнительные (не влияют на PASS/FAIL основных 19, но показываются пользователю).
+- Все 21 = ДА для PASS. Даже 1 НЕТ = FAIL. Для Q20: если эксперта нет → Н/П (не считается). Для Q21: если PLACEHOLDER_OVERRIDE → WARNING (не FAIL).
+- Cross-Block Consistency и Flow Check — дополнительные (не влияют на PASS/FAIL основных 20, но показываются пользователю).
 - Цитируй конкретные фрагменты текста при указании на проблемы.
 - STRENGTHS обязательны — покажи, что в тексте уже хорошо.
 ```
