@@ -322,11 +322,23 @@ C) Оставить как [ВСТАВИТЬ:...] — вы заполните п
 - Есть OPEN → СТОП. Вернуться к PLACEHOLDER RESOLUTION.
 - Все RESOLVED/REMOVED (или PLACEHOLDER_OVERRIDE) → продолжить сборку.
 
-**LAUNCH CRITIC (перед сборкой):**
+<!-- TODO: ADVERSARIAL ARENA — вставить здесь (Задача 2). Протокол: блок 11. -->
+<!-- TODO: DIAGNOSTICS (Emotion Map ∥ Bias Audit) — вставить здесь (Задача 3). Протокол: блок 11. -->
+
+**LAUNCH CRITIC (после сборки):**
 После сборки final.md → dispatch субагент G (Launch Critic) → блок 11, секция 7.10 [SUBAGENT_G_LAUNCH_V1].
-PASS → переход к FINAL SELF-CHECK.
+PASS → переход к AUDIENCE SIMULATION.
 FAIL → показать LAUNCH REPORT, исправить, перезапустить G.
-FALLBACK: Если Agent tool недоступен → 21 вопрос in-context (блок 09, секция 6.2).
+FALLBACK: Если Agent tool недоступен → 28 вопросов in-context (блок 09, секция 6.2).
+
+**AUDIENCE SIMULATION (после Launch Critic):**
+После PASS Launch Critic → запустить по [AUDIENCE_SIMULATION_V1] (блок 11, секция 7.16):
+1. Генерация 5-8 персон из research.md + strategy.md (секция M)
+2. Показать персоны пользователю → одобрение
+3. Параллельный dispatch 5-8 субагентов P по [SUBAGENT_P_READER_V1] (блок 11, секция 7.15)
+4. Сборка SIMULATION REPORT → показать пользователю
+5. По вердикту: PASS → FINAL SELF-CHECK / NEEDS_FIX → решение пользователя / CRITICAL_FIX → правки → повтор
+FALLBACK: Если Agent tool недоступен → 3 симуляции in-context.
 
 — только сборка финала из УТВЕРЖДЁННЫХ блоков
 — FINAL SELF-CHECK (5 пунктов) + выдача результата
