@@ -523,7 +523,7 @@ Angles:
 {таблица Proof Usage Registry из state.md — все использованные proof-элементы в предыдущих блоках}
 Критику: для Q28 — сверяй proof в текущем блоке с этим реестром. Если элемент уже в реестре — отметить дублирование.
 
---- СЕКЦИЯ S5: HORMOZI STRATEGY (→ Q31) ---
+--- СЕКЦИЯ S5: HORMOZI STRATEGY (→ Q31, Q32) ---
 Value Equation (из strategy.md D2):
 - Dream Outcome: {конкретная картинка}
 - Perceived Likelihood: {что повышает веру}
@@ -539,7 +539,11 @@ Guarantee Strategy (F5):
 - Формулировка: {текст}
 - Reason Why: {бизнес-причина}
 
-Критику: для Q31 — проверяй, что гарантия в тексте соответствует типу из F5. Для Offer — проверяй, что Value Equation данные использованы (Dream Outcome в «Sell the vacation», Speed to Value в Lead/Result Projection, Effort в снятии возражений).
+Mechanism Mode (из strategy.md I2):
+- Режим: {Hidden / Teased / Revealed}
+- Обоснование: {1 предложение}
+
+Критику: для Q31 — проверяй, что гарантия в тексте соответствует типу из F5. Для Q32 — проверяй, что Offer Stack собран по протоколу (Naming, Reason Why, «Sell the Vacation», «Who NOT for»). Для Offer — проверяй, что Value Equation данные использованы (Dream Outcome в «Sell the vacation», Speed to Value в Lead/Result Projection, Effort в снятии возражений).
 ```
 
 ---
@@ -568,7 +572,7 @@ Guarantee Strategy (F5):
 **ПРОМПТ-ШАБЛОН:**
 
 ```
-ЗАДАЧА: Проверь блок копирайтинга "{block_name}" по 31 критерию качества. Для каждого критерия ответь ДА/НЕТ/Н/П (не применимо к данному блоку). Для каждого НЕТ — опиши проблему и предложи 1-3 конкретных исправления. Вопрос 29 (Placeholder Audit) — INFO, не влияет на PASS/FAIL. Вопрос 31 (Guarantee-Offer Alignment) — если F5 не заполнена → WARNING, не FAIL.
+ЗАДАЧА: Проверь блок копирайтинга "{block_name}" по 32 критериям качества. Для каждого критерия ответь ДА/НЕТ/Н/П (не применимо к данному блоку). Для каждого НЕТ — опиши проблему и предложи 1-3 конкретных исправления. Вопрос 29 (Placeholder Audit) — INFO, не влияет на PASS/FAIL. Вопрос 31 (Guarantee-Offer Alignment) — если F5 не заполнена → WARNING, не FAIL. Вопрос 32 (Offer Stack Quality) — если блок не содержит offer/close → Н/П.
 
 КОНТЕКСТ ПРОЕКТА:
 - Продукт: {1-2 предложения из brief.md}
@@ -591,7 +595,7 @@ Guarantee Strategy (F5):
 ---
 
 ==============================
-28 КРИТЕРИЕВ ПРОВЕРКИ
+32 КРИТЕРИЯ ПРОВЕРКИ
 ==============================
 
 ГРУППА 1: БАЗОВЫЕ (1-13)
@@ -712,6 +716,21 @@ Guarantee Strategy (F5):
     - Есть ли минимум 2 сенсорные детали (что увидит/услышит/почувствует)?
     Если блок не содержит desire/result section → Н/П.
 
+ГРУППА 8: HORMOZI (31-32)
+
+31. **Guarantee-Offer Alignment (Hormozi):** Гарантия соответствует типу из стратегии (F5)?
+    - Формулировка конкретная (не «мы гарантируем качество», а условие + действие)?
+    - Тип адекватен аудитории (Anti-guarantee для mass market = FAIL; Unconditional для premium без Reason Why = WARNING)?
+    Если F5 не заполнена → WARNING (не FAIL). Если блок не содержит guarantee → Н/П.
+32. **Offer Stack Quality (Hormozi):** Если блок содержит оффер/close:
+    - Каждый компонент Value Stack решает конкретную проблему из research?
+    - Названия компонентов продают (не generic «Бонус 1» — по [NAMING_PROTOCOL_V1])?
+    - Dream Outcome показан ДО списка компонентов («Sell the Vacation»)?
+    - Reason Why для цены присутствует?
+    - Разрыв ценность/цена >= 3x?
+    - Пройден ли [OFFER_FUNCTIONAL_TEST_V1] (4.6c)?
+    Если блок не содержит offer/close → Н/П.
+
 ==============================
 ПРАВИЛА ОЦЕНКИ
 ==============================
@@ -726,6 +745,8 @@ Guarantee Strategy (F5):
 - Блок НЕ содержит Pain section (например, Close, FAQ, Proof) → вопрос 28 = Н/П
 - Вопрос 29 (Placeholder Audit) = всегда INFO (не влияет на PASS/FAIL, выводится в отдельной секции)
 - Блок НЕ содержит desire/result section (Lead, Pain Deep Dive, Bridge, FAQ, Proof) → вопрос 30 = Н/П
+- Блок НЕ содержит guarantee section → вопрос 31 = Н/П. Если F5 не заполнена → WARNING
+- Блок НЕ содержит offer/close section → вопрос 32 = Н/П
 
 **Порог PASS:** Из ПРИМЕНИМЫХ вопросов >= 80% должны быть ДА.
 
@@ -750,6 +771,8 @@ Guarantee Strategy (F5):
 | 28 | Pain Density | ✓ / ✗ / Н/П | {комментарий} |
 | 29 | Placeholder Audit | INFO | {кол-во плейсхолдеров, описание если есть} |
 | 30 | Desire Depth | ✓ / ✗ / Н/П | {комментарий — какие слои, конкретика, связь с UMR} |
+| 31 | Guarantee-Offer Alignment | ✓ / ✗ / Н/П / ⚠️ | {комментарий — тип, F5 match, формулировка} |
+| 32 | Offer Stack Quality | ✓ / ✗ / Н/П | {комментарий — Naming, Reason Why, Sell Vacation, Who NOT for} |
 
 ### CORRECTIONS (для каждого ✗)
 **Q{N} — {название критерия}**
@@ -799,7 +822,7 @@ Guarantee Strategy (F5):
 **ПРОМПТ-ШАБЛОН:**
 
 ```
-ЗАДАЧА: Проверь полный собранный текст (final.md) по 23 критериям Launch Checklist. ВСЕ 23 должны быть ДА для прохождения. Для каждого НЕТ — опиши проблему и предложи исправление.
+ЗАДАЧА: Проверь полный собранный текст (final.md) по 27 критериям Launch Checklist. ВСЕ 27 должны быть ДА для прохождения. Для каждого НЕТ — опиши проблему и предложи исправление.
 
 КОНТЕКСТ ПРОЕКТА:
 - Продукт: {1-2 предложения из brief.md}
@@ -814,6 +837,7 @@ Guarantee Strategy (F5):
 - Value Equation (D2): {Dream Outcome, Likelihood, Time Delay, Effort}
 - Speed to Value (D3): {Quick Win + Full Result}
 - Guarantee Strategy (F5): {тип + формулировка}
+- Mechanism Mode (I2): {Hidden / Teased / Revealed}
 - Формат: {landing/email/vsl/ads/chatbot}
 
 ПОЛНЫЙ ТЕКСТ ДЛЯ ПРОВЕРКИ:
@@ -853,6 +877,14 @@ Guarantee Strategy (F5):
     - Push (боль/DRE) ≠ 0: есть pain section с 4 слоями DRE?
     - Pull (желание/DES) ≠ 0: есть Dream State в Close (шаг 16) и/или Result Projection после Mechanism, с минимум 3 слоями DES?
     Если один из двигателей = 0 → FAIL.
+24. **Arrangement Coherence:** Если в BRIEF указаны ARRANGEMENT_MODS — выполнены ли они в тексте? Если MODs не указаны или "дефолт RMBC" → Н/П.
+25. **Mechanism Mode Coherence (Hormozi):** Mechanism Mode из strategy.md (I2) соответствует реализации?
+    - HIDDEN: механизм <= 3 абзацев, нет деталей реализации?
+    - TEASED: раскрыт принцип, спрятана реализация?
+    - REVEALED: все шаги показаны + pivot «знать ≠ сделать»?
+    Если I2 не заполнен в стратегии → WARNING.
+26. **"Who NOT for" (Hormozi):** Присутствует ли секция «для кого НЕ подходит» (3-5 пунктов)? Пункты усиливают доверие и exclusivity (не отталкивают ЦА)? Позиция: после CTA #3 или перед P.S.?
+27. **Speed to Value (Hormozi):** Упомянут ли Quick Win (первый результат за 24-48ч) из D3? Full Result с конкретным сроком? Обещания реалистичны (не пустое «мгновенный результат»)? Если D3 не заполнен → WARNING.
 
 ==============================
 ДОПОЛНИТЕЛЬНЫЕ ПРОВЕРКИ
@@ -876,7 +908,7 @@ Guarantee Strategy (F5):
 
 ## LAUNCH REPORT: {project_name}
 
-### VERDICT: PASS / FAIL ({кол-во ДА}/23)
+### VERDICT: PASS / FAIL ({кол-во ДА}/27)
 
 ### DETAILED CHECK
 | # | Критерий | Результат | Комментарий |
@@ -886,6 +918,12 @@ Guarantee Strategy (F5):
 | 19 | Mechanism-Research | ✓ / ✗ | {комментарий} |
 | 20 | Authority Weaving | ✓ / ✗ / Н/П | {комментарий} |
 | 21 | Zero Placeholders | ✓ / ✗ / ⚠️ | {кол-во плейсхолдеров; ⚠️ если OVERRIDE} |
+| 22 | Pain Density | ✓ / ✗ | {комментарий} |
+| 23 | Push:Pull Balance | ✓ / ✗ | {комментарий} |
+| 24 | Arrangement Coherence | ✓ / ✗ / Н/П | {комментарий} |
+| 25 | Mechanism Mode Coherence | ✓ / ✗ / ⚠️ | {комментарий — I2 match} |
+| 26 | "Who NOT for" | ✓ / ✗ | {комментарий — наличие, качество, позиция} |
+| 27 | Speed to Value | ✓ / ✗ / ⚠️ | {комментарий — Quick Win, Full Result, D3 match} |
 
 ### CROSS-BLOCK CONSISTENCY
 | Проверка | Результат | Деталь |
@@ -920,7 +958,7 @@ Guarantee Strategy (F5):
 {2-3 предложения: готов ли текст к запуску, главные приоритеты}
 
 ПРАВИЛА:
-- Все 23 = ДА для PASS. Даже 1 НЕТ = FAIL. Для Q20: если эксперта нет → Н/П (не считается). Для Q21: если PLACEHOLDER_OVERRIDE → WARNING (не FAIL).
+- Все 27 = ДА для PASS. Даже 1 НЕТ = FAIL. Для Q20: если эксперта нет → Н/П (не считается). Для Q21: если PLACEHOLDER_OVERRIDE → WARNING (не FAIL). Для Q24: если MODs не указаны → Н/П. Для Q25: если I2 не заполнен → WARNING. Для Q27: если D3 не заполнен → WARNING.
 - Cross-Block Consistency и Flow Check — дополнительные (не влияют на PASS/FAIL основных 20, но показываются пользователю).
 - Цитируй конкретные фрагменты текста при указании на проблемы.
 - STRENGTHS обязательны — покажи, что в тексте уже хорошо.

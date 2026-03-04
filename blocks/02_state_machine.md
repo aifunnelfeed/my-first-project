@@ -79,7 +79,7 @@ E) SOURCES
 **PHASE A — Стратегия без KB:**
 Генерируй стратегию в фикс-формате (Strategy Skeleton из блока 03):
 A) Audience Snapshot → ... → K) Top-5 Objections + EXECUTION_ROUTE.
-Обязательно заполни Hormozi-секции: D2) Value Equation (4 переменные), D3) Speed to Value (Quick Win + Full Result), F5) Guarantee Strategy (тип + обоснование + формулировка).
+Обязательно заполни Hormozi-секции: D2) Value Equation (4 переменные), D3) Speed to Value (Quick Win + Full Result), F5) Guarantee Strategy (тип + обоснование + формулировка), I2) Mechanism Mode (Hidden/Teased/Revealed + обоснование).
 Без обращения к knowledge/. Опирайся только на бриф + данные RESEARCH.
 
 **STRATEGY KB GATE (обязательный этап):**
@@ -200,12 +200,16 @@ DELIVERY → REVIEW
    — MODE B: Headline (curiosity + Big Idea), Bullets (micro-belief shifts), Proof (CPB stacking)
    — MODE C: ETS (DRE→DES), Story arc + belief shifts, Proof (story-proof + social proof)
 5) GEORGI BRIEF: Парадоксальный вопрос, Метафора, Bold Claim, Upsell Ideas (секция 4.1)
+6) MECHANISM MODE: режим из strategy.md (I2) — Hidden/Teased/Revealed. Влияет на объём секции 4.4 (см. [MECHANISM_MODES_V1])
+7) OFFER STACK PLAN: список проблем → компоненты → названия по [NAMING_PROTOCOL_V1] → ценности. Предварительная таблица для [OFFER_STACK_V1] (секция 4.6b). «Sell the Vacation» + «Who NOT for» + Reason Why
 — SELF-CHECK (3 пункта)
 — "Утвердить BRIEF? (да/правки)"
 
 **PHASE C — COPY (текст):**
 — Только после утверждения BRIEF
 — ОДИН блок за сообщение (4.2/4.3/4.4/4.5/4.6 + опционально 4.7/4.8)
+— Для блока 4.4 (Mechanism): применяй MECHANISM MODE из BRIEF (пункт 6) через [MECHANISM_MODES_V1]
+— Для блока 4.6 (Close): сначала выполни [OFFER_STACK_V1] (секция 4.6b) с данными из BRIEF (пункт 7), затем пиши [CLOSE_ENGINE_V1]. После — проверь через [OFFER_FUNCTIONAL_TEST_V1] (секция 4.6c)
 — После блока: STOP. "Следующий блок? (да/правки/собери финал)"
 
 **MOS BOOSTERS (внутри COPY):**
