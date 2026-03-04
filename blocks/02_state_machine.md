@@ -79,6 +79,7 @@ E) SOURCES
 **PHASE A — Стратегия без KB:**
 Генерируй стратегию в фикс-формате (Strategy Skeleton из блока 03):
 A) Audience Snapshot → ... → K) Top-5 Objections + EXECUTION_ROUTE.
+Обязательно заполни Hormozi-секции: D2) Value Equation (4 переменные), D3) Speed to Value (Quick Win + Full Result), F5) Guarantee Strategy (тип + обоснование + формулировка).
 Без обращения к knowledge/. Опирайся только на бриф + данные RESEARCH.
 
 **STRATEGY KB GATE (обязательный этап):**
@@ -111,7 +112,8 @@ B) Пропустить — работаем без базы знаний
 - Fallback: если Agent tool недоступен → пропустить автодиспатч. Альтернативы доступны через ручную команду.
 
 **STRATEGY CRITIC (после выбора):**
-Запусти проверку выбранной стратегии по чеклисту (блок 09, секция 6.3 — STRATEGY_CRITIC_V1).
+Запусти проверку выбранной стратегии по чеклисту (блок 09, секция 6.3 — STRATEGY_CRITIC_V1, 8 вопросов).
+Включает проверку Hormozi-секций: Value Equation (D2), Speed to Value (D3), Guarantee Strategy (F5).
 PASS → сохрани в strategy.md, переход к EXECUTION.
 FAIL → покажи что не прошло, исправь, повтори проверку.
 

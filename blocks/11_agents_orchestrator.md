@@ -28,7 +28,7 @@
 | C  | Curiosity + Corruption | STATE=RESEARCH | brief-context + проблема | Углы для Big Idea | → research_raw.md → DOUBLE FILTER → research.md |
 | D  | Proof Research | EXECUTION (PROOF_MINING gap) | strategy-context + UMR claims | Исследования + Insider Knowledge | → показать пользователю → интегрировать в proof block |
 | E  | Research-Mini | EXECUTION (data gap) | краткий контекст + конкретный пробел | Точечные данные | → показать пользователю → интегрировать в блок |
-| F  | Block Critic | DEBUGGING (после каждого блока COPY) | текст + контекст + 30 критериев | CRITIC REPORT (PASS/FAIL + corrections + placeholder audit) | → показать пользователю → rewrite если FAIL |
+| F  | Block Critic | DEBUGGING (после каждого блока COPY) | текст + контекст + 31 критерий | CRITIC REPORT (PASS/FAIL + corrections + placeholder audit) | → показать пользователю → rewrite если FAIL |
 | G  | Launch Critic | DELIVERY (перед сборкой) | final.md + контекст + 23 критерия | LAUNCH REPORT (PASS/FAIL + corrections + placeholder status) | → показать пользователю → fix если FAIL |
 | H  | Research Assembler | STATE=RESEARCH (после A+B+C) | выходы субагентов A+B+C | Готовый research_raw.md + SUMMARY | → показать пользователю → research.md |
 | I  | KB-Scout | EXECUTION (PHASE C, перед блоком COPY кроме Proof) | block_type + strategy-context (Awareness, Sophistication, ниша) | Top-3 формулы + Top-2 примера (отфильтрованные) | → показать пользователю → основной агент учитывает при написании |
@@ -522,6 +522,24 @@ Angles:
 --- СЕКЦИЯ S4: PROOF USAGE REGISTRY (→ Q28) ---
 {таблица Proof Usage Registry из state.md — все использованные proof-элементы в предыдущих блоках}
 Критику: для Q28 — сверяй proof в текущем блоке с этим реестром. Если элемент уже в реестре — отметить дублирование.
+
+--- СЕКЦИЯ S5: HORMOZI STRATEGY (→ Q31) ---
+Value Equation (из strategy.md D2):
+- Dream Outcome: {конкретная картинка}
+- Perceived Likelihood: {что повышает веру}
+- Time Delay: {сроки}
+- Effort & Sacrifice: {что минимизировано}
+
+Speed to Value (D3):
+- Quick Win: {первый результат за 24-48ч}
+- Full Result: {полная трансформация за X}
+
+Guarantee Strategy (F5):
+- Тип: {Unconditional / Conditional / Anti-guarantee / Performance}
+- Формулировка: {текст}
+- Reason Why: {бизнес-причина}
+
+Критику: для Q31 — проверяй, что гарантия в тексте соответствует типу из F5. Для Offer — проверяй, что Value Equation данные использованы (Dream Outcome в «Sell the vacation», Speed to Value в Lead/Result Projection, Effort в снятии возражений).
 ```
 
 ---
@@ -530,27 +548,27 @@ Angles:
 
 Определяет, какие секции [CRITIC_CONTEXT_V1] включать для каждого типа блока:
 
-| block_type | R1 | R2 | R3 | R4 | R5 | R6 | S1 | S2 | S3 | S4 |
-|------------|----|----|----|----|----|----|----|----|----|----|
-| Headline | FULL | SHORT | SKIP | SKIP | SKIP | SKIP | SKIP | SHORT | SKIP | SKIP |
-| Lead | FULL | FULL | SHORT | SHORT | SHORT | FULL | SHORT | FULL | FULL | FULL |
-| Story | FULL | FULL | SKIP | SKIP | SKIP | FULL | SKIP | SHORT | SHORT | SHORT |
-| Pain Deep Dive | FULL | FULL | SHORT | SKIP | SKIP | SKIP | SKIP | SHORT | SHORT | SHORT |
-| Bridge / UMP | FULL | SHORT | SHORT | FULL | SHORT | SHORT | SKIP | FULL | SHORT | SHORT |
-| UMR / Mechanism | FULL | SHORT | SKIP | SHORT | FULL | SHORT | FULL | SHORT | SHORT | FULL |
-| Result Projection | FULL | FULL | SKIP | SKIP | SHORT | SKIP | FULL | SHORT | SHORT | FULL |
-| Mini-Proof | SHORT | SKIP | SKIP | SKIP | FULL | SHORT | FULL | SHORT | SKIP | FULL |
-| Product Reveal | SHORT | SKIP | SHORT | SHORT | SKIP | SHORT | SHORT | SHORT | SHORT | SHORT |
-| Offer + Close | SHORT | SKIP | FULL | SHORT | SKIP | SKIP | FULL | FULL | SHORT | FULL |
-| Fascinations | SHORT | SHORT | SHORT | SKIP | SHORT | SKIP | SHORT | SHORT | SKIP | SKIP |
-| FAQ | SHORT | SHORT | FULL | SHORT | SHORT | SKIP | SKIP | FULL | SKIP | SKIP |
+| block_type | R1 | R2 | R3 | R4 | R5 | R6 | S1 | S2 | S3 | S4 | S5 |
+|------------|----|----|----|----|----|----|----|----|----|----|-----|
+| Headline | FULL | SHORT | SKIP | SKIP | SKIP | SKIP | SKIP | SHORT | SKIP | SKIP | SKIP |
+| Lead | FULL | FULL | SHORT | SHORT | SHORT | FULL | SHORT | FULL | FULL | FULL | SHORT |
+| Story | FULL | FULL | SKIP | SKIP | SKIP | FULL | SKIP | SHORT | SHORT | SHORT | SKIP |
+| Pain Deep Dive | FULL | FULL | SHORT | SKIP | SKIP | SKIP | SKIP | SHORT | SHORT | SHORT | SKIP |
+| Bridge / UMP | FULL | SHORT | SHORT | FULL | SHORT | SHORT | SKIP | FULL | SHORT | SHORT | SKIP |
+| UMR / Mechanism | FULL | SHORT | SKIP | SHORT | FULL | SHORT | FULL | SHORT | SHORT | FULL | SHORT |
+| Result Projection | FULL | FULL | SKIP | SKIP | SHORT | SKIP | FULL | SHORT | SHORT | FULL | SHORT |
+| Mini-Proof | SHORT | SKIP | SKIP | SKIP | FULL | SHORT | FULL | SHORT | SKIP | FULL | SKIP |
+| Product Reveal | SHORT | SKIP | SHORT | SHORT | SKIP | SHORT | SHORT | SHORT | SHORT | SHORT | SHORT |
+| Offer + Close | SHORT | SKIP | FULL | SHORT | SKIP | SKIP | FULL | FULL | SHORT | FULL | FULL |
+| Fascinations | SHORT | SHORT | SHORT | SKIP | SHORT | SKIP | SHORT | SHORT | SKIP | SKIP | SKIP |
+| FAQ | SHORT | SHORT | FULL | SHORT | SHORT | SKIP | SKIP | FULL | SKIP | SKIP | SKIP |
 
 ---
 
 **ПРОМПТ-ШАБЛОН:**
 
 ```
-ЗАДАЧА: Проверь блок копирайтинга "{block_name}" по 30 критериям качества. Для каждого критерия ответь ДА/НЕТ/Н/П (не применимо к данному блоку). Для каждого НЕТ — опиши проблему и предложи 1-3 конкретных исправления. Вопрос 29 (Placeholder Audit) — INFO, не влияет на PASS/FAIL.
+ЗАДАЧА: Проверь блок копирайтинга "{block_name}" по 31 критерию качества. Для каждого критерия ответь ДА/НЕТ/Н/П (не применимо к данному блоку). Для каждого НЕТ — опиши проблему и предложи 1-3 конкретных исправления. Вопрос 29 (Placeholder Audit) — INFO, не влияет на PASS/FAIL. Вопрос 31 (Guarantee-Offer Alignment) — если F5 не заполнена → WARNING, не FAIL.
 
 КОНТЕКСТ ПРОЕКТА:
 - Продукт: {1-2 предложения из brief.md}
@@ -793,6 +811,9 @@ Angles:
 - Core Promise: {из strategy.md}
 - UMP: {1 предложение}
 - UMR: {название + 1 предложение}
+- Value Equation (D2): {Dream Outcome, Likelihood, Time Delay, Effort}
+- Speed to Value (D3): {Quick Win + Full Result}
+- Guarantee Strategy (F5): {тип + формулировка}
 - Формат: {landing/email/vsl/ads/chatbot}
 
 ПОЛНЫЙ ТЕКСТ ДЛЯ ПРОВЕРКИ:
@@ -801,7 +822,7 @@ Angles:
 ---
 
 ==============================
-21 КРИТЕРИЙ LAUNCH CHECKLIST
+23 КРИТЕРИЯ LAUNCH CHECKLIST
 ==============================
 
 1. **ЦА через JTBD:** ЦА чётко определена через JTBD (не через соцдем)?
