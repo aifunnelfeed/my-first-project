@@ -2,7 +2,7 @@
 
 ## Текущий стейт: EXECUTION
 ## Фаза: PHASE C (COPY)
-## Текущий блок: Offer + Proof Stack
+## Текущий блок: Close (Dream State + P.S.)
 ## Формат: landing
 
 ## Пройденные стейты
@@ -25,7 +25,7 @@
 | Result Projection | ✅ | ✅ | ✅ PASS | APPROVED |
 | Product Reveal | ✅ | ✅ | ✅ PASS | APPROVED |
 | Mini-Proof | ✅ | ✅ | ✅ PASS | APPROVED |
-| Offer + Proof Stack | ⏳ | — | — | — |
+| Offer + Proof Stack | ✅ | ✅ | ✅ PASS | APPROVED |
 | Close (Dream State + P.S.) | ⏳ | — | — | — |
 | Fascinations | ⏳ | — | — | — |
 | FAQ | ⏳ | — | — | — |
@@ -48,6 +48,10 @@
 | 1 | Елена Лорец: 18-30к → 200-220к | Transformation Case | Mini-Proof |
 | 5 | Мадина Онова: 50к → 150к | Transformation Case | Mini-Proof |
 | 7 | Антон Тарасов: 100-150к → 300-500к | Transformation Case | Mini-Proof |
+| 2 | Павел Карякин: 100-120к → 200-250к | Transformation Case | Offer + Proof Stack |
+| 4 | Ольга Скоробогатова: 40-60к → 350к | Transformation Case | Offer + Proof Stack |
+| 9 | Геннадий Бабинцев: 100к за 10 дней | Transformation Story | Offer + Proof Stack |
+| 8 | Евгения Маврина: 150-250к → 500к | Transformation Case | Offer + Proof Stack |
 
 ## Placeholder Registry
 | # | Тип | Описание | Блок | Статус |
