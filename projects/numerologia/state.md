@@ -2,7 +2,7 @@
 
 ## Текущий стейт: EXECUTION
 ## Фаза: PHASE C (COPY)
-## Текущий блок: Fascinations
+## Текущий блок: FAQ
 ## Формат: landing
 
 ## Пройденные стейты
@@ -27,7 +27,7 @@
 | Mini-Proof | ✅ | ✅ | ✅ PASS | APPROVED |
 | Offer + Proof Stack | ✅ | ✅ | ✅ PASS | APPROVED |
 | Close (Dream State + P.S.) | ✅ | ✅ | ✅ PASS | APPROVED |
-| Fascinations | ⏳ | — | — | — |
+| Fascinations | ✅ | ✅ | ✅ PASS | APPROVED |
 | FAQ | ⏳ | — | — | — |
 
 ## Счётчик попыток
