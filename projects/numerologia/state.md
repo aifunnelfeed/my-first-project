@@ -2,7 +2,7 @@
 
 ## Текущий стейт: EXECUTION
 ## Фаза: PHASE C (COPY)
-## Текущий блок: Close (Dream State + P.S.)
+## Текущий блок: Fascinations
 ## Формат: landing
 
 ## Пройденные стейты
@@ -26,7 +26,7 @@
 | Product Reveal | ✅ | ✅ | ✅ PASS | APPROVED |
 | Mini-Proof | ✅ | ✅ | ✅ PASS | APPROVED |
 | Offer + Proof Stack | ✅ | ✅ | ✅ PASS | APPROVED |
-| Close (Dream State + P.S.) | ⏳ | — | — | — |
+| Close (Dream State + P.S.) | ✅ | ✅ | ✅ PASS | APPROVED |
 | Fascinations | ⏳ | — | — | — |
 | FAQ | ⏳ | — | — | — |
 
@@ -52,6 +52,7 @@
 | 4 | Ольга Скоробогатова: 40-60к → 350к | Transformation Case | Offer + Proof Stack |
 | 9 | Геннадий Бабинцев: 100к за 10 дней | Transformation Story | Offer + Proof Stack |
 | 8 | Евгения Маврина: 150-250к → 500к | Transformation Case | Offer + Proof Stack |
+| 3 | Светлана Грант: 30к → 2 200к | Transformation Case | Close (Dream State) |
 
 ## Placeholder Registry
 | # | Тип | Описание | Блок | Статус |
