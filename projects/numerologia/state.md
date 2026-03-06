@@ -2,7 +2,7 @@
 
 ## Текущий стейт: EXECUTION
 ## Фаза: PHASE C (COPY)
-## Текущий блок: Mechanism (UMR)
+## Текущий блок: Result Projection
 ## Формат: landing
 
 ## Пройденные стейты
@@ -21,7 +21,7 @@
 | Lead + Pain Amplification | ✅ | ✅ | ✅ PASS | APPROVED |
 | Bridge (UMP) | ✅ | ✅ | ✅ PASS | APPROVED |
 | Story / Background | ✅ | ✅ | ✅ PASS | APPROVED |
-| Mechanism (UMR) | ⏳ | — | — | — |
+| Mechanism (UMR) | ✅ | ✅ | ✅ PASS | APPROVED |
 | Result Projection | ⏳ | — | — | — |
 | Product Reveal | ⏳ | — | — | — |
 | Mini-Proof | ⏳ | — | — | — |
@@ -41,6 +41,10 @@
 | 11 | Евгения: 3→5.5 млн/мес | Expert Own Result | Story (proof of concept) |
 | 8 | Дарья Шубина: 0→250к | Transformation Case | Story (масштабируемость) |
 | 6 | Дамир Саетов: 10к→150к | Transformation Case | Story (масштабируемость) |
+| 13 | Дж.П. Морган + астролог | Historical/Cultural | Mechanism (СКАН — authority) |
+| 13 | Alibaba IPO 68, Олимпиада 08.08.08 | Historical/Cultural | Mechanism (СКАН — стратегия чисел) |
+| 14 | Китайские IPO: 26% на 8, 3% на 4 | Statistical | Mechanism (СКАН — proof паттернов) |
+| 10 | Алишер: 100+ бизнесов | Authority | Mechanism (ПЛАН — бизнес-стратег) |
 
 ## Placeholder Registry
 | # | Тип | Описание | Блок | Статус |
