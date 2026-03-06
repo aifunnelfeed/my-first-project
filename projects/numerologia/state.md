@@ -2,7 +2,7 @@
 
 ## Текущий стейт: EXECUTION
 ## Фаза: PHASE C (COPY)
-## Текущий блок: Story / Background
+## Текущий блок: Mechanism (UMR)
 ## Формат: landing
 
 ## Пройденные стейты
@@ -20,7 +20,7 @@
 |------|-------|------|-----------|--------|
 | Lead + Pain Amplification | ✅ | ✅ | ✅ PASS | APPROVED |
 | Bridge (UMP) | ✅ | ✅ | ✅ PASS | APPROVED |
-| Story / Background | ⏳ | — | — | — |
+| Story / Background | ✅ | ✅ | ✅ PASS | APPROVED |
 | Mechanism (UMR) | ⏳ | — | — | — |
 | Result Projection | ⏳ | — | — | — |
 | Product Reveal | ⏳ | — | — | — |
@@ -38,6 +38,9 @@
 | # | Proof-элемент | Тип | Использован в блоке |
 |---|--------------|-----|---------------------|
 | 12 | Harvard/Science 2013: IQ -14 | Scientific Study | Bridge (UMP) |
+| 11 | Евгения: 3→5.5 млн/мес | Expert Own Result | Story (proof of concept) |
+| 8 | Дарья Шубина: 0→250к | Transformation Case | Story (масштабируемость) |
+| 6 | Дамир Саетов: 10к→150к | Transformation Case | Story (масштабируемость) |
 
 ## Placeholder Registry
 | # | Тип | Описание | Блок | Статус |
