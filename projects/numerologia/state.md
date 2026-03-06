@@ -2,7 +2,7 @@
 
 ## Текущий стейт: EXECUTION
 ## Фаза: PHASE C (COPY)
-## Текущий блок: Lead + Pain Amplification → DEBUGGING
+## Текущий блок: Story / Background
 ## Формат: landing
 
 ## Пройденные стейты
@@ -19,7 +19,7 @@
 | Блок | BRIEF | COPY | DEBUGGING | Статус |
 |------|-------|------|-----------|--------|
 | Lead + Pain Amplification | ✅ | ✅ | ✅ PASS | APPROVED |
-| Bridge (UMP) | ⏳ | — | — | — |
+| Bridge (UMP) | ✅ | ✅ | ✅ PASS | APPROVED |
 | Story / Background | ⏳ | — | — | — |
 | Mechanism (UMR) | ⏳ | — | — | — |
 | Result Projection | ⏳ | — | — | — |
@@ -37,6 +37,7 @@
 ## Proof Usage Registry
 | # | Proof-элемент | Тип | Использован в блоке |
 |---|--------------|-----|---------------------|
+| 12 | Harvard/Science 2013: IQ -14 | Scientific Study | Bridge (UMP) |
 
 ## Placeholder Registry
 | # | Тип | Описание | Блок | Статус |
