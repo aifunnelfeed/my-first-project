@@ -1,15 +1,15 @@
 # Состояние проекта: Нумерология
 
-## Текущий стейт: STRATEGY
-## Фаза: —
-## Текущий блок: —
+## Текущий стейт: EXECUTION
+## Фаза: PHASE C (COPY)
+## Текущий блок: Lead + Pain Amplification → DEBUGGING
 ## Формат: landing
 
 ## Пройденные стейты
 - [x] INPUT
 - [x] QUERY
 - [x] RESEARCH
-- [ ] STRATEGY
+- [x] STRATEGY
 - [ ] EXECUTION
 - [ ] DEBUGGING
 - [ ] DELIVERY
@@ -18,6 +18,17 @@
 ## Блоки EXECUTION
 | Блок | BRIEF | COPY | DEBUGGING | Статус |
 |------|-------|------|-----------|--------|
+| Lead + Pain Amplification | ✅ | ✅ | ✅ PASS | APPROVED |
+| Bridge (UMP) | ⏳ | — | — | — |
+| Story / Background | ⏳ | — | — | — |
+| Mechanism (UMR) | ⏳ | — | — | — |
+| Result Projection | ⏳ | — | — | — |
+| Product Reveal | ⏳ | — | — | — |
+| Mini-Proof | ⏳ | — | — | — |
+| Offer + Proof Stack | ⏳ | — | — | — |
+| Close (Dream State + P.S.) | ⏳ | — | — | — |
+| Fascinations | ⏳ | — | — | — |
+| FAQ | ⏳ | — | — | — |
 
 ## Счётчик попыток
 | Блок | Попыток FAIL | Последняя причина |
