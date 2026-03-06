@@ -2,7 +2,7 @@
 
 ## Текущий стейт: EXECUTION
 ## Фаза: PHASE C (COPY)
-## Текущий блок: Mini-Proof
+## Текущий блок: Offer + Proof Stack
 ## Формат: landing
 
 ## Пройденные стейты
@@ -24,7 +24,7 @@
 | Mechanism (UMR) | ✅ | ✅ | ✅ PASS | APPROVED |
 | Result Projection | ✅ | ✅ | ✅ PASS | APPROVED |
 | Product Reveal | ✅ | ✅ | ✅ PASS | APPROVED |
-| Mini-Proof | ⏳ | — | — | — |
+| Mini-Proof | ✅ | ✅ | ✅ PASS | APPROVED |
 | Offer + Proof Stack | ⏳ | — | — | — |
 | Close (Dream State + P.S.) | ⏳ | — | — | — |
 | Fascinations | ⏳ | — | — | — |
@@ -45,6 +45,9 @@
 | 13 | Alibaba IPO 68, Олимпиада 08.08.08 | Historical/Cultural | Mechanism (СКАН — стратегия чисел) |
 | 14 | Китайские IPO: 26% на 8, 3% на 4 | Statistical | Mechanism (СКАН — proof паттернов) |
 | 10 | Алишер: 100+ бизнесов | Authority | Mechanism (ПЛАН — бизнес-стратег) |
+| 1 | Елена Лорец: 18-30к → 200-220к | Transformation Case | Mini-Proof |
+| 5 | Мадина Онова: 50к → 150к | Transformation Case | Mini-Proof |
+| 7 | Антон Тарасов: 100-150к → 300-500к | Transformation Case | Mini-Proof |
 
 ## Placeholder Registry
 | # | Тип | Описание | Блок | Статус |
