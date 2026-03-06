@@ -28,7 +28,7 @@
 | Offer + Proof Stack | ✅ | ✅ | ✅ PASS | APPROVED |
 | Close (Dream State + P.S.) | ✅ | ✅ | ✅ PASS | APPROVED |
 | Fascinations | ✅ | ✅ | ✅ PASS | APPROVED |
-| FAQ | ⏳ | — | — | — |
+| FAQ | ✅ | ✅ | ✅ PASS | APPROVED |
 
 ## Счётчик попыток
 | Блок | Попыток FAIL | Последняя причина |
