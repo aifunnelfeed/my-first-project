@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Copycraft М.О.С. — Маркетинговая Операционная Система</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg-card: #12121a;
+    --bg-card-hover: #1a1a28;
+    --border: #2a2a3a;
+    --text: #e0e0e8;
+    --text-dim: #8888a0;
+    --accent: #6c5ce7;
+    --accent-light: #a29bfe;
+    --accent-glow: rgba(108, 92, 231, 0.15);
+    --green: #00b894;
+    --green-dim: rgba(0, 184, 148, 0.12);
+    --orange: #fdcb6e;
+    --orange-dim: rgba(253, 203, 110, 0.12);
+    --red: #e17055;
+    --red-dim: rgba(225, 112, 85, 0.12);
+    --blue: #74b9ff;
+    --blue-dim: rgba(116, 185, 255, 0.12);
+    --pink: #fd79a8;
+    --pink-dim: rgba(253, 121, 168, 0.12);
+    --coming: #ff9f43;
+    --coming-dim: rgba(255, 159, 67, 0.12);
+    --coming-border: rgba(255, 159, 67, 0.35);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* --- NAV --- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+  }
+  nav .nav-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; height: 60px;
+  }
+  nav .logo { font-size: 1.1rem; font-weight: 700; color: var(--accent-light); letter-spacing: 0.05em; }
+  nav .logo span { color: var(--text-dim); font-weight: 400; }
+  nav .nav-links { display: flex; gap: 1.5rem; }
+  nav .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
+  nav .nav-links a:hover { color: var(--accent-light); }
+
+  /* --- HERO --- */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+    padding: 6rem 2rem 4rem; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block; padding: 0.4rem 1rem;
+    border: 1px solid var(--border); border-radius: 100px;
+    font-size: 0.8rem; color: var(--text-dim); margin-bottom: 2rem; background: var(--bg-card);
+  }
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 800;
+    line-height: 1.15; margin-bottom: 1.5rem; letter-spacing: -0.02em;
+  }
+  .hero h1 .gradient {
+    background: linear-gradient(135deg, var(--accent-light), var(--pink), var(--orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .hero .subtitle {
+    font-size: clamp(1.05rem, 2.5vw, 1.3rem); color: var(--text-dim);
+    max-width: 700px; margin-bottom: 3rem;
+  }
+  .hero-stats { display: flex; gap: 3rem; flex-wrap: wrap; justify-content: center; }
+  .hero-stat { text-align: center; }
+  .hero-stat .number { font-size: 2.5rem; font-weight: 800; color: var(--accent-light); display: block; line-height: 1.2; }
+  .hero-stat .label { font-size: 0.85rem; color: var(--text-dim); }
+
+  /* --- SECTIONS --- */
+  section { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem; }
+  .section-label {
+    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--accent-light); margin-bottom: 0.75rem;
+  }
+  section > h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; margin-bottom: 1rem; letter-spacing: -0.01em; }
+  section > h2 strong { color: var(--orange); }
+  section > .section-desc { color: var(--text-dim); font-size: 1.05rem; max-width: 680px; margin-bottom: 3rem; }
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0 2rem; }
+
+  /* --- GRIDS --- */
+  .problem-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; }
+
+  /* --- CARDS --- */
+  .problem-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 2rem; transition: background 0.2s, border-color 0.2s;
+  }
+  .problem-card:hover { background: var(--bg-card-hover); border-color: var(--accent); }
+  .problem-card .icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; margin-bottom: 1.25rem;
+  }
+  .problem-card h3 { font-size: 1.15rem; margin-bottom: 0.75rem; font-weight: 600; }
+  .problem-card p { color: var(--text-dim); font-size: 0.92rem; line-height: 1.6; }
+  .problem-card .price { color: var(--red); font-weight: 700; font-size: 0.85rem; margin-top: 0.5rem; }
+
+  .feature-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 2rem; position: relative; overflow: hidden; transition: all 0.25s;
+  }
+  .feature-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(108, 92, 231, 0.08); }
+  .feature-card .tag {
+    display: inline-block; font-size: 0.7rem; text-transform: uppercase;
+    letter-spacing: 0.1em; padding: 0.25rem 0.6rem; border-radius: 6px;
+    margin-bottom: 1rem; font-weight: 600;
+  }
+  .tag-engine { background: var(--accent-glow); color: var(--accent-light); }
+  .tag-quality { background: var(--green-dim); color: var(--green); }
+  .tag-research { background: var(--blue-dim); color: var(--blue); }
+  .tag-ai { background: var(--orange-dim); color: var(--orange); }
+  .tag-speed { background: var(--pink-dim); color: var(--pink); }
+  .tag-coming { background: var(--coming-dim); color: var(--coming); border: 1px solid var(--coming-border); }
+
+  .feature-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; }
+  .feature-card p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; }
+  .feature-card ul { list-style: none; margin-top: 0.75rem; }
+  .feature-card ul li { color: var(--text-dim); font-size: 0.88rem; padding: 0.2rem 0; padding-left: 1rem; position: relative; }
+  .feature-card ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent-light); }
+
+  /* --- COMING SOON CARD --- */
+  .coming-card {
+    background: var(--bg-card); border: 1px dashed var(--coming-border); border-radius: 16px;
+    padding: 2rem; position: relative; overflow: hidden; opacity: 0.85;
+  }
+  .coming-card::after {
+    content: 'COMING SOON'; position: absolute; top: 1rem; right: 1rem;
+    font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--coming); background: var(--coming-dim); padding: 0.2rem 0.5rem;
+    border-radius: 4px; font-weight: 700;
+  }
+  .coming-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text); }
+  .coming-card p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; }
+
+  /* --- SPEED --- */
+  .speed-section {
+    background: linear-gradient(180deg, rgba(108, 92, 231, 0.06) 0%, transparent 100%);
+    padding: 5rem 2rem; text-align: center;
+  }
+  .speed-inner { max-width: 900px; margin: 0 auto; }
+  .speed-headline { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; margin-bottom: 1.2rem; }
+  .pink-grad {
+    background: linear-gradient(135deg, var(--pink), var(--orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .speed-subtitle { color: var(--text-dim); font-size: 1.05rem; max-width: 600px; margin: 0 auto 3rem; }
+  .speed-comparison { display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .speed-col {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 2rem 2.5rem; min-width: 280px; text-align: center;
+  }
+  .speed-col.old { border-color: rgba(225, 112, 85, 0.3); }
+  .speed-col.new { border-color: rgba(0, 184, 148, 0.4); }
+  .speed-time { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .speed-col.old .speed-time { color: var(--red); }
+  .speed-col.new .speed-time { color: var(--green); }
+  .speed-label { color: var(--text-dim); font-size: 0.88rem; }
+  .speed-vs { font-size: 1.5rem; font-weight: 700; color: var(--text-dim); }
+  .speed-note {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 1.5rem 2rem; font-size: 0.92rem; color: var(--text-dim); text-align: left; line-height: 1.7;
+  }
+
+  /* --- COMPARISON TABLE --- */
+  .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .comparison-col { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; }
+  .comparison-col.old { border-color: rgba(225, 112, 85, 0.3); }
+  .comparison-col.new { border-color: rgba(0, 184, 148, 0.3); }
+  .comparison-col h3 { font-size: 1.15rem; margin-bottom: 1.2rem; }
+  .comparison-col ul { list-style: none; }
+  .comparison-col ul li { padding: 0.4rem 0; font-size: 0.92rem; color: var(--text-dim); line-height: 1.5; }
+
+  /* --- FULL TABLE --- */
+  .comp-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; }
+  .comp-table th { text-align: left; padding: 0.75rem 1rem; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); border-bottom: 2px solid var(--border); }
+  .comp-table td { padding: 0.75rem 1rem; font-size: 0.88rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .comp-table td:first-child { color: var(--text); font-weight: 500; }
+  .comp-table td:nth-child(2) { color: var(--red); opacity: 0.7; }
+  .comp-table td:nth-child(3) { color: var(--green); }
+  .comp-table tr:hover { background: var(--bg-card-hover); }
+
+  /* --- STATS GRID --- */
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+  .stat-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 2rem; text-align: center;
+  }
+  .stat-card .stat-num { font-size: 2.5rem; font-weight: 800; color: var(--accent-light); line-height: 1.2; }
+  .stat-card .stat-label { font-size: 0.85rem; color: var(--text-dim); margin-top: 0.5rem; }
+  .stat-card .stat-note { font-size: 0.75rem; color: var(--text-dim); margin-top: 0.3rem; opacity: 0.7; }
+
+  /* --- PIPELINE --- */
+  .pipeline { display: flex; flex-wrap: wrap; gap: 0; justify-content: center; margin: 2rem 0; }
+  .pipeline-step { display: flex; align-items: center; }
+  .pipeline-step .step-box {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 1rem 1.5rem; text-align: center; min-width: 130px; transition: all 0.2s;
+  }
+  .pipeline-step .step-box:hover { border-color: var(--accent); background: var(--bg-card-hover); transform: translateY(-2px); }
+  .pipeline-step .step-num { font-size: 0.7rem; color: var(--accent-light); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.3rem; }
+  .pipeline-step .step-name { font-weight: 600; font-size: 0.9rem; }
+  .pipeline-step .step-desc { font-size: 0.75rem; color: var(--text-dim); margin-top: 0.3rem; }
+  .pipeline-arrow { color: var(--text-dim); font-size: 1.2rem; padding: 0 0.3rem; display: flex; align-items: center; }
+
+  /* --- STEPS (how it works) --- */
+  .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .step-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 2rem; position: relative;
+  }
+  .step-card .step-number {
+    font-size: 3rem; font-weight: 900; color: var(--accent-light); opacity: 0.3;
+    position: absolute; top: 1rem; right: 1.5rem;
+  }
+  .step-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; }
+  .step-card p { color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; }
+
+  /* --- VALUE MAP --- */
+  .value-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+  .value-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem;
+  }
+  .value-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; }
+  .value-card ul { list-style: none; }
+  .value-card ul li { padding: 0.35rem 0; font-size: 0.9rem; color: var(--text-dim); padding-left: 1.5rem; position: relative; }
+  .value-card ul li::before { content: '✓'; position: absolute; left: 0; color: var(--green); font-weight: 700; }
+
+  /* --- LONG COPY SECTION --- */
+  .longcopy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+  .longcopy-card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem;
+  }
+  .longcopy-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.75rem; color: var(--text); }
+  .longcopy-card p { color: var(--text-dim); font-size: 0.88rem; line-height: 1.6; }
+
+  /* --- CTA --- */
+  .cta-section {
+    text-align: center; padding: 5rem 2rem;
+    background: linear-gradient(180deg, transparent 0%, rgba(108, 92, 231, 0.08) 100%);
+  }
+  .cta-section h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; margin-bottom: 1.5rem; }
+  .cta-button {
+    display: inline-block; padding: 1rem 3rem; font-size: 1.1rem; font-weight: 700;
+    color: #fff; background: linear-gradient(135deg, var(--accent), var(--pink));
+    border: none; border-radius: 12px; text-decoration: none; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cta-button:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(108, 92, 231, 0.3); }
+
+  /* --- BIG QUOTE --- */
+  .big-quote {
+    text-align: center; padding: 4rem 2rem;
+    max-width: 900px; margin: 0 auto;
+  }
+  .big-quote blockquote {
+    font-size: clamp(1.3rem, 3vw, 1.8rem); font-weight: 600; line-height: 1.5;
+    color: var(--text); border: none; margin: 0; padding: 0;
+  }
+  .big-quote blockquote strong { color: var(--orange); }
+
+  /* --- FOOTER --- */
+  footer {
+    text-align: center; padding: 3rem 2rem; border-top: 1px solid var(--border);
+    color: var(--text-dim); font-size: 0.85rem;
+  }
+  footer a { color: var(--accent-light); text-decoration: none; }
+
+  /* --- FADE IN --- */
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* --- RESPONSIVE --- */
+  @media (max-width: 768px) {
+    nav .nav-links { display: none; }
+    .comparison { grid-template-columns: 1fr; }
+    .speed-comparison { flex-direction: column; }
+    .hero-stats { gap: 1.5rem; }
+    .features-grid { grid-template-columns: 1fr; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .comp-table { font-size: 0.8rem; }
+    .comp-table td, .comp-table th { padding: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">COPYCRAFT <span>M.O.C.</span></div>
+    <div class="nav-links">
+      <a href="#why-longcopy">Зачем Long Copy</a>
+      <a href="#problem">Проблема</a>
+      <a href="#solution">Решение</a>
+      <a href="#engines">Движки</a>
+      <a href="#comparison">Сравнение</a>
+      <a href="#speed">Скорость</a>
+      <a href="#coming-soon">Будущее</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===================== SLIDE 11: HERO ===================== -->
+<header class="hero">
+  <div class="hero-badge">Маркетинговая Операционная Система</div>
+  <h1>
+    Система, которая приносит<br>
+    <span class="gradient">продажи ежедневно</span>
+  </h1>
+  <p class="subtitle">
+    Copycraft&nbsp;М.О.С. превращает информацию о вашем продукте и аудитории
+    в полностью работающую воронку продаж за 2&ndash;3 часа.
+    Ваши инфо-продукты продают себя сами &mdash; пока вы спите.
+  </p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="number">2-3 ч</span>
+      <span class="label">от идеи до готовой воронки</span>
+    </div>
+    <div class="hero-stat">
+      <span class="number">11</span>
+      <span class="label">движков в системе</span>
+    </div>
+    <div class="hero-stat">
+      <span class="number">24/7</span>
+      <span class="label">воронка работает без вас</span>
+    </div>
+    <div class="hero-stat">
+      <span class="number">5</span>
+      <span class="label">форматов из одного брифа</span>
+    </div>
+  </div>
+</header>
+
+<hr class="divider">
+
+<!-- ===================== SLIDES 23-24: ЗАЧЕМ LONG SALES LETTER ===================== -->
+<section id="why-longcopy">
+  <div class="section-label fade-in">Зачем это вообще нужно</div>
+  <h2 class="fade-in">Почему сложные продукты <strong>нельзя продать</strong> коротким текстом</h2>
+  <p class="section-desc fade-in">
+    Чек-лист, гайд или короткий лендинг работают для простых покупок.
+    Но если ваш продукт стоит от 5,000&nbsp;&#8381; &mdash; человеку нужно объяснить, убедить и закрыть возражения.
+    Для этого существует long-form sales copy.
+  </p>
+
+  <div class="longcopy-grid fade-in">
+    <div class="longcopy-card">
+      <h3>Продаёт, когда вы спите</h3>
+      <p>Лендинг &mdash; это масштабируемый клон вашего лучшего продающего разговора. Он говорит правильные слова каждому посетителю, 24/7, без выходных и выгорания.</p>
+    </div>
+    <div class="longcopy-card">
+      <h3>Заставляет сформулировать уникальность</h3>
+      <p>Большинство экспертов продают &laquo;на вайбе&raquo;. Процесс создания текста заставляет кристаллизовать: кто ваш клиент, почему ваш метод работает, какие у вас доказательства.</p>
+    </div>
+    <div class="longcopy-card">
+      <h3>Закрывает возражения до их появления</h3>
+      <p>&laquo;Дорого&raquo;, &laquo;у меня не получится&raquo;, &laquo;я уже пробовал&raquo; &mdash; long-form вшивает ответы по всему тексту так, что читатель даже не осознаёт, что его сомнения уже сняты.</p>
+    </div>
+    <div class="longcopy-card">
+      <h3>Мастер-документ для всего маркетинга</h3>
+      <p>Email-серия, рекламные объявления, посты, вебинарный скрипт, скрипт для отдела продаж &mdash; всё создаётся из одного лендинга. Не с нуля, а адаптацией.</p>
+    </div>
+    <div class="longcopy-card">
+      <h3>Стресс-тест продукта</h3>
+      <p>Если не получается написать убедительный текст &mdash; проблема в продукте, а не в тексте. Невозможность сформулировать механизм или найти доказательства &mdash; это бесплатный аудит.</p>
+    </div>
+    <div class="longcopy-card">
+      <h3>Мультипликатор всех усилий</h3>
+      <p>Улучшение рекламы на 1% даёт больше кликов. Улучшение лендинга на 1% &mdash; утраивает выручку при том же трафике. Лендинг &mdash; бутылочное горлышко всей воронки.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===================== SLIDE 12: ПРОБЛЕМА ===================== -->
+<section id="problem">
+  <div class="section-label fade-in">Проблема, о которой все молчат</div>
+  <h2 class="fade-in">Прямо сейчас вы <strong>не зарабатываете</strong> деньги. Каждый день.</h2>
+  <p class="section-desc fade-in">
+    Пока ваш лендинг конвертирует на 1-2% вместо возможных 5-8% &mdash; вы теряете деньги,
+    которые могли бы заработать. А трафик с каждым годом дорожает &mdash; и окупаемость падает.
+  </p>
+
+  <div class="problem-grid fade-in">
+    <div class="problem-card">
+      <div class="icon" style="background: var(--red-dim); color: var(--red);">&#128176;</div>
+      <h3>Копирайтер за $3,000/текст</h3>
+      <p>Ждёте 2&ndash;4 недели. Получаете 1 версию. Если не сработала &mdash; ещё $3,000 и ещё 2 недели. А рынок уже ушёл.</p>
+      <div class="price">&minus;$9,000 / квартал</div>
+    </div>
+    <div class="problem-card">
+      <div class="icon" style="background: var(--red-dim); color: var(--red);">&#129302;</div>
+      <h3>AI без системы: &laquo;напиши продающий текст&raquo;</h3>
+      <p>ChatGPT, Claude, Gemini &mdash; любая нейросеть без структуры уверенно выдумывает факты. Нет стратегии, нет доказательств, каждый раз с нуля. Результат &mdash; случайный.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon" style="background: var(--red-dim); color: var(--red);">&#9200;</div>
+      <h3>Писать самому</h3>
+      <p>40+ часов на один лендинг. Без знания психологии продаж. Без тестирования. Без уверенности, что сработает.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon" style="background: var(--red-dim); color: var(--red);">&#127970;</div>
+      <h3>Маркетинговое агентство</h3>
+      <p>Ретейнер от $3,000/мес. Джуниор пишет по шаблону. Правки &mdash; через менеджера. Результат через 4&ndash;6 недель.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===================== SLIDE 13: РЕШЕНИЕ ===================== -->
+<section id="solution">
+  <div class="section-label fade-in">Решение</div>
+  <h2 class="fade-in">Copycraft &mdash; это не промпт. Это <strong>машина по производству контент-элементов</strong>, которые продают ваш продукт вместо вас</h2>
+  <p class="section-desc fade-in">
+    11 специализированных движков работают последовательно. База знаний из паттернов лучших
+    продающих текстов за 60 лет. Многоуровневый контроль качества.
+    Всё &mdash; за 2&ndash;3 часа вашего участия.
+  </p>
+
+  <div class="pipeline fade-in">
+    <div class="pipeline-step">
+      <div class="step-box">
+        <div class="step-num">Этап 1</div>
+        <div class="step-name">Ваш продукт</div>
+        <div class="step-desc">Расскажите о нём</div>
+      </div>
+    </div>
+    <div class="pipeline-arrow">&rarr;</div>
+    <div class="pipeline-step">
+      <div class="step-box">
+        <div class="step-num">Этап 2</div>
+        <div class="step-name">Исследование</div>
+        <div class="step-desc">Рынок + аудитория</div>
+      </div>
+    </div>
+    <div class="pipeline-arrow">&rarr;</div>
+    <div class="pipeline-step">
+      <div class="step-box">
+        <div class="step-num">Этап 3</div>
+        <div class="step-name">Стратегия</div>
+        <div class="step-desc">Идея + механизм</div>
+      </div>
+    </div>
+    <div class="pipeline-arrow">&rarr;</div>
+    <div class="pipeline-step">
+      <div class="step-box">
+        <div class="step-num">Этап 4</div>
+        <div class="step-name">Текст</div>
+        <div class="step-desc">Блок за блоком</div>
+      </div>
+    </div>
+    <div class="pipeline-arrow">&rarr;</div>
+    <div class="pipeline-step">
+      <div class="step-box" style="border-color: var(--green);">
+        <div class="step-num" style="color: var(--green);">Результат</div>
+        <div class="step-name">Продажи</div>
+        <div class="step-desc">Ежедневно</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="feature-card fade-in" style="margin-top: 2rem; text-align: center;">
+    <p style="font-size: 1.05rem;">
+      На выходе: готовый лендинг, который ежедневно продаёт ваш продукт,
+      создаёт базу клиентов и прогревает людей до покупки флагманского продукта.
+    </p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===================== SLIDE 21+28: КАК ЭТО РАБОТАЕТ ===================== -->
+<section>
+  <div class="section-label fade-in">Как это работает</div>
+  <h2 class="fade-in">Три шага. Четвёртый &mdash; <strong>получать продажи ежедневно</strong></h2>
+  <p class="section-desc fade-in">
+    Вам не нужно быть копирайтером, маркетологом или программистом.
+    Вы рассказываете о своём продукте &mdash; система делает остальное.
+  </p>
+
+  <div class="steps-grid fade-in">
+    <div class="step-card">
+      <div class="step-number">01</div>
+      <h3>Расскажите о продукте</h3>
+      <p>На простом языке. Система задаёт правильные вопросы и вытаскивает из вас то, что копирайтеры извлекают за $500/час брифинга. Никакого маркетингового жаргона.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-number">02</div>
+      <h3>Система работает за вас</h3>
+      <p>Движки исследуют рынок, анализируют конкурентов, изучают психологию вашей аудитории, строят стратегию, пишут текст блок за блоком, проверяют каждый элемент. Вы участвуете в ключевых решениях.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-number">03</div>
+      <h3>Запускайте и зарабатывайте</h3>
+      <p>Готовый лендинг. Готовая email-серия. Готовые рекламные объявления. Запустите &mdash; и воронка начнёт приносить продажи. Каждый день.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===================== SLIDE 26: СКОРОСТЬ ===================== -->
+<div class="speed-section" id="speed">
+  <div class="speed-inner">
+    <div class="section-label fade-in">Главное в 2026</div>
+    <h2 class="speed-headline fade-in">
+      <span class="pink-grad">Скорость</span> &mdash; новое<br>конкурентное преимущество
+    </h2>
+    <p class="speed-subtitle fade-in">
+      В 2026 году побеждает не тот, кто пишет лучше всех.
+      Побеждает тот, кто запускает быстрее &mdash; и тестирует больше.
+      Copycraft превращает недели в часы.
+    </p>
+
+    <div class="speed-comparison fade-in">
+      <div class="speed-col old">
+        <div class="speed-time">2-4 нед.</div>
+        <div class="speed-label">Классический копирайтер:<br>бриф &rarr; ресерч &rarr; драфт &rarr; правки &rarr; финал</div>
+      </div>
+      <div class="speed-vs">vs</div>
+      <div class="speed-col new">
+        <div class="speed-time">2-3 часа</div>
+        <div class="speed-label">Copycraft М.О.С.:<br>тот же процесс, но с 11 движками<br>и базой знаний из 2000+ паттернов</div>
+      </div>
+    </div>
+
+    <div class="speed-note fade-in">
+      <strong style="color: var(--text);">Скорость без потери глубины.</strong>
+      Система проходит все этапы &mdash; исследование рынка, стратегию, написание, проверку &mdash;
+      но параллельные движки и база из 2000+ паттернов лучших продающих текстов делают это
+      за часы, а не недели. А значит &mdash; быстрее итерации, раньше выход на рабочую конверсию.
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ===================== SLIDE 5+14: ДВИЖКИ ===================== -->
+<section id="engines">
+  <div class="section-label fade-in">Каждый движок &mdash; отдельная индустрия</div>
+  <h2 class="fade-in">Каждая функция &mdash; <strong>отдельная суперсила</strong></h2>
+  <p class="section-desc fade-in">
+    Copycraft &mdash; единственная в своём роде система. На рынке просто нет аналогов, потому что
+    каждый из 11 движков решает задачу, которую обычные нейросети даже не пытаются решить.
+  </p>
+
+  <!-- SLIDES 15-17: Simplified feature cards -->
+  <div class="features-grid fade-in">
+
+    <div class="feature-card">
+      <div class="tag tag-engine">Движок желаний</div>
+      <h3>Desire Engine</h3>
+      <p>Система раскапывает настоящие желания вашего клиента &mdash; не &laquo;хочу похудеть&raquo;, а что стоит за этим. И показывает в тексте, как ваш продукт изменит его жизнь на всех уровнях: от конкретного результата до нового ощущения себя.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="tag tag-engine">Движок боли</div>
+      <h3>Pain Architecture</h3>
+      <p>Каждый текст раскрывает проблему клиента на 4 уровнях: что происходит прямо сейчас, сколько это стоит в деньгах и времени, как это ощущается изнутри, и что это говорит о нём самом. Читатель узнаёт себя &mdash; и хочет решение.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="tag tag-engine">Движок историй</div>
+      <h3>Story Engine</h3>
+      <p>Убедительная история эксперта или клиента, которая строится по трёхактной структуре: дно &rarr; перелом &rarr; первый результат. Читатель видит себя в герое и верит, что у него тоже получится.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="tag tag-engine">Движок доверия</div>
+      <h3>Trust Protocol</h3>
+      <p>Система отслеживает &laquo;баланс доверия&raquo; читателя на каждом шагу текста. Конкретика, уязвимость, предсказания и доказательства увеличивают доверие. Преувеличения и фальшивая срочность &mdash; разрушают.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="tag tag-quality">Движок доказательств</div>
+      <h3>Proof Engine</h3>
+      <p>7 уровней проверки. AI не может выдумать ни один факт &mdash; каждое утверждение проходит тройную верификацию. Нет доказательства? Система честно помечает это, а не галлюцинирует.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="tag tag-quality">Движок уникальности</div>
+      <h3>Unique Mechanism</h3>
+      <p>Объясняет, почему у клиента раньше не получалось (снимает вину) и почему ваш метод &mdash; это новый путь, который даёт другой результат. Именно это отличает вас от 50 конкурентов.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="tag tag-research">Движок исследований</div>
+      <h3>Research Engine</h3>
+      <p>Несколько специализированных исследователей работают параллельно: собирают цитаты реальных клиентов, анализируют конкурентов, ищут научные данные. Ваш текст основан на реальности, а не на выдумках.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="tag tag-research">Движок стратегии</div>
+      <h3>Strategy Engine</h3>
+      <p>Определяет, насколько ваша аудитория &laquo;подогрета&raquo; и искушена. На основе этого выбирает тип заголовка, глубину объяснений, стиль доказательств и формат предложения. Не угадывает &mdash; считает.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="tag tag-ai">Движок критики</div>
+      <h3>Block Critic</h3>
+      <p>Независимый AI-агент проверяет каждый блок текста по 30+ критериям. Получает полный контекст вашего проекта. Порог прохождения строгий &mdash; не &laquo;всё хорошо&raquo;, а конкретные замечания с требованием исправить.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="tag tag-ai">Движок знаний</div>
+      <h3>Knowledge Vault</h3>
+      <p>2000+ паттернов, извлечённых из работ Хормози, Шварца, Халберта, Керна, Agora и других авторов, чьи тексты принесли миллионы долларов. Перед написанием каждого блока система находит идеальные формулы для вашей ниши. Не шаблоны &mdash; а принципы, проверенные реальными продажами.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="tag tag-speed">Движок форматов</div>
+      <h3>Multi-Format</h3>
+      <p>Один бриф &mdash; 5 форматов: лендинг, email-серия из 5 писем, видео-скрипт, рекламные объявления, чат-бот воронка. Каждый &mdash; со своей структурой и правилами, а не просто &laquo;переделай текст&raquo;.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===================== SLIDE 6: AUDIENCE SIMULATION ===================== -->
+<section>
+  <div class="section-label fade-in">Тестирование на виртуальной аудитории</div>
+  <h2 class="fade-in">Audience Simulation &mdash; <strong>текст проверяют ваши клиенты</strong> до запуска</h2>
+  <p class="section-desc fade-in">
+    Перед публикацией 5&ndash;8 виртуальных читателей с разными психотипами, болями и возражениями
+    &laquo;читают&raquo; ваш текст. Система фиксирует, где они теряют внимание, сомневаются, уходят.
+  </p>
+
+  <div class="problem-grid fade-in">
+    <div class="problem-card">
+      <div class="icon" style="background: var(--accent-glow); color: var(--accent-light);">&#128101;</div>
+      <h3>Разные психотипы</h3>
+      <p>Скептик, эмоциональный покупатель, аналитик, &laquo;уже обжёгся&raquo; &mdash; каждый читает текст по-своему и реагирует на разные аргументы.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon" style="background: var(--green-dim); color: var(--green);">&#128200;</div>
+      <h3>Точки потери внимания</h3>
+      <p>Система показывает, где именно конкретный тип читателя перестаёт верить, теряет интерес или не понимает, что делать дальше.</p>
+    </div>
+    <div class="problem-card">
+      <div class="icon" style="background: var(--blue-dim); color: var(--blue);">&#128736;</div>
+      <h3>Конкретные исправления</h3>
+      <p>Не абстрактная оценка, а конкретные рекомендации: &laquo;в этом блоке добавьте доказательство для скептика&raquo; или &laquo;здесь слишком рано просите деньги&raquo;.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===================== SLIDE 9+18: СРАВНЕНИЕ ===================== -->
+<section id="comparison">
+  <div class="section-label fade-in">Сравнение</div>
+  <h2 class="fade-in">Это даже не соревнование. Это <strong>разные лиги.</strong></h2>
+  <p class="section-desc fade-in">
+    Copycraft &mdash; это не &laquo;ещё один AI-промпт&raquo;. Это полноценная операционная система с движками,
+    базой знаний и контролем качества, которых нет ни у одной нейросети.
+  </p>
+
+  <table class="comp-table fade-in">
+    <thead>
+      <tr>
+        <th>Параметр</th>
+        <th>AI без системы</th>
+        <th>Copycraft М.О.С.</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Подход</td>
+        <td>Один промпт &rarr; один текст</td>
+        <td>Полный конвейер: исследование &rarr; стратегия &rarr; текст &rarr; проверка</td>
+      </tr>
+      <tr>
+        <td>Факты и цифры</td>
+        <td>Придумывает уверенно</td>
+        <td>Тройная верификация. Нет подтверждения &mdash; ставит пометку</td>
+      </tr>
+      <tr>
+        <td>Контроль качества</td>
+        <td>Нет. Сам написал &mdash; сам оценил</td>
+        <td>Независимый критик: 30+ вопросов по каждому блоку</td>
+      </tr>
+      <tr>
+        <td>База знаний</td>
+        <td>Общие данные из интернета</td>
+        <td>2000+ паттернов из 26 реальных sales letters за 60 лет</td>
+      </tr>
+      <tr>
+        <td>Стратегия</td>
+        <td>Нет. Пишет сразу</td>
+        <td>Анализ аудитории, конкурентов, уровня осведомлённости &rarr; стратегия &rarr; только потом текст</td>
+      </tr>
+      <tr>
+        <td>Контекст</td>
+        <td>Каждый раз с нуля</td>
+        <td>Полная память проекта: всё сохраняется между сессиями</td>
+      </tr>
+      <tr>
+        <td>Тестирование</td>
+        <td>Нет</td>
+        <td>5&ndash;8 виртуальных читателей проверяют текст до публикации</td>
+      </tr>
+      <tr>
+        <td>Форматы</td>
+        <td>Один формат за раз</td>
+        <td>5 форматов из одного брифа: лендинг, email, VSL, реклама, чат-бот</td>
+      </tr>
+      <tr>
+        <td>Время</td>
+        <td>Быстро, но бесполезно</td>
+        <td>2&ndash;3 часа &mdash; и готовая воронка, которая продаёт</td>
+      </tr>
+      <tr>
+        <td>Результат</td>
+        <td>Шаблонный текст без структуры</td>
+        <td>Полноценная продающая воронка с доказательствами и стратегией</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<hr class="divider">
+
+<!-- ===================== SLIDE 19: ЦИФРЫ ===================== -->
+<section>
+  <div class="section-label fade-in">Цифры</div>
+  <h2 class="fade-in">Цифры, которые <strong>не нуждаются в объяснении</strong></h2>
+
+  <div class="stats-grid fade-in">
+    <div class="stat-card">
+      <div class="stat-num">2-3 ч</div>
+      <div class="stat-label">От идеи до готовой воронки</div>
+      <div class="stat-note">вместо 2&ndash;4 недель у копирайтера</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">2000+</div>
+      <div class="stat-label">Паттернов в базе знаний</div>
+      <div class="stat-note">Хормози, Шварц, Халберт, Керн, Agora</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">11</div>
+      <div class="stat-label">Специализированных движков</div>
+      <div class="stat-note">каждый &mdash; отдельная индустрия</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">30+</div>
+      <div class="stat-label">Критериев проверки на блок</div>
+      <div class="stat-note">независимый AI-критик</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Форматов из одного брифа</div>
+      <div class="stat-note">лендинг, email, VSL, реклама, чат-бот</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Выдуманных фактов</div>
+      <div class="stat-note">тройная верификация каждого утверждения</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===================== SLIDE 27: ПРОБЛЕМА, КОТОРУЮ РЕШАЕТ СИСТЕМА ===================== -->
+<section>
+  <div class="section-label fade-in">Зачем нужна система</div>
+  <h2 class="fade-in">Проблема, которую решает <strong>Copycraft</strong></h2>
+  <p class="section-desc fade-in">
+    Нейросети пишут тексты. Но продающий текст &mdash; это не текст.
+    Это инженерная конструкция, где каждый блок решает конкретную задачу.
+  </p>
+
+  <div class="comparison fade-in">
+    <div class="comparison-col old">
+      <h3><span style="color:var(--red)">&#x2717;</span> Без системы</h3>
+      <ul>
+        <li><span style="color:var(--red)">&#x2022;</span> &laquo;Напиши продающий текст&raquo; &rarr; шаблонная вода</li>
+        <li><span style="color:var(--red)">&#x2022;</span> AI придумывает факты, кейсы, цифры</li>
+        <li><span style="color:var(--red)">&#x2022;</span> Нет структуры: текст не ведёт к покупке</li>
+        <li><span style="color:var(--red)">&#x2022;</span> Каждый раз с нуля: контекст теряется</li>
+        <li><span style="color:var(--red)">&#x2022;</span> Некому проверить: сам написал &mdash; сам оценил</li>
+        <li><span style="color:var(--red)">&#x2022;</span> Один формат: остальное переделывать вручную</li>
+      </ul>
+    </div>
+    <div class="comparison-col new">
+      <h3><span style="color:var(--green)">&#x2713;</span> Copycraft М.О.С.</h3>
+      <ul>
+        <li><span style="color:var(--green)">&#x2022;</span> Полный конвейер: от исследования до готового лендинга</li>
+        <li><span style="color:var(--green)">&#x2022;</span> Запрет на выдумку: тройная верификация каждого факта</li>
+        <li><span style="color:var(--green)">&#x2022;</span> Стратегия &rarr; механизм &rarr; текст &rarr; проверка</li>
+        <li><span style="color:var(--green)">&#x2022;</span> Полная память: ничего не теряется между сессиями</li>
+        <li><span style="color:var(--green)">&#x2022;</span> Независимый критик: 30+ вопросов по каждому блоку</li>
+        <li><span style="color:var(--green)">&#x2022;</span> 5 форматов: лендинг, email, реклама, VSL, чат-бот</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===================== SLIDE 20: BIG QUOTE ===================== -->
+<div class="big-quote fade-in">
+  <blockquote>
+    Copycraft &mdash; это не инструмент для написания текстов.<br>
+    Это <strong>операционная система для ежедневных продаж</strong>,<br>
+    которая использует текст как топливо.
+  </blockquote>
+</div>
+
+<hr class="divider">
+
+<!-- ===================== SLIDE 25: ПОЛНАЯ КАРТА ЦЕННОСТИ ===================== -->
+<section>
+  <div class="section-label fade-in">Что вы получаете</div>
+  <h2 class="fade-in">Полная карта <strong>ценности</strong></h2>
+
+  <div class="value-grid fade-in">
+    <div class="value-card" style="border-color: rgba(0, 184, 148, 0.3);">
+      <h3 style="color: var(--green);">Прямая ценность (продажи)</h3>
+      <ul>
+        <li>Воронка, которая генерирует продажи 24/7</li>
+        <li>Мультипликатор всех маркетинговых каналов</li>
+        <li>В разы быстрее и дешевле, чем копирайтер</li>
+        <li>Актив, который дорожает со временем</li>
+      </ul>
+    </div>
+    <div class="value-card" style="border-color: rgba(108, 92, 231, 0.3);">
+      <h3 style="color: var(--accent-light);">Операционная ценность (процессы)</h3>
+      <ul>
+        <li>Мастер-документ для всего маркетинга</li>
+        <li>Единый язык для команды</li>
+        <li>Скрипты продаж и контент-план &mdash; уже написаны</li>
+        <li>Возможность диагностики и оптимизации</li>
+      </ul>
+    </div>
+    <div class="value-card" style="border-color: rgba(253, 203, 110, 0.3);">
+      <h3 style="color: var(--orange);">Стратегическая ценность (бизнес)</h3>
+      <ul>
+        <li>Стресс-тест продукта до траты денег на рекламу</li>
+        <li>Кристаллизация позиционирования и уникальности</li>
+        <li>Фильтр на входе &mdash; приходят правильные клиенты</li>
+        <li>Защита от конкурентов через уникальный нарратив</li>
+        <li>Независимость от личного бренда эксперта</li>
+      </ul>
+    </div>
+    <div class="value-card" style="border-color: rgba(253, 121, 168, 0.3);">
+      <h3 style="color: var(--pink);">Уникальный механизм Copycraft</h3>
+      <ul>
+        <li>11 специализированных движков</li>
+        <li>2000+ паттернов из реальных sales letters</li>
+        <li>Тройная верификация каждого факта</li>
+        <li>Тестирование на виртуальной аудитории</li>
+        <li>Скорость: 2&ndash;3 часа вместо 2&ndash;4 недель</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===================== SLIDES 1-4 + 7-8: COMING SOON ===================== -->
+<section id="coming-soon">
+  <div class="section-label fade-in">Что мы внедряем прямо сейчас</div>
+  <h2 class="fade-in">Система <strong>эволюционирует</strong>. Вот что скоро появится.</h2>
+  <p class="section-desc fade-in">
+    Каждый из этих движков уже разработан на уровне архитектуры и проходит тестирование.
+    Они войдут в систему в ближайших обновлениях &mdash; бесплатно для всех пользователей.
+  </p>
+
+  <div class="features-grid fade-in">
+    <div class="coming-card">
+      <div class="tag tag-coming">Adversarial Arena</div>
+      <h3>Два AI. Один выживает.</h3>
+      <p>Writer AI пишет текст. Attacker AI пытается его уничтожить &mdash; находит слабости, симулирует скептичного читателя.
+         Writer переписывает. Снова атака. Снова защита. Несколько раундов. Выживает только неуязвимый текст.
+         Это не просто проверка &mdash; это эволюционный отбор для текста.</p>
+    </div>
+    <div class="coming-card">
+      <div class="tag tag-coming">Campaign DNA Vault</div>
+      <h3>Каждая успешная кампания сохраняет свою ДНК</h3>
+      <p>Не текст копируется, а структура успеха: последовательность эмоций, тип доказательств,
+         плотность призывов к действию. Для нового проекта система берёт ДНК лучших кампаний
+         и создаёт на их основе новый текст.</p>
+    </div>
+    <div class="coming-card">
+      <div class="tag tag-coming">Voice DNA Cloning</div>
+      <h3>Ваш стиль &mdash; навсегда</h3>
+      <p>Загрузите несколько ваших текстов. Система извлечёт ДНК вашего голоса:
+         ритм, лексику, тональность, юмор. Каждый следующий текст будет звучать как вы &mdash;
+         но убедительнее. Подписчики не отличат от вашего авторского текста.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===================== SLIDE 28: ПРОСТОЙ ПРОЦЕСС ===================== -->
+<section>
+  <div class="section-label fade-in">Как выглядит работа</div>
+  <h2 class="fade-in">Вы говорите <strong>&laquo;напиши мне лендинг&raquo;</strong> &mdash; система делает остальное</h2>
+  <p class="section-desc fade-in">
+    Никаких сложных настроек. Вы описываете свой продукт и аудиторию &mdash; система автоматически
+    запускает нужные движки в правильном порядке.
+  </p>
+
+  <div class="features-grid fade-in" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+    <div class="feature-card">
+      <div class="tag tag-research">Шаг 1</div>
+      <h3>Сбор информации</h3>
+      <p>Система задаёт вам вопросы простым языком о вашем продукте, аудитории и конкурентах. Вы отвечаете как умеете &mdash; система структурирует сама.</p>
+    </div>
+    <div class="feature-card">
+      <div class="tag tag-research">Шаг 2</div>
+      <h3>Исследование и стратегия</h3>
+      <p>Движки исследуют рынок, собирают цитаты реальных клиентов, анализируют конкурентов. На основе данных формируют стратегию: какой тип текста, какие аргументы, какой стиль.</p>
+    </div>
+    <div class="feature-card">
+      <div class="tag tag-engine">Шаг 3</div>
+      <h3>Написание и проверка</h3>
+      <p>Текст создаётся блок за блоком. После каждого блока &mdash; независимая проверка. Перед каждым &mdash; поиск лучших формул из базы знаний. Вы утверждаете каждый этап.</p>
+    </div>
+    <div class="feature-card">
+      <div class="tag tag-quality">Шаг 4</div>
+      <h3>Финальная сборка</h3>
+      <p>Ещё один уровень проверки собранного текста целиком. Тестирование на виртуальной аудитории. Автоматическая сборка готового лендинга. Запуск &mdash; и продажи каждый день.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===================== SLIDE 22: URGENCY ===================== -->
+<div class="cta-section">
+  <div class="section-label fade-in">Бета-тестирование открыто</div>
+  <h2 class="fade-in" style="max-width: 800px; margin: 0 auto 1.5rem;">
+    Рынок ускоряется. Каждый день без системы &mdash;<br>
+    это <strong>потерянные позиции</strong> среди конкурентов.
+  </h2>
+  <p class="fade-in" style="color: var(--text-dim); font-size: 1.05rem; max-width: 650px; margin: 0 auto 2.5rem; line-height: 1.7;">
+    Пока вы думаете &mdash; рынок уходит вперёд. Трафик дорожает. Конкуренция растёт.
+    Те, кто используют системный подход к продающим текстам, получают преимущество,
+    которое невозможно компенсировать просто &laquo;работать больше&raquo;.
+    <br><br>
+    Copycraft М.О.С. сейчас в бета-тестировании &mdash; это ваш шанс создать
+    маркетинговую систему для вашего бизнеса за минимальное время.
+  </p>
+  <a href="https://t.me/zhilamarketing" target="_blank" class="cta-button fade-in">Начать бета-тестирование</a>
+
+  <div class="fade-in" style="margin-top: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+    <div style="background: var(--bg-card); border: 1px solid rgba(0, 184, 148, 0.3); border-radius: 16px; padding: 2rem; text-align: center;">
+      <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 0.5rem;">Стоимость полной системы после релиза</p>
+      <p style="font-size: 1.8rem; font-weight: 800; color: var(--text-dim); text-decoration: line-through; opacity: 0.5;">300,000 &#8381;</p>
+      <p style="font-size: 0.85rem; color: var(--green); margin: 0.5rem 0;">Цена бета-тестирования (чтобы собрать кейсы)</p>
+      <p style="font-size: 2.5rem; font-weight: 900; color: var(--green);">10,000 &#8381;</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CLOSING ===================== -->
+<section style="text-align: center; padding: 5rem 2rem;">
+  <div class="section-label fade-in">Итого</div>
+  <h2 class="fade-in" style="margin-bottom: 2rem;">Copycraft &mdash; это не промпт.<br>Это <span style="color: var(--orange);">операционная система.</span></h2>
+  <p class="fade-in" style="color: var(--text-dim); font-size: 1.1rem; max-width: 650px; margin: 0 auto; line-height: 1.8;">
+    11 движков. 2000+ паттернов знаний. 30-вопросный критик на каждый блок.
+    5 форматов. Тестирование на виртуальной аудитории. Готовый лендинг за 2&ndash;3 часа.
+    <br><br>
+    Система, которая превращает информацию о вашем продукте в ежедневные продажи.
+  </p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    Copycraft М.О.С. &mdash; Маркетинговая Операционная Система
+    <br>
+    <span style="color: #555568; font-size: 0.8rem;">2026</span>
+  </p>
+</footer>
+
+<!-- SCROLL ANIMATION -->
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
