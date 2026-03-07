@@ -8,24 +8,24 @@
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
   :root {
-    --bg: #050508;
-    --bg-card: #0a0a14;
-    --bg-card-hover: #12121f;
-    --border: #1a1a2e;
-    --text: #e8e8f0;
-    --text-dim: #6e6e88;
-    --text-body: #b0b0c8;
-    --gold: #f5c842;
-    --gold-dim: rgba(245, 200, 66, 0.1);
-    --gold-glow: rgba(245, 200, 66, 0.15);
-    --green: #00ff87;
-    --green-dim: rgba(0, 255, 135, 0.08);
-    --red: #ff4757;
-    --red-dim: rgba(255, 71, 87, 0.1);
-    --purple: #7c5ce7;
-    --purple-glow: rgba(124, 92, 231, 0.2);
-    --white: #ffffff;
-    --cyan: #00d2ff;
+    --bg: #faf5ee;
+    --bg-card: #ffffff;
+    --bg-card-hover: #fff8f0;
+    --border: #e8ddd0;
+    --text: #2d2520;
+    --text-dim: #9a8e82;
+    --text-body: #5c534a;
+    --gold: #d4942a;
+    --gold-dim: rgba(212, 148, 42, 0.1);
+    --gold-glow: rgba(212, 148, 42, 0.12);
+    --green: #4caf6a;
+    --green-dim: rgba(76, 175, 106, 0.1);
+    --red: #c0392b;
+    --red-dim: rgba(192, 57, 43, 0.07);
+    --purple: #9066cc;
+    --purple-glow: rgba(144, 102, 204, 0.1);
+    --white: #2d2520;
+    --cyan: #5ba4cf;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -47,10 +47,8 @@
   .bg-grid {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-image:
-      linear-gradient(rgba(245, 200, 66, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(245, 200, 66, 0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
+    background-image: radial-gradient(circle, rgba(180, 160, 130, 0.15) 1px, transparent 1px);
+    background-size: 32px 32px;
     pointer-events: none;
     z-index: 0;
   }
@@ -96,7 +94,7 @@
 
   .gold { color: var(--gold); }
   .gold-text {
-    background: linear-gradient(135deg, var(--gold), #ffd700, #ff9500);
+    background: linear-gradient(135deg, var(--gold), #c07d20, #9066cc);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -120,8 +118,8 @@
     transform: translateX(-50%);
     width: 1000px; height: 1000px;
     background: radial-gradient(circle,
-      rgba(245, 200, 66, 0.08) 0%,
-      rgba(124, 92, 231, 0.05) 40%,
+      rgba(212, 148, 42, 0.08) 0%,
+      rgba(144, 102, 204, 0.05) 40%,
       transparent 70%);
     pointer-events: none;
     animation: heroGlow 8s ease-in-out infinite;
@@ -134,7 +132,7 @@
   .hero-pre {
     display: inline-block;
     padding: 0.5rem 1.5rem;
-    border: 1px solid rgba(245, 200, 66, 0.3);
+    border: 1px solid rgba(212, 148, 42, 0.3);
     border-radius: 100px;
     font-size: 0.8rem;
     color: var(--gold);
@@ -180,7 +178,7 @@
 
   /* === PAIN SECTION === */
   .pain {
-    background: linear-gradient(180deg, transparent, rgba(255, 71, 87, 0.03) 50%, transparent);
+    background: linear-gradient(180deg, transparent, rgba(192, 57, 43, 0.03) 50%, transparent);
   }
 
   .pain-highlight {
@@ -212,7 +210,7 @@
     text-align: center;
     padding: 3rem 2rem;
     background: var(--bg-card);
-    border: 1px solid rgba(245, 200, 66, 0.15);
+    border: 1px solid rgba(212, 148, 42, 0.15);
     border-radius: 20px;
     margin: 2rem 0;
     position: relative;
@@ -253,11 +251,12 @@
     position: relative;
     overflow: hidden;
     transition: all 0.3s;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
   }
   .step-card:hover {
     border-color: var(--gold);
     transform: translateY(-2px);
-    box-shadow: 0 20px 60px rgba(245, 200, 66, 0.06);
+    box-shadow: 0 20px 60px rgba(212, 148, 42, 0.08);
   }
   .step-card::before {
     content: '';
@@ -274,7 +273,7 @@
     width: 48px; height: 48px;
     border-radius: 14px;
     background: var(--gold-dim);
-    border: 1px solid rgba(245, 200, 66, 0.2);
+    border: 1px solid rgba(212, 148, 42, 0.2);
     font-size: 1.3rem;
     font-weight: 900;
     color: var(--gold);
@@ -332,7 +331,7 @@
 
   /* === STORY === */
   .story-section {
-    background: linear-gradient(180deg, transparent, rgba(124, 92, 231, 0.03) 50%, transparent);
+    background: linear-gradient(180deg, transparent, rgba(144, 102, 204, 0.03) 50%, transparent);
   }
   .story-quote {
     border-left: 3px solid var(--purple);
@@ -346,7 +345,7 @@
 
   /* === RESULT PROJECTION === */
   .result-section {
-    background: linear-gradient(180deg, transparent, rgba(0, 255, 135, 0.02) 50%, transparent);
+    background: linear-gradient(180deg, transparent, rgba(76, 175, 106, 0.04) 50%, transparent);
   }
   .result-timeline {
     border-left: 2px solid var(--gold);
@@ -400,7 +399,7 @@
     transition: all 0.3s;
   }
   .day-card:hover {
-    border-color: rgba(245, 200, 66, 0.3);
+    border-color: rgba(212, 148, 42, 0.3);
     transform: translateY(-2px);
   }
   .day-label {
@@ -429,9 +428,10 @@
     padding: 2rem;
     margin: 1.5rem 0;
     transition: all 0.3s;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
   }
   .case-card:hover {
-    border-color: rgba(0, 255, 135, 0.3);
+    border-color: rgba(76, 175, 106, 0.3);
   }
   .case-header {
     display: flex;
@@ -483,7 +483,7 @@
   /* === OFFER === */
   .offer-section {
     padding: 5rem 0;
-    background: linear-gradient(180deg, transparent, rgba(245, 200, 66, 0.03) 50%, transparent);
+    background: linear-gradient(180deg, transparent, rgba(212, 148, 42, 0.04) 50%, transparent);
   }
 
   .offer-total {
@@ -505,17 +505,18 @@
     position: relative;
     overflow: hidden;
     transition: all 0.3s;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
   }
   .tier-card.featured {
     border-color: var(--gold);
-    box-shadow: 0 0 60px rgba(245, 200, 66, 0.08);
+    box-shadow: 0 0 60px rgba(212, 148, 42, 0.1);
   }
   .tier-card.featured::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
     height: 3px;
-    background: linear-gradient(90deg, var(--gold), #ff9500, var(--gold));
+    background: linear-gradient(90deg, var(--gold), var(--purple), var(--gold));
   }
 
   .tier-name {
@@ -576,19 +577,19 @@
   .cta-btn {
     display: inline-block;
     padding: 1.1rem 3rem;
-    background: linear-gradient(135deg, var(--gold), #ff9500);
-    color: #000;
+    background: linear-gradient(135deg, var(--gold), #b87d1e);
+    color: #fff;
     font-weight: 800;
     font-size: 1.05rem;
     border-radius: 14px;
     text-decoration: none;
     transition: all 0.3s;
     letter-spacing: 0.02em;
-    box-shadow: 0 8px 30px rgba(245, 200, 66, 0.25);
+    box-shadow: 0 8px 30px rgba(212, 148, 42, 0.3);
   }
   .cta-btn:hover {
     transform: translateY(-3px);
-    box-shadow: 0 15px 50px rgba(245, 200, 66, 0.35);
+    box-shadow: 0 15px 50px rgba(212, 148, 42, 0.35);
   }
   .cta-btn:active {
     transform: translateY(-1px);
@@ -647,7 +648,7 @@
     transition: all 0.3s;
   }
   .faq-item:hover {
-    border-color: rgba(245, 200, 66, 0.2);
+    border-color: rgba(212, 148, 42, 0.2);
   }
   .faq-q {
     padding: 1.5rem 2rem;
@@ -697,7 +698,7 @@
     transition: all 0.3s;
   }
   .fasc-list li:hover {
-    border-color: rgba(245, 200, 66, 0.3);
+    border-color: rgba(212, 148, 42, 0.3);
   }
   .fasc-list li::before {
     content: '→';
@@ -711,7 +712,7 @@
 
   /* === DREAM STATE === */
   .dream {
-    background: linear-gradient(180deg, transparent, rgba(245, 200, 66, 0.04) 50%, transparent);
+    background: linear-gradient(180deg, transparent, rgba(212, 148, 42, 0.05) 50%, transparent);
     padding: 5rem 0;
   }
   .dream p {
@@ -794,7 +795,7 @@
   /* === GUARANTEE === */
   .guarantee-box {
     background: var(--bg-card);
-    border: 1px solid rgba(0, 255, 135, 0.2);
+    border: 1px solid rgba(76, 175, 106, 0.3);
     border-radius: 20px;
     padding: 2.5rem;
     text-align: center;
@@ -829,7 +830,7 @@
     transition: all 0.3s;
   }
   .founder-card:hover {
-    border-color: rgba(245, 200, 66, 0.2);
+    border-color: rgba(212, 148, 42, 0.2);
   }
   .founder-photo {
     width: 100%;
@@ -865,7 +866,7 @@
     transition: all 0.3s;
   }
   .bonus-card:hover {
-    border-color: rgba(245, 200, 66, 0.2);
+    border-color: rgba(212, 148, 42, 0.2);
   }
   .bonus-price {
     color: var(--gold);
@@ -1658,7 +1659,7 @@
 
     <div class="divider"></div>
 
-    <div class="case-card reveal" style="text-align:left; border-color: rgba(245, 200, 66, 0.3);">
+    <div class="case-card reveal" style="text-align:left; border-color: rgba(212, 148, 42, 0.3);">
       <div class="case-header">
         <div>
           <div class="case-name">Светлана Грант</div>
