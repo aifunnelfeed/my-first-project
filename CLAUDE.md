@@ -50,7 +50,7 @@
 | EXECUTION | 02 + 07 (или 02 + 08 для email/ads/vsl/chatbot) |
 | DEBUGGING | 02 + 09 + 11 |
 | DELIVERY | 02 + 09 + 11 |
-| REVIEW | 02 |
+| REVIEW | 02 + 11 |
 | XRAY | 01 + 10 |
 
 Блок 01 загружается всегда, кроме EXECUTION/DEBUGGING/DELIVERY/REVIEW (там достаточно блока 02).
