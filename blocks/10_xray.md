@@ -47,7 +47,7 @@
 
 Выполни последовательно:
 1. Детекция структуры → [STRUCTURE_DETECT_V1]
-2. Оценка по 9 измерениям → [XRAY_SCORING_V2]
+2. Оценка по 10 измерениям → [XRAY_SCORING_V2]
 3. Калибровка по Awareness/Sophistication → [XRAY_AWARENESS_ADAPT_V1]
 4. Сравнение с базой знаний → [XRAY_KB_COMPARE_V2]
 5. Формирование рекомендаций → [XRAY_RECOMMENDATIONS_V1]
@@ -106,7 +106,7 @@
 ### 7.3. МНОГОМЕРНАЯ ОЦЕНКА (SCORING)
 КОД ДОСТУПА: [XRAY_SCORING_V2]
 
-**9 ИЗМЕРЕНИЙ (каждое 1-10):**
+**10 ИЗМЕРЕНИЙ (каждое 1-10):**
 
 Для каждого измерения используй чеклист. Балл = количество «Да» / количество применимых критериев × 10.
 
@@ -128,8 +128,9 @@
 | 8 | DRE Layer 3 (Emotion): эмоции показаны через сцены/действия, а не названы (per `[DRE_DEPTH_V1]`)? |  |
 | 9 | DRE Layer 4 (Identity): угроза самоощущению читателя артикулирована? |  |
 | 10 | Pain Budget: объём боли (Lead + Pain Amplification) ≥ объёма механизма (S1-2: ≥1:1, S3-4: ≥1.5:1, S5: 0.5:1 допустимо)? |  |
+| 11 | Pain Density (per `[PAIN_DENSITY_V1]`): каждый абзац боли вносит новый ракурс (новый слой DRE / ситуация / цифра / голос / следствие)? Нет повторов без углубления? Micro-relief каждые 3-4 абзаца чистой боли (эмпатия/нормализация)? |  |
 
-**N/A:** Ad → #6-10. Email → #9-10.
+**N/A:** Ad → #6-11. Email → #9-11.
 
 ---
 
@@ -164,23 +165,31 @@
 | 8 | Логика: шаги вытекают один из другого? |  |
 | 9 | Mechanism-Proof Fusion: хотя бы 1 элемент, который одновременно объясняет КАК и доказывает ЧТО (per `[PROOF_RESEARCH_V1]`, 4.9b-ext)? |  |
 | 10 | Для Health/Finance: минимум 1 внешнее исследование/факт, подкрепляющий механизм? |  |
+| 11 | Mechanism Mode alignment (per `[MECHANISM_MODES_V1]`): глубина раскрытия механизма соответствует Sophistication? Hidden (S1-2, 2-3 абзаца, результат > метод) / Teased (S2-3, 4-6 абзацев, принцип без реализации) / Revealed (S3-5, 6-10+ абзацев, полный метод + pivot «знать ≠ сделать»)? |  |
 
-**N/A:** #9 → при Sophistication < 3 и не Health/Finance. #10 → при не Health/Finance.
+**N/A:** #9 → при Sophistication < 3 и не Health/Finance. #10 → при не Health/Finance. #11 → если Sophistication не определён (UNDETECTED).
 
 ---
 
-**ИЗМЕРЕНИЕ 4: OFFER STRENGTH (вес: 1.0x)**
+**ИЗМЕРЕНИЕ 4: OFFER STRENGTH (вес: 1.5x)** — обновлено per Grand Slam Offer (Hormozi)
 
 | # | Критерий | Да/Нет |
 |---|----------|--------|
-| 1 | Core Outcome конкретный и измеримый? |  |
+| 1 | Core Outcome конкретный и измеримый (per Value Equation: Dream Outcome чёткий)? |  |
 | 2 | Value Stack с денежным эквивалентом каждого элемента? |  |
-| 3 | Value Stack ≥ 3x цены? |  |
-| 4 | Бонусы (3-5 шт.) усиливают основной результат? |  |
-| 5 | Гарантия снимает главный страх клиента? |  |
-| 6 | Триггер срочности #1 (время)? |  |
-| 7 | Триггер срочности #2 (количество/социальный)? |  |
-| 8 | Цена бездействия озвучена? |  |
+| 3 | Value Stack ≥ 5x цены (идеал 10x)? Если < 3x — FAIL. |  |
+| 4 | Бонусы (3-5 шт.) — каждый решает отдельную проблему клиента, а не generic «материал»? |  |
+| 5 | Naming Protocol (per `[NAMING_PROTOCOL_V1]`): компоненты/бонусы имеют уникальные продающие названия (не «Бонус 1», «Модуль 3»)? Название продаёт компонент отдельно от стека? |  |
+| 6 | «Sell the Vacation» (per `[OFFER_STACK_V1]`, шаг 6): Dream Outcome показан ПЕРЕД списком компонентов (сначала картинка результата → потом «как мы к этому придём»)? |  |
+| 7 | Reason Why для цены/скидки: есть бизнес-причина (не «мы хотим помочь людям»)? |  |
+| 8 | Guarantee Strategy (per F5): тип гарантии соответствует Sophistication — Unconditional (S1-2) / Conditional (S2-4) / Anti-guarantee (S4-5) / Performance (S3-5)? Гарантия адресная — снимает главный страх, а не дженерик «100% money back»? |  |
+| 9 | «Who NOT for» (per `[OFFER_STACK_V1]`, шаг 7): есть секция «для кого НЕ подходит» (exclusivity + доверие)? |  |
+| 10 | Триггер срочности #1 (время)? |  |
+| 11 | Триггер срочности #2 (количество/социальный)? |  |
+| 12 | Цена бездействия озвучена? |  |
+| 13 | Value Equation баланс (per D2): Perceived Likelihood усилена (proof + mechanism + гарантия)? Time Delay и Effort Sacrifice минимизированы в подаче (конкретные сроки + простота внедрения)? |  |
+
+**N/A:** Ad → #2-9, #13. Email → #2-3, #5-7, #9, #13.
 
 ---
 
@@ -245,12 +254,14 @@
 | 6 | Возражения сняты ДО финального CTA? |  |
 | 7 | Текст решает одну проблему (а не пытается всё сразу)? |  |
 | 8 | Финал сильнее начала (крещендо)? |  |
+| 9 | Result Projection (per `[RESULT_PROJECTION_V1]`): после механизма есть мост к конкретному результату (3-5 предложений, слои 1-2 DES)? Awareness ≤ 3 — обязателен; Awareness 4-5 — опционален. |  |
+| 10 | Dream State в Close (per `[DREAM_STATE_V1]`): полная Future Pacing перед финальным CTA — все 4 слоя DES, сенсорные детали, контраст с DRE? |  |
 
-**N/A:** #4 → если эксперт/автор не упоминается в тексте. Ad → #1, #4.
+**N/A:** #4 → если эксперт/автор не упоминается в тексте. #9 → Awareness 4-5 (опционален). Ad → #1, #4, #9, #10.
 
 ---
 
-**ИЗМЕРЕНИЕ 9: TRUST ACCOUNT (вес: 1.0x)** — НОВОЕ
+**ИЗМЕРЕНИЕ 9: TRUST ACCOUNT (вес: 1.0x)**
 
 | # | Критерий | Да/Нет |
 |---|----------|--------|
@@ -267,6 +278,23 @@
 
 ---
 
+**ИЗМЕРЕНИЕ 10: DESIRE ENGINE (вес: 1.0x)** — НОВОЕ
+
+| # | Критерий | Да/Нет |
+|---|----------|--------|
+| 1 | DES Layer 1 (Конкретный результат): измеримое/видимое изменение с цифрами, действиями, сроками — не абстрактное «будет хорошо» (per `[DES_DEPTH_V1]`)? |  |
+| 2 | DES Layer 2 (Ценность для жизни): показано, как изменится повседневная жизнь — время, деньги, свобода, возможности? |  |
+| 3 | DES Layer 3 (Эмоциональная награда): гордость, уверенность, спокойствие — показаны через сцены, не названы? |  |
+| 4 | DES Layer 4 (Обновление идентичности): кем становится читатель, новый статус/роль — кульминация desire? |  |
+| 5 | 4 слоя идут последовательно (от конкретного → к глубокому), не разбросаны хаотично? |  |
+| 6 | DRE↔DES контраст: слои desire резонируют с соответствующими слоями боли (поверхность↔результат, цена↔ценность, эмоция↔награда, идентичность↔обновление)? |  |
+| 7 | Desire-секции используют VOC-фразы (язык клиента из целевой аудитории), а не абстрактный маркетинговый язык? |  |
+| 8 | Тест «Магнит трансформации»: читатель видит СВОЮ жизнь «после» (конкретная сцена), а не generic обещание? |  |
+
+**N/A:** Ad → всё измерение. Email → #3-6 (в email обычно только слои 1-2). Chatbot → всё измерение.
+
+---
+
 **РАСЧЁТ ОБЩЕГО БАЛЛА:**
 
 ```
@@ -277,15 +305,16 @@ N/A критерии исключены из подсчёта. Если все �
   Lead Power           × 1.5
   Story Arc            × 1.0
   Mechanism Clarity    × 1.5
-  Offer Strength       × 1.0
+  Offer Strength       × 1.5
   Proof Weight         × 1.5
   Language & Flow      × 1.0
   Big Idea             × 1.0
   Persuasion Arch.     × 1.0
   Trust Account        × 1.0
+  Desire Engine        × 1.0
 
 Формула: Общий = (Σ(балл × вес)) / (Σ весов для не-N/A измерений) × 10
-Макс. сумма весов (все применимы) = 11.0
+Макс. сумма весов (все применимы) = 12.0
 ```
 
 **ЦВЕТОВАЯ СИСТЕМА:**
@@ -321,7 +350,13 @@ N/A критерии исключены из подсчёта. Если все �
 6. **Transitions** (если Language & Flow 🔴/🟡):
    `search_knowledge("transitional phrases block connections flow", category="formulas", n_results=3)`
 
-Запросы 4-6 выполняются только при наличии 🔴/🟡 в соответствующем измерении.
+7. **Offer / Grand Slam паттерны** (если Offer Strength 🔴/🟡):
+   `search_knowledge("offer stack value stack guarantee bonus naming {ниша}", category="formulas", n_results=5)`
+
+8. **Desire / Future Pacing паттерны** (если Desire Engine 🔴/🟡):
+   `search_knowledge("dream state future pacing transformation identity desire {ниша}", category="formulas", n_results=3)`
+
+Запросы 4-8 выполняются только при наличии 🔴/🟡 в соответствующем измерении.
 
 **ФОРМАТ ВЫВОДА:**
 - «Ваш лид использует подход [X]. В базе есть пример [Y] из {source}, где аналогичная задача решена через [Z] — это дало бы усиление.»
@@ -391,6 +426,7 @@ N/A критерии исключены из подсчёта. Если все �
 | 7 | Big Idea | X/10 | 🔴/🟡/🟢 | {1 предложение} |
 | 8 | Persuasion Arch. | X/10 | 🔴/🟡/🟢 | {1 предложение} |
 | 9 | Trust Account | X/10 | 🔴/🟡/🟢 | {1 предложение} |
+| 10 | Desire Engine | X/10 или N/A | 🔴/🟡/🟢 | {1 предложение} |
 
 ## Детальный анализ
 
@@ -405,6 +441,12 @@ N/A критерии исключены из подсчёта. Если все �
 
 ### Proof
 {Найденные типы по PROOF_TAXONOMY, эскалация, калибровка по цене}
+
+### Offer
+{Grand Slam Offer: компоненты стека, naming, sell the vacation, guarantee type, value/price ratio, reason why, who NOT for}
+
+### Desire
+{DES layers 1-4: какие найдены, какие пропущены. Result Projection: есть/нет. Dream State: есть/нет, сенсорика, DRE↔DES контраст}
 
 ### Trust
 {Найденные deposits и killers, баланс, CTA coverage}
@@ -450,15 +492,16 @@ N/A критерии исключены из подсчёта. Если все �
   | 5 | Соответствует содержанию письма? | |
 - Story Arc: вес 0.5x (в email история необязательна)
 - Specificity Anchor: добавить в Proof Weight
+- Desire Engine: #3-6 = N/A (в email обычно только слои 1-2 DES), вес 0.5x
 
 **AD (короткий формат):**
 - Только 3 измерения: **Lead Power** + **Offer Strength** + **Language & Flow**
-- Story Arc, Mechanism Clarity, Proof Weight, Big Idea, Persuasion Architecture, Trust Account = N/A
+- Story Arc, Mechanism Clarity, Proof Weight, Big Idea, Persuasion Architecture, Trust Account, Desire Engine = N/A
 - Дополнительный критерий: длина ≤150 слов
 - Визуал: описан ли (для связки текст+картинка)?
 
 **VSL:**
-- Все 9 измерений + дополнительное **Pacing**:
+- Все 10 измерений + дополнительное **Pacing**:
   | # | Критерий | Да/Нет |
   |---|----------|--------|
   | 1 | Lead укладывается в 0:00–1:30? | |
@@ -470,7 +513,7 @@ N/A критерии исключены из подсчёта. Если все �
 
 **CHATBOT:**
 - Только 4 измерения: **Hook Power** + **Mechanism Clarity** + **Offer Strength** + **Language & Flow**
-- Trust Account, Story Arc, Big Idea, Persuasion Architecture = N/A
+- Trust Account, Story Arc, Big Idea, Persuasion Architecture, Desire Engine = N/A
 - Дополнительный критерий: диалогичность (бот задаёт вопросы, а не монологизирует)
 
 ---
@@ -499,8 +542,10 @@ N/A критерии исключены из подсчёта. Если все �
 | Lead Power (DRE) | Critical | Critical | Important | Less critical | DRE #6-9 skip |
 | Story Arc | Critical | Critical | Important | Less critical | N/A |
 | Mechanism Clarity | Less critical | Important | Critical | Important | Less critical |
+| Offer Strength | Less critical | Important | Important | Critical | Critical |
 | Proof Weight | В историю | Масштаб проблемы | Proof механизма | Social proof | Price proof |
 | Trust Account | Very critical | Critical | Important | Important | Less critical |
+| Desire Engine | Critical (слои 1-2) | Critical (1-3) | Important (все 4) | Important (фокус 3-4) | Critical (фокус 4 Identity) |
 
 *Critical* = акцентировать в комментарии. *Less critical* = оценить, но не штрафовать жёстко.
 
@@ -508,7 +553,7 @@ N/A критерии исключены из подсчёта. Если все �
 
 | Stage | Ключевые поправки |
 |-------|-------------------|
-| 1-2 | Pain Budget 1:1 достаточно. Proof: простые testimonials. Authority: имя + должность. |
-| 3 | Mechanism-Proof Fusion обязателен. Proof diversity 3+ типов. Authority: конкретные достижения. |
-| 4 | Proof = основной аргумент. Distributed Proof. Documentary/Track Record ценятся. |
-| 5 | Story-first подход ожидаем. Identity-level proof («такие как я»). Pain Budget 0.5:1 допустим. |
+| 1-2 | Pain Budget 1:1 достаточно. Proof: простые testimonials. Authority: имя + должность. Offer: simple stack, Unconditional guarantee. DES: compact 4 слоя, фокус слой 1. Mechanism Mode: Hidden. |
+| 3 | Mechanism-Proof Fusion обязателен. Proof diversity 3+ типов. Authority: конкретные достижения. Offer: full Grand Slam, Conditional guarantee. DES: 4 слоя + 2-3 доп. ракурса. Mechanism Mode: Teased. |
+| 4 | Proof = основной аргумент. Distributed Proof. Documentary/Track Record ценятся. Offer: extensive stack, naming critical, Performance/Anti-guarantee. DES: Identity-уровень важен. Mechanism Mode: Teased/Revealed. |
+| 5 | Story-first подход ожидаем. Identity-level proof («такие как я»). Pain Budget 0.5:1 допустим. Offer: exclusivity > value stack. DES: Identity layer = кульминация. Mechanism Mode: Revealed. |
