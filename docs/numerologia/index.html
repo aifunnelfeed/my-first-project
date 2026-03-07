@@ -1,1895 +1,1844 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>numerologia</title>
-    <style>
-        /* === Reset & Base === */
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            font-size: 18px;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-                         'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.75;
-            color: #1a1a2e;
-            background: #0f0f23;
-            -webkit-font-smoothing: antialiased;
-            padding-bottom: 72px;
-        }
-
-        /* === Container === */
-        .container {
-            max-width: 720px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* === Sections === */
-        .section {
-            padding: 72px 0;
-        }
-
-        .section--light {
-            background: #ffffff;
-            color: #1a1a2e;
-        }
-
-        .section--dark {
-            background: #16162a;
-            color: #d0d0de;
-        }
-
-        /* === Section Headings === */
-        .section__heading {
-            font-size: 1.6rem;
-            font-weight: 700;
-            margin-bottom: 28px;
-            line-height: 1.3;
-        }
-
-        .section__heading::before {
-            content: '';
-            display: block;
-            width: 40px;
-            height: 4px;
-            background: linear-gradient(90deg, #7F56D9, #B692F6);
-            margin-bottom: 16px;
-            border-radius: 2px;
-        }
-
-        .section--light .section__heading {
-            background: linear-gradient(135deg, #7F56D9 0%, #B692F6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section--dark .section__heading {
-            color: #ffffff;
-        }
-
-        /* === Hero === */
-        .section--hero {
-            padding: 100px 0 72px;
-            text-align: center;
-            background: radial-gradient(ellipse at 50% 0%, #2d1b69 0%, #0f0f23 70%);
-            color: #e8e8f0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .section--hero::before {
-            content: '';
-            position: absolute;
-            top: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 700px;
-            height: 500px;
-            background: radial-gradient(ellipse, rgba(127, 86, 217, 0.15) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .section--hero .container {
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero__title {
-            font-size: 3rem;
-            font-weight: 800;
-            line-height: 1.15;
-            color: #ffffff;
-            margin-bottom: 24px;
-            letter-spacing: -0.03em;
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        .hero__subtitle {
-            font-size: 1.2rem;
-            color: #B692F6;
-            line-height: 1.6;
-            max-width: 600px;
-            margin: 0 auto 40px;
-            animation: fadeInUp 0.6s ease-out 0.15s both;
-        }
-
-        .hero__body {
-            text-align: left;
-            animation: fadeInUp 0.6s ease-out 0.3s both;
-        }
-
-        .hero__body p {
-            font-size: 1.05rem;
-            color: #c8c8d8;
-            margin-bottom: 1em;
-        }
-
-        .hero__body strong {
-            color: #ffffff;
-            background: linear-gradient(to top, rgba(127, 86, 217, 0.3) 0%, rgba(127, 86, 217, 0.3) 35%, transparent 35%);
-            padding: 0 2px;
-        }
-
-        /* === Body Text === */
-        .section__body p {
-            margin-bottom: 1em;
-        }
-
-        .section--light .section__body p {
-            color: #2a2a3c;
-        }
-
-        .section--dark .section__body p {
-            color: #d0d0de;
-        }
-
-        .section--light .section__body strong {
-            color: #0f0f23;
-            background: linear-gradient(to top, rgba(127, 86, 217, 0.15) 0%, rgba(127, 86, 217, 0.15) 35%, transparent 35%);
-            padding: 0 2px;
-        }
-
-        .section--dark .section__body strong {
-            color: #ffffff;
-            background: linear-gradient(to top, rgba(182, 146, 246, 0.25) 0%, rgba(182, 146, 246, 0.25) 35%, transparent 35%);
-            padding: 0 2px;
-        }
-
-        .section--light .section__body em {
-            color: #555;
-        }
-
-        .section--dark .section__body em {
-            color: #a0a0b8;
-        }
-
-        .section__body ol,
-        .section__body ul {
-            margin: 1em 0;
-            padding-left: 1.5em;
-        }
-
-        .section__body li {
-            margin-bottom: 0.6em;
-        }
-
-        .section--light .section__body li {
-            color: #2a2a3c;
-        }
-
-        .section--dark .section__body li {
-            color: #d0d0de;
-        }
-
-        .section__body li::marker {
-            color: #7F56D9;
-        }
-
-        /* === Callout (italic aside) === */
-        .section--callout {
-            border-left: 4px solid #B692F6;
-            background: #1a1a2e;
-            color: #c8c8d8;
-        }
-
-        .section--callout .container {
-            padding-top: 4px;
-            padding-bottom: 4px;
-        }
-
-        .callout-text {
-            font-style: italic;
-            color: #B692F6;
-            font-size: 0.95rem;
-        }
-
-        .callout-text p {
-            margin-bottom: 0.5em;
-        }
-
-        /* === CTA Button === */
-        .section--cta {
-            text-align: center;
-            padding: 56px 0;
-        }
-
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(135deg, #e63946 0%, #c1121f 100%);
-            color: #ffffff;
-            font-size: 1.2rem;
-            font-weight: 700;
-            padding: 20px 52px;
-            border-radius: 12px;
-            text-decoration: none;
-            letter-spacing: 0.02em;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            box-shadow: 0 0 24px rgba(230, 57, 70, 0.35), 0 4px 14px rgba(230, 57, 70, 0.25);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 36px rgba(230, 57, 70, 0.5), 0 8px 24px rgba(230, 57, 70, 0.3);
-        }
-
-        .cta-button:active {
-            transform: translateY(0);
-        }
-
-        .cta-subtext {
-            margin-bottom: 36px;
-            font-size: 1rem;
-            text-align: left;
-            line-height: 1.75;
-        }
-
-        .cta-subtext p {
-            margin-bottom: 1em;
-        }
-
-        .section--light .cta-subtext {
-            color: #2a2a3c;
-        }
-
-        .section--dark .cta-subtext {
-            color: #d0d0de;
-        }
-
-        .section--light .cta-subtext strong {
-            color: #0f0f23;
-            background: linear-gradient(to top, rgba(127, 86, 217, 0.15) 0%, rgba(127, 86, 217, 0.15) 35%, transparent 35%);
-            padding: 0 2px;
-        }
-
-        .section--dark .cta-subtext strong {
-            color: #ffffff;
-            background: linear-gradient(to top, rgba(182, 146, 246, 0.25) 0%, rgba(182, 146, 246, 0.25) 35%, transparent 35%);
-            padding: 0 2px;
-        }
-
-        /* === Bridge (transition with inline CTA) === */
-        .section--bridge {
-            text-align: center;
-            padding: 48px 0;
-        }
-
-        .bridge-text {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 24px;
-        }
-
-        .section--light .bridge-text {
-            color: #0f0f23;
-        }
-
-        .section--dark .bridge-text {
-            color: #ffffff;
-        }
-
-        .bridge-text p {
-            margin: 0;
-        }
-
-        .cta-button--secondary {
-            display: inline-block;
-            background: transparent;
-            color: #B692F6;
-            font-size: 1rem;
-            font-weight: 700;
-            padding: 14px 36px;
-            border-radius: 12px;
-            border: 2px solid #7F56D9;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-
-        .cta-button--secondary:hover {
-            background: #7F56D9;
-            color: #ffffff;
-            box-shadow: 0 0 20px rgba(127, 86, 217, 0.3);
-        }
-
-        /* === Comparison === */
-        .comparison-intro {
-            margin-bottom: 24px;
-        }
-
-        .section--light .comparison-intro p {
-            color: #2a2a3c;
-        }
-
-        .section--dark .comparison-intro p {
-            color: #d0d0de;
-        }
-
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 24px;
-        }
-
-        .comparison-card {
-            padding: 24px;
-            border-radius: 16px;
-            font-size: 0.95rem;
-        }
-
-        .comparison-card p {
-            margin-bottom: 0.5em;
-            color: #2a2a3c;
-        }
-
-        .comparison-card strong {
-            background: none !important;
-            -webkit-text-fill-color: initial !important;
-        }
-
-        .comparison-card--bad {
-            background: #fff5f5;
-            border: 1px solid #fecaca;
-            border-top: 4px solid #e63946;
-        }
-
-        .comparison-card--good {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            border-top: 4px solid #16a34a;
-        }
-
-        .comparison-label {
-            font-weight: 700;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .comparison-label--bad {
-            color: #dc2626;
-        }
-
-        .comparison-label--good {
-            color: #16a34a;
-        }
-
-        .comparison-conclusion {
-            margin-top: 8px;
-        }
-
-        .section--light .comparison-conclusion p {
-            color: #2a2a3c;
-        }
-
-        .section--dark .comparison-conclusion p {
-            color: #d0d0de;
-        }
-
-        /* === Feature Grid (comparison cards) === */
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin: 32px 0;
-        }
-
-        .feature-card {
-            padding: 24px 20px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(255, 255, 255, 0.03);
-        }
-
-        .feature-card__title {
-            font-weight: 700;
-            font-size: 1.05rem;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .section--dark .feature-card__title {
-            color: #a0a0b8;
-        }
-
-        .section--light .feature-card__title {
-            color: #555;
-        }
-
-        .feature-card--highlight {
-            border-color: rgba(127, 86, 217, 0.4);
-            background: rgba(127, 86, 217, 0.08);
-            box-shadow: 0 4px 24px rgba(127, 86, 217, 0.12);
-        }
-
-        .feature-card--highlight .feature-card__title {
-            color: #B692F6;
-            border-bottom-color: rgba(127, 86, 217, 0.3);
-        }
-
-        .section--light .feature-card--highlight .feature-card__title {
-            background: linear-gradient(135deg, #7F56D9 0%, #B692F6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .feature-card__list {
-            display: grid;
-            gap: 12px;
-        }
-
-        .feature-card__list dt {
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            margin-bottom: 2px;
-        }
-
-        .section--dark .feature-card__list dt {
-            color: #666;
-        }
-
-        .section--light .feature-card__list dt {
-            color: #999;
-        }
-
-        .feature-card__list dd {
-            margin: 0;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        .section--dark .feature-card__list dd {
-            color: #c8c8d8;
-        }
-
-        .section--light .feature-card__list dd {
-            color: #2a2a3c;
-        }
-
-        .feature-card--highlight .feature-card__list dd {
-            color: #ffffff;
-            font-weight: 600;
-        }
-
-        .section--light .feature-card--highlight .feature-card__list dd {
-            color: #1a1a2e;
-            font-weight: 600;
-        }
-
-        /* === FAQ === */
-        .section--faq {
-            background: #0f0f23;
-            color: #d0d0de;
-        }
-
-        .section--faq .section__heading {
-            color: #ffffff;
-        }
-
-        .section--faq .section__heading::before {
-            background: linear-gradient(90deg, #7F56D9, #B692F6);
-        }
-
-        .faq-list {
-            max-width: 720px;
-        }
-
-        .faq-item {
-            margin-bottom: 24px;
-            padding: 24px;
-            background: rgba(127, 86, 217, 0.06);
-            border-radius: 16px;
-            border: 1px solid rgba(127, 86, 217, 0.15);
-            transition: box-shadow 0.2s ease, border-color 0.2s ease;
-        }
-
-        .faq-item:hover {
-            box-shadow: 0 4px 20px rgba(127, 86, 217, 0.12);
-            border-color: rgba(127, 86, 217, 0.3);
-        }
-
-        .faq-question {
-            font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 8px;
-            font-size: 1.05rem;
-        }
-
-        .faq-answer {
-            color: #c8c8d8;
-            line-height: 1.7;
-        }
-
-        .faq-answer p {
-            margin-bottom: 0.5em;
-        }
-
-        /* === Steps (CTA subtype) === */
-        .steps {
-            display: flex;
-            flex-direction: column;
-            gap: 28px;
-            margin: 32px 0 40px;
-        }
-
-        .step {
-            display: flex;
-            gap: 20px;
-            align-items: flex-start;
-        }
-
-        .step__number {
-            flex-shrink: 0;
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, #7F56D9 0%, #B692F6 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: #fff;
-        }
-
-        .step__content {
-            flex: 1;
-        }
-
-        .step__title {
-            font-weight: 700;
-            font-size: 1.05rem;
-            margin-bottom: 6px;
-        }
-
-        .section--dark .step__title {
-            color: #ffffff;
-        }
-
-        .section--light .step__title {
-            color: #0f0f23;
-        }
-
-        .step__text {
-            line-height: 1.7;
-        }
-
-        .section--dark .step__text {
-            color: #c8c8d8;
-        }
-
-        .section--light .step__text {
-            color: #2a2a3c;
-        }
-
-        /* === Choice Grid (CTA subtype) === */
-        .choice-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin: 24px 0;
-        }
-
-        .choice-card {
-            padding: 28px;
-            border-radius: 16px;
-            line-height: 1.7;
-        }
-
-        .choice-card p {
-            margin-bottom: 0.6em;
-            color: inherit;
-        }
-
-        .choice-card--a {
-            background: #fff5f5;
-            border: 1px solid #fecaca;
-            border-top: 4px solid #e63946;
-            color: #4a2020;
-        }
-
-        .choice-card--b {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            border-top: 4px solid #16a34a;
-            color: #1a3a2a;
-        }
-
-        .choice-label {
-            font-weight: 800;
-            font-size: 1.1rem;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.03em;
-        }
-
-        .choice-card--a .choice-label {
-            color: #dc2626;
-        }
-
-        .choice-card--b .choice-label {
-            color: #16a34a;
-        }
-
-        .choice-risk {
-            margin-top: 8px;
-            font-size: 0.95rem;
-            opacity: 0.85;
-        }
-
-        /* === P.S. Block === */
-        .section--ps {
-            background: #0f0f23;
-        }
-
-        .ps-block p {
-            font-style: italic;
-            color: #a0a0b8;
-            border-left: 3px solid #7F56D9;
-            padding-left: 16px;
-            margin-bottom: 1em;
-        }
-
-        /* === Sticky CTA === */
-        .sticky-cta {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(15, 15, 35, 0.95);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-top: 1px solid rgba(127, 86, 217, 0.2);
-            padding: 14px 24px;
-            text-align: center;
-            z-index: 100;
-        }
-
-        .sticky-cta__button {
-            display: inline-block;
-            background: linear-gradient(135deg, #e63946 0%, #c1121f 100%);
-            color: #ffffff;
-            font-size: 0.95rem;
-            font-weight: 700;
-            padding: 12px 32px;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
-            box-shadow: 0 0 16px rgba(230, 57, 70, 0.3), 0 2px 8px rgba(230, 57, 70, 0.2);
-        }
-
-        .sticky-cta__button:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 0 24px rgba(230, 57, 70, 0.4), 0 4px 12px rgba(230, 57, 70, 0.3);
-        }
-
-        /* === Footer === */
-        .footer {
-            padding: 40px 24px;
-            text-align: center;
-            color: #555;
-            font-size: 0.85rem;
-            border-top: 1px solid rgba(127, 86, 217, 0.1);
-            background: #0a0a1a;
-        }
-
-        /* === Animations === */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* === Responsive === */
-        @media (max-width: 768px) {
-            html {
-                font-size: 16px;
-            }
-
-            body {
-                padding-bottom: 64px;
-            }
-
-            .section {
-                padding: 48px 0;
-            }
-
-            .section--hero {
-                padding: 64px 0 48px;
-            }
-
-            .hero__title {
-                font-size: 2rem;
-            }
-
-            .hero__subtitle {
-                font-size: 1rem;
-            }
-
-            .section__heading {
-                font-size: 1.3rem;
-            }
-
-            .cta-button {
-                display: block;
-                width: 100%;
-                padding: 18px 24px;
-                font-size: 1.1rem;
-            }
-
-            .cta-button--secondary {
-                display: block;
-                width: 100%;
-                padding: 14px 24px;
-            }
-
-            .container {
-                padding: 0 16px;
-            }
-
-            .comparison-grid,
-            .choice-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .step {
-                gap: 14px;
-            }
-
-            .step__number {
-                width: 40px;
-                height: 40px;
-                font-size: 0.95rem;
-            }
-
-            .faq-item {
-                padding: 16px;
-            }
-
-            .sticky-cta {
-                padding: 10px 16px;
-            }
-
-            .sticky-cta__button {
-                display: block;
-                width: 100%;
-                padding: 12px 20px;
-                font-size: 0.9rem;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Практикум «Активация Денежного Потока»</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  :root {
+    --bg: #050508;
+    --bg-card: #0a0a14;
+    --bg-card-hover: #12121f;
+    --border: #1a1a2e;
+    --text: #e8e8f0;
+    --text-dim: #6e6e88;
+    --text-body: #b0b0c8;
+    --gold: #f5c842;
+    --gold-dim: rgba(245, 200, 66, 0.1);
+    --gold-glow: rgba(245, 200, 66, 0.15);
+    --green: #00ff87;
+    --green-dim: rgba(0, 255, 135, 0.08);
+    --red: #ff4757;
+    --red-dim: rgba(255, 71, 87, 0.1);
+    --purple: #7c5ce7;
+    --purple-glow: rgba(124, 92, 231, 0.2);
+    --white: #ffffff;
+    --cyan: #00d2ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text-body);
+    line-height: 1.8;
+    font-size: 17px;
+  }
+
+  /* === ANIMATED BG === */
+  .bg-grid {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      linear-gradient(rgba(245, 200, 66, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245, 200, 66, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* === LAYOUT === */
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  section {
+    padding: 4rem 0;
+    position: relative;
+  }
+
+  /* === TYPOGRAPHY === */
+  h1, h2, h3, h4 {
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    font-weight: 800;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+  }
+
+  h3 {
+    font-size: clamp(1.3rem, 3vw, 1.6rem);
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+  }
+
+  p { margin-bottom: 1.2rem; }
+  p:last-child { margin-bottom: 0; }
+
+  strong { color: var(--white); font-weight: 700; }
+  em { color: var(--text-dim); font-style: italic; }
+
+  .gold { color: var(--gold); }
+  .gold-text {
+    background: linear-gradient(135deg, var(--gold), #ffd700, #ff9500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* === HERO === */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 8rem 2rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -300px; left: 50%;
+    transform: translateX(-50%);
+    width: 1000px; height: 1000px;
+    background: radial-gradient(circle,
+      rgba(245, 200, 66, 0.08) 0%,
+      rgba(124, 92, 231, 0.05) 40%,
+      transparent 70%);
+    pointer-events: none;
+    animation: heroGlow 8s ease-in-out infinite;
+  }
+  @keyframes heroGlow {
+    0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+    50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+  }
+
+  .hero-pre {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    border: 1px solid rgba(245, 200, 66, 0.3);
+    border-radius: 100px;
+    font-size: 0.8rem;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    background: var(--gold-dim);
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    animation: fadeInUp 1s ease;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.2rem, 5.5vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.03em;
+    max-width: 800px;
+    animation: fadeInUp 1s ease 0.2s both;
+  }
+
+  .hero .subtitle {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    color: var(--text-dim);
+    max-width: 650px;
+    margin-bottom: 0;
+    line-height: 1.8;
+    animation: fadeInUp 1s ease 0.4s both;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* === DIVIDER === */
+  .divider {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 3rem auto;
+  }
+
+  /* === PAIN SECTION === */
+  .pain {
+    background: linear-gradient(180deg, transparent, rgba(255, 71, 87, 0.03) 50%, transparent);
+  }
+
+  .pain-highlight {
+    border-left: 3px solid var(--red);
+    padding: 1.5rem 2rem;
+    background: var(--red-dim);
+    border-radius: 0 12px 12px 0;
+    margin: 2rem 0;
+    font-size: 1.05rem;
+  }
+
+  .pain-math {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 2rem 0;
+  }
+  .pain-math .num {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--red);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  /* === BRIDGE === */
+  .bridge-box {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--bg-card);
+    border: 1px solid rgba(245, 200, 66, 0.15);
+    border-radius: 20px;
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .bridge-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .bridge-box p {
+    font-size: 1.2rem;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* === RELIEF LINE === */
+  .relief {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-dim);
+    font-style: italic;
+    font-size: 1.05rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+
+  /* === MECHANISM CARDS === */
+  .step-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .step-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 0 20px 60px rgba(245, 200, 66, 0.06);
+  }
+  .step-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--purple));
+  }
+
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    background: var(--gold-dim);
+    border: 1px solid rgba(245, 200, 66, 0.2);
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+  }
+
+  .step-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .step-card ul {
+    list-style: none;
+    margin-top: 1rem;
+  }
+  .step-card ul li {
+    padding: 0.4rem 0 0.4rem 1.5rem;
+    position: relative;
+  }
+  .step-card ul li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* === WHY 3 === */
+  .why3-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  .why3-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .why3-icon {
+    flex-shrink: 0;
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+  .why3-icon.bad { background: var(--red-dim); }
+  .why3-icon.good { background: var(--green-dim); }
+
+  /* === STORY === */
+  .story-section {
+    background: linear-gradient(180deg, transparent, rgba(124, 92, 231, 0.03) 50%, transparent);
+  }
+  .story-quote {
+    border-left: 3px solid var(--purple);
+    padding: 1.2rem 1.5rem;
+    background: var(--purple-glow);
+    border-radius: 0 12px 12px 0;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: var(--text);
+  }
+
+  /* === RESULT PROJECTION === */
+  .result-section {
+    background: linear-gradient(180deg, transparent, rgba(0, 255, 135, 0.02) 50%, transparent);
+  }
+  .result-timeline {
+    border-left: 2px solid var(--gold);
+    padding-left: 2rem;
+    margin: 2rem 0 2rem 1rem;
+  }
+  .result-timeline .milestone {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+  .result-timeline .milestone::before {
+    content: '';
+    position: absolute;
+    left: -2.35rem;
+    top: 0.5rem;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 15px rgba(245, 200, 66, 0.4);
+  }
+  .milestone-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.3rem;
+  }
+
+  /* === PRODUCT REVEAL === */
+  .product-section {
+    text-align: center;
+    padding: 5rem 0;
+  }
+  .product-section h2 {
+    font-size: clamp(2rem, 5vw, 2.8rem);
+  }
+
+  .product-days {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+    text-align: left;
+  }
+  .day-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s;
+  }
+  .day-card:hover {
+    border-color: rgba(245, 200, 66, 0.3);
+    transform: translateY(-2px);
+  }
+  .day-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .day-card h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+  .day-card p {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    margin-bottom: 0;
+  }
+
+  /* === CASE CARDS === */
+  .case-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 1.5rem 0;
+    transition: all 0.3s;
+  }
+  .case-card:hover {
+    border-color: rgba(0, 255, 135, 0.3);
+  }
+  .case-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .case-name {
+    font-weight: 700;
+    color: var(--white);
+    font-size: 1.05rem;
+  }
+  .case-role {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+  }
+  .case-result {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 1rem 0;
+  }
+  .case-before {
+    color: var(--red);
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+  .case-arrow {
+    color: var(--gold);
+    font-weight: 900;
+    font-size: 1.2rem;
+  }
+  .case-after {
+    color: var(--green);
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+  .case-quote {
+    color: var(--text-dim);
+    font-style: italic;
+    font-size: 0.95rem;
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+    margin-top: 1rem;
+  }
+
+  /* === OFFER === */
+  .offer-section {
+    padding: 5rem 0;
+    background: linear-gradient(180deg, transparent, rgba(245, 200, 66, 0.03) 50%, transparent);
+  }
+
+  .offer-total {
+    text-align: center;
+    margin: 2rem 0 3rem;
+  }
+  .offer-total .old-price {
+    font-size: 1.2rem;
+    color: var(--text-dim);
+    text-decoration: line-through;
+  }
+
+  .tier-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin: 1.5rem 0;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .tier-card.featured {
+    border-color: var(--gold);
+    box-shadow: 0 0 60px rgba(245, 200, 66, 0.08);
+  }
+  .tier-card.featured::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), #ff9500, var(--gold));
+  }
+
+  .tier-name {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .tier-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+  }
+  .tier-price .current {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--white);
+  }
+  .tier-price .was {
+    font-size: 1rem;
+    color: var(--text-dim);
+    text-decoration: line-through;
+  }
+
+  .tier-features {
+    list-style: none;
+    margin: 1.5rem 0;
+  }
+  .tier-features li {
+    padding: 0.5rem 0 0.5rem 1.8rem;
+    position: relative;
+    color: var(--text-body);
+  }
+  .tier-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-weight: 700;
+  }
+  .tier-features li.bonus::before {
+    content: '★';
+    color: var(--gold);
+  }
+
+  .tier-guarantee {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    margin-top: 1rem;
+  }
+
+  /* === CTA BUTTON === */
+  .cta-btn {
+    display: inline-block;
+    padding: 1.1rem 3rem;
+    background: linear-gradient(135deg, var(--gold), #ff9500);
+    color: #000;
+    font-weight: 800;
+    font-size: 1.05rem;
+    border-radius: 14px;
+    text-decoration: none;
+    transition: all 0.3s;
+    letter-spacing: 0.02em;
+    box-shadow: 0 8px 30px rgba(245, 200, 66, 0.25);
+  }
+  .cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 50px rgba(245, 200, 66, 0.35);
+  }
+  .cta-btn:active {
+    transform: translateY(-1px);
+  }
+
+  .cta-section {
+    text-align: center;
+    padding: 3rem 0;
+  }
+  .cta-note {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+
+  /* === COMPARISON TABLE === */
+  .compare-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 2rem 0;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .compare-table th {
+    background: var(--bg-card);
+    padding: 1rem 1.5rem;
+    text-align: left;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    font-weight: 700;
+  }
+  .compare-table th:last-child { color: var(--gold); }
+  .compare-table td {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .compare-table tr td:first-child {
+    color: var(--red);
+  }
+  .compare-table tr td:last-child {
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  /* === FAQ === */
+  .faq-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin: 1rem 0;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .faq-item:hover {
+    border-color: rgba(245, 200, 66, 0.2);
+  }
+  .faq-q {
+    padding: 1.5rem 2rem;
+    font-weight: 700;
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+  }
+  .faq-q::after {
+    content: '+';
+    font-size: 1.4rem;
+    color: var(--gold);
+    font-weight: 300;
+    transition: transform 0.3s;
+    flex-shrink: 0;
+    margin-left: 1rem;
+  }
+  .faq-item.open .faq-q::after {
+    transform: rotate(45deg);
+  }
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+  }
+  .faq-item.open .faq-a {
+    max-height: 500px;
+    padding: 0 2rem 1.5rem;
+  }
+
+  /* === FASCINATIONS === */
+  .fasc-list {
+    list-style: none;
+    margin: 2rem 0;
+  }
+  .fasc-list li {
+    padding: 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin: 1rem 0;
+    position: relative;
+    padding-left: 3.5rem;
+    transition: all 0.3s;
+  }
+  .fasc-list li:hover {
+    border-color: rgba(245, 200, 66, 0.3);
+  }
+  .fasc-list li::before {
+    content: '→';
+    position: absolute;
+    left: 1.5rem;
+    top: 1.5rem;
+    color: var(--gold);
+    font-weight: 900;
+    font-size: 1.2rem;
+  }
+
+  /* === DREAM STATE === */
+  .dream {
+    background: linear-gradient(180deg, transparent, rgba(245, 200, 66, 0.04) 50%, transparent);
+    padding: 5rem 0;
+  }
+  .dream p {
+    font-size: 1.1rem;
+    color: var(--text);
+    margin: 0.8rem 0;
+    line-height: 1.9;
+  }
+
+  /* === VIDEO TESTIMONIALS === */
+  .video-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 1.5rem 0;
+  }
+  .video-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    cursor: pointer;
+    background: #000;
+  }
+  .video-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .video-thumb iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 68px;
+    height: 48px;
+    background: rgba(255, 0, 0, 0.85);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.4rem;
+    transition: background 0.2s;
+  }
+  .video-thumb:hover .play-btn {
+    background: rgba(255, 0, 0, 1);
+  }
+  .video-quote {
+    padding: 1.2rem 1.5rem;
+    color: var(--text-dim);
+    font-style: italic;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  /* === PS === */
+  .ps-section {
+    border-top: 1px solid var(--border);
+    padding: 3rem 0;
+  }
+  .ps {
+    padding: 1.5rem 2rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+    color: var(--text-dim);
+  }
+  .ps strong { color: var(--gold); }
+
+  /* === GUARANTEE === */
+  .guarantee-box {
+    background: var(--bg-card);
+    border: 1px solid rgba(0, 255, 135, 0.2);
+    border-radius: 20px;
+    padding: 2.5rem;
+    text-align: center;
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .guarantee-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+  }
+  .guarantee-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  /* === FOUNDERS === */
+  .founders {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+  .founder-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.3s;
+  }
+  .founder-card:hover {
+    border-color: rgba(245, 200, 66, 0.2);
+  }
+  .founder-photo {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+  }
+  .founder-name {
+    font-weight: 800;
+    color: var(--white);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  .founder-card p {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+  }
+
+  /* === BONUS === */
+  .bonus-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem 2rem;
+    margin: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    transition: all 0.3s;
+  }
+  .bonus-card:hover {
+    border-color: rgba(245, 200, 66, 0.2);
+  }
+  .bonus-price {
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  /* === SCROLL ANIMATION === */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* === MOBILE === */
+  @media (max-width: 640px) {
+    section { padding: 3rem 0; }
+    .container { padding: 0 1.2rem; }
+    .hero { padding: 4rem 1.2rem; }
+    .hero h1 { font-size: 1.8rem; }
+    .founders { grid-template-columns: 1fr; }
+    .step-card, .tier-card { padding: 1.8rem; }
+    .compare-table th, .compare-table td { padding: 0.7rem 1rem; font-size: 0.9rem; }
+    .case-result { flex-wrap: wrap; }
+  }
+</style>
 </head>
 <body>
-    
 
-    
-    <section class="section section--hero">
-        <div class="container">
-            <h1 class="hero__title"></h1>
-            
-            
-            <div class="hero__body"><p><strong>У тебя в голове работает программа, которая обнуляет каждую попытку заработать. Ты её не устанавливала.</strong></p>
-<p><em>Ты делаешь всё правильно. Но деньги — не приходят. Причина — в том, о чём не рассказывают на бизнес-курсах.</em></p></div>
-            
-        </div>
-    </section>
-
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p>Ты делаешь всё правильно — а денег нет.</p>
-<p>Прошла наставничество. Марафон по продажам. Курс по маркетингу. Может, даже поработала с психологом над «денежными установками».</p>
-<p>А потом открыла кошелёк — и там всё так же пусто.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><p>Каждое утро начинается с подсчётов. Хватит ли до конца месяца. Можно ли купить ребёнку эту игрушку — или «давай в следующий раз, солнышко».</p>
-<p>Ты вкладывалась. В себя, в обучение, в свою экспертность. Курс по SMM. Потом наставник по продажам. Потом марафон «мышление миллионера». Потом ещё один наставник — «который точно поможет».</p>
-<p>У тебя квалификация на миллион. А на счету — двадцатка.</p>
-<p>Ну, или 2-3 клиента по знакомству. За которых тебе неловко брать деньги.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p>Давай посчитаем. Все эти обучения — 50-150 тысяч. Минимум.</p>
-<p>Каждое обещало: «Сделай воронку — клиенты пойдут», «Прокачай мышление — деньги придут», «Найди свою нишу — и всё закрутится». Ты делала. Не закрутилось. Но 150 тысяч — закрутились. В другую сторону.</p>
-<p>А если считать не только деньги — но и время? Полтора года вечеров и выходных, когда ты «училась». Вместо того чтобы зарабатывать.</p>
-<p>Даже при скромных 50 тысячах в месяц — это 900 000 рублей, которых ты не увидела. За полтора года.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><p>Но самое тяжёлое — не деньги.</p>
-<p>Самое тяжёлое — когда муж говорит: «Ну и? Когда ты начнёшь зарабатывать?»</p>
-<p>И ты ничего не можешь ответить. Потому что он прав. Пока — прав.</p>
-<p>Ты чувствуешь это каждый раз, когда подруга спрашивает «ну как, бизнес идёт?» — и ты меняешь тему. Каждый раз, когда видишь в ленте коллегу, которая уже «записана на 2 недели вперёд» — и не понимаешь: что она делает не так, как ты? Или что ТЫ делаешь не так?</p>
-<p>И тихий голос внутри: «Может, я просто не создана для этого. Может, пора признать — и пойти в офис».</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p><em>Так чувствует себя большинство экспертов, пытающихся выйти на стабильный доход. Ты не одна — и это не твоя вина.</em></p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><p>Потому что вот что происходит на самом деле.</p>
-<p>Ты решила работать на себя не просто ради денег. Ты чувствовала: ты способна на большее. Что у тебя есть дар — помогать людям. Что ты — не «обычная мама из Воронежа» и не «ещё одна девочка с курсов».</p>
-<p>И каждое обучение, которое не дало результата, — это не просто потеря денег. Это удар по вере в себя. По ощущению «я на своём месте». По мечте стать тем, кто помогает другим — и живёт так, как хочет.</p>
-<p>Вопрос «чем ты занимаешься?» превращается в пытку. Потому что назвать себя экспертом — неловко: результатов нет. А сказать «ничем особенным» — ещё стыднее: потому что это неправда.</p>
-<p>И каждый день ты выбираешь между двумя версиями себя: той, которая знает, что способна на 100-200 тысяч в месяц — и той, которая не может позволить себе ребёнку киндер-сюрприз без чувства вины.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--bridge section--dark">
-        <div class="container">
-            <div class="bridge-text"><p>А что если дело не в тебе? Не в твоих знаниях. Не в курсах. И не в нише.</p>
-<p>Что если дело — в том, о чём тебе не рассказали ни на одном обучении?</p></div>
-            <a href="#" class="cta-button--secondary">Записаться</a>
-        </div>
-    </section>
-
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><h2>«Денежный саботажник»</h2>
-<p>Вот что тебе не расскажут ни на одном курсе по маркетингу. Ни один наставник. Ни один бизнес-коуч.</p>
-<p>Потому что они этого не знают.</p>
-<p>Они учат тебя продавать. Строить воронки. Вести соцсети. Прокачивать мышление. И всё это — правильно. Но это как если бы врач сказал: «Пейте обезболивающее» — не сделав рентген. Боль уйдёт на час. Перелом — останется.</p>
-<p>Знать, ЧТО делать — не равно уметь это применить. И вот почему.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p>В 2013 году учёные из Гарварда провели исследование, которое опубликовали в журнале <em>Science</em> — одном из двух самых авторитетных научных журналов мира.</p>
-<p>Они обнаружили: когда человек испытывает финансовую тревогу — его IQ падает на <strong>14 баллов</strong>. Не на время экзамена. Постоянно. Пока длится тревога.</p>
-<p>Это разница между «принимаю хорошие решения» и «раз за разом делаю выбор, который ведёт к потерям».</p>
-<p>Ты не «не можешь» заработать. Ты буквально думаешь хуже каждый раз, когда думаешь о деньгах. Твой мозг — на износе. Какая «воронка продаж» это исправит?</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><p>Но дальше — ещё интереснее.</p>
-<p>У тебя в голове работает программа. Ты её не устанавливала. Она записалась сама — из того, что ты слышала в детстве, видела вокруг, впитывала без фильтра.</p>
-<p>«Большие деньги — большие грехи». «Хорошие люди живут скромно». «Деньги портят».</p>
-<p>Это не просто «фразы из прошлого». Это сценарий поведения. Конкретный. Измеримый. И у каждого — свой.</p>
-<p>Мы называем его <strong>денежный саботажник</strong>.</p>
-<p>Он работает так: каждый раз, когда ты приближаешься к деньгам — он включается и обнуляет всё. Ты даже не замечаешь.</p>
-<p>И вот самое неприятное: ты не можешь «просто решить» его отключить.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p>Исследования нейрофизиологов показывают: <strong>92% всех решений</strong> человек принимает автоматически. Не обдумывая. Не осознавая. Подсознание решает — а сознание потом придумывает объяснение, почему «я так и хотела».</p>
-<p>Ты думаешь, что сама выбираешь: назвать цену — или дать скидку. Написать пост — или «подождать до понедельника». Вложить в рекламу — или «сначала ещё подготовиться». Тебе кажется, что это осознанные решения. Но в 92 случаях из 100 — это не ты решаешь. Это саботажник.</p>
-<p>Он записался в твоё подсознание задолго до того, как ты узнала слово «бизнес». Из того, что слышала от родителей. Из того, что видела вокруг в детстве. Из реакций учителей, бабушек, соседей. Все эти «не высовывайся», «будь скромнее», «большие деньги — большие проблемы» — они не исчезли. Они стали автоматическими программами.</p>
-<p>И теперь 92% твоих решений о деньгах принимает не твой разум — а эти программы.</p>
-<p>Вот почему «знания» не помогают. Ты можешь знать, что нужно поднять цену. Знать, что пора делегировать. Знать, что нужно вложить в рекламу. Но 92% твоих реальных действий определяет не то, что ты знаешь — а то, что записано глубже. И пока ЭТО не изменится — знания бесполезны.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><p>И вот что делает саботажника по-настоящему опасным: он прячется не только в голове.</p>
-<p>Есть типы людей, которым <strong>нельзя</strong> брать потребительские кредиты — только бизнес-кредит с просчитанной окупаемостью. Есть те, кому противопоказано копить — им нужно инвестировать сразу. И это только начало:</p>
-<p>— Потребительский кредит — нейтрален для одних, финансовый обвал для других
-— Копить деньги — правильно для одного типа, токсично для другого
-— «Неправильное» хобби, способ отдыха — незаметно работают против дохода</p>
-<p>Ты никогда это не связывала с деньгами. Но именно эти невидимые сценарии — не «карма» и не «блоки» — определяют, сколько ты зарабатываешь.</p>
-<p>Но есть инструмент, который видит именно это. Инструмент, которым пользовались миллиардеры — от Дж. П. Моргана до основателей Alibaba — но о котором тебе никогда не рассказывали на бизнес-курсах.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p>А что если этот инструмент впервые соединить с психологией и бизнес-стратегией — в одном месте? И узнать, какой вид спорта, хобби или способ отдыха тихо сливает твой доход — и почему ты никогда не связывала это с деньгами?</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><h2>История Евгении</h2>
-<p>Евгения — дипломированный психолог. Эриксоновский гипноз, КПТ, психосоматика. Не «нумеролог из инстаграма» — человек с клинической практикой.</p>
-<p>И у неё была одна проблема, которую она не могла решить годами.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p>К ней приходили женщины. Коучи, тарологи, психологи, мамы, решившие работать на себя. Все — умные. Все — обучались. Все — вкладывали деньги в курсы, наставников, повышение квалификации.</p>
-<p>И у всех — одно и то же.</p>
-<p>Одна из них — коуч, 34 года, двое детей — сидела напротив и теребила ремешок сумки. Третья встреча за полгода. Те же слова:</p>
-<p>«Евгения, я всё понимаю. Я знаю, что мне мешает. Я проработала свои установки. Но денег по-прежнему нет.»</p>
-<p>Евгения слышала эту фразу так часто, что могла бы закончить её сама. Менялись имена, профессии, возраст — не менялась суть. Тарологи, коучи, массажисты, мамы-фрилансеры — все приходили с одним: «Я знаю, что делать. Но почему-то не делаю. Или делаю — а результата нет.»</p>
-<p>Она применяла всё, чему её учили. КПТ — чтобы переписать убеждения. Гипноз — чтобы достучаться до подсознания. Психосоматику — чтобы найти, где тело держит блок.</p>
-<p>Клиентки уходили с инсайтами. С облегчением. С ощущением «наконец-то разобралась».</p>
-<p>А через месяц — возвращались. С той же суммой на счету. С тем же вопросом в глазах: «Почему не работает?»</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><p>Евгения закрывала дверь кабинета после таких встреч и несколько минут стояла у окна, не двигаясь. Она видела проблему. Точно видела. Но её инструменты — все до единого — как будто скользили по поверхности.</p>
-<p>Она пробовала иначе. Добавляла глубинные сессии. Меняла протоколы. Выписывала книги по финансовой психологии. Проходила супервизии.</p>
-<p>Результат: клиентки чувствовали себя лучше. Понимали себя глубже. Но зарабатывали — столько же.</p>
-<p>И самое мучительное: она видела этот паттерн и у себя. Дипломированный психолог — с пятью методиками в арсенале — а собственный доход буксовал на месте. Она помогала другим разобраться с деньгами, а свои — не могла сдвинуть.</p>
-<p>Однажды, в два часа ночи, она сидела на кухне с чашкой остывшего чая и листала записи по очередной клиентке. Та же картина: понимание есть, сдвига нет. Евгения медленно закрыла ноутбук — как будто боялась, что мысль станет реальной, если останется на экране.</p>
-<p>«Может, я просто не тот специалист, который может помочь с деньгами. Может, деньги — это не про психологию.»</p>
-<p>На диплом на стене она в тот момент старалась не смотреть.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p>А потом случилось кое-что, чего она не планировала.</p>
-<p>Одна из клиенток — в качестве эксперимента — попросила Евгению посмотреть на её ситуацию через нумерологию. Евгения в тот момент только начинала изучать эту систему — скорее из любопытства, чем из веры.</p>
-<p>Она посчитала. И замерла.</p>
-<p>Нумерология показала ровно те же точки, на которые Евгения выходила через месяцы психологической работы. Те же паттерны. Те же сценарии. Только — за 40 минут вместо четырёх месяцев.</p>
-<p>Два разных языка описывали одну и ту же проблему. Один — через годы терапии. Другой — через дату рождения.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><p>Но было кое-что, чего не мог ни один из этих языков.</p>
-<p>Нумерология показывала ГДЕ проблема — какие действия, привычки, решения работают против человека. Психология объясняла ПОЧЕМУ — какие установки и сценарии за этим стоят.</p>
-<p>Но ни нумерология, ни психология не отвечали на главный вопрос: <strong>ЧТО ДЕЛАТЬ?</strong></p>
-<p>«Ты теряешь деньги вот здесь» — отлично. «Потому что в детстве ты услышала вот это» — понятно. А дальше что? Какой бизнес строить? Какой тип монетизации выбрать? Как перейти от «я знаю свою проблему» к «я зарабатываю 200 тысяч в месяц»?</p>
-<p>У Евгении не было ответа. Пока она не встретила человека, у которого был.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p>Алишер — не нумеролог и не психолог. Он — бизнес-практик. 100+ запущенных бизнесов. 6 книг, одна — бестселлер. Человек, который знает, как превратить экспертность в деньги — потому что делал это сотни раз.</p>
-<p>Когда Евгения показала ему свои наработки — диагностику через нумерологию, деактивацию через психологию — он сказал одну фразу:</p>
-<p>«Ты видишь проблему. Ты умеешь её убирать. Но ты не даёшь людям план. А без плана они будут возвращаться к тебе снова и снова — с той же проблемой.»</p>
-<p>Это был недостающий элемент.</p>
-<p>Нумерология (ГДЕ) + Психология (ПОЧЕМУ) + Бизнес-стратегия (ЧТО ДЕЛАТЬ) = впервые — полная формула.</p>
-<p>Не медитация. Не ритуал. Не «визуализируй и жди». А конкретный план — с цифрами, сроками и действиями.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><p>Евгения проверила на себе первой.</p>
-<p>К тому моменту она сама была в долгом периоде выгорания. Апатия. Снижение доходов.</p>
-<p>Она посчитала свои числа. Увидела конкретный сценарий, который сливал деньги — и который она не замечала годами, потому что он казался «нормальным». Убрала его за одну практику. Перестроила стратегию по своему типу.</p>
-<p>За один месяц — с 3 до 5,5 миллионов. Личный доход удвоился. Семейный — вырос в пять раз.</p>
-<p>Не потому что «активировала поток». А потому что перестала делать то, что тормозило именно её тип — и начала делать то, что усиливает.</p>
-<p>Потом — на учениках. Дарья — коуч, бизнес-тренер. Доход: ноль. Через программу — 250 тысяч в месяц. Дамир — детский врач-реабилитолог. Было 10 тысяч. Стало 150.</p>
-<p>Не нумерологи. Не эзотерики. Обычные эксперты — которые наконец получили не знания, а систему.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p>И тогда они поняли: это работает не только для них.</p>
-<p>Вот как устроена эта система — шаг за шагом.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><h2>Формула ×10</h2>
-<p>Система работает в три шага. Каждый — обязателен. Убрать один — и результата не будет. Вот почему «курсы» и «проработки» не давали тебе ничего: они давали максимум один из трёх.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <h2 class="section__heading">Шаг 1: СКАН — Нумерологическая диагностика</h2>
-            
-            <div class="section__body"><p>Нумерология — это не гадание. Это язык закономерностей.</p>
-<p>Ты можешь не верить в «магию чисел». Дж. П. Морган — основатель крупнейшего банка в мире — тоже не верил в магию. Но у него был личный астролог-нумеролог, с которым он консультировался ежедневно. Когда его спрашивали зачем, он отвечал: «Миллионеры не пользуются астрологией. Миллиардеры — пользуются.»</p>
-<p>Основатели Alibaba выставили акции по $68 за штуку — потому что 68 в китайской традиции означает «плавный путь к процветанию». Пекинскую Олимпиаду открыли 08.08.08 в 08:08 — и это не суеверие, а стратегия.</p>
-<p>Это не совпадения. Исследование китайского фондового рынка за 2000-2009 годы показало: 26% цен на IPO оканчивались на 8 — и всего 3% на 4. Компании со «счастливыми» кодами торговались с начальной премией.</p>
-<p>И это не только миллиардеры прошлого. Предприниматели из списка Forbes консультируются с нумерологами перед ключевыми решениями. А Сбербанк — крупнейший банк России — пригласил нумерологов проводить занятия для сотрудников. Не мистику. Не гадание. Инструмент, который помогает принимать решения.</p>
-<p>Цифры — не талисман. Цифры — инструмент. Они показывают закономерность: какие действия для ТЕБЯ работают на деньги, а какие — сливают.</p>
-<p>СКАН — это полная диагностика по дате рождения. Не «узнай своё число судьбы». А конкретно: какой тип монетизации тебе подходит. Какой вид деятельности усиливает твой доход. И — самое неочевидное — какие привычки из совершенно «неденежных» сфер (спорт, хобби, отдых, отношения) работают ПРОТИВ твоего кошелька.</p>
-<p>Одному типу нужно продавать лично — один на один. Другому — только через контент, без живых продаж. Один расцветает в партнёрстве — другой теряет деньги каждый раз, когда берёт компаньона. И даже время суток, когда ты принимаешь ключевые решения, может работать за тебя или против.</p>
-<p>Ты этого не видишь — потому что никто не показывал. СКАН показывает.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <h2 class="section__heading">Шаг 2: ЧИСТКА — Психологическая деактивация</h2>
-            
-            <div class="section__body"><p>СКАН показал проблему. Но знать — мало. Нужно убрать то, что заставляет тебя повторять одни и те же ошибки.</p>
-<p>Помнишь «денежного саботажника»? Вот здесь мы его обезвреживаем.</p>
-<p>Не аффирмациями. Не медитациями «на изобилие». Не визуализацией пачки денег.</p>
-<p>Это конкретные психологические практики на четырёх уровнях — от поверхностных убеждений до глубинных сценариев, которые ты даже не осознаёшь. Их разработала Евгения и адаптировала под нумерологическую диагностику. Потому что СКАН уже показал, куда смотреть. Ты приходишь к практике с готовым диагнозом — не нужно искать вслепую.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <h2 class="section__heading">Шаг 3: ПЛАН — Бизнес-стратегия ×10</h2>
-            
-            <div class="section__body"><p>Вот здесь 90% «нумерологических курсов» останавливаются. Тебе говорят: «Теперь ты знаешь свои числа. Действуй!»</p>
-<p>А дальше что? Какой бизнес строить? Какой тип клиентов привлекать? Какую цену ставить?</p>
-<p>ПЛАН — это персональная денежная карта. Не абстрактная «стратегия роста». А конкретно: твоя ниша, твой тип монетизации, твои сильные стороны по дате рождения — и план на год с цифрами.</p>
-<p>Алишер знает, какие модели работают. А Евгения знает, какая модель подходит именно ТЕБЕ — потому что видит твой тип через числа.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <h2 class="section__heading">Почему три шага — не два и не один</h2>
-            
-            <div class="section__body"><p><strong>Только СКАН</strong> (нумерология без психологии и без плана) — ты узнаёшь, где проблема. Но саботажник остаётся. И план не появляется. Это то, что дают 90% курсов по нумерологии.</p>
-<p><strong>Только ЧИСТКА</strong> (психология без диагностики) — ты работаешь вслепую. Месяцы терапии, чтобы найти то, что СКАН показывает за 40 минут. И без плана действий.</p>
-<p><strong>Только ПЛАН</strong> (бизнес-стратегия без диагностики и чистки) — ты получаешь план. Но саботажник его обнуляет. Воронка есть, клиенты есть — а ты не можешь назвать цену. Или саботируешь продажу. Или выбираешь не ту нишу.</p>
-<p>Три шага вместе — впервые — дают полную формулу:</p>
-<p><strong>ГДЕ ты теряешь</strong> (СКАН) → <strong>ПОЧЕМУ ты это делаешь</strong> (ЧИСТКА) → <strong>ЧТО делать вместо этого</strong> (ПЛАН).</p>
-<p>Убрать одно звено — и цепь не работает. Именно поэтому раньше не получалось.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p><em>Так выглядит система. Вот что происходит, когда она работает.</em></p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><h2>Результаты</h2>
-<p>Вот что происходит, когда все три шага работают вместе.</p>
-<p>В первый день ты получаешь СКАН — и впервые видишь конкретную картину: какие твои действия работали НА доход, а какие — тихо сливали его годами. Одно это меняет всё — потому что ты перестаёшь тратить энергию вслепую.</p>
-<p>За три дня — у тебя на руках персональная денежная карта: твоя ниша, твой тип монетизации, твой план роста ×10 с конкретными цифрами. Не «привлекай изобилие» — а «вот что делать в понедельник утром».</p>
-<p>Первое, что замечают ученики — ты перестаёшь откладывать. Пост, который неделю лежал в черновиках — публикуешь. Цену, которую боялась назвать — называешь. И удивляешься: оказывается, это было не страшно.</p>
-<p>Потом — первые деньги «не по знакомству». Клиент, который пришёл сам. Оплата, за которую не стыдно. Ощущение: «Я наконец-то делаю то, что должна была делать давно».</p>
-<p>Ученики, которые прошли этот путь, выходили на 100-200 тысяч в месяц за 1-3 месяца. Они нашли, что именно их тормозило — и убрали это. Без магии. Без ритуалов.</p>
-<p>Чтобы ты могла получить этот результат без месяцев самостоятельных проб и ошибок — мы создали конкретный инструмент.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><h2>Практикум «Активация Денежного Потока»</h2>
-<p>Практикум <strong>«Активация Денежного Потока»</strong> — 3 дня, которые меняют твою финансовую траекторию.</p>
-<p>Это не курс по нумерологии. Не марафон «мышление миллионера». Не очередные видеоуроки, которые ты посмотришь и забудешь.</p>
-<p>Это система из трёх шагов — СКАН, ЧИСТКА, ПЛАН — упакованная в практикум, где ты не просто слушаешь, а делаешь. И выходишь с конкретным результатом: персональная диагностика, деактивация саботажника, денежная карта на год — за 3 дня.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <h2 class="section__heading">Почему именно эти двое</h2>
-            
-            <div class="section__body"><p>Нумеролог не покажет, как монетизировать. Бизнес-коуч не увидит твой тип. Психолог не даст план. Поэтому практикум ведут двое — и это не случайно.</p>
-<p><strong>Алишер</strong> знает, как превратить экспертность в доход — потому что помогал именно таким, как ты: коучам, психологам, помогающим практикам. ICF-сертифицированный коуч. Он даёт ПЛАН — конкретную бизнес-стратегию, которую можно применить сразу.</p>
-<p><strong>Евгения</strong> — первая, кто соединила нумерологическую диагностику с психологической деактивацией и доказала на себе, что это работает. Она даёт СКАН и ЧИСТКУ — видит, где ты теряешь, и знает, как это убрать.</p>
-<p>Вместе они закрывают все три шага формулы. Такой связки нет ни у кого на рынке.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><h2>Кейсы</h2>
-<p>Вот что изменилось у тех, кто нашёл своего «денежного саботажника» и убрал его.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><p><strong>Мадина Онова</strong> — дипломированный васту-наставник, Казахстан.</p>
-<p>Было: 50 тысяч. Стало: 150 тысяч.</p>
-<p>«Алишер — просто гений! Больше нет таких курсов, где в комплексе идёт развитие и проекта, и личности.»</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p><strong>Елена Лорец</strong> — наставник по раскрытию потенциала, мотивационный оратор.</p>
-<p>Было: 18-30 тысяч в месяц. Стало: 200-220 тысяч.</p>
-<p>«Самое ценное — это глубокая личная трансформация. Эта программа не только про клиентов и финансовый результат. Она про жизнь.»</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><p><strong>Антон Тарасов</strong> — бизнес-психолог, мотивационный оратор.</p>
-<p>Было: 100-150 тысяч. Стало: 300-500 тысяч.</p>
-<p>«Момент, когда я стану крутым экспертом, не наступит никогда, если не начать создавать его прямо сегодня из того, что есть.»</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p><strong>Ольга</strong> — сметчик в строительной компании.</p>
-<p>Было: 15-30 тысяч в месяц, наёмная работа. Стало: 450 тысяч за 2 месяца.</p>
-<p>Не эксперт. Не коуч. Обычный сметчик. Алишер определил её сильные стороны — и дал задание, которое перевернуло картину мира: прыгнуть с парашютом. Через 2 месяца Ольга собрала конференцию для владельцев стоматологических клиник, заключила 3 контракта по 150 тысяч. Рост с нуля в новой сфере — в 15 раз.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><p>Разные ниши. Разные точки старта. Одна система — и результат за 1-3 месяца.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><h2>Предложение</h2>
-<p>Через 3 месяца после практикума — стабильные 100-200 тысяч в месяц. Запись клиентов на 2 недели вперёд. Покупка ребёнку игрушки без взгляда на ценник. И конкретный ответ на вопрос «чем ты занимаешься?» — с цифрами.</p>
-<p>Вот что внутри практикума, чтобы к этому прийти.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <h2 class="section__heading">Что ты получаешь</h2>
-            
-            <div class="section__body"><p><strong>«Код Успеха» — предобучение</strong> (доступ сразу после оплаты)
-Расшифровка 5 предназначений по дате рождения + 4 практики трансформации. Ты начинаешь работу с саботажником ещё до первого дня — и приходишь на практикум с первым инсайтом: «вот какие мои действия работали ПРОТИВ меня».
-<em>Отдельно стоило бы: 4 990 ₽</em></p>
-<p><strong>День 1 — «Денежные коды»: СКАН</strong>
-Полная нумерологическая диагностика: карьерное предназначение, денежные профессии по дате рождения, код миллионера. Ты узнаешь свой тип — и получаешь персональную карту: что усиливает доход, а что тихо сливает.
-<em>Отдельно стоило бы: 19 990 ₽</em></p>
-<p><strong>День 2 — «Деактиватор саботажника» + «Денежная карта ×10»: ЧИСТКА + ПЛАН</strong>
-Обнаружение и деактивация конкретных денежных блокираторов на 4 уровнях. Пошаговый план роста ×10: твоя ниша, твой тип монетизации, конкретные цифры. Персональная денежная карта на год.
-<em>Отдельно стоило бы: 24 980 ₽</em></p>
-<p><strong>День 3 — «Внутренний Реактор»: Активация</strong>
-Система «МЦП» (Материализация Целей через Практики) — практики на 4 уровнях для закрепления результата. Годовой план действий. Ты выходишь не с «мотивацией» — а с документом: что делать, когда делать, какой результат ожидать.
-<em>Отдельно стоило бы: 7 990 ₽</em></p>
-<p><strong>День 4 — «Квантовый скачок»</strong> (секретный бонус для тех, кто прошёл все 3 дня)
-Материал, который не вошёл в основную программу. Только для тех, кто дошёл до конца.
-<em>Отдельно стоило бы: 9 990 ₽</em></p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <h2 class="section__heading">Бонусы</h2>
-            
-            <div class="section__body"><p><strong>«Детектор саботажа»</strong> — чек-лист 30 убеждений, которые тихо сливают доход. Проверь себя за 10 минут — и увидишь, какие из них работают в твоей голове прямо сейчас.
-<em>Стоимость: 2 990 ₽</em></p>
-<p><strong>«Денежный компас»</strong> — чек-лист действий по дате рождения: какие хобби, спорт, способ отдыха усиливают твой доход, а какие — сливают. Персональный навигатор для повседневных решений.
-<em>Стоимость: 4 990 ₽</em></p>
-<p><strong>«Скрытые рычаги»</strong> — денежные хобби + спорт по дате рождения + идеальный мужчина по дате. То, что ни один бизнес-коуч не расскажет — потому что не знает.
-<em>Стоимость: 3 990 ₽</em></p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <h2 class="section__heading">Итого</h2>
-            
-            <div class="section__body"><p>Суммарная ценность всего, что внутри: <strong>больше 75 000 ₽</strong></p>
-<p>Но ты не заплатишь 75 920. И не заплатишь 19 990.</p>
-<p>Алишер и Евгения могли бы поставить цену в 10 раз выше — и имели бы на это право.</p>
-<p>Но их цель — максимальный охват: чем больше людей пройдут практикум, тем больше кейсов и рекомендаций. Поэтому цена такая.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <h2 class="section__heading">Тарифы</h2>
-            
-            <div class="section__body"><p><strong>SILVER — 2 222 ₽</strong> ~~7 990 ₽~~</p>
-<p><em>Всё, что нужно для старта:</em></p>
-<ul>
-<li>Практикум 4 дня + предобучение «Код Успеха»</li>
-<li>Все бонусы: «Детектор саботажа», «Денежный компас», «Скрытые рычаги»</li>
-<li>Доступ: 1 неделя</li>
-</ul>
-<p><strong>Гарантия:</strong> Не подошло — вернём деньги. Без вопросов. Материалы предобучения оставь себе.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><p><strong>GOLD — 4 444 ₽</strong> ~~19 990 ₽~~</p>
-<p>Всё из Silver +</p>
-<ul>
-<li><strong>«Быстрые деньги через самоценность»</strong> — экспресс-проработка, которая отдельно стоит 19 990 ₽. Ты получаешь её в подарок.</li>
-<li>Доступ: 1 месяц</li>
-<li>Дополнительные бонусы: на что тратить деньги по типу, кружки для ребёнка по дате, «Внутренний реактор», «Лук на миллион»</li>
-</ul>
-<p><strong>Гарантия:</strong> Пройди все 3 дня, выполни задания — если не получишь конкретный план ×10, вернём деньги.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p><strong>PLATINUM — 22 222 ₽</strong> ~~49 990 ₽~~</p>
-<p>Всё из Gold +</p>
-<ul>
-<li><strong>Персональная сессия с Алишером и Евгенией</strong> (1.5-2 часа) — они разбирают ТВОЮ ситуацию. Отдельно эта консультация стоит 30 000 ₽.</li>
-<li>Доступ: 3 месяца</li>
-</ul>
-<p><strong>Гарантия:</strong> Если после персональной консультации у тебя нет конкретного плана действий — вернём стоимость консультации.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--cta section--light">
-        <div class="container">
-            
-            
-            <div class="cta-subtext"><p>Набор на поток ограничен — чтобы Алишер и Евгения успели дать обратную связь каждому участнику.</p></div>
-            
-            <a href="#" class="cta-button">КНОПКА: Получить доступ к практикуму</a>
-            
-        </div>
-    </section>
-
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p>Всё ещё сомневаешься? Вот что случилось с теми, кто тоже сомневался.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><p><strong>Павел Карякин</strong> — интернет-маркетолог, наставник экспертов.</p>
-<p>Было: 100-120 тысяч. Стало: 200-250 тысяч.</p>
-<p>«Одно из самых сильных осознаний за последние полгода — надо не бояться открываться миру.»</p>
-<p>Не нумеролог. Маркетолог — человек, который и так «знал, как продавать». Но знания не помогали — пока не убрал то, что тормозило.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p><strong>Ольга Скоробогатова</strong> — бизнес-тренер, телесный энерготерапевт, психолог.</p>
-<p>Было: 40-60 тысяч. Стало: 350 тысяч.</p>
-<p>«Прежде всего произошли внутренние изменения. И они помогли мне, наконец, начать проявляться.»</p>
-<p>Рост в 6-8 раз. Не потому что «научилась продавать» — а потому что перестала саботировать.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><p><strong>Геннадий Бабинцев</strong> — организатор «Дерзкий Инфобизнес», основатель «Наследие».</p>
-<p>Запрос: фокус в бизнесе среди множества проектов. Результат: нашёл проект, 100 тысяч за первые 10 дней — без активных продаж.</p>
-<p>«Когда ты направляешься именно туда, где реализуется большинство твоих талантов и сильных сторон, начинается колоссальный рост.»</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p><strong>Евгения Маврина</strong> — художник, тату-мастер, женский тренер.</p>
-<p>Было: 150-250 тысяч. Стало: 500 тысяч.</p>
-<p>«Мы начали работать с мышлением, с пониманием, как позиционировать себя на рынке.»</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><p><strong>Наталья</strong> — владелица онлайн-школы со стажем 5+ лет.</p>
-<p>Школа зарабатывала 3,5 миллиона — но Наталья забирала себе 100 тысяч за полгода. Из страха ответственности она раздала проценты трём уровням «партнёров». После 15 стратегических сессий — забрала ответственность на себя, передоговорилась. Часть людей ушла. Через 2 месяца — запуск на 2,5 миллиона, себе забрала миллион. Потом 5 миллионов. Потом 15.</p>
-<p>Рост в 10 раз — просто за счёт того, что забрала на себя ответственность.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p>И это только часть результатов. Все кейсы выше — разные ниши, разные точки старта. Одна система.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <h2 class="section__heading">Без практикума vs С практикумом</h2>
-            
-            <div class="section__body"><div class="feature-grid">
-<div class="feature-card feature-card--highlight">
-<div class="feature-card__title">С</div>
-<dl class="feature-card__list">
-<dt>Ещё один курс → ещё одно разочарование</dt>
-<dd>СКАН показывает, ГДЕ ты теряешь — конкретно</dd>
-<dt>Саботажник продолжает работать</dt>
-<dd>ЧИСТКА обезвреживает его на 4 уровнях</dd>
-<dt>«Не знаю что делать дальше»</dt>
-<dd>ПЛАН: ниша, монетизация, цифры на год</dd>
-<dt>50 000 ₽/мес потерянного дохода</dt>
-<dd>100-200к/мес через 1-3 месяца</dd>
-</dl>
-</div>
-</div></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--faq">
-        <div class="container">
-            
-            <h2 class="section__heading">«Но у меня уже...»</h2>
-            
-            <div class="faq-list">
-                
-                <div class="faq-item">
-                    <div class="faq-question">Я уже проходила курсы по нумерологии</div>
-                    <div class="faq-answer"><p>Те курсы давали теорию — «вот твоё число». Здесь — диагностика + деактивация + план. Ни один курс не собирал три инструмента вместе.</p></div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">А вдруг опять не поможет? Денег и так мало</div>
-                    <div class="faq-answer"><p>2 222 ₽ — с безусловной гарантией. Если не подошло — вернём без вопросов. А если поможет — это 2 222 рубля, которые могут стоить тебе 100-200 тысяч в месяц.</p></div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">Мне муж не разрешит ещё один курс</div>
-                    <div class="faq-answer"><p>Покажи ему эту страницу. Покажи кейсы. И скажи: «Это стоит 2 222 рубля — с гарантией возврата. Если не сработает — ты получишь деньги обратно. Если сработает — ты получишь жену, которая зарабатывает.»</p></div>
-                </div>
-                
-                <div class="faq-item">
-                    <div class="faq-question">Я сама психолог/коуч и работаю с установками — зачем мне нумерология?</div>
-                    <div class="faq-answer"><p>Именно это чувствовала Олеся Шандро — практикующий психолог с авторской программой восстановления. Она прорабатывала установки клиентам каждый день. Но свой доход — не могла сдвинуть. Мешали страхи: осуждение коллег за высокие цены, хейт за то, что обучает других психологов. Она закрылась — перестала проявляться.</p>
-<p>СКАН показал, где именно блок. Не «в целом тревожность» — а конкретный сценарий. После проработки — удвоила доход. Потом утроила. Спокойно подняла чеки и пошла в рекламу.</p>
-<p>Нумерология — не замена психологии. Это диагностический срез, который показывает точку входа. Ты знаешь КАК работать — СКАН показывает, С ЧЕМ именно работать первым.</p></div>
-                </div>
-                
-            </div>
-        </div>
-    </section>
-
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <h2 class="section__heading">Цена бездействия</h2>
-            
-            <div class="section__body"><p>Если ты теряешь хотя бы 50 000 в месяц из-за саботажника — только за ближайший год это 600 000 рублей, которых ты не увидишь.</p>
-<p>Практикум стоит 2 222 ₽. Цена бездействия — 600 000.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--cta section--dark">
-        <div class="container">
-            
-            
-            <a href="#" class="cta-button">КНОПКА: Начать сегодня — 2 222 ₽</a>
-            
-        </div>
-    </section>
-
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><h2>Через 3 месяца</h2>
-<p>Представь: утро понедельника. Ты просыпаешься — и не тянешься к калькулятору. Не считаешь, хватит ли до пятницы. Потому что на счету — сумма, которая раньше казалась чужой.</p>
-<p>Телефон вибрирует — сообщение от клиентки: «Когда ближайшее окно? Мне вас порекомендовали». И ты открываешь календарь — а там запись на две недели вперёд. И ты выбираешь, кого взять.</p>
-<p>Ребёнок показывает пальцем на игрушку в витрине — и ты не отводишь его руку. Ты заходишь и покупаешь. Без взгляда на ценник. Без привычного укола в животе.</p>
-<p>Муж спрашивает: «Как дела на работе?» — и ты отвечаешь с цифрами. Спокойно. Без оправданий. И видишь в его глазах то, чего давно не видела — уважение.</p>
-<p>А подруга пишет: «Слушай, ты так изменилась. Расскажи, что ты делаешь?» — и ты рассказываешь. Не стесняясь. Не меняя тему.</p>
-<p>Потому что ты — больше не «вечная ученица». Ты — та, к кому приходят за ответами.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p>Именно это произошло со Светланой.</p>
-<p><strong>Светлана Грант</strong> — коуч, наставник.</p>
-<p>Было: <strong>минус 30 тысяч</strong> в месяц. Стало: <strong>6 000 000 в месяц</strong>.</p>
-<p>Светлана полгода вела блог в Инстаграме. Запустила марафон по самооценке — и ушла в минус на 30 тысяч рублей. Ни клиентов, ни дохода. Стандартный путь: блог → курс → убыток → разочарование.</p>
-<p>Алишер посмотрел её числа — и увидел то, чего не видела она сама. По бэкграунду Светлана — финансовый директор. Её сильная сторона — деньги и стратегия, не самооценка. Она пыталась монетизировать чужой талант — и поэтому проигрывала.</p>
-<p>Переупаковали продукт на финансовую тему. На той же аудитории. Без вложений в рекламу.</p>
-<p>Первый запуск — 525 тысяч. Второй — 2,4 миллиона. Дальше — рост до 6+ миллионов в месяц.</p>
-<p>Тот же человек. Те же подписчики. Другой СКАН — другая стратегия — другой результат.</p>
-<p>Твой результат будет другим — у тебя другая точка старта и другая ниша. Но даже сотая часть траектории Светланы — это 60 тысяч в месяц. А десятая — 600 тысяч. И всё начинается с одного: увидеть, ГДЕ ты теряешь — и перестать это делать.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <h2 class="section__heading">Кто НЕ получит результата</h2>
-            
-            <div class="section__body"><p>Если ты ищешь ритуалы, талисманы, «активацию потока» через медитацию — это не сюда. Если хочешь, чтобы кто-то «снял порчу» или «открыл канал денег» — тоже не сюда.</p>
-<p>Этот практикум для тех, кто готов: увидеть, что тормозит — убрать это — и сделать конкретные шаги.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--cta section--dark">
-        <div class="container">
-            
-            
-            <div class="cta-subtext"><p>Набор на этот поток ограничен. Практикум стоит от 2 222 ₽ — с полной гарантией.</p></div>
-            
-            <a href="#" class="cta-button">КНОПКА: Получить доступ к практикуму</a>
-            
-        </div>
-    </section>
-
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <h2 class="section__heading">Гарантия</h2>
-            
-            <div class="section__body"><p><strong>Безусловная гарантия качества:</strong> если тебе не понравится что угодно в продукте — верни средства в течение 3 дней практикума. Без вопросов. Без объяснений. Написала — получила деньги обратно.</p>
-<p>Три дня — достаточно, чтобы пройти весь практикум, получить СКАН, ЧИСТКУ и ПЛАН — и решить, работает ли это для тебя.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--ps">
-        <div class="container">
-            <div class="ps-block"><p>P.S. Гарантия — безусловная. Любая причина. «Не понравился формат» — вернём. «Передумала» — вернём. «Просто хочу вернуть» — вернём. Все риски — на нашей стороне.</p>
-<p>P.P.S. Каждый день без ясности — это минус ~1 700 рублей (при потерянном доходе 50 000 в месяц). За месяц — минус 50 000. За год — минус 600 000. Практикум стоит 2 222 ₽. Один день промедления стоит дороже.</p></div>
-        </div>
-    </section>
-
-    
-
-    
-
-    
-    <section class="section section--cta section--light">
-        <div class="container">
-            
-            
-            <a href="#" class="cta-button">КНОПКА: Начать сегодня — 2 222 ₽</a>
-            
-        </div>
-    </section>
-
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><h2>Частые вопросы</h2>
-<p><strong>«Мне нужно разбираться в нумерологии?»</strong></p>
-<p>Нет. Мы не учим нумерологию — мы используем её как диагностический инструмент. Тебе не нужно ничего считать, запоминать или изучать. Ты приходишь с датой рождения — уходишь с готовой картой и планом. Всю «техническую» часть делают Алишер и Евгения.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><p><strong>«Я не нумеролог и не эзотерик. Это точно для меня?»</strong></p>
-<p>Большинство учеников — не нумерологи. Коучи, психологи, маркетологи, тренеры, мамы-фрилансеры. Если ты — эксперт или помогающий практик, у тебя есть знания и навыки, но доход не растёт — практикум для тебя. Если ищешь ритуалы и талисманы — нет.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p><strong>«Сколько времени нужно в день?»</strong></p>
-<p>Практикум идёт 3 дня. Каждый день — 2-3 часа на эфир + задание. Предобучение «Код Успеха» — в своём темпе, до старта. Итого: меньше недели, без отрыва от текущей работы.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><p><strong>«Когда я увижу первый результат?»</strong></p>
-<p>Первый инсайт — в предобучении: ты увидишь, какие твои действия работали против дохода. Это уже меняет решения. Полная картина + план — к концу третьего дня. Измеримый рост дохода — через 1-3 месяца после внедрения. Зависит от ниши, точки старта и скорости внедрения.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p><strong>«Будут ли допродажи на практикуме?»</strong></p>
-<p>На практикуме — нет. Ты получаешь всё, что заявлено в тарифе. Единственное предложение, которое ты можешь увидеть после — это возможность продолжить работу индивидуально (Platinum). Давления не будет.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--light">
-        <div class="container">
-            
-            <div class="section__body"><p><strong>«Я в другом городе / стране. Могу участвовать?»</strong></p>
-<p>Да. Практикум проходит онлайн. Прямые эфиры + записи. Часовой пояс не важен — записи доступны сразу. Ученики из Казахстана, Германии, ОАЭ уже проходили.</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--dark">
-        <div class="container">
-            
-            <div class="section__body"><p><strong>«Я сама нумеролог / таролог и уже проходила 5+ курсов. Чем это отличается?»</strong>
-[ВСТАВИТЬ: FAQ_НУМЕРОЛОГ — ответ для практикующих нумерологов/тарологов, которые разочарованы в курсах. Суть: те курсы давали теорию чисел. Здесь — связка нумерологии с психологической деактивацией (ЧИСТКА) и бизнес-стратегией (ПЛАН). Ни один нумерологический курс не даёт три инструмента вместе. Пример: кейс нумеролога/таролога/эзотерика, который прошёл программу и вырос в доходе.]</p></div>
-        </div>
-    </section>
-    
-
-    
-
-    
-    <section class="section section--cta section--light">
-        <div class="container">
-            
-            
-            <a href="#" class="cta-button">КНОПКА: Начать сегодня — 2 222 ₽</a>
-            
-        </div>
-    </section>
-
-    
-
-    
-
-    <!-- Footer -->
-    <footer class="footer">
-        &copy; numerologia
-    </footer>
-
-    <!-- Sticky CTA -->
-    <div class="sticky-cta">
-        <a href="#" class="sticky-cta__button">Записаться</a>
+<div class="bg-grid"></div>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <h1><span class="gold-text">У тебя в голове работает программа, которая обнуляет каждую попытку заработать.</span> <span style="color:var(--white)">Ты её не устанавливала.</span></h1>
+  <p class="subtitle">Ты делаешь всё правильно. Но деньги — не приходят.<br>Причина — в том, о чём не рассказывают на бизнес-курсах.</p>
+</section>
+
+<!-- ============ PAIN ============ -->
+<section class="pain">
+  <div class="container">
+
+    <div class="reveal">
+      <p>Ты делаешь всё правильно — а денег нет.</p>
+      <p>Прошла наставничество. Марафон по продажам. Курс по маркетингу. Может, даже поработала с психологом над «денежными установками».</p>
+      <p>А потом открыла кошелёк — и там всё так же пусто.</p>
     </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>Каждое утро начинается с подсчётов. Хватит ли до конца месяца. Можно ли купить ребёнку эту игрушку — или <em>«давай в следующий раз, солнышко»</em>.</p>
+      <p>Ты вкладывалась. В себя, в обучение, в свою экспертность. Курс по SMM. Потом наставник по продажам. Потом марафон «мышление миллионера». Потом ещё один наставник — «который точно поможет».</p>
+      <p><strong>У тебя квалификация на миллион. А на счету — двадцатка.</strong></p>
+      <p>Ну, или 2-3 клиента по знакомству. За которых тебе неловко брать деньги.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="pain-math reveal">
+      <p>Давай посчитаем. Все эти обучения — 50-150 тысяч. Минимум.</p>
+      <p>Каждое обещало: «Сделай воронку — клиенты пойдут», «Прокачай мышление — деньги придут», «Найди свою нишу — и всё закрутится». Ты делала. Не закрутилось. Но 150 тысяч — закрутились. В другую сторону.</p>
+      <p>А если считать не только деньги — но и время? Полтора года вечеров и выходных, когда ты «училась». Вместо того чтобы зарабатывать.</p>
+      <span class="num">−900 000 ₽</span>
+      <p style="margin-bottom:0;">Даже при скромных 50 тысячах в месяц — это 900 000 рублей, которых ты не увидела. За полтора года.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>Но самое тяжёлое — не деньги.</p>
+      <p><strong>Самое тяжёлое — когда муж говорит: «Ну и? Когда ты начнёшь зарабатывать?»</strong></p>
+      <p>И ты ничего не можешь ответить. Потому что он прав. Пока — прав.</p>
+      <p>Ты чувствуешь это каждый раз, когда подруга спрашивает «ну как, бизнес идёт?» — и ты меняешь тему. Каждый раз, когда видишь в ленте коллегу, которая уже «записана на 2 недели вперёд» — и не понимаешь: что она делает не так, как ты? Или что <em>ТЫ</em> делаешь не так?</p>
+      <p>И тихий голос внутри: <em>«Может, я просто не создана для этого. Может, пора признать — и пойти в офис».</em></p>
+    </div>
+
+    <div class="relief reveal">
+      Так чувствует себя большинство экспертов, пытающихся выйти на стабильный доход. Ты не одна — и это не твоя вина.
+    </div>
+
+    <div class="reveal">
+      <p>Потому что вот что происходит на самом деле.</p>
+      <p>Ты решила работать на себя не просто ради денег. Ты чувствовала: ты способна на большее. Что у тебя есть дар — помогать людям. Что ты — не «обычная мама из Воронежа» и не «ещё одна девочка с курсов».</p>
+      <p>И каждое обучение, которое не дало результата, — это не просто потеря денег. Это удар по вере в себя. По ощущению «я на своём месте». По мечте стать тем, кто помогает другим — и живёт так, как хочет.</p>
+      <p>Вопрос «чем ты занимаешься?» превращается в пытку. Потому что назвать себя экспертом — неловко: результатов нет. А сказать «ничем особенным» — ещё стыднее: потому что это неправда.</p>
+      <p><strong>И каждый день ты выбираешь между двумя версиями себя:</strong> той, которая знает, что способна на 100-200 тысяч в месяц — и той, которая не может позволить себе ребёнку киндер-сюрприз без чувства вины.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ BRIDGE ============ -->
+<section>
+  <div class="container">
+    <div class="bridge-box reveal">
+      <p>А что если дело не в тебе? Не в твоих знаниях. Не в курсах. И не в нише.</p>
+      <p style="margin-bottom:0;"><strong>Что если дело — в том, о чём тебе не рассказали ни на одном обучении?</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ UMP — Денежный саботажник ============ -->
+<section>
+  <div class="container">
+
+    <h2 class="reveal"><span class="gold-text">«Денежный саботажник»</span></h2>
+
+    <div class="reveal">
+      <p>Вот что тебе не расскажут ни на одном курсе по маркетингу. Ни один наставник. Ни один бизнес-коуч.</p>
+      <p><strong>Потому что они этого не знают.</strong></p>
+      <p>Они учат тебя продавать. Строить воронки. Вести соцсети. Прокачивать мышление. И всё это — правильно. Но это как если бы врач сказал: «Пейте обезболивающее» — не сделав рентген. Боль уйдёт на час. Перелом — останется.</p>
+      <p>Знать, ЧТО делать — не равно уметь это применить. И вот почему.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="pain-highlight reveal">
+      <p>В 2013 году учёные из Гарварда опубликовали исследование в журнале <em>Science</em> — одном из двух самых авторитетных научных журналов мира.</p>
+      <p>Они обнаружили: когда человек испытывает финансовую тревогу — его IQ падает на <strong>14 баллов</strong>. Не на время экзамена. Постоянно. Пока длится тревога.</p>
+      <p>Это разница между «принимаю хорошие решения» и «раз за разом делаю выбор, который ведёт к потерям».</p>
+      <p style="margin-bottom:0;">Ты не «не можешь» заработать. Ты буквально думаешь хуже каждый раз, когда думаешь о деньгах. Твой мозг — на износе. Какая «воронка продаж» это исправит?</p>
+    </div>
+
+    <div class="reveal">
+      <p>Но дальше — ещё интереснее.</p>
+      <p>У тебя в голове работает программа. Ты её не устанавливала. Она записалась сама — из того, что ты слышала в детстве, видела вокруг, впитывала без фильтра.</p>
+      <p><em>«Большие деньги — большие грехи». «Хорошие люди живут скромно». «Деньги портят».</em></p>
+      <p>Это не просто «фразы из прошлого». Это сценарий поведения. Конкретный. Измеримый. И у каждого — свой.</p>
+      <p>Мы называем его <strong class="gold">денежный саботажник</strong>.</p>
+      <p>Он работает так: каждый раз, когда ты приближаешься к деньгам — он включается и обнуляет всё. Ты даже не замечаешь.</p>
+      <p>И вот самое неприятное: ты не можешь «просто решить» его отключить.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>Исследования нейрофизиологов показывают: <strong>92% всех решений</strong> человек принимает автоматически. Не обдумывая. Не осознавая. Подсознание решает — а сознание потом придумывает объяснение, почему «я так и хотела».</p>
+      <p>Ты думаешь, что сама выбираешь: назвать цену — или дать скидку. Написать пост — или «подождать до понедельника». Вложить в рекламу — или «сначала ещё подготовиться». Тебе кажется, что это осознанные решения. Но в 92 случаях из 100 — это не ты решаешь. Это саботажник.</p>
+      <p>Он записался в твоё подсознание задолго до того, как ты узнала слово «бизнес». Из того, что слышала от родителей. Из того, что видела вокруг в детстве. Из реакций учителей, бабушек, соседей. Все эти «не высовывайся», «будь скромнее», «большие деньги — большие проблемы» — они не исчезли. Они стали автоматическими программами.</p>
+      <p>И теперь 92% твоих решений о деньгах принимает не твой разум — а эти программы.</p>
+      <p>Вот почему «знания» не помогают. Ты можешь знать, что нужно поднять цену. Знать, что пора делегировать. Знать, что нужно вложить в рекламу. Но 92% твоих реальных действий определяет не то, что ты знаешь — а то, что записано глубже. И пока ЭТО не изменится — знания бесполезны.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>И вот что делает саботажника по-настоящему опасным: он прячется не только в голове.</p>
+      <p>Есть типы людей, которым <strong>нельзя</strong> брать потребительские кредиты — только бизнес-кредит с просчитанной окупаемостью. Есть те, кому противопоказано копить — им нужно инвестировать сразу. И это только начало:</p>
+    </div>
+
+    <div class="step-card reveal" style="border-left: 3px solid var(--red);">
+      <ul>
+        <li>Потребительский кредит — нейтрален для одних, финансовый обвал для других</li>
+        <li>Копить деньги — правильно для одного типа, токсично для другого</li>
+        <li>«Неправильное» хобби, способ отдыха — незаметно работают против дохода</li>
+      </ul>
+    </div>
+
+    <div class="reveal">
+      <p>Ты никогда это не связывала с деньгами. Но именно эти невидимые сценарии — не «карма» и не «блоки» — определяют, сколько ты зарабатываешь.</p>
+      <p><strong>Но есть инструмент, который видит именно это.</strong> Инструмент, которым пользовались миллиардеры — от Дж. П. Моргана до основателей Alibaba — но о котором тебе никогда не рассказывали на бизнес-курсах.</p>
+    </div>
+
+    <div class="bridge-box reveal">
+      <p style="margin-bottom:0;">А что если этот инструмент впервые соединить с психологией и бизнес-стратегией — <strong>в одном месте?</strong> И узнать, какой вид спорта, хобби или способ отдыха тихо сливает твой доход — и почему ты никогда не связывала это с деньгами?</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ STORY ============ -->
+<section class="story-section">
+  <div class="container">
+
+    <h2 class="reveal">История Евгении</h2>
+
+    <div class="reveal">
+      <p>Евгения — дипломированный психолог. Эриксоновский гипноз, КПТ, психосоматика. Не «нумеролог из инстаграма» — человек с клинической практикой.</p>
+      <p>И у неё была одна проблема, которую она не могла решить годами.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>К ней приходили женщины. Коучи, тарологи, психологи, мамы, решившие работать на себя. Все — умные. Все — обучались. Все — вкладывали деньги в курсы, наставников, повышение квалификации.</p>
+      <p>И у всех — одно и то же.</p>
+      <p>Одна из них — коуч, 34 года, двое детей — сидела напротив и теребила ремешок сумки. Третья встреча за полгода. Те же слова:</p>
+    </div>
+
+    <div class="story-quote reveal">
+      «Евгения, я всё понимаю. Я знаю, что мне мешает. Я проработала свои установки. Но денег по-прежнему нет.»
+    </div>
+
+    <div class="reveal">
+      <p>Евгения слышала эту фразу так часто, что могла бы закончить её сама. Менялись имена, профессии, возраст — не менялась суть. Тарологи, коучи, массажисты, мамы-фрилансеры — все приходили с одним: <em>«Я знаю, что делать. Но почему-то не делаю. Или делаю — а результата нет.»</em></p>
+      <p>Она применяла всё, чему её учили. КПТ — чтобы переписать убеждения. Гипноз — чтобы достучаться до подсознания. Психосоматику — чтобы найти, где тело держит блок.</p>
+      <p>Клиентки уходили с инсайтами. С облегчением. С ощущением «наконец-то разобралась».</p>
+      <p><strong>А через месяц — возвращались. С той же суммой на счету.</strong> С тем же вопросом в глазах: «Почему не работает?»</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>Евгения закрывала дверь кабинета после таких встреч и несколько минут стояла у окна, не двигаясь. Она видела проблему. Точно видела. Но её инструменты — все до единого — как будто скользили по поверхности.</p>
+      <p>Она пробовала иначе. Добавляла глубинные сессии. Меняла протоколы. Выписывала книги по финансовой психологии. Проходила супервизии.</p>
+      <p>Результат: клиентки чувствовали себя лучше. Понимали себя глубже. <strong>Но зарабатывали — столько же.</strong></p>
+    </div>
+
+    <div class="story-quote reveal">
+      «Может, я просто не тот специалист, который может помочь с деньгами. Может, деньги — это не про психологию.»
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p><strong>А потом случилось кое-что, чего она не планировала.</strong></p>
+      <p>Одна из клиенток — в качестве эксперимента — попросила Евгению посмотреть на её ситуацию через нумерологию. Евгения в тот момент только начинала изучать эту систему — скорее из любопытства, чем из веры.</p>
+      <p>Она посчитала. И замерла.</p>
+      <p>Нумерология показала ровно те же точки, на которые Евгения выходила через месяцы психологической работы. Те же паттерны. Те же сценарии. Только — <strong>за 40 минут вместо четырёх месяцев.</strong></p>
+      <p>Два разных языка описывали одну и ту же проблему. Один — через годы терапии. Другой — через дату рождения.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>Но было кое-что, чего не мог ни один из этих языков.</p>
+      <p>Нумерология показывала <strong>ГДЕ</strong> проблема. Психология объясняла <strong>ПОЧЕМУ</strong>.</p>
+      <p>Но ни нумерология, ни психология не отвечали на главный вопрос: <strong class="gold">ЧТО ДЕЛАТЬ?</strong></p>
+      <p>У Евгении не было ответа. Пока она не встретила человека, у которого был.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p><strong>Алишер</strong> — не нумеролог и не психолог. Он — бизнес-практик. 100+ запущенных бизнесов. 6 книг, одна — бестселлер. Человек, который знает, как превратить экспертность в деньги — потому что делал это сотни раз.</p>
+      <p>Когда Евгения показала ему свои наработки, он сказал одну фразу:</p>
+    </div>
+
+    <div class="story-quote reveal">
+      «Ты видишь проблему. Ты умеешь её убирать. Но ты не даёшь людям план. А без плана они будут возвращаться к тебе снова и снова — с той же проблемой.»
+    </div>
+
+    <div class="reveal">
+      <p>Это был недостающий элемент.</p>
+      <img src="formula.png" alt="Нумерология (ГДЕ) + Психология (ПОЧЕМУ) + Бизнес-стратегия (ЧТО ДЕЛАТЬ) = Полная формула" style="width:100%; border-radius:12px; margin:1.5rem 0;">
+      <p>Не медитация. Не ритуал. Не «визуализируй и жди». А конкретный план — с цифрами, сроками и действиями.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p><strong>Евгения проверила на себе первой.</strong></p>
+      <p>К тому моменту она сама была в долгом периоде выгорания. Апатия. Снижение доходов.</p>
+      <p>Она посчитала свои числа. Увидела конкретный сценарий, который сливал деньги — и который она не замечала годами, потому что он казался «нормальным». Убрала его за одну практику. Перестроила стратегию по своему типу.</p>
+      <p><strong>За один месяц — с 3 до 5,5 миллионов. Личный доход удвоился. Семейный — вырос в пять раз.</strong></p>
+      <p>Не потому что «активировала поток». А потому что перестала делать то, что тормозило именно её тип — и начала делать то, что усиливает.</p>
+      <p>Потом — на учениках. Дарья — коуч, бизнес-тренер. Доход: ноль. Через программу — 250 тысяч в месяц. Дамир — детский врач-реабилитолог. Было 10 тысяч. Стало 150.</p>
+      <p>Не нумерологи. Не эзотерики. Обычные эксперты — которые наконец получили не знания, а систему.</p>
+    </div>
+
+    <div class="relief reveal">И тогда они поняли: это работает не только для них. Вот как устроена эта система — шаг за шагом.</div>
+
+  </div>
+</section>
+
+<!-- ============ MECHANISM — Формула ×10 ============ -->
+<section>
+  <div class="container">
+
+    <h2 class="reveal"><span class="gold-text">Формула ×10</span></h2>
+    <p class="reveal">Система работает в три шага. Каждый — обязателен. Убрать один — и результата не будет. Вот почему «курсы» и «проработки» не давали тебе ничего: они давали максимум один из трёх.</p>
+
+    <div class="step-card reveal">
+      <div class="step-num">1</div>
+      <h3>СКАН — Нумерологическая диагностика</h3>
+      <p>Нумерология — это не гадание. Это язык закономерностей.</p>
+      <p>Ты можешь не верить в «магию чисел». Дж.&nbsp;П.&nbsp;Морган — основатель крупнейшего банка в мире — тоже не верил в магию. Но у него был личный астролог-нумеролог, с которым он консультировался ежедневно. Когда его спрашивали зачем, он отвечал: <em>«Миллионеры не пользуются астрологией. Миллиардеры — пользуются.»</em></p>
+      <p>Основатели Alibaba выставили акции по $68 за штуку — потому что 68 в китайской традиции означает «плавный путь к процветанию». Пекинскую Олимпиаду открыли 08.08.08 в 08:08 — и это не суеверие, а стратегия.</p>
+      <p>Исследование китайского фондового рынка за 2000-2009 годы показало: 26% цен на IPO оканчивались на 8 — и всего 3% на 4. Компании со «счастливыми» кодами торговались с начальной премией.</p>
+      <p>И это не только миллиардеры прошлого. Предприниматели из списка Forbes консультируются с нумерологами перед ключевыми решениями. А Сбербанк — крупнейший банк России — пригласил нумерологов проводить занятия для сотрудников. Не мистику. Не гадание. Инструмент, который помогает принимать решения.</p>
+      <p>Цифры — не талисман. Цифры — инструмент. Они показывают закономерность: какие действия для ТЕБЯ работают на деньги, а какие — сливают.</p>
+      <p><strong>СКАН — это полная диагностика по дате рождения.</strong> Не «узнай своё число судьбы». А конкретно: какой тип монетизации тебе подходит. Какой вид деятельности усиливает твой доход. И — самое неочевидное — какие привычки из совершенно «неденежных» сфер работают ПРОТИВ твоего кошелька.</p>
+    </div>
+
+    <div class="step-card reveal">
+      <div class="step-num">2</div>
+      <h3>ЧИСТКА — Психологическая деактивация</h3>
+      <p>СКАН показал проблему. Но знать — мало. Нужно убрать то, что заставляет тебя повторять одни и те же ошибки.</p>
+      <p>Помнишь «денежного саботажника»? Вот здесь мы его обезвреживаем.</p>
+      <p>Не аффирмациями. Не медитациями «на изобилие». Не визуализацией пачки денег.</p>
+      <p>Это конкретные психологические практики на четырёх уровнях — от поверхностных убеждений до глубинных сценариев. Их разработала Евгения и адаптировала под нумерологическую диагностику. Потому что СКАН уже показал, куда смотреть. Ты приходишь к практике с готовым диагнозом — не нужно искать вслепую.</p>
+    </div>
+
+    <div class="step-card reveal">
+      <div class="step-num">3</div>
+      <h3>ПЛАН — Бизнес-стратегия ×10</h3>
+      <p>Вот здесь 90% «нумерологических курсов» останавливаются. Тебе говорят: «Теперь ты знаешь свои числа. Действуй!»</p>
+      <p>А дальше что? Какой бизнес строить? Какой тип клиентов привлекать? Какую цену ставить?</p>
+      <p><strong>ПЛАН — это персональная денежная карта.</strong> Не абстрактная «стратегия роста». А конкретно: твоя ниша, твой тип монетизации, твои сильные стороны по дате рождения — и план на год с цифрами.</p>
+      <p>Алишер знает, какие модели работают. А Евгения знает, какая модель подходит именно ТЕБЕ — потому что видит твой тип через числа.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 class="reveal">Почему три шага — не два и не один</h3>
+
+    <div class="why3-grid reveal">
+      <div class="why3-item">
+        <div class="why3-icon bad">✗</div>
+        <div>
+          <strong>Только СКАН</strong> (нумерология без психологии и без плана) — ты узнаёшь, где проблема. Но саботажник остаётся. И план не появляется. Это то, что дают 90% курсов.
+        </div>
+      </div>
+      <div class="why3-item">
+        <div class="why3-icon bad">✗</div>
+        <div>
+          <strong>Только ЧИСТКА</strong> (психология без диагностики) — ты работаешь вслепую. Месяцы терапии, чтобы найти то, что СКАН показывает за 40 минут.
+        </div>
+      </div>
+      <div class="why3-item">
+        <div class="why3-icon bad">✗</div>
+        <div>
+          <strong>Только ПЛАН</strong> (бизнес-стратегия без диагностики и чистки) — ты получаешь план. Но саботажник его обнуляет.
+        </div>
+      </div>
+      <div class="why3-item">
+        <div class="why3-icon good">✓</div>
+        <div>
+          <strong class="gold">Три шага вместе</strong> — впервые — дают полную формулу: <strong>ГДЕ ты теряешь</strong> (СКАН) → <strong>ПОЧЕМУ ты это делаешь</strong> (ЧИСТКА) → <strong>ЧТО делать вместо этого</strong> (ПЛАН).
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ RESULT PROJECTION ============ -->
+<section class="result-section">
+  <div class="container">
+
+    <h2 class="reveal">Результаты</h2>
+    <p class="reveal">Вот что происходит, когда все три шага работают вместе.</p>
+
+    <div class="result-timeline reveal">
+      <div class="milestone">
+        <div class="milestone-label">День 1</div>
+        <p>Ты получаешь СКАН — и впервые видишь конкретную картину: какие твои действия работали НА доход, а какие — тихо сливали его годами.</p>
+      </div>
+      <div class="milestone">
+        <div class="milestone-label">За 3 дня</div>
+        <p>У тебя на руках персональная денежная карта: твоя ниша, твой тип монетизации, твой план роста ×10 с конкретными цифрами. Не «привлекай изобилие» — а «вот что делать в понедельник утром».</p>
+      </div>
+      <div class="milestone">
+        <div class="milestone-label">Первые сдвиги</div>
+        <p>Ты перестаёшь откладывать. Пост, который неделю лежал в черновиках — публикуешь. Цену, которую боялась назвать — называешь. И удивляешься: оказывается, это было не страшно.</p>
+      </div>
+      <div class="milestone">
+        <div class="milestone-label">Первые деньги</div>
+        <p>Клиент, который пришёл сам. Оплата, за которую не стыдно. Ощущение: «Я наконец-то делаю то, что должна была делать давно».</p>
+      </div>
+      <div class="milestone">
+        <div class="milestone-label">1–3 месяца</div>
+        <p>100-200 тысяч в месяц. Они нашли, что именно их тормозило — и убрали это. Без магии. Без ритуалов.</p>
+      </div>
+    </div>
+
+    <p class="reveal">Чтобы ты могла получить этот результат без месяцев самостоятельных проб и ошибок — мы создали конкретный инструмент.</p>
+
+  </div>
+</section>
+
+<!-- ============ PRODUCT REVEAL ============ -->
+<section class="product-section">
+  <div class="container">
+
+    <div class="hero-pre">3 дня, которые меняют финансовую траекторию</div>
+    <h2 class="reveal" style="margin-top:1.5rem;">Практикум<br><span class="gold-text">«Активация Денежного Потока»</span></h2>
+    <p class="reveal" style="text-align:center; max-width:600px; margin: 0 auto 2rem;">Это не курс по нумерологии. Не марафон «мышление миллионера». Это система из трёх шагов — СКАН, ЧИСТКА, ПЛАН — упакованная в практикум, где ты не просто слушаешь, а делаешь. И выходишь с конкретным результатом: персональная диагностика, деактивация саботажника, денежная карта на год — за 3 дня.</p>
+
+    <!-- FOUNDERS -->
+    <h3 class="reveal" style="text-align:center;">Почему именно эти двое</h3>
+    <p class="reveal" style="text-align:center;">Нумеролог не покажет, как монетизировать. Бизнес-коуч не увидит твой тип. Психолог не даст план.</p>
+
+    <div class="founders reveal">
+      <div class="founder-card">
+        <img src="alisher.jpg" alt="Алишер Отабаев" class="founder-photo">
+        <div class="founder-name">Алишер Отабаев</div>
+        <p>ICF-сертифицированный коуч. Знает, как превратить экспертность в доход. Даёт ПЛАН — конкретную бизнес-стратегию, которую можно применить сразу.</p>
+      </div>
+      <div class="founder-card">
+        <img src="evgeniya.jpeg" alt="Евгения Отабаева" class="founder-photo">
+        <div class="founder-name">Евгения Отабаева</div>
+        <p>Первая, кто соединила нумерологическую диагностику с психологической деактивацией и доказала на себе, что это работает. Даёт СКАН и ЧИСТКУ.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ MINI-PROOF ============ -->
+<section>
+  <div class="container">
+
+    <h2 class="reveal">Кейсы</h2>
+    <p class="reveal">Вот что изменилось у тех, кто нашёл своего «денежного саботажника» и убрал его.</p>
+
+    <div class="case-card reveal">
+      <div class="case-header">
+        <div>
+          <div class="case-name">Мадина Онова</div>
+          <div class="case-role">дипломированный васту-наставник, Казахстан</div>
+        </div>
+      </div>
+      <div class="case-result">
+        <span class="case-before">50 000 ₽</span>
+        <span class="case-arrow">→</span>
+        <span class="case-after">150 000 ₽</span>
+      </div>
+      <div class="case-quote">«Алишер — просто гений! Больше нет таких курсов, где в комплексе идёт развитие и проекта, и личности.»</div>
+    </div>
+
+    <div class="case-card reveal">
+      <div class="case-header">
+        <div>
+          <div class="case-name">Елена Лорец</div>
+          <div class="case-role">наставник по раскрытию потенциала, мотивационный оратор</div>
+        </div>
+      </div>
+      <div class="case-result">
+        <span class="case-before">18–30 000 ₽</span>
+        <span class="case-arrow">→</span>
+        <span class="case-after">200–220 000 ₽</span>
+      </div>
+      <div class="case-quote">«Самое ценное — это глубокая личная трансформация. Эта программа не только про клиентов и финансовый результат. Она про жизнь.»</div>
+    </div>
+
+    <div class="case-card reveal">
+      <div class="case-header">
+        <div>
+          <div class="case-name">Антон Тарасов</div>
+          <div class="case-role">бизнес-психолог, мотивационный оратор</div>
+        </div>
+      </div>
+      <div class="case-result">
+        <span class="case-before">100–150 000 ₽</span>
+        <span class="case-arrow">→</span>
+        <span class="case-after">300–500 000 ₽</span>
+      </div>
+      <div class="case-quote">«Момент, когда я стану крутым экспертом, не наступит никогда, если не начать создавать его прямо сегодня из того, что есть.»</div>
+    </div>
+
+    <div class="case-card reveal">
+      <div class="case-header">
+        <div>
+          <div class="case-name">Ольга</div>
+          <div class="case-role">сметчик в строительной компании</div>
+        </div>
+      </div>
+      <div class="case-result">
+        <span class="case-before">15–30 000 ₽</span>
+        <span class="case-arrow">→</span>
+        <span class="case-after">450 000 ₽ за 2 мес.</span>
+      </div>
+      <div class="case-quote">Не эксперт. Не коуч. Обычный сметчик. Алишер определил её сильные стороны — и дал задание, которое перевернуло картину мира: прыгнуть с парашютом. Через 2 месяца Ольга собрала конференцию для владельцев стоматологических клиник, заключила 3 контракта по 150 тысяч. Рост с нуля в новой сфере — в 15 раз.</div>
+    </div>
+
+    <p class="reveal" style="text-align:center; color: var(--text-dim); margin-top:2rem;">Разные ниши. Разные точки старта. Одна система — и результат за 1-3 месяца.</p>
+
+  </div>
+</section>
+
+<!-- ============ OFFER ============ -->
+<section class="offer-section">
+  <div class="container">
+
+    <h2 class="reveal" style="text-align:center;">Предложение</h2>
+
+    <p class="reveal" style="text-align:center;">Через 3 месяца после практикума — стабильные 100-200 тысяч в месяц. Запись клиентов на 2 недели вперёд. Покупка ребёнку игрушки без взгляда на ценник.</p>
+
+    <!-- What you get -->
+    <h3 class="reveal">Что ты получаешь</h3>
+
+    <div class="day-card reveal" style="margin: 1rem 0;">
+      <div class="day-label">Предобучение</div>
+      <h4>«Код Успеха»</h4>
+      <p>Расшифровка 5 предназначений + 4 практики трансформации. Доступ сразу после оплаты.</p>
+      <p style="color:var(--text-dim); font-size:0.85rem;">Отдельно стоило бы: 4 990 ₽</p>
+    </div>
+    <div class="day-card reveal" style="margin: 1rem 0;">
+      <div class="day-label">День 1</div>
+      <h4>«Денежные коды»: СКАН</h4>
+      <p>Полная нумерологическая диагностика: карьерное предназначение, денежные профессии по дате рождения, код миллионера. Ты узнаешь свой тип — и получаешь персональную карту: что усиливает доход, а что тихо сливает.</p>
+      <p style="color:var(--text-dim); font-size:0.85rem;">Отдельно стоило бы: 19 990 ₽</p>
+    </div>
+    <div class="day-card reveal" style="margin: 1rem 0;">
+      <div class="day-label">День 2</div>
+      <h4>«Деактиватор саботажника» + «Денежная карта ×10»</h4>
+      <p>Деактивация блокираторов на 4 уровнях. Пошаговый план роста ×10 с конкретными цифрами.</p>
+      <p style="color:var(--text-dim); font-size:0.85rem;">Отдельно стоило бы: 24 980 ₽</p>
+    </div>
+    <div class="day-card reveal" style="margin: 1rem 0;">
+      <div class="day-label">День 3</div>
+      <h4>«Внутренний Реактор»: Активация</h4>
+      <p>Система «МЦП» — практики на 4 уровнях. Годовой план действий.</p>
+      <p style="color:var(--text-dim); font-size:0.85rem;">Отдельно стоило бы: 7 990 ₽</p>
+    </div>
+    <div class="day-card reveal" style="margin: 1rem 0; border-color: rgba(245,200,66,0.15);">
+      <div class="day-label" style="color:var(--purple);">День 4 — Секретный</div>
+      <h4>«Квантовый скачок»</h4>
+      <p>Бонус для тех, кто прошёл все 3 дня.</p>
+      <p style="color:var(--text-dim); font-size:0.85rem;">Отдельно стоило бы: 9 990 ₽</p>
+    </div>
+
+    <!-- Bonuses -->
+    <h3 class="reveal" style="margin-top:2.5rem;">Бонусы</h3>
+
+    <div class="bonus-card reveal">
+      <div><strong>«Детектор саботажа»</strong> — чек-лист 30 убеждений, которые тихо сливают доход</div>
+      <div class="bonus-price">2 990 ₽</div>
+    </div>
+    <div class="bonus-card reveal">
+      <div><strong>«Денежный компас»</strong> — чек-лист действий по дате рождения: хобби, спорт, отдых</div>
+      <div class="bonus-price">4 990 ₽</div>
+    </div>
+    <div class="bonus-card reveal">
+      <div><strong>«Скрытые рычаги»</strong> — денежные хобби + спорт по дате рождения + идеальный мужчина по дате</div>
+      <div class="bonus-price">3 990 ₽</div>
+    </div>
+
+    <!-- Total -->
+    <div class="offer-total reveal">
+      <p>Суммарная ценность всего, что внутри:</p>
+      <p><span class="old-price">больше 75 000 ₽</span></p>
+      <p style="margin-bottom:0;">Алишер и Евгения могли бы поставить цену в 10 раз выше — и имели бы на это право. Но их цель — максимальный охват: чем больше людей пройдут практикум, тем больше кейсов и рекомендаций. Поэтому цена такая.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- TIERS -->
+    <h3 class="reveal" style="text-align:center;">Тарифы</h3>
+
+    <div class="tier-card featured reveal">
+      <div class="tier-name">Silver</div>
+      <div class="tier-price">
+        <span class="current">2 222 ₽</span>
+        <span class="was">7 990 ₽</span>
+      </div>
+      <p style="color:var(--text); margin-bottom: 1rem;">Всё, что нужно для старта:</p>
+      <ul class="tier-features">
+        <li>Практикум 4 дня + предобучение «Код Успеха»</li>
+        <li>Все бонусы: «Детектор саботажа», «Денежный компас», «Скрытые рычаги»</li>
+        <li>Доступ: 1 неделя</li>
+      </ul>
+      <div class="tier-guarantee">Не подошло — вернём деньги. Без вопросов. Материалы предобучения оставь себе.</div>
+    </div>
+
+    <div class="tier-card reveal">
+      <div class="tier-name">Gold</div>
+      <div class="tier-price">
+        <span class="current">4 444 ₽</span>
+        <span class="was">19 990 ₽</span>
+      </div>
+      <p style="color:var(--text); margin-bottom: 1rem;">Всё из Silver +</p>
+      <ul class="tier-features">
+        <li class="bonus">«Быстрые деньги через самоценность» — отдельно стоит 19 990 ₽</li>
+        <li>Доступ: 1 месяц</li>
+        <li>Доп. бонусы: на что тратить деньги по типу, кружки для ребёнка по дате, «Внутренний реактор», «Лук на миллион»</li>
+      </ul>
+      <div class="tier-guarantee">Пройди все 3 дня, выполни задания — если не получишь конкретный план ×10, вернём деньги.</div>
+    </div>
+
+    <div class="tier-card reveal">
+      <div class="tier-name">Platinum</div>
+      <div class="tier-price">
+        <span class="current">22 222 ₽</span>
+        <span class="was">49 990 ₽</span>
+      </div>
+      <p style="color:var(--text); margin-bottom: 1rem;">Всё из Gold +</p>
+      <ul class="tier-features">
+        <li class="bonus">Персональная сессия с Алишером и Евгенией (1.5-2 часа) — отдельно стоит 30 000 ₽</li>
+        <li>Доступ: 3 месяца</li>
+      </ul>
+      <div class="tier-guarantee">Если после персональной консультации нет конкретного плана действий — вернём стоимость консультации.</div>
+    </div>
+
+    <p class="reveal" style="text-align:center; color: var(--text-dim); margin-top: 2rem;">Набор на поток ограничен — чтобы Алишер и Евгения успели дать обратную связь каждому участнику.</p>
+
+    <div class="cta-section reveal">
+      <a href="#" class="cta-btn">Купить практикум</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ MORE PROOF ============ -->
+<section>
+  <div class="container">
+
+    <p class="reveal" style="text-align:center; font-size:1.1rem; color:var(--text);">Всё ещё сомневаешься? Вот что случилось с теми, кто тоже сомневался.</p>
+
+    <div class="case-card reveal">
+      <div class="case-header">
+        <div>
+          <div class="case-name">Павел Карякин</div>
+          <div class="case-role">интернет-маркетолог, наставник экспертов</div>
+        </div>
+      </div>
+      <div class="case-result">
+        <span class="case-before">100–120 000 ₽</span>
+        <span class="case-arrow">→</span>
+        <span class="case-after">200–250 000 ₽</span>
+      </div>
+      <div class="case-quote">«Одно из самых сильных осознаний за последние полгода — надо не бояться открываться миру.»<br><br><span style="color:var(--text-dim); font-style:normal; font-size:0.85rem;">Не нумеролог. Маркетолог — человек, который и так «знал, как продавать». Но знания не помогали — пока не убрал то, что тормозило.</span></div>
+    </div>
+
+    <div class="case-card reveal">
+      <div class="case-header">
+        <div>
+          <div class="case-name">Ольга Скоробогатова</div>
+          <div class="case-role">бизнес-тренер, телесный энерготерапевт, психолог</div>
+        </div>
+      </div>
+      <div class="case-result">
+        <span class="case-before">40–60 000 ₽</span>
+        <span class="case-arrow">→</span>
+        <span class="case-after">350 000 ₽</span>
+      </div>
+      <div class="case-quote">«Прежде всего произошли внутренние изменения. И они помогли мне, наконец, начать проявляться.»<br><br><span style="color:var(--text-dim); font-style:normal; font-size:0.85rem;">Рост в 6-8 раз. Не потому что «научилась продавать» — а потому что перестала саботировать.</span></div>
+    </div>
+
+    <div class="case-card reveal">
+      <div class="case-header">
+        <div>
+          <div class="case-name">Геннадий Бабинцев</div>
+          <div class="case-role">организатор «Дерзкий Инфобизнес», основатель «Наследие»</div>
+        </div>
+      </div>
+      <div class="case-result">
+        <span class="case-before">фокус в бизнесе</span>
+        <span class="case-arrow">→</span>
+        <span class="case-after">100 000 ₽ за 10 дней</span>
+      </div>
+      <div class="case-quote">«Когда ты направляешься именно туда, где реализуется большинство твоих талантов и сильных сторон, начинается колоссальный рост.»</div>
+    </div>
+
+    <div class="case-card reveal">
+      <div class="case-header">
+        <div>
+          <div class="case-name">Евгения Маврина</div>
+          <div class="case-role">художник, тату-мастер, женский тренер</div>
+        </div>
+      </div>
+      <div class="case-result">
+        <span class="case-before">150–250 000 ₽</span>
+        <span class="case-arrow">→</span>
+        <span class="case-after">500 000 ₽</span>
+      </div>
+      <div class="case-quote">«Мы начали работать с мышлением, с пониманием, как позиционировать себя на рынке.»</div>
+    </div>
+
+    <div class="case-card reveal">
+      <div class="case-header">
+        <div>
+          <div class="case-name">Наталья</div>
+          <div class="case-role">владелица онлайн-школы со стажем 5+ лет</div>
+        </div>
+      </div>
+      <div class="case-result">
+        <span class="case-before">100 000 ₽ за полгода</span>
+        <span class="case-arrow">→</span>
+        <span class="case-after">15 000 000 ₽</span>
+      </div>
+      <div class="case-quote">Школа зарабатывала 3,5 миллиона — но Наталья забирала себе 100 тысяч за полгода. Из страха ответственности она раздала проценты трём уровням «партнёров». После 15 стратегических сессий — забрала ответственность на себя, передоговорилась. Через 2 месяца — запуск на 2,5 миллиона, себе забрала миллион. Потом 5 миллионов. Потом 15.<br><br><span style="color:var(--text-dim); font-style:normal; font-size:0.85rem;">Рост в 10 раз — просто за счёт того, что забрала на себя ответственность.</span></div>
+    </div>
+
+    <div class="reveal" style="text-align:center; margin-top: 2rem;">
+      <p>И это только часть результатов. Все кейсы выше — разные ниши, разные точки старта. Одна система.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ COMPARISON ============ -->
+<section>
+  <div class="container">
+
+    <h3 class="reveal" style="text-align:center;">Без практикума vs С практикумом</h3>
+
+    <table class="compare-table reveal">
+      <thead>
+        <tr>
+          <th>Без</th>
+          <th>С практикумом</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ещё один курс → ещё одно разочарование</td>
+          <td>СКАН показывает, ГДЕ ты теряешь — конкретно</td>
+        </tr>
+        <tr>
+          <td>Саботажник продолжает работать</td>
+          <td>ЧИСТКА обезвреживает его на 4 уровнях</td>
+        </tr>
+        <tr>
+          <td>«Не знаю что делать дальше»</td>
+          <td>ПЛАН: ниша, монетизация, цифры на год</td>
+        </tr>
+        <tr>
+          <td>50 000 ₽/мес потерянного дохода</td>
+          <td>100-200к/мес через 1-3 месяца</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</section>
+
+<!-- ============ FAQ OBJECTIONS ============ -->
+<section>
+  <div class="container">
+
+    <h3 class="reveal">«Но у меня уже...»</h3>
+
+    <div class="faq-item open reveal">
+      <div class="faq-q">«Я уже проходила курсы по нумерологии»</div>
+      <div class="faq-a">
+        <p>Те курсы давали теорию — «вот твоё число». Здесь — диагностика + деактивация + план. Ни один курс не собирал три инструмента вместе.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <div class="faq-q">«А вдруг опять не поможет? Денег и так мало»</div>
+      <div class="faq-a">
+        <p>2 222 ₽ — с безусловной гарантией. Если не подошло — вернём без вопросов. А если поможет — это 2 222 рубля, которые могут стоить тебе 100-200 тысяч в месяц.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <div class="faq-q">«Мне муж не разрешит ещё один курс»</div>
+      <div class="faq-a">
+        <p>Покажи ему эту страницу. Покажи кейсы. И скажи: «Это стоит 2 222 рубля — с гарантией возврата. Если не сработает — ты получишь деньги обратно. Если сработает — ты получишь жену, которая зарабатывает.»</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <div class="faq-q">«Я сама психолог/коуч и работаю с установками — зачем мне нумерология?»</div>
+      <div class="faq-a">
+        <p>Именно это чувствовала Олеся Шандро — практикующий психолог с авторской программой восстановления. Она прорабатывала установки клиентам каждый день. Но свой доход — не могла сдвинуть. Мешали страхи: осуждение коллег за высокие цены, хейт за то, что обучает других психологов. Она закрылась — перестала проявляться.</p>
+        <p>СКАН показал, где именно блок. Не «в целом тревожность» — а конкретный сценарий. После проработки — удвоила доход. Потом утроила. Спокойно подняла чеки и пошла в рекламу.</p>
+        <p>Нумерология — не замена психологии. Это диагностический срез, который показывает точку входа. Ты знаешь КАК работать — СКАН показывает, С ЧЕМ именно работать первым.</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 class="reveal">Цена бездействия</h3>
+    <div class="pain-math reveal">
+      <p>Если ты теряешь хотя бы 50 000 в месяц из-за саботажника — только за ближайший год это:</p>
+      <span class="num">−600 000 ₽</span>
+      <p style="margin-bottom:0;"><strong>Практикум стоит 2 222 ₽. Цена бездействия — 600 000.</strong></p>
+    </div>
+
+    <div class="cta-section reveal">
+      <a href="#" class="cta-btn">Купить практикум — 2 222 ₽</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ DREAM STATE ============ -->
+<section class="dream">
+  <div class="container">
+
+    <h2 class="reveal">Через 3 месяца</h2>
+
+    <div class="reveal">
+      <p>Представь: утро понедельника. Ты просыпаешься — и не тянешься к калькулятору. Не считаешь, хватит ли до пятницы. Потому что на счету — сумма, которая раньше казалась чужой.</p>
+      <p>Телефон вибрирует — сообщение от клиентки: «Когда ближайшее окно? Мне вас порекомендовали». И ты открываешь календарь — а там запись на две недели вперёд. И ты выбираешь, кого взять.</p>
+      <p>Ребёнок показывает пальцем на игрушку в витрине — и ты не отводишь его руку. Ты заходишь и покупаешь. Без взгляда на ценник. Без привычного укола в животе.</p>
+      <p>Муж спрашивает: «Как дела на работе?» — и ты отвечаешь с цифрами. Спокойно. Без оправданий. И видишь в его глазах то, чего давно не видела — <strong>уважение</strong>.</p>
+      <p>А подруга пишет: «Слушай, ты так изменилась. Расскажи, что ты делаешь?» — и ты рассказываешь. Не стесняясь. Не меняя тему.</p>
+      <p><strong>Потому что ты — больше не «вечная ученица». Ты — та, к кому приходят за ответами.</strong></p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="case-card reveal" style="text-align:left; border-color: rgba(245, 200, 66, 0.3);">
+      <div class="case-header">
+        <div>
+          <div class="case-name">Светлана Грант</div>
+          <div class="case-role">коуч, наставник</div>
+        </div>
+      </div>
+      <div class="case-result">
+        <span class="case-before">−30 000 ₽</span>
+        <span class="case-arrow">→</span>
+        <span class="case-after" style="font-size:1.3rem;">6 000 000 ₽</span>
+      </div>
+      <p style="color:var(--text-dim); font-size:0.95rem;">Светлана полгода вела блог в Инстаграме. Запустила марафон по самооценке — и ушла в минус на 30 тысяч рублей. Ни клиентов, ни дохода.</p>
+      <p style="color:var(--text-dim); font-size:0.95rem;">Алишер посмотрел её числа — и увидел то, чего не видела она сама. По бэкграунду Светлана — финансовый директор. Её сильная сторона — деньги и стратегия, не самооценка. Она пыталась монетизировать чужой талант — и поэтому проигрывала.</p>
+      <p style="color:var(--text-dim); font-size:0.95rem;">Переупаковали продукт на финансовую тему. На той же аудитории. Без вложений в рекламу.</p>
+      <p style="color:var(--text-dim); font-size:0.95rem;">Первый запуск — 525 тысяч. Второй — 2,4 миллиона. Дальше — рост до 6+ миллионов в месяц.</p>
+      <p style="color:var(--text-dim); font-size:0.95rem;"><strong style="color:var(--text);">Тот же человек. Те же подписчики. Другой СКАН — другая стратегия — другой результат.</strong></p>
+      <p style="color:var(--text-dim); font-size:0.9rem; margin-bottom:0;">Твой результат будет другим — у тебя другая точка старта и другая ниша. Но даже сотая часть траектории Светланы — это 60 тысяч в месяц. А десятая — 600 тысяч. И всё начинается с одного: увидеть, ГДЕ ты теряешь — и перестать это делать.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ WHO NOT ============ -->
+<section>
+  <div class="container">
+    <div class="reveal" style="text-align:center;">
+      <h3>Кто НЕ получит результата</h3>
+      <p>Если ты ищешь ритуалы, талисманы, «активацию потока» через медитацию — это не сюда. Если хочешь, чтобы кто-то «снял порчу» или «открыл канал денег» — тоже не сюда.</p>
+      <p><strong>Этот практикум для тех, кто готов: увидеть, что тормозит — убрать это — и сделать конкретные шаги.</strong></p>
+    </div>
+
+    <div class="cta-section reveal">
+      <a href="#" class="cta-btn">Купить практикум</a>
+      <div class="cta-note">Набор на этот поток ограничен. С полной гарантией.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GUARANTEE ============ -->
+<section>
+  <div class="container">
+    <div class="guarantee-box reveal">
+      <div class="guarantee-icon">&#128737;</div>
+      <h3>Безусловная гарантия качества</h3>
+      <p style="margin-top:1rem;">Если тебе не понравится что угодно в продукте — верни средства в течение 3 дней практикума. Без вопросов. Без объяснений. Написала — получила деньги обратно.</p>
+      <p style="color:var(--text-dim); margin-bottom:0;">Три дня — достаточно, чтобы пройти весь практикум, получить СКАН, ЧИСТКУ и ПЛАН — и решить, работает ли это для тебя.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PS ============ -->
+<section class="ps-section">
+  <div class="container">
+    <div class="ps reveal">
+      <strong>P.S.</strong> Гарантия — безусловная. Любая причина. «Не понравился формат» — вернём. «Передумала» — вернём. «Просто хочу вернуть» — вернём. Все риски — на нашей стороне.
+    </div>
+    <div class="ps reveal">
+      <strong>P.P.S.</strong> Каждый день без ясности — это минус ~1 700 рублей (при потерянном доходе 50 000 в месяц). За месяц — минус 50 000. За год — минус 600 000. Практикум стоит 2 222 ₽. Один день промедления стоит дороже.
+    </div>
+
+    <div class="cta-section reveal">
+      <a href="#" class="cta-btn">Купить практикум — 2 222 ₽</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ FAQ ============ -->
+<section>
+  <div class="container">
+
+    <h2 class="reveal" style="text-align:center;">Частые вопросы</h2>
+
+    <div class="faq-item reveal">
+      <div class="faq-q">«Мне нужно разбираться в нумерологии?»</div>
+      <div class="faq-a">
+        <p>Нет. Мы не учим нумерологию — мы используем её как диагностический инструмент. Ты приходишь с датой рождения — уходишь с готовой картой и планом.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <div class="faq-q">«Я не нумеролог и не эзотерик. Это точно для меня?»</div>
+      <div class="faq-a">
+        <p>Большинство учеников — не нумерологи. Коучи, психологи, маркетологи, тренеры, мамы-фрилансеры. Если ты — эксперт или помогающий практик, у тебя есть знания и навыки, но доход не растёт — практикум для тебя.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <div class="faq-q">«Сколько времени нужно в день?»</div>
+      <div class="faq-a">
+        <p>Каждый день — 2-3 часа на эфир + задание. Предобучение «Код Успеха» — в своём темпе, до старта. Итого: меньше недели, без отрыва от текущей работы.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <div class="faq-q">«Когда я увижу первый результат?»</div>
+      <div class="faq-a">
+        <p>Первый инсайт — в предобучении. Полная картина + план — к концу третьего дня. Измеримый рост дохода — через 1-3 месяца после внедрения.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <div class="faq-q">«Будут ли допродажи на практикуме?»</div>
+      <div class="faq-a">
+        <p>На практикуме — нет. Ты получаешь всё, что заявлено в тарифе. Единственное предложение после — возможность продолжить работу индивидуально (Platinum). Давления не будет.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <div class="faq-q">«Я в другом городе / стране. Могу участвовать?»</div>
+      <div class="faq-a">
+        <p>Да. Практикум проходит онлайн. Прямые эфиры + записи. Часовой пояс не важен — записи доступны сразу. Ученики из Казахстана, Германии, ОАЭ уже проходили.</p>
+      </div>
+    </div>
+
+    <div class="cta-section reveal" style="margin-top: 2rem;">
+      <a href="#" class="cta-btn">Купить практикум — 2 222 ₽</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ VIDEO TESTIMONIALS ============ -->
+<section>
+  <div class="container">
+
+    <h2 class="reveal" style="text-align:center;">Еще больше обратной связи и результатов</h2>
+    <p class="reveal" style="text-align:center; font-size:1.1rem; color:var(--text); margin-bottom:2.5rem;">Почему эксперты выбирают программы<br>Алишера Отабаева</p>
+
+    <div class="video-card reveal">
+      <div class="video-thumb" onclick="this.innerHTML='<iframe width=\'100%\' height=\'100%\' src=\'https://www.youtube.com/embed/rOgjl8MCkRU?autoplay=1\' frameborder=\'0\' allow=\'autoplay; encrypted-media\' allowfullscreen></iframe>'">
+        <img src="https://img.youtube.com/vi/rOgjl8MCkRU/hqdefault.jpg" alt="Видеоотзыв">
+        <div class="play-btn">▶</div>
+      </div>
+      <p class="video-quote">«Создал и автоматизировал курс, который теперь продает себя сам. Спасибо, Алишер, за умение слушать и слышать.»</p>
+    </div>
+
+    <div class="video-card reveal">
+      <div class="video-thumb" onclick="this.innerHTML='<iframe width=\'100%\' height=\'100%\' src=\'https://www.youtube.com/embed/PitnqAHhflQ?autoplay=1\' frameborder=\'0\' allow=\'autoplay; encrypted-media\' allowfullscreen></iframe>'">
+        <img src="https://img.youtube.com/vi/PitnqAHhflQ/hqdefault.jpg" alt="Видеоотзыв">
+        <div class="play-btn">▶</div>
+      </div>
+      <p class="video-quote">«Произошел ключевой прорыв в бизнесе и начались позитивные изменения, которые приносят результаты в деньгах и улучшении ключевых показателей до сих пор.»</p>
+    </div>
+
+    <div class="video-card reveal">
+      <div class="video-thumb" onclick="this.innerHTML='<iframe width=\'100%\' height=\'100%\' src=\'https://www.youtube.com/embed/XDnj09PtIsM?autoplay=1\' frameborder=\'0\' allow=\'autoplay; encrypted-media\' allowfullscreen></iframe>'">
+        <img src="https://img.youtube.com/vi/XDnj09PtIsM/hqdefault.jpg" alt="Видеоотзыв">
+        <div class="play-btn">▶</div>
+      </div>
+      <p class="video-quote">«Я смогла взглянуть своему страху в глаза, побороть его и в итоге увеличила свой доход в 2 раза.»</p>
+    </div>
+
+  </div>
+</section>
+
+<div style="height: 4rem;"></div>
+
+<!-- ============ JS ============ -->
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // FAQ toggle
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      item.classList.toggle('open');
+    });
+  });
+</script>
+
 </body>
 </html>
