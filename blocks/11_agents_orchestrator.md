@@ -577,7 +577,7 @@ Mechanism Mode (из strategy.md I2):
 | Mini-Proof | SHORT | SKIP | SKIP | SKIP | FULL | SHORT | FULL | SHORT | SKIP | FULL | SKIP |
 | Product Reveal | SHORT | SKIP | SHORT | SHORT | SKIP | SHORT | SHORT | SHORT | SHORT | SHORT | SHORT |
 | Offer + Close | SHORT | SKIP | FULL | SHORT | SKIP | SKIP | FULL | FULL | SHORT | FULL | FULL |
-| Fascinations | SHORT | SHORT | SHORT | SKIP | SHORT | SKIP | SHORT | SHORT | SKIP | SKIP | SKIP |
+| Fascination Bank (BRIEF) | SHORT | SHORT | SHORT | SKIP | SHORT | SKIP | SHORT | SHORT | SKIP | SKIP | SKIP |
 | FAQ | SHORT | SHORT | FULL | SHORT | SHORT | SKIP | SKIP | FULL | SKIP | SKIP | SKIP |
 
 ---
@@ -1327,7 +1327,7 @@ Mechanism Mode (из strategy.md I2):
 **КАК ФОРМИРОВАТЬ КОНТЕКСТ (инструкция для главного агента):**
 1. Из strategy.md: Awareness (уровень 1-5 по Шварцу), Sophistication (стадия 1-5), MOS_MODE (A/B/C), Lead Type (из LEAD_ROUTER)
 2. Из brief.md: продукт (1 предложение), ниша, ЦА (1 предложение)
-3. Из BRIEF (Phase B, утверждённый): текущий block_type (Lead/Story/Mechanism/Product Reveal/Close/Fascinations/FAQ)
+3. Из BRIEF (Phase B, утверждённый): текущий block_type (Lead/Story/Mechanism/Product Reveal/Close/Fascination Bank/FAQ)
 
 **ТАБЛИЦА ЗАПРОСОВ [KB_QUERY_TEMPLATES_V1]:**
 
@@ -1339,7 +1339,7 @@ Mechanism Mode (из strategy.md I2):
 | Product Reveal (4.5) | 1) `"формула представления продукта product reveal создание нарратив"` | 1) `"пример представления продукта sales letter нарративная арка что входит"` |
 | Close/Offer (4.6) | 1) `"формула оффера value stack CTA гарантия снятие риска скидка"` 2) `"паттерн закрытия close P.S. срочность дедлайн"` | 1) `"пример оффера close sales letter тройной CTA value stack цена"` |
 | **Proof (4.9)** | **НЕ ЗАПУСКАТЬ** — Proof имеет собственный PROOF_MINING_V1 (блок 07, секция 4.9b) с 3 специализированными запросами к formulas/audience/expert | **НЕ ЗАПУСКАТЬ** |
-| Fascinations (4.7) | 1) `"формула фасцинаций буллетов curiosity bullets proof bullets {ниша}"` 2) `"11 типов фасцинаций шаблоны why how secret list"` | 1) `"пример фасцинаций буллетов из sales letter {ниша}"` |
+| Fascination Bank (4.7, в BRIEF) | 1) `"формула фасцинаций буллетов curiosity bullets proof bullets {ниша}"` 2) `"11 типов фасцинаций шаблоны why how secret list"` | 1) `"пример фасцинаций буллетов из sales letter {ниша}"` |
 | FAQ (4.8) | 1) `"формула FAQ ответы на возражения снятие сомнений перед покупкой"` | 1) `"пример FAQ секции sales letter мягкий CTA в ответах"` |
 
 **ПРОМПТ-ШАБЛОН:**

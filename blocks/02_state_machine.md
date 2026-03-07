@@ -202,21 +202,22 @@ DELIVERY → REVIEW
 5) GEORGI BRIEF: Парадоксальный вопрос, Метафора, Bold Claim, Upsell Ideas (секция 4.1)
 6) MECHANISM MODE: режим из strategy.md (I2) — Hidden/Teased/Revealed. Влияет на объём секции 4.4 (см. [MECHANISM_MODES_V1])
 7) OFFER STACK PLAN: список проблем → компоненты → названия по [NAMING_PROTOCOL_V1] → ценности. Предварительная таблица для [OFFER_STACK_V1] (секция 4.6b). «Sell the Vacation» + «Who NOT for» + Reason Why
+8) FASCINATION BANK: сгенерируй 12–15 фасцинаций по [FASCINATION_BANK_V1] (секция 4.7). Покажи банк с тегами (curiosity / proof / identity-result). Пользователь утверждает банк вместе с BRIEF
 — SELF-CHECK (3 пункта)
 — "Утвердить BRIEF? (да/правки)"
 
 **PHASE C — COPY (текст):**
 — Только после утверждения BRIEF
-— ОДИН блок за сообщение (4.2/4.3/4.4/4.5/4.6 + опционально 4.7/4.8)
+— ОДИН блок за сообщение (4.2/4.3/4.4/4.5/4.6 + опционально 4.8)
 — Для блока 4.4 (Mechanism): применяй MECHANISM MODE из BRIEF (пункт 6) через [MECHANISM_MODES_V1]
 — Для блока 4.6 (Close): сначала выполни [OFFER_STACK_V1] (секция 4.6b) с данными из BRIEF (пункт 7), затем пиши [CLOSE_ENGINE_V1]. После — проверь через [OFFER_FUNCTIONAL_TEST_V1] (секция 4.6c)
+— FASCINATION PLACEMENT: при написании каждого блока — сверься с Fascination Bank из BRIEF (пункт 8). Если фасцинация усиливает конкретное место (подзаголовок, буллет в оффере, transition hook) — встрой её. Если не усиливает — не вставляй. Неиспользованные фасцинации НЕ выносятся в отдельную секцию
 — После блока: STOP. "Следующий блок? (да/правки/собери финал)"
 
 **MOS BOOSTERS (внутри COPY):**
 1) HEADLINE PASS (10 вариантов → выбери 2)
-2) BULLET PASS (12 bullets: 4 curiosity / 4 proof / 4 identity-result — типы из 4.7 FASCINATIONS_ENGINE)
-3) OFFER STACK PASS (обязателен при MODE A; опционален при B/C)
-4) SKEPTIC BREAKER (только при MODE B/C): Prosecutor Argument flow
+2) OFFER STACK PASS (обязателен при MODE A; опционален при B/C)
+3) SKEPTIC BREAKER (только при MODE B/C): Prosecutor Argument flow
 
 **KNOWLEDGE GATE (обязательный чекпоинт перед PHASE C):**
 **TRIGGER:** Начало PHASE C (COPY) для любого блока.

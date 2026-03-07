@@ -18,7 +18,7 @@
 | 04 | `04_protocols.md` | Operational Loop, Truth Protocol, Query Protocol | STATE=INPUT, QUERY |
 | 05 | `05_research_engine.md` | JTBD, Schwartz Matrix, Unfair Advantage, Curiosity Mining, Corruption Mining, Research Sources, Source Priority, Fact Tagging, Triple Source Rule, Search Templates (субагенты → блок 11) | STATE=RESEARCH |
 | 06 | `06_meaning_maker.md` | UM Engine, Big Idea, Offer Engine | STATE=STRATEGY → EXECUTION |
-| 07 | `07_copywriting_kernel.md` | RMBC, Arrangement Mods, Lead, Pain Density, DES Depth, Story, Mechanism, Mechanism Modes, Result Projection, Product Reveal, Offer Stack (Grand Slam Offer, Naming Protocol, Offer Functional Test), Close (incl. Dream State), Fascinations, FAQ, Proof Engine (incl. Proof Research, Placeholder System), Authority Weaving | STATE=EXECUTION |
+| 07 | `07_copywriting_kernel.md` | RMBC, Arrangement Mods, Lead, Pain Density, DES Depth, Story, Mechanism, Mechanism Modes, Result Projection, Product Reveal, Offer Stack (Grand Slam Offer, Naming Protocol, Offer Functional Test), Close (incl. Dream State), Fascination Bank, FAQ, Proof Engine (incl. Proof Research, Placeholder System), Authority Weaving | STATE=EXECUTION |
 | 08 | `08_asset_library.md` | Email, Ads, VSL, Chatbot шаблоны, Subject Lines | STATE=EXECUTION (по формату) |
 | 09 | `09_debugging.md` | Critic Mode (32Q), Launch Checklist (28Q), Strategy Critic (9Q) | STATE=STRATEGY, DEBUGGING, DELIVERY |
 | 10 | `10_xray.md` | Рентген текста — X-ray V2: 9-мерный скоринг (Lead/Story/Mechanism/Offer/Proof/Language/BigIdea/Architecture/Trust), N/A логика, Awareness/Sophistication-адаптация, KB-сравнение V2 | Команда «Рентген» (независимый режим) |
