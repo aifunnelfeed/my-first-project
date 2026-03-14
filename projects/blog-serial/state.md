@@ -56,7 +56,9 @@
 ## Placeholder Registry
 | # | Тип | Описание | Блок | Статус |
 |---|-----|----------|------|--------|
-| P1 | Цена | [ВСТАВИТЬ: ЦЕНА И УСЛОВИЯ] | Offer + Proof Stack | OPEN |
-| P2 | Social Proof | [ВСТАВИТЬ: КЕЙСЫ УЧАСТНИЦ — 3-5 отзывов] | Offer + Proof Stack | OPEN |
+| P1 | Цена | [ВСТАВИТЬ: ЦЕНА И УСЛОВИЯ] | Offer + Proof Stack | PLACEHOLDER_OVERRIDE |
+| P2 | Social Proof | [ВСТАВИТЬ: КЕЙСЫ УЧАСТНИЦ — 3-5 отзывов] | Offer + Proof Stack | PLACEHOLDER_OVERRIDE |
+
+## PLACEHOLDER_OVERRIDE: 2 placeholders accepted by user (заполнит сам после final.md)
 
 ## Последнее обновление: 2026-03-15
