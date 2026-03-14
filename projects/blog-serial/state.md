@@ -27,7 +27,7 @@
 | Product Reveal | ✅ | ✅ | ✅ PASS | APPROVED |
 | Mini-Proof | ✅ | ✅ | ✅ PASS | APPROVED |
 | Offer + Proof Stack | ✅ | ✅ | ✅ PASS | APPROVED |
-| Close (Dream State + P.S.) | ✅ | | | PENDING |
+| Close (Dream State + P.S.) | ✅ | ✅ | ✅ PASS | APPROVED |
 
 ## Счётчик попыток
 | Блок | Попыток FAIL | Последняя причина |
@@ -51,6 +51,7 @@
 | 13 | Origin story — ракурс «15 минут вечером, 1.5 млн за 9 мес.» | Case Study | Offer + Proof Stack |
 | 14 | Зейгарник + Диккенс — Reason Why для гарантии | Scientific + Historical | Offer + Proof Stack |
 | 15 | «8 лет маркетинговой экспертизы» — authority в Reason Why | Authority | Offer + Proof Stack |
+| 16 | Origin story — микро-ракурс «ролик в три часа ночи на кухне» | Case Study | Close |
 
 ## Placeholder Registry
 | # | Тип | Описание | Блок | Статус |
