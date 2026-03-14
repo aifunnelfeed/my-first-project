@@ -2,7 +2,7 @@
 
 ## Текущий стейт: EXECUTION
 ## Фаза: PHASE C (COPY)
-## Текущий блок: Mini-Proof
+## Текущий блок: Offer + Proof Stack
 ## Формат: landing
 
 ## Пройденные стейты
@@ -25,7 +25,7 @@
 | Mechanism (TEASED) | ✅ | ✅ | ✅ PASS | APPROVED |
 | Result Projection | ✅ | ✅ | ✅ PASS | APPROVED |
 | Product Reveal | ✅ | ✅ | ✅ PASS | APPROVED |
-| Mini-Proof | ✅ | | | PENDING |
+| Mini-Proof | ✅ | ✅ | ✅ PASS | APPROVED |
 | Offer + Proof Stack | ✅ | | | PENDING |
 | Close (Dream State + P.S.) | ✅ | | | PENDING |
 
@@ -44,9 +44,11 @@
 | 6 | Origin story — полная | Case Study | Story |
 | 7 | AI Overviews убивает "полезный контент" | Trend | Mechanism |
 | 8 | Диккенс — расширенный ("Малышка Нелл", пристань) | Historical Data | Mechanism |
+| 9 | 90% retention сериальный контент (Deloitte/Backlinko) | Statistical | Mini-Proof |
+| 10 | 90% криейторов выгорают — новый ракурс (контраст систем) | Statistical | Mini-Proof |
 
 ## Placeholder Registry
 | # | Тип | Описание | Блок | Статус |
 |---|-----|----------|------|--------|
 
-## Последнее обновление: 2026-03-14
+## Последнее обновление: 2026-03-15
