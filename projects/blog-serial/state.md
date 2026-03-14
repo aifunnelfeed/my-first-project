@@ -2,7 +2,7 @@
 
 ## Текущий стейт: EXECUTION
 ## Фаза: PHASE C (COPY)
-## Текущий блок: Mechanism (TEASED)
+## Текущий блок: Result Projection
 ## Формат: landing
 
 ## Пройденные стейты
@@ -22,7 +22,7 @@
 | Lead Часть 1 (Story-First) | ✅ | ✅ | ✅ PASS | APPROVED |
 | Lead Часть 2 (Problem Bridge) | ✅ | ✅ | ✅ PASS | APPROVED |
 | Story | ✅ | ✅ | ✅ PASS | APPROVED |
-| Mechanism (TEASED) | ✅ | | | PENDING |
+| Mechanism (TEASED) | ✅ | ✅ | ✅ PASS | APPROVED |
 | Result Projection | ✅ | | | PENDING |
 | Product Reveal | ✅ | | | PENDING |
 | Mini-Proof | ✅ | | | PENDING |
@@ -36,6 +36,14 @@
 ## Proof Usage Registry
 | # | Proof-элемент | Тип | Использован в блоке |
 |---|--------------|-----|---------------------|
+| 1 | Origin story — кратко (8 лет, 300к, 1.5 млн) | Case Study | Lead Part 1 |
+| 2 | Диккенс — кратко (100к экз.) | Historical Data | Lead Part 1 |
+| 3 | Зейгарник — стат (+90%) | Scientific Study | Lead Part 2 |
+| 4 | ReelShort (35 мин > Netflix) | Market Data | Lead Part 2 |
+| 5 | 90% криейторов выгорают | Statistical | Lead Part 2 |
+| 6 | Origin story — полная | Case Study | Story |
+| 7 | AI Overviews убивает "полезный контент" | Trend | Mechanism |
+| 8 | Диккенс — расширенный ("Малышка Нелл", пристань) | Historical Data | Mechanism |
 
 ## Placeholder Registry
 | # | Тип | Описание | Блок | Статус |
