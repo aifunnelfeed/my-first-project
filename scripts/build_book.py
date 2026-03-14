@@ -499,14 +499,19 @@ html.dark .toc li a:hover {{
   color: var(--text-secondary);
 }}
 
+.table-wrap {{
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1.25rem 0;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}}
+
 .chapter table {{
   width: 100%;
   border-collapse: collapse;
-  margin: 1.25rem 0;
   font-size: 0.9rem;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  border: 1px solid var(--border);
+  min-width: 400px;
 }}
 
 .chapter th {{
@@ -843,6 +848,8 @@ def build():
         text = filepath.read_text(encoding="utf-8")
         md.reset()
         html = md.convert(text)
+        # Wrap tables for mobile scroll
+        html = html.replace("<table>", '<div class="table-wrap"><table>').replace("</table>", "</table></div>")
 
         num = "—" if i == 0 else str(i)
         toc_lines.append(
