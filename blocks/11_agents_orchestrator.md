@@ -28,8 +28,8 @@
 | C  | Curiosity + Corruption | STATE=RESEARCH | brief-context + проблема | Углы для Big Idea | → research_raw.md → DOUBLE FILTER → research.md |
 | D  | Proof Research | EXECUTION (PROOF_MINING gap) | strategy-context + UMR claims | Исследования + Insider Knowledge | → показать пользователю → интегрировать в proof block |
 | E  | Research-Mini | EXECUTION (data gap) | краткий контекст + конкретный пробел | Точечные данные | → показать пользователю → интегрировать в блок |
-| F  | Block Critic | DEBUGGING (после каждого блока COPY) | текст + контекст + 31 критерий | CRITIC REPORT (PASS/FAIL + corrections + placeholder audit) | → показать пользователю → rewrite если FAIL |
-| G  | Launch Critic | DELIVERY (после сборки) | final.md + контекст + 28 критериев | LAUNCH REPORT (PASS/FAIL + corrections + placeholder status + simulation coverage) | → показать пользователю → fix если FAIL |
+| F  | Block Critic | DEBUGGING (после каждого блока COPY) | текст + контекст + 34 критерия | CRITIC REPORT (PASS/FAIL + corrections + placeholder audit) | → показать пользователю → rewrite если FAIL |
+| G  | Launch Critic | DELIVERY (после сборки) | final.md + контекст + 30 критериев | LAUNCH REPORT (PASS/FAIL + corrections + placeholder status + simulation coverage) | → показать пользователю → fix если FAIL |
 | H  | Research Assembler | STATE=RESEARCH (после A+B+C) | выходы субагентов A+B+C | Готовый research_raw.md + SUMMARY | → показать пользователю → research.md |
 | I  | KB-Scout | EXECUTION (PHASE C, перед блоком COPY кроме Proof) | block_type + strategy-context (Awareness, Sophistication, ниша) | Top-3 формулы + Top-2 примера (отфильтрованные) | → показать пользователю → основной агент учитывает при написании |
 | J  | Alternatives Scout | STATE=STRATEGY (авто, фон) / команда "Альтернативы" (ручной, любой стейт) | brief-context + research-context + strategy-context (или текущий draft) + rejected variants из сессии | ALTERNATIVES REPORT: Big Ideas, Mechanisms, Headlines, Leads, Enhancements, Creative Hooks (по 2-3 варианта в категории) | → показать пользователю → alternatives.md (кумулятивно) |
@@ -54,7 +54,7 @@
 
 **STATE=EXECUTION (PHASE C — KB-SCOUT, усиление KNOWLEDGE GATE):**
 - Перед каждым блоком COPY (кроме Proof) → dispatch I (KB-Scout) ПАРАЛЛЕЛЬНО с подготовкой контекста блока → блок 11, секция 7.13 [SUBAGENT_I_KBSCOUT_V1]
-- ИСКЛЮЧЕНИЕ: block_type = Proof → НЕ dispatch I (Proof использует собственный PROOF_MINING_V1, блок 07, секция 4.9b)
+- ИСКЛЮЧЕНИЕ: block_type = Proof → НЕ dispatch I (Proof использует собственный PROOF_MINING_V1, блок 07, секция 4.11b)
 - Скаут НЕ заменяет собственный поиск основного агента — он **усиливает** его дополнительным материалом
 - По возвращении I → показать KB-SCOUT REPORT пользователю → основной агент объединяет свои находки + REPORT скаута → пишет блок
 - Fallback (Agent tool или MCP скауту недоступен): основной агент работает через KNOWLEDGE GATE самостоятельно (search_knowledge / чтение файлов)
@@ -116,8 +116,8 @@
 
 **FALLBACK (всегда):**
 Если Agent tool недоступен → выполнять проверки in-context (блок 09):
-- F → 28 вопросов CRITIC_MODE_V1 (секция 6.1)
-- G → 21 вопрос LAUNCH_CHECKLIST_V1 (секция 6.2)
+- F → 34 вопроса CRITIC_MODE_V1 (секция 6.1)
+- G → 30 вопросов LAUNCH_CHECKLIST_V1 (секция 6.2)
 - H → главный агент собирает research_raw.md вручную (текущее поведение)
 - A-E → серийный ресерч в основном агенте
 - I → основной агент выполняет KNOWLEDGE GATE самостоятельно (search_knowledge / чтение файлов — текущее поведение)
@@ -328,7 +328,7 @@ B) CORRUPTION MINING (кто виноват):
 ### 7.7. ПРОМПТ-ШАБЛОН D: PROOF RESEARCH (для PROOF_RESEARCH_V1)
 КОД ДОСТУПА: [SUBAGENT_D_PROOF_V1]
 
-**ТРИГГЕР:** Шаг 5 протокола PROOF_MINING_V1 (блок 07, секция 4.9b) определил пробелы → нужен внешний ресерч по [PROOF_RESEARCH_V1].
+**ТРИГГЕР:** Шаг 5 протокола PROOF_MINING_V1 (блок 07, секция 4.11b) определил пробелы → нужен внешний ресерч по [PROOF_RESEARCH_V1].
 
 **ПРОМПТ-ШАБЛОН:**
 
@@ -451,7 +451,7 @@ B) CORRUPTION MINING (кто виноват):
 **Шаблон заполнения (главный агент подставляет данные из файлов проекта):**
 
 ```
---- СЕКЦИЯ R1: JTBD + ЭМОЦИОНАЛЬНАЯ КАРТА (→ Q1, Q11, Q15, Q16, Q30) ---
+--- СЕКЦИЯ R1: JTBD + ЭМОЦИОНАЛЬНАЯ КАРТА (→ Q1, Q11, Q15, Q16, Q30, Q34) ---
 - JTBD (функциональная): {что хочет сделать — 1 предложение}
 - JTBD (эмоциональная): {что хочет почувствовать — 1 предложение}
 - JTBD (социальная): {кем хочет казаться / перестать быть — 1 предложение}
@@ -508,7 +508,7 @@ VOC-цитаты (CORE, дословные — по 2-3 из каждой тем
 {2-4 записи из research.md секции 3.1}
 
 --- СЕКЦИЯ R6: EXPERT AUTHORITY (→ Q27) ---
-Критику: для Q27 — проверь, вплетены ли credentials в нарратив по паттернам [AUTHORITY_WEAVING_V1] (блок 07, секция 4.3f).
+Критику: для Q27 — проверь, вплетены ли credentials в нарратив по паттернам [AUTHORITY_WEAVING_V1] (блок 07, секция 4.5f).
 Если strategy.md секция L пуста или помечена «Эксперт: отсутствует» → Q27 = Н/П.
 
 Credentials (из strategy.md секция L):
@@ -566,6 +566,13 @@ Mechanism Mode (из strategy.md I2):
 - Обоснование: {1 предложение}
 
 Критику: для Q31 — проверяй, что гарантия в тексте соответствует типу из F5. Для Q32 — проверяй, что Offer Stack собран по протоколу (Naming, Reason Why, «Sell the Vacation», «Who NOT for»). Для Offer — проверяй, что Value Equation данные использованы (Dream Outcome в «Sell the vacation», Speed to Value в Lead/Result Projection, Effort в снятии возражений).
+
+--- СЕКЦИЯ S6: CORE EMOTION (→ Q34) ---
+Core Emotion (из strategy.md N):
+- Эмоция: {номер + название из 10}
+- Обоснование: {почему для данной ЦА}
+
+Критику: для Q34 — проверяй, что каждый блок усиливает выбранную Core Emotion. Lead = запуск эмоции, Pain = пик, Story = зеркало через героя, Mechanism = трансформация в надежду, Offer/Close = конвертация в действие. Переключение на другую эмоцию = FAIL.
 ```
 
 ---
@@ -574,27 +581,27 @@ Mechanism Mode (из strategy.md I2):
 
 Определяет, какие секции [CRITIC_CONTEXT_V1] включать для каждого типа блока:
 
-| block_type | R1 | R2 | R3 | R4 | R5 | R6 | S1 | S2 | S3 | S4 | S5 |
-|------------|----|----|----|----|----|----|----|----|----|----|-----|
-| Headline | FULL | SHORT | SKIP | SKIP | SKIP | SKIP | SKIP | SHORT | SKIP | SKIP | SKIP |
-| Lead | FULL | FULL | SHORT | SHORT | SHORT | FULL | SHORT | FULL | FULL | FULL | SHORT |
-| Story | FULL | FULL | SKIP | SKIP | SKIP | FULL | SKIP | SHORT | SHORT | SHORT | SKIP |
-| Pain Deep Dive | FULL | FULL | SHORT | SKIP | SKIP | SKIP | SKIP | SHORT | SHORT | SHORT | SKIP |
-| Bridge / UMP | FULL | SHORT | SHORT | FULL | SHORT | SHORT | SKIP | FULL | SHORT | SHORT | SKIP |
-| UMR / Mechanism | FULL | SHORT | SKIP | SHORT | FULL | SHORT | FULL | SHORT | SHORT | FULL | SHORT |
-| Result Projection | FULL | FULL | SKIP | SKIP | SHORT | SKIP | FULL | SHORT | SHORT | FULL | SHORT |
-| Mini-Proof | SHORT | SKIP | SKIP | SKIP | FULL | SHORT | FULL | SHORT | SKIP | FULL | SKIP |
-| Product Reveal | SHORT | SKIP | SHORT | SHORT | SKIP | SHORT | SHORT | SHORT | SHORT | SHORT | SHORT |
-| Offer + Close | SHORT | SKIP | FULL | SHORT | SKIP | SKIP | FULL | FULL | SHORT | FULL | FULL |
-| Fascination Bank (BRIEF) | SHORT | SHORT | SHORT | SKIP | SHORT | SKIP | SHORT | SHORT | SKIP | SKIP | SKIP |
-| FAQ | SHORT | SHORT | FULL | SHORT | SHORT | SKIP | SKIP | FULL | SKIP | SKIP | SKIP |
+| block_type | R1 | R2 | R3 | R4 | R5 | R6 | S1 | S2 | S3 | S4 | S5 | S6 |
+|------------|----|----|----|----|----|----|----|----|----|----|-----|-----|
+| Headline | FULL | SHORT | SKIP | SKIP | SKIP | SKIP | SKIP | SHORT | SKIP | SKIP | SKIP | FULL |
+| Lead | FULL | FULL | SHORT | SHORT | SHORT | FULL | SHORT | FULL | FULL | FULL | SHORT | FULL |
+| Story | FULL | FULL | SKIP | SKIP | SKIP | FULL | SKIP | SHORT | SHORT | SHORT | SKIP | FULL |
+| Pain Deep Dive | FULL | FULL | SHORT | SKIP | SKIP | SKIP | SKIP | SHORT | SHORT | SHORT | SKIP | FULL |
+| Bridge / UMP | FULL | SHORT | SHORT | FULL | SHORT | SHORT | SKIP | FULL | SHORT | SHORT | SKIP | FULL |
+| UMR / Mechanism | FULL | SHORT | SKIP | SHORT | FULL | SHORT | FULL | SHORT | SHORT | FULL | SHORT | FULL |
+| Result Projection | FULL | FULL | SKIP | SKIP | SHORT | SKIP | FULL | SHORT | SHORT | FULL | SHORT | FULL |
+| Mini-Proof | SHORT | SKIP | SKIP | SKIP | FULL | SHORT | FULL | SHORT | SKIP | FULL | SKIP | SHORT |
+| Product Reveal | SHORT | SKIP | SHORT | SHORT | SKIP | SHORT | SHORT | SHORT | SHORT | SHORT | SHORT | SHORT |
+| Offer + Close | SHORT | SKIP | FULL | SHORT | SKIP | SKIP | FULL | FULL | SHORT | FULL | FULL | FULL |
+| Fascination Bank (BRIEF) | SHORT | SHORT | SHORT | SKIP | SHORT | SKIP | SHORT | SHORT | SKIP | SKIP | SKIP | SHORT |
+| FAQ | SHORT | SHORT | FULL | SHORT | SHORT | SKIP | SKIP | FULL | SKIP | SKIP | SKIP | SHORT |
 
 ---
 
 **ПРОМПТ-ШАБЛОН:**
 
 ```
-ЗАДАЧА: Проверь блок копирайтинга "{block_name}" по 32 критериям качества. Для каждого критерия ответь ДА/НЕТ/Н/П (не применимо к данному блоку). Для каждого НЕТ — опиши проблему и предложи 1-3 конкретных исправления. Вопрос 29 (Placeholder Audit) — INFO, не влияет на PASS/FAIL. Вопрос 31 (Guarantee-Offer Alignment) — если F5 не заполнена → WARNING, не FAIL. Вопрос 32 (Offer Stack Quality) — если блок не содержит offer/close → Н/П.
+ЗАДАЧА: Проверь блок копирайтинга "{block_name}" по 34 критериям качества. Для каждого критерия ответь ДА/НЕТ/Н/П (не применимо к данному блоку). Для каждого НЕТ — опиши проблему и предложи 1-3 конкретных исправления. Вопрос 29 (Placeholder Audit) — INFO, не влияет на PASS/FAIL. Вопрос 31 (Guarantee-Offer Alignment) — если F5 не заполнена → WARNING, не FAIL. Вопрос 32 (Offer Stack Quality) — если блок не содержит offer/close → Н/П. Вопрос 34 (Core Emotion) — если N не заполнена в стратегии → WARNING, не FAIL.
 
 КОНТЕКСТ ПРОЕКТА:
 - Продукт: {1-2 предложения из brief.md}
@@ -650,8 +657,8 @@ Mechanism Mode (из strategy.md I2):
     - Слой 3 (Эмоция): фрустрация, стыд, бессилие, злость
     - Слой 4 (Идентичность): что проблема говорит обо мне как о человеке/профессионале
     Если слои 3-4 отсутствуют или формальные → FAIL.
-16. **Earned Solution:** Хочет ли читатель узнать решение К МОМЕНТУ, когда оно предлагается? Тест: если убрать механизм и оффер — будет ли читатель разочарован? Если нет → Pain Amplification слишком слабая.
-17. **Pain Budget:** Секция боли (Lead + Pain Amplification) >= секции механизма (Bridge + Mechanism) по объёму?
+16. **Earned Solution:** Хочет ли читатель узнать решение К МОМЕНТУ, когда оно предлагается? Тест: если убрать механизм и оффер — будет ли читатель разочарован? Если нет → Lead Часть 2 слишком слабая.
+17. **Pain Budget:** Секция боли (Lead + Lead Часть 2) >= секции механизма (Mechanism) по объёму?
     - Sophistication 1-2: соотношение боль:механизм >= 1:1
     - Sophistication 3-4: >= 1.5:1
     - Sophistication 5: допустимо 0.5:1
@@ -703,7 +710,7 @@ Mechanism Mode (из strategy.md I2):
 26. **Mechanism-Research Validation:** Содержит ли Mechanism хотя бы 1 внешнее исследование / инсайдерский факт, подкрепляющий UMR? Если Sophistication >= 3 — есть ли Mechanism-Proof Fusion (одновременно объясняет КАК + доказывает ЧТО)? Если ниша Health/Finance и нет внешнего research → FAIL.
 27. **Authority Weaving:** Если в тексте упоминается эксперт:
     - Credentials вплетены в нарратив (НЕ отдельный блок «Об авторе»)?
-    - Используется паттерн, подходящий для Awareness {awareness} / Sophistication {sophistication} (по матрице 4.3f)?
+    - Используется паттерн, подходящий для Awareness {awareness} / Sophistication {sophistication} (по матрице 4.5f)?
     - Credentials появляются минимум в 2 точках текста?
     - Каждый credential ПРИВЯЗАН к окружающему контексту (не висит в воздухе)?
     Если credentials одним списком или нерелевантны → FAIL. Если эксперта нет → Н/П.
@@ -726,8 +733,8 @@ Mechanism Mode (из strategy.md I2):
 
 ГРУППА 7: DESIRE CALIBRATION (30)
 
-30. **Desire Depth:** Если блок содержит Result Projection (4.4b) или Dream State (шаг 16 Close):
-    - Проработаны ли минимум 3 из 4 слоёв DES Depth (по [DES_DEPTH_V1], блок 07 секция 4.2b)?
+30. **Desire Depth:** Если блок содержит Result Projection (4.6b) или Dream State (шаг 16 Close):
+    - Проработаны ли минимум 3 из 4 слоёв DES Depth (по [DES_DEPTH_V1], блок 07 секция 4.3a)?
       (1) Конкретный результат (измеримое/видимое изменение)
       (2) Ценность для жизни (время/деньги/свобода/возможности)
       (3) Эмоциональная награда (гордость/уверенность/спокойствие)
@@ -750,8 +757,17 @@ Mechanism Mode (из strategy.md I2):
     - Dream Outcome показан ДО списка компонентов («Sell the Vacation»)?
     - Reason Why для цены присутствует?
     - Разрыв ценность/цена >= 3x?
-    - Пройден ли [OFFER_FUNCTIONAL_TEST_V1] (4.6c)?
+    - Пройден ли [OFFER_FUNCTIONAL_TEST_V1] (4.8c)?
     Если блок не содержит offer/close → Н/П.
+
+ГРУППА 9: EMOTION (34)
+
+34. **Core Emotion Alignment (EMOTION_ANCHOR_V1):** Усиливает ли блок Core Emotion из strategy.md (N)?
+    - Какая Core Emotion выбрана: {эмоция из S6}
+    - Как блок её усиливает: Lead = запускает, Pain = пик, Story = зеркало, Mechanism = надежда, Offer/Close = конвертация в действие
+    - Нет ли переключения на другую эмоцию (например, текст про страх вдруг переходит в жадность)?
+    - Если Core Emotion не выбрана в стратегии → WARNING с рекомендацией заполнить N.
+    Переключение Core Emotion внутри блока = FAIL.
 
 33. **Repetition Audit (REPETITION_GUARD_V1):** Проверка по 5 категориям повторов:
     - **R1 Дословный:** Есть ли в блоке фразы/предложения, дословно совпадающие с предыдущими блоками?
@@ -779,6 +795,7 @@ Mechanism Mode (из strategy.md I2):
 - Блок НЕ содержит guarantee section → вопрос 31 = Н/П. Если F5 не заполнена → WARNING
 - Блок НЕ содержит offer/close section → вопрос 32 = Н/П
 - Вопрос 33 (Repetition Audit) = применим ВСЕГДА (проверяет текущий блок против всех предыдущих)
+- Вопрос 34 (Core Emotion) = применим ВСЕГДА. Если Core Emotion (N) не выбрана в стратегии → WARNING, не FAIL
 
 **Порог PASS:** Из ПРИМЕНИМЫХ вопросов >= 80% должны быть ДА.
 
@@ -854,7 +871,7 @@ Mechanism Mode (из strategy.md I2):
 **ПРОМПТ-ШАБЛОН:**
 
 ```
-ЗАДАЧА: Проверь полный собранный текст (final.md) по 28 критериям Launch Checklist. ВСЕ 28 должны быть ДА для прохождения. Для каждого НЕТ — опиши проблему и предложи исправление.
+ЗАДАЧА: Проверь полный собранный текст (final.md) по 30 критериям Launch Checklist. ВСЕ 30 должны быть ДА для прохождения. Для каждого НЕТ — опиши проблему и предложи исправление.
 
 КОНТЕКСТ ПРОЕКТА:
 - Продукт: {1-2 предложения из brief.md}
@@ -870,6 +887,7 @@ Mechanism Mode (из strategy.md I2):
 - Speed to Value (D3): {Quick Win + Full Result}
 - Guarantee Strategy (F5): {тип + формулировка}
 - Mechanism Mode (I2): {Hidden / Teased / Revealed}
+- Core Emotion (N): {номер + название}
 - Формат: {landing/email/vsl/ads/chatbot}
 
 ПОЛНЫЙ ТЕКСТ ДЛЯ ПРОВЕРКИ:
@@ -918,7 +936,13 @@ Mechanism Mode (из strategy.md I2):
 26. **"Who NOT for" (Hormozi):** Присутствует ли секция «для кого НЕ подходит» (3-5 пунктов)? Пункты усиливают доверие и exclusivity (не отталкивают ЦА)? Позиция: после CTA #3 или перед P.S.?
 27. **Speed to Value (Hormozi):** Упомянут ли Quick Win (первый результат за 24-48ч) из D3? Full Result с конкретным сроком? Обещания реалистичны (не пустое «мгновенный результат»)? Если D3 не заполнен → WARNING.
 28. **Audience Simulation Coverage:** Если Audience Simulation проводилась — все Primary-сегменты удержаны (BUY/MAYBE)? Все 4 decision models обслужены в тексте (ANALYST: цифры/proof, SOCIAL: отзывы/кейсы, IMPULSIVE: яркий hook + быстрый CTA, METHODICAL: пошаговый процесс)? Если CRITICAL_FIX был — исправления применены? Если симуляция не проводилась → Н/П.
-29. **Cross-Block Repetition Scan (REPETITION_GUARD_V1):** Полный скан собранного текста по 5 категориям:
+29. **Core Emotion Consistency:** Одна ли эмоция (из strategy.md N) проходит через ВЕСЬ текст от Lead до P.S.?
+    - Lead запускает Core Emotion?
+    - Lead Часть 2 доводит до пика?
+    - Mechanism трансформирует в надежду?
+    - Offer/Close конвертирует в действие?
+    Если эмоция переключается на другую в середине текста → FAIL. Если Core Emotion не выбрана → FAIL с рекомендацией вернуться к STRATEGY.
+30. **Cross-Block Repetition Scan (REPETITION_GUARD_V1):** Полный скан собранного текста по 5 категориям:
     - **R1 Дословные повторы:** фразы/предложения, встречающиеся 2+ раз в разных блоках?
     - **R2 Аргументные дубли:** один и тот же довод/claim в 2+ местах (даже перефразированный) БЕЗ развития?
     - **R3 Структурные дубли:** одна и та же секция/список/описание в 2+ блоках (например, программа дня и в Mechanism, и в Offer)?
@@ -1361,13 +1385,13 @@ Mechanism Mode (из strategy.md I2):
 | Блок | Запросы FORMULAS (`category="formulas"`, `n_results=7`) | Запросы EXAMPLES (`category="examples"`, `n_results=5`) |
 |------|--------------------------------------------------------|--------------------------------------------------------|
 | Lead (4.2) | 1) `"формула лида заголовка для уровня осведомлённости {awareness_level} по Шварцу тип {lead_type}"` 2) `"паттерн заголовка с крючком curiosity обещанием и конкретикой для {ниша}"` | 1) `"пример лида вступления sales letter для {ниша} уровень Шварца {awareness_level}"` 2) `"opening hook sales letter {lead_type} {ниша}"` |
-| Story (4.3) | 1) `"формула истории нарративного блока три акта дно перелом результат"` 2) `"паттерн эмоциональной истории переход от боли к инсайту трансформация"` | 1) `"пример истории background story в sales letter трансформация героя"` |
-| Mechanism (4.4) | 1) `"формула раскрытия механизма аналогия шаги контраст объяснение для {ниша}"` 2) `"паттерн механизма решения UMR через простое объяснение метафору"` | 1) `"пример раскрытия механизма в sales letter {ниша} как работает решение"` |
-| Product Reveal (4.5) | 1) `"формула представления продукта product reveal создание нарратив"` | 1) `"пример представления продукта sales letter нарративная арка что входит"` |
-| Close/Offer (4.6) | 1) `"формула оффера value stack CTA гарантия снятие риска скидка"` 2) `"паттерн закрытия close P.S. срочность дедлайн"` | 1) `"пример оффера close sales letter тройной CTA value stack цена"` |
-| **Proof (4.9)** | **НЕ ЗАПУСКАТЬ** — Proof имеет собственный PROOF_MINING_V1 (блок 07, секция 4.9b) с 3 специализированными запросами к formulas/audience/expert | **НЕ ЗАПУСКАТЬ** |
-| Fascination Bank (4.7, в BRIEF) | 1) `"формула фасцинаций буллетов curiosity bullets proof bullets {ниша}"` 2) `"11 типов фасцинаций шаблоны why how secret list"` | 1) `"пример фасцинаций буллетов из sales letter {ниша}"` |
-| FAQ (4.8) | 1) `"формула FAQ ответы на возражения снятие сомнений перед покупкой"` | 1) `"пример FAQ секции sales letter мягкий CTA в ответах"` |
+| Story (4.5) | 1) `"формула истории нарративного блока три акта дно перелом результат"` 2) `"паттерн эмоциональной истории переход от боли к инсайту трансформация"` | 1) `"пример истории background story в sales letter трансформация героя"` |
+| Mechanism (4.6) | 1) `"формула раскрытия механизма аналогия шаги контраст объяснение для {ниша}"` 2) `"паттерн механизма решения UMR через простое объяснение метафору"` | 1) `"пример раскрытия механизма в sales letter {ниша} как работает решение"` |
+| Product Reveal (4.7) | 1) `"формула представления продукта product reveal создание нарратив"` | 1) `"пример представления продукта sales letter нарративная арка что входит"` |
+| Close/Offer (4.8) | 1) `"формула оффера value stack CTA гарантия снятие риска скидка"` 2) `"паттерн закрытия close P.S. срочность дедлайн"` | 1) `"пример оффера close sales letter тройной CTA value stack цена"` |
+| **Proof (4.11)** | **НЕ ЗАПУСКАТЬ** — Proof имеет собственный PROOF_MINING_V1 (блок 07, секция 4.11b) с 3 специализированными запросами к formulas/audience/expert | **НЕ ЗАПУСКАТЬ** |
+| Fascination Bank (4.9, в BRIEF) | 1) `"формула фасцинаций буллетов curiosity bullets proof bullets {ниша}"` 2) `"11 типов фасцинаций шаблоны why how secret list"` | 1) `"пример фасцинаций буллетов из sales letter {ниша}"` |
+| FAQ (4.10) | 1) `"формула FAQ ответы на возражения снятие сомнений перед покупкой"` | 1) `"пример FAQ секции sales letter мягкий CTA в ответах"` |
 
 **ПРОМПТ-ШАБЛОН:**
 

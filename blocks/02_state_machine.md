@@ -64,7 +64,7 @@ E) SOURCES
 — DRE (Dominant Resident Emotion): 1 эмоция сейчас
 — DRE Depth (4 слоя): Поверхность / Цена / Эмоция / Идентичность (краткие формулировки + VOC)
 — DES (Desired Emotional State): 1 эмоция "после"
-— DES Depth (4 слоя по [DES_DEPTH_V1], блок 07 секция 4.2b):
+— DES Depth (4 слоя по [DES_DEPTH_V1], блок 07 секция 4.3a):
   - Конкретный результат: {что конкретно изменится — цифры, действия}
   - Ценность для жизни: {как улучшится повседневность — время/деньги/свобода}
   - Эмоциональная награда: {что почувствует — гордость/уверенность/спокойствие}
@@ -200,17 +200,17 @@ DELIVERY → REVIEW
    — MODE B: Headline (curiosity + Big Idea), Bullets (micro-belief shifts), Proof (CPB stacking)
    — MODE C: ETS (DRE→DES), Story arc + belief shifts, Proof (story-proof + social proof)
 5) GEORGI BRIEF: Парадоксальный вопрос, Метафора, Bold Claim, Upsell Ideas (секция 4.1)
-6) MECHANISM MODE: режим из strategy.md (I2) — Hidden/Teased/Revealed. Влияет на объём секции 4.4 (см. [MECHANISM_MODES_V1])
-7) OFFER STACK PLAN: список проблем → компоненты → названия по [NAMING_PROTOCOL_V1] → ценности. Предварительная таблица для [OFFER_STACK_V1] (секция 4.6b). «Sell the Vacation» + «Who NOT for» + Reason Why
-8) FASCINATION BANK: сгенерируй 12–15 фасцинаций по [FASCINATION_BANK_V1] (секция 4.7). Покажи банк с тегами (curiosity / proof / identity-result). Пользователь утверждает банк вместе с BRIEF
+6) MECHANISM MODE: режим из strategy.md (I2) — Hidden/Teased/Revealed. Влияет на объём секции 4.6 (см. [MECHANISM_MODES_V1])
+7) OFFER STACK PLAN: список проблем → компоненты → названия по [NAMING_PROTOCOL_V1] → ценности. Предварительная таблица для [OFFER_STACK_V1] (секция 4.8b). «Sell the Vacation» + «Who NOT for» + Reason Why
+8) FASCINATION BANK: сгенерируй 12–15 фасцинаций по [FASCINATION_BANK_V1] (секция 4.9). Покажи банк с тегами (curiosity / proof / identity-result). Пользователь утверждает банк вместе с BRIEF
 — SELF-CHECK (3 пункта)
 — "Утвердить BRIEF? (да/правки)"
 
 **PHASE C — COPY (текст):**
 — Только после утверждения BRIEF
-— ОДИН блок за сообщение (4.2/4.3/4.4/4.5/4.6 + опционально 4.8)
-— Для блока 4.4 (Mechanism): применяй MECHANISM MODE из BRIEF (пункт 6) через [MECHANISM_MODES_V1]
-— Для блока 4.6 (Close): сначала выполни [OFFER_STACK_V1] (секция 4.6b) с данными из BRIEF (пункт 7), затем пиши [CLOSE_ENGINE_V1]. После — проверь через [OFFER_FUNCTIONAL_TEST_V1] (секция 4.6c)
+— ОДИН блок за сообщение (4.2/4.3/4.4/4.5/4.6/4.7/4.8 + опционально 4.10)
+— Для блока 4.6 (Mechanism): применяй MECHANISM MODE из BRIEF (пункт 6) через [MECHANISM_MODES_V1]
+— Для блока 4.8 (Close): сначала выполни [OFFER_STACK_V1] (секция 4.8b) с данными из BRIEF (пункт 7), затем пиши [CLOSE_ENGINE_V1]. После — проверь через [OFFER_FUNCTIONAL_TEST_V1] (секция 4.8c)
 — FASCINATION PLACEMENT: при написании каждого блока — сверься с Fascination Bank из BRIEF (пункт 8). Если фасцинация усиливает конкретное место (подзаголовок, буллет в оффере, transition hook) — встрой её. Если не усиливает — не вставляй. Неиспользованные фасцинации НЕ выносятся в отдельную секцию
 — После блока: STOP. "Следующий блок? (да/правки/собери финал)"
 
@@ -229,7 +229,7 @@ DELIVERY → REVIEW
 **Поток 1 — Субагент KB-Scout (усиление):**
 1. Если Agent tool доступен И block_type ≠ Proof → dispatch субагент I (KB-Scout) → блок 11, секция 7.13 [SUBAGENT_I_KBSCOUT_V1]
 2. Scout запускается ПАРАЛЛЕЛЬНО с потоком 2 (не блокирует основной процесс)
-3. Если block_type = Proof → пропустить поток 1 (Proof → PROOF_MINING_V1, блок 07, секция 4.9b)
+3. Если block_type = Proof → пропустить поток 1 (Proof → PROOF_MINING_V1, блок 07, секция 4.11b)
 4. Если Agent tool недоступен → пропустить поток 1, работать только через поток 2
 
 **Поток 2 — Основной агент (базовый поиск):**
