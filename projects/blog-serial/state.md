@@ -2,7 +2,7 @@
 
 ## Текущий стейт: EXECUTION
 ## Фаза: PHASE C (COPY)
-## Текущий блок: Offer + Proof Stack
+## Текущий блок: Close (Dream State + P.S.)
 ## Формат: landing
 
 ## Пройденные стейты
@@ -26,7 +26,7 @@
 | Result Projection | ✅ | ✅ | ✅ PASS | APPROVED |
 | Product Reveal | ✅ | ✅ | ✅ PASS | APPROVED |
 | Mini-Proof | ✅ | ✅ | ✅ PASS | APPROVED |
-| Offer + Proof Stack | ✅ | | | PENDING |
+| Offer + Proof Stack | ✅ | ✅ | ✅ PASS | APPROVED |
 | Close (Dream State + P.S.) | ✅ | | | PENDING |
 
 ## Счётчик попыток
@@ -46,9 +46,16 @@
 | 8 | Диккенс — расширенный ("Малышка Нелл", пристань) | Historical Data | Mechanism |
 | 9 | 90% retention сериальный контент (Deloitte/Backlinko) | Statistical | Mini-Proof |
 | 10 | 90% криейторов выгорают — новый ракурс (контраст систем) | Statistical | Mini-Proof |
+| 11 | 97% не проходят курсы — ракурс «формат для отчётности» | Statistical | Offer + Proof Stack |
+| 12 | Диккенс — ракурс «обычные люди, не супергерои» | Historical Data | Offer + Proof Stack |
+| 13 | Origin story — ракурс «15 минут вечером, 1.5 млн за 9 мес.» | Case Study | Offer + Proof Stack |
+| 14 | Зейгарник + Диккенс — Reason Why для гарантии | Scientific + Historical | Offer + Proof Stack |
+| 15 | «8 лет маркетинговой экспертизы» — authority в Reason Why | Authority | Offer + Proof Stack |
 
 ## Placeholder Registry
 | # | Тип | Описание | Блок | Статус |
 |---|-----|----------|------|--------|
+| P1 | Цена | [ВСТАВИТЬ: ЦЕНА И УСЛОВИЯ] | Offer + Proof Stack | OPEN |
+| P2 | Social Proof | [ВСТАВИТЬ: КЕЙСЫ УЧАСТНИЦ — 3-5 отзывов] | Offer + Proof Stack | OPEN |
 
 ## Последнее обновление: 2026-03-15
