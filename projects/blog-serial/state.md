@@ -1,13 +1,13 @@
 # Состояние проекта: Blog Serial
 
-## Текущий стейт: INPUT
+## Текущий стейт: RESEARCH
 ## Фаза: —
 ## Текущий блок: —
 ## Формат: landing
 
 ## Пройденные стейты
-- [ ] INPUT
-- [ ] QUERY
+- [x] INPUT
+- [x] QUERY (BYPASS — данные из прямого ввода)
 - [ ] RESEARCH
 - [ ] STRATEGY
 - [ ] EXECUTION
