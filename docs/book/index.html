@@ -23,6 +23,11 @@
   --radius: 12px;
   --radius-sm: 8px;
   --sidebar-w: 260px;
+  --table-bg: #f0f4ff;
+  --table-header: #dbe4f8;
+  --table-header-text: #3b4f74;
+  --table-border: #c7d4ec;
+  --table-stripe: #e8edf8;
 }
 
 html.dark {
@@ -37,6 +42,11 @@ html.dark {
   --code-bg: #27272a;
   --shadow: 0 1px 3px rgba(0,0,0,0.3);
   --shadow-lg: 0 4px 6px -1px rgba(0,0,0,0.4);
+  --table-bg: #141829;
+  --table-header: #1c2240;
+  --table-header-text: #8b9fce;
+  --table-border: #2a3358;
+  --table-stripe: #181d33;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -454,7 +464,8 @@ html.dark .toc li a:hover {
   -webkit-overflow-scrolling: touch;
   margin: 1.25rem 0;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--border);
+  border: 1px solid var(--table-border);
+  background: var(--table-bg);
 }
 
 .chapter table {
@@ -465,21 +476,25 @@ html.dark .toc li a:hover {
 }
 
 .chapter th {
-  background: var(--bg);
+  background: var(--table-header);
   padding: 0.6rem 0.875rem;
   text-align: left;
   font-weight: 600;
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--text-secondary);
-  border-bottom: 1px solid var(--border);
+  color: var(--table-header-text);
+  border-bottom: 1px solid var(--table-border);
 }
 
 .chapter td {
   padding: 0.6rem 0.875rem;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--table-border);
   vertical-align: top;
+}
+
+.chapter tr:nth-child(even) {
+  background: var(--table-stripe);
 }
 
 .chapter tr:last-child td {
