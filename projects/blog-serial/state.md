@@ -2,7 +2,7 @@
 
 ## Текущий стейт: EXECUTION
 ## Фаза: PHASE C (COPY)
-## Текущий блок: Product Reveal
+## Текущий блок: Mini-Proof
 ## Формат: landing
 
 ## Пройденные стейты
@@ -24,7 +24,7 @@
 | Story | ✅ | ✅ | ✅ PASS | APPROVED |
 | Mechanism (TEASED) | ✅ | ✅ | ✅ PASS | APPROVED |
 | Result Projection | ✅ | ✅ | ✅ PASS | APPROVED |
-| Product Reveal | ✅ | | | PENDING |
+| Product Reveal | ✅ | ✅ | ✅ PASS | APPROVED |
 | Mini-Proof | ✅ | | | PENDING |
 | Offer + Proof Stack | ✅ | | | PENDING |
 | Close (Dream State + P.S.) | ✅ | | | PENDING |
