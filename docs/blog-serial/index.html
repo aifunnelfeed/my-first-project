@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Практикум «Сериальный Блог»</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  :root {
+    --bg: #faf5ee;
+    --bg-card: #ffffff;
+    --bg-card-hover: #fff8f0;
+    --border: #e8ddd0;
+    --text: #2d2520;
+    --text-dim: #9a8e82;
+    --text-body: #5c534a;
+    --gold: #d4942a;
+    --gold-dim: rgba(212, 148, 42, 0.1);
+    --gold-glow: rgba(212, 148, 42, 0.12);
+    --green: #4caf6a;
+    --green-dim: rgba(76, 175, 106, 0.1);
+    --red: #c0392b;
+    --red-dim: rgba(192, 57, 43, 0.07);
+    --purple: #9066cc;
+    --purple-glow: rgba(144, 102, 204, 0.1);
+    --white: #2d2520;
+    --cyan: #5ba4cf;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text-body);
+    line-height: 1.8;
+    font-size: 17px;
+  }
+
+  /* === ANIMATED BG === */
+  .bg-grid {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: radial-gradient(circle, rgba(180, 160, 130, 0.15) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* === LAYOUT === */
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  section {
+    padding: 4rem 0;
+    position: relative;
+  }
+
+  /* === TYPOGRAPHY === */
+  h1, h2, h3, h4 {
+    color: var(--white);
+    line-height: 1.2;
+  }
+
+  h2 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    font-weight: 800;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+  }
+
+  h3 {
+    font-size: clamp(1.3rem, 3vw, 1.6rem);
+    font-weight: 700;
+    margin-bottom: 1.2rem;
+  }
+
+  p { margin-bottom: 1.2rem; }
+  p:last-child { margin-bottom: 0; }
+
+  strong { color: var(--white); font-weight: 700; }
+  em { color: var(--text-dim); font-style: italic; }
+
+  .gold { color: var(--gold); }
+  .gold-text {
+    background: linear-gradient(135deg, var(--gold), #c07d20, #9066cc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* === HERO === */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 8rem 2rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -300px; left: 50%;
+    transform: translateX(-50%);
+    width: 1000px; height: 1000px;
+    background: radial-gradient(circle,
+      rgba(212, 148, 42, 0.08) 0%,
+      rgba(144, 102, 204, 0.05) 40%,
+      transparent 70%);
+    pointer-events: none;
+    animation: heroGlow 8s ease-in-out infinite;
+  }
+  @keyframes heroGlow {
+    0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+    50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+  }
+
+  .hero h1 {
+    font-size: clamp(2.2rem, 5.5vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.03em;
+    max-width: 800px;
+    animation: fadeInUp 1s ease 0.2s both;
+  }
+
+  .hero .subtitle {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    color: var(--text-dim);
+    max-width: 650px;
+    margin-bottom: 0;
+    line-height: 1.8;
+    animation: fadeInUp 1s ease 0.4s both;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* === DIVIDER === */
+  .divider {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 3rem auto;
+  }
+
+  /* === PAIN SECTION === */
+  .pain {
+    background: linear-gradient(180deg, transparent, rgba(192, 57, 43, 0.03) 50%, transparent);
+  }
+
+  .pain-highlight {
+    border-left: 3px solid var(--red);
+    padding: 1.5rem 2rem;
+    background: var(--red-dim);
+    border-radius: 0 12px 12px 0;
+    margin: 2rem 0;
+    font-size: 1.05rem;
+  }
+
+  /* === BRIDGE === */
+  .bridge-box {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--bg-card);
+    border: 1px solid rgba(212, 148, 42, 0.15);
+    border-radius: 20px;
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .bridge-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .bridge-box p {
+    font-size: 1.2rem;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* === RELIEF LINE === */
+  .relief {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-dim);
+    font-style: italic;
+    font-size: 1.05rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin: 2rem 0;
+  }
+
+  /* === STORY === */
+  .story-section {
+    background: linear-gradient(180deg, transparent, rgba(144, 102, 204, 0.03) 50%, transparent);
+  }
+  .story-quote {
+    border-left: 3px solid var(--purple);
+    padding: 1.2rem 1.5rem;
+    background: var(--purple-glow);
+    border-radius: 0 12px 12px 0;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: var(--text);
+  }
+
+  /* === MECHANISM CARD === */
+  .step-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  }
+  .step-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 0 20px 60px rgba(212, 148, 42, 0.08);
+  }
+  .step-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--purple));
+  }
+
+  /* === RESULT PROJECTION === */
+  .result-section {
+    background: linear-gradient(180deg, transparent, rgba(76, 175, 106, 0.04) 50%, transparent);
+  }
+  .result-timeline {
+    border-left: 2px solid var(--gold);
+    padding-left: 2rem;
+    margin: 2rem 0 2rem 1rem;
+  }
+  .result-timeline .milestone {
+    position: relative;
+    margin-bottom: 2rem;
+  }
+  .result-timeline .milestone::before {
+    content: '';
+    position: absolute;
+    left: -2.35rem;
+    top: 0.5rem;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 15px rgba(245, 200, 66, 0.4);
+  }
+  .milestone-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.3rem;
+  }
+
+  /* === PRODUCT REVEAL === */
+  .product-section {
+    text-align: center;
+    padding: 5rem 0;
+  }
+  .product-section h2 {
+    font-size: clamp(2rem, 5vw, 2.8rem);
+  }
+
+  .module-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 1.5rem 0;
+    text-align: left;
+    transition: all 0.3s;
+  }
+  .module-card:hover {
+    border-color: rgba(212, 148, 42, 0.3);
+    transform: translateY(-2px);
+  }
+  .module-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .module-card h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+  .module-card p {
+    color: var(--text-dim);
+    font-size: 0.95rem;
+    margin-bottom: 0;
+  }
+
+  /* === BONUS CARD === */
+  .bonus-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem 2rem;
+    margin: 1rem 0;
+    transition: all 0.3s;
+  }
+  .bonus-card:hover {
+    border-color: rgba(212, 148, 42, 0.2);
+  }
+
+  /* === COMPARE TABLE === */
+  .compare-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 2rem 0;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .compare-table th {
+    background: var(--bg-card);
+    padding: 1rem 1.5rem;
+    text-align: left;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    font-weight: 700;
+  }
+  .compare-table th:last-child { color: var(--gold); }
+  .compare-table td {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .compare-table tr td:first-child {
+    color: var(--red);
+  }
+  .compare-table tr td:last-child {
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  /* === FAQ === */
+  .faq-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin: 1rem 0;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .faq-item:hover {
+    border-color: rgba(212, 148, 42, 0.2);
+  }
+  .faq-q {
+    padding: 1.5rem 2rem;
+    font-weight: 700;
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+  }
+  .faq-q::after {
+    content: '+';
+    font-size: 1.4rem;
+    color: var(--gold);
+    font-weight: 300;
+    transition: transform 0.3s;
+    flex-shrink: 0;
+    margin-left: 1rem;
+  }
+  .faq-item.open .faq-q::after {
+    transform: rotate(45deg);
+  }
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+  }
+  .faq-item.open .faq-a {
+    max-height: 500px;
+    padding: 0 2rem 1.5rem;
+  }
+
+  /* === CTA BUTTON === */
+  .cta-btn {
+    display: inline-block;
+    padding: 1.1rem 3rem;
+    background: linear-gradient(135deg, var(--gold), #b87d1e);
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.05rem;
+    border-radius: 14px;
+    text-decoration: none;
+    transition: all 0.3s;
+    letter-spacing: 0.02em;
+    box-shadow: 0 8px 30px rgba(212, 148, 42, 0.3);
+  }
+  .cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 50px rgba(212, 148, 42, 0.35);
+  }
+  .cta-btn:active {
+    transform: translateY(-1px);
+  }
+
+  .cta-section {
+    text-align: center;
+    padding: 3rem 0;
+  }
+  .cta-note {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+  }
+
+  /* === GUARANTEE === */
+  .guarantee-box {
+    background: var(--bg-card);
+    border: 1px solid rgba(76, 175, 106, 0.3);
+    border-radius: 20px;
+    padding: 2.5rem;
+    text-align: center;
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .guarantee-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+  }
+  .guarantee-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  /* === DREAM STATE === */
+  .dream {
+    background: linear-gradient(180deg, transparent, rgba(212, 148, 42, 0.05) 50%, transparent);
+    padding: 5rem 0;
+  }
+  .dream p {
+    font-size: 1.1rem;
+    color: var(--text);
+    margin: 0.8rem 0;
+    line-height: 1.9;
+  }
+
+  /* === PS === */
+  .ps-section {
+    border-top: 1px solid var(--border);
+    padding: 3rem 0;
+  }
+  .ps {
+    padding: 1.5rem 2rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    margin: 1rem 0;
+    font-size: 0.95rem;
+    color: var(--text-dim);
+  }
+  .ps strong { color: var(--gold); }
+
+  /* === PROOF STAT === */
+  .proof-stat {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 1.5rem 0;
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+  .proof-stat .stat-num {
+    flex-shrink: 0;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .proof-stat p {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  /* === WHY3 === */
+  .why3-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 2rem 0;
+  }
+  .why3-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .why3-icon {
+    flex-shrink: 0;
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+  .why3-icon.bad { background: var(--red-dim); }
+  .why3-icon.good { background: var(--green-dim); }
+
+  /* === SCROLL ANIMATION === */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* === MOBILE === */
+  @media (max-width: 640px) {
+    section { padding: 3rem 0; }
+    .container { padding: 0 1.2rem; }
+    .hero { padding: 4rem 1.2rem; }
+    .hero h1 { font-size: 1.8rem; }
+    .step-card { padding: 1.8rem; }
+    .compare-table th, .compare-table td { padding: 0.7rem 1rem; font-size: 0.9rem; }
+    .proof-stat { flex-direction: column; gap: 0.8rem; }
+    .cta-btn { display: block; width: 100%; text-align: center; padding: 1.1rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <h1><span class="gold-text">Мама четверых детей ушла от мужа с 20&nbsp;000&#8381; на карте</span> <span style="color:var(--white)">— и собрала 150&nbsp;000 подписчиков благодаря принципу, которому 200 лет</span></h1>
+  <p class="subtitle">Восемь лет она вела блог «по науке». Курсы, воронки, контент-планы.<br>Подписчики приходили — и уходили. Пока она не сменила одну вещь: формат.</p>
+</section>
+
+<!-- ============ LEAD ============ -->
+<section>
+  <div class="container">
+
+    <div class="reveal">
+      <p>А потом она ушла от мужа. С четырьмя детьми. С 20&nbsp;000 рублей на карте. Без родителей, которые могли бы помочь. Без подушки. Без плана Б.</p>
+      <p>И сделала то, чего не делала все восемь лет: перестала «давать пользу» — и начала рассказывать свою настоящую историю. Как есть. Без фильтров и без «экспертной» позиции.</p>
+      <p>Не потому что прочитала об этом в книге. А потому что больше нечего было терять. И потому что хотела доказать — себе, ему, всем — что справится.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p><strong>Через три месяца она зарабатывала 300&nbsp;000 рублей в месяц.</strong></p>
+      <p><strong>Через девять — 1&nbsp;500&nbsp;000.</strong></p>
+      <p>150&nbsp;000 подписчиков на трёх площадках. Люди писали в комментариях одно и то же: <strong class="gold">«Когда следующая серия?»</strong></p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>Не потому что она стала лучшим экспертом. Не потому что выучила новые приёмы продвижения — она знала их все и без этого. А потому что сменила одну вещь: формат.</p>
+      <p>Она перестала создавать одноразовый контент — и начала вести блог как сериал.</p>
+      <p>Принципу, который за этим стоит, 200 лет. Его открыл Чарльз Диккенс — и продавал по 100&nbsp;000 экземпляров каждую неделю. Сегодня его используют стриминговые платформы — и он работает лучше, чем весь Голливуд.</p>
+      <p><strong>Восемь лет маркетинговой экспертизы не дали ей того, что дал этот принцип за три месяца.</strong></p>
+      <p>А курсы по блогу о нём молчат. Потому что он ломает всё, чему вас учили.</p>
+    </div>
+
+    <div class="bridge-box reveal">
+      <p>На этой странице я покажу, как он работает. Как женщина с восьмилетним опытом в маркетинге не могла пробиться — пока не сменила формат на сериальный. И как вы можете сделать то же самое, даже если у вас нет её опыта. Потому что дело никогда не было в опыте. <strong>Дело в формате.</strong></p>
+      <p>Вам не нужно придумывать темы из головы. Вам нужна ваша история — и метод, который превращает её в сериал.</p>
+      <p style="margin-bottom:0;">Но сначала — давайте разберёмся, почему всё, что вам советовали до сих пор, не работало. И кто в этом виноват. <strong>Спойлер: не вы.</strong></p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ PAIN ============ -->
+<section class="pain">
+  <div class="container">
+
+    <div class="reveal">
+      <p>Вы пробовали. Не надо говорить, что не пробовали.</p>
+      <p>Курс по рилсам. Марафон по упаковке профиля. Наставничество за 50&nbsp;000. Контент-план на месяц вперёд. Прогревы в сторис. Воронки. Хэштеги. Алгоритмы. Вы делали всё, что говорили — полезные рилсы, лайфхаки, чек-листы, посты каждый день, потому что «алгоритм любит регулярность».</p>
+      <p>И что?</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>Охваты падали. Аудитория не задерживалась. Комментарии: тишина. Сторис смотрели 40 человек. Из них 30 — подруги и мама.</p>
+      <p>А на курсе говорили: «Ты просто делаешь недостаточно». Или: «Тебе нужен следующий уровень обучения».</p>
+      <p>И вот вы сидите. С телефоном, на котором 14 сохранённых курсов. С блогом, в который стыдно заглядывать. С ощущением, что вы — единственная, у кого «не получается».</p>
+      <p>Блог мёртв. Или хуже — он в коме. Вроде существует, но ничего не приносит. Ни денег. Ни подписчиков. Ни даже уверенности, что вы на правильном пути.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="pain-highlight reveal">
+      <p>Посчитайте. Сколько вы потратили на курсы? 15&nbsp;000? 50&nbsp;000? 100&nbsp;000? А сколько заработали с блога? Вот эта разница — это не «инвестиция в себя», как говорили на вебинаре. Это деньги, которых нет. Которые можно было отложить. Которые могли стать подушкой.</p>
+      <p style="margin-bottom:0;">А самое тяжёлое — не деньги. <strong>Самое тяжёлое — когда муж говорит: «Ну что, помогли тебе твои курсы?»</strong> И вам нечего ответить.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p><em>«Я сама виновата, что не могу заработать»</em> — знакомая мысль?</p>
+      <p>И в эти моменты внутри что-то сжимается — но не ломается. Потому что где-то глубоко вы знаете: дело не в вас.</p>
+      <p>Но мысль возвращается. Каждый вечер, когда вы укладываете детей и думаете: «Ещё один день, когда ничего не изменилось».</p>
+      <p>Вы хотели доказать — себе, ему, всем — что можете. Что вы не просто «мама в декрете». Что у вас есть голос, мозг и право зарабатывать.</p>
+      <p><strong>Но каждый мёртвый пост шепчет обратное: «Кому ты нужна?»</strong></p>
+    </div>
+
+    <div class="relief reveal">
+      Это не ваши слова. Это слова системы, которая вам врала.
+    </div>
+
+    <div class="reveal">
+      <p>Потому что вам сказали, что для заработка на блоге нужно:</p>
+      <p>— Стать экспертом (а вы «никто»)<br>
+      — Перестать бояться камеры (а у вас руки трясутся)<br>
+      — Придумывать темы из головы каждый день (а у вас четверо детей)<br>
+      — Найти «правильный» курс (а вы уже нашли — три штуки)</p>
+      <p><strong>Ничего из этого не нужно.</strong></p>
+      <p>И я сейчас объясню почему. Но для этого нужно увидеть одну вещь, которую курсы по блогу старательно прячут.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ PROBLEM — Ловушка полезного контента ============ -->
+<section>
+  <div class="container">
+
+    <h2 class="reveal"><span class="gold-text">Ловушка полезного контента</span></h2>
+
+    <div class="reveal">
+      <p>Все курсы учат одному: давай пользу. Каждый пост должен решать проблему подписчика. Чем больше пользы — тем больше доверия. Чем больше доверия — тем больше продаж.</p>
+      <p>Звучит логично. Все так говорят. И вы тоже так думаете.</p>
+      <p><strong>Но тогда ответьте на один вопрос.</strong></p>
+    </div>
+
+    <div class="pain-highlight reveal">
+      <p style="margin-bottom:0;">Если дело в пользе — почему женщина с восьмилетним опытом в маркетинге, которая знала все формулы, все воронки, все приёмы продвижения — не могла набрать аудиторию? Восемь лет «пользы». Ноль результата.</p>
+    </div>
+
+    <div class="reveal">
+      <p>А 90% блогеров, которые «дают пользу» каждый день, выгорают. Не потому что ленивые. А потому что бегут — и не двигаются.</p>
+      <p>Странно, правда? Если формула работает — почему те, кто её применяет лучше всех, проигрывают?</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>Вот как это работает на самом деле.</p>
+      <p>Вы записываете рилс: «5 способов организовать утро с ребёнком». Подписчик смотрит. Получает пять способов. Проблема решена.</p>
+      <p><strong>Зачем ему возвращаться?</strong></p>
+      <p>Вы написали пост: «Как перестать тревожиться из-за денег». Подписчик прочитал. Узнал. Всё.</p>
+      <p><strong>Зачем ему ждать следующий пост?</strong></p>
+      <p>Каждый «полезный» пост, который решает проблему до конца — это пост, после которого подписчику <strong>незачем возвращаться</strong>. Вы создаёте одноразовые касания. Одна встреча — и разошлись.</p>
+    </div>
+
+    <div class="why3-grid reveal">
+      <div class="why3-item">
+        <div class="why3-icon bad">&#10007;</div>
+        <div>
+          <strong>Полезный пост</strong> = завершённая задача. Мозг ставит галочку и забывает.
+        </div>
+      </div>
+      <div class="why3-item">
+        <div class="why3-icon good">&#10003;</div>
+        <div>
+          <strong class="gold">Сериальный пост</strong> = незавершённая задача. Мозг не может отпустить и ждёт продолжения.
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>А теперь посмотрите на другую сторону. ReelShort — приложение с двухминутными сериалами — крадёт у Netflix больше экранного времени, чем весь Голливуд. 35 минут в день против 24 у Netflix. Люди смотрят не потому, что им «полезно». А потому что не могут остановиться.</p>
+      <p>А теперь добавьте 2025 год. У каждого в кармане — нейросеть, которая отвечает на любой вопрос за три секунды.</p>
+      <p><strong>Конкурировать «пользой» с машиной — это как соревноваться с калькулятором в устном счёте.</strong> Можно быть быстрой. Но вы проиграете. Всегда.</p>
+      <p>Формат «полезного контента» — это ловушка с заданным исходом. Алгоритм его хоронит, нейросети вытесняют. Вы проигрывали не другим блогерам. Вы проигрывали формату.</p>
+    </div>
+
+    <div class="reveal">
+      <p>Видите?</p>
+      <p>Дело не в том, что вы плохо давали пользу. Дело не в экспертности. Не в камере. Не в алгоритмах.</p>
+      <p><strong>Дело в формате.</strong></p>
+      <p>Формула «1 пост = 1 польза» — это формула блога, который никто не читает дважды. Вы не строили аудиторию. Вы раздавали листовки на перекрёстке — каждый день новые, каждый день другим людям. Подписчики не уходили потому, что вы плохой эксперт. Они уходили потому, что вы решали их проблему — и им <strong>незачем</strong> было оставаться.</p>
+    </div>
+
+    <div class="bridge-box reveal">
+      <p><strong>Виноваты не вы. Виноват формат.</strong></p>
+      <p>И есть другой формат. Ему 200 лет, его придумал Чарльз Диккенс — и он до сих пор работает лучше любого алгоритма.</p>
+      <p style="margin-bottom:0;">Но прежде чем я покажу, как он работает — я расскажу историю женщины, которая на своей шкуре доказала разницу между «полезным блогом» и сериалом. Потому что она — восемь лет — была по ту сторону.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ STORY ============ -->
+<section class="story-section">
+  <div class="container">
+
+    <h2 class="reveal">История Натали</h2>
+
+    <div class="reveal">
+      <p>Я не была новичком. Вот что важно понять.</p>
+      <p>Курсы, вебинары, воронки — я не просто знала эти слова, я учила им других. Могла разложить любой запуск по полочкам. Объяснить, почему у одного блогера сторис заходят, а у другого — нет. Я видела механику.</p>
+      <p><strong>Но когда дело касалось моего блога — механика не работала.</strong></p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>Я делала всё. Полезные рилсы с чек-листами. Лайф-контент — показывала свою жизнь, детей, бытовые моменты. Экспертные разборы. Микс из «пользы» и «жизни», как советуют на каждом втором курсе.</p>
+      <p>Но всё это было без стержня. Без большой идеи, без вызова, без истории, за которой хочется следить. Просто — набор кусочков. Сегодня чек-лист, завтра рилс с детьми, послезавтра разбор чужой воронки. Всё по отдельности — нормально. Вместе — каша, у которой нет вкуса.</p>
+      <p>Тридцать просмотров. Два лайка. Один — от подруги, которая лайкает всё подряд из жалости.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>А потом я открывала Инстаграм — и видела их. Девочек в бежевых свитерах, которые пьют матчу и рассказывают про «энергию изобилия». Мам, у которых дети тихо играют на заднем плане, пока мама вещает на камеру. Экспертов с подписью «мой блог приносит мне 500К в месяц» — и у них почему-то получается.</p>
+      <p>Я смотрела на них и думала одно: <em>мне сюда нельзя.</em></p>
+      <p>Блог — это для тех, у кого есть деньги. Время. Идеальная жизнь. Муж, который поддерживает. Ребёнок, который спит по расписанию.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>У меня — четверо детей. Муж, который при каждом удобном случае напоминал: «Это мои деньги». Квартира, в которой нельзя снимать, потому что «что люди подумают». Родителей нет — вообще. Не «далеко живут», не «мы в ссоре». Нет. Я выросла без них. Всю жизнь — сама.</p>
+      <p>Когда-то я знала, чего хочу. Теперь, если кто-то спрашивал — я открывала рот и не могла ответить. Растворилась в стирках, завтраках, детских болезнях и чужих ожиданиях. Когда подруги спрашивали «Как дела?» — отвечала «Нормально» и быстро переводила тему.</p>
+      <p>Я вела блог по вечерам. Когда дети засыпали. На кухне, с телефоном в руке и сообщением от мужа на экране: <em>«Ты опять в телефоне сидишь?»</em></p>
+      <p><strong>Восемь лет. Ни одного результата, который можно показать.</strong></p>
+    </div>
+
+    <div class="story-quote reveal">
+      Знаете, что самое тяжёлое? Не отсутствие денег. Не усталость. Самое тяжёлое — когда ты знаешь, что умеешь. Видишь, как другие делают хуже — и у них получается. А у тебя — нет. И не можешь понять, почему.
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>А потом я ушла. С одной сумкой. Без подруг, готовых пустить к себе на месяц. Без родственников — звонить некому. Без плана.</p>
+      <p>В ту ночь я открыла банковское приложение и посчитала: хватит на одиннадцать дней. Если не считать подгузники.</p>
+      <p>Первая неделя — на автомате. Документы, временное жильё, продукты, школа. Вторая — я лежала с открытыми глазами до четырёх утра и считала дни. Третья — я открывала банковское приложение по четыре раза в день, и каждый раз цифра была меньше.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>И в какой-то момент — в три часа ночи, когда младший наконец заснул — я взяла телефон. Не чтобы записать полезный рилс. Не чтобы «дать ценность подписчикам».</p>
+      <p><strong>Я просто рассказала. Как есть.</strong> Что ушла. Что страшно. Что денег нет. Что не знаю, что будет завтра. Без фильтров, без «экспертной позиции», без макияжа.</p>
+    </div>
+
+    <div class="story-quote reveal">
+      Не потому что это был маркетинговый ход. А потому что больше нечего было терять. И потому что осталось одно: <em>я докажу. Ему, его маме, всем, кто считал меня приложением к квартире — я докажу, что справлюсь. Одна. Как всегда.</em>
+    </div>
+
+    <div class="reveal">
+      <p>Выложила. Легла спать.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>Утром — 40 комментариев. Не лайков — <strong>комментариев</strong>. От незнакомых людей. «Я в такой же ситуации.» «Как будто про меня написала.» «Что было дальше?»</p>
+      <p><em>Что было дальше.</em></p>
+      <p>За восемь лет блога — полезного, лайфового, любого — мне ни разу не написали «что было дальше».</p>
+      <p>Я рассказала, что было дальше. И на следующий день — ещё. И через неделю — ещё. Не потому что появился контент-план. А потому что появилась история, от которой люди не могли оторваться.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>Через месяц — в три раза больше подписчиков, чем за предыдущие два года. Через три — я перестала считать дни до конца денег. Квартира, еда, одежда детям — без роскоши, но я больше не просыпалась с калькулятором в голове. Через девять — я не узнавала свою жизнь.</p>
+      <p>Люди писали одно и то же: <strong class="gold">«Когда следующая серия?»</strong></p>
+      <p>Я не стала умнее. Не выучила новые приёмы. Не купила очередной курс.</p>
+      <p>Я просто перестала разбрасывать кусочки контента без связи — и начала рассказывать сериал. Свой. Настоящий. Тот, от которого невозможно отписаться, потому что хочется знать — чем всё закончится.</p>
+      <p>И тогда я поняла вещь, которую не дал ни один курс по маркетингу: <em>дело никогда не было в знаниях. Дело было в формате.</em></p>
+      <p>Я нашла этот формат случайно. Не потому что прочитала об этом в книге. А потому что больше нечего было терять. Но когда он сработал — я захотела понять: <em>почему?</em> Почему восемь лет «пользы» дали ноль, а три месяца историй — 150&nbsp;000 подписчиков?</p>
+      <p>Меня зовут Натали. И вот что я выяснила.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ MECHANISM — Принцип Диккенса ============ -->
+<section>
+  <div class="container">
+
+    <h2 class="reveal"><span class="gold-text">Принцип Диккенса</span></h2>
+
+    <div class="reveal">
+      <p>Когда я начала копать — не как маркетолог, а как человек, которому нужно было понять, что произошло, — я увидела вещь, которая объяснила всё.</p>
+      <p>Формат «полезного контента» не просто «не удерживает». Он запускает цепочку, в которой невозможно выиграть.</p>
+      <p>Вы публикуете рилс с советами. Алгоритм фиксирует: аккаунт не удерживает внимание. Ваш следующий рилс показывают меньшему числу людей. Чтобы компенсировать — нужно публиковать чаще. Ещё чаще. Вы создаёте больше контента — а охваты падают быстрее. <strong>Это не сбой. Это механика: алгоритм продвигает то, к чему возвращаются.</strong> Полезный контент по определению не создаёт возврата — он решает вопрос и закрывает его.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>Казалось бы — выход один: уйти из блога. Перестать конкурировать. Закрыть телефон и забыть.</p>
+      <p>Но я нашла кое-что другое. Формат, в котором конкуренции нет. Потому что нейросеть не может его скопировать. А алгоритм — обожает.</p>
+      <p><strong>Что, если самый эффективный способ удержания аудитории придумали задолго до появления интернета?</strong></p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="step-card reveal">
+      <h3>В 1836 году Диккенс изменил правила</h3>
+      <p>Он не написал лучший роман. Он разрезал роман на главы — и продавал по одной в месяц. Каждая глава обрывалась в момент, когда читатель не мог остановиться.</p>
+      <p>Когда корабль с очередной главой приплывал в Нью-Йорк — толпа встречала его на пристани с криками: <strong>«Малышка Нелл жива?!»</strong> Тираж, о котором сегодня мечтает любой блогер — и это в стране, где половина населения не умела читать.</p>
+    </div>
+
+    <div class="step-card reveal">
+      <h3>Эффект Зейгарник</h3>
+      <p>Диккенс не писал лучше всех. Он первым понял то, что нейрофизиологи доказали через сто лет: <strong>незавершённая история захватывает мозг сильнее, чем готовый ответ</strong>. Мозг не может её отпустить — он требует продолжения. Незавершённые задачи запоминаются на 90% лучше завершённых.</p>
+      <p>На этом принципе построены все сериалы, все стриминговые платформы, все приложения, от которых невозможно оторваться.</p>
+      <p>Именно поэтому вы досматриваете сериал в три часа ночи, хотя завтра на работу.</p>
+    </div>
+
+    <div class="reveal">
+      <p>Вашему блогу не нужен бюджет Netflix. Ему нужна ваша история — рассказанная как сериал. Серия за серией.</p>
+      <p>Потому что у вашей истории есть то, чего не будет у ChatGPT: <strong>вы</strong>. Ваша жизнь. Ваш путь. Та уязвимость, которую вы считали слабостью — она и есть ваше оружие. Её невозможно сгенерировать. И от неё невозможно отписаться.</p>
+      <p>Как именно превратить вашу историю в серию роликов. Какие моменты обрывать. Как выстроить сценарий по готовому шаблону, даже если вы никогда не писали сценарии — всё это внутри метода, который я назвала «Сериальный Блог».</p>
+      <p>Но прежде чем я покажу, что в нём — давайте на секунду представим, как выглядит ваша жизнь, когда это работает.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ PROOF ============ -->
+<section>
+  <div class="container">
+
+    <div class="reveal">
+      <p>Вы можете подумать: «Звучит красиво. Но где доказательства, что сериальный формат работает не только у неё?»</p>
+      <p>Справедливый вопрос. Вот цифры.</p>
+    </div>
+
+    <div class="proof-stat reveal">
+      <div class="stat-num">90%</div>
+      <div>
+        <p><strong>Deloitte и Backlinko</strong> провели независимые исследования контента, который удерживает аудиторию. Результат одинаковый: сериальный формат — серии, эпизоды, продолжения — возвращает до 90% зрителей. Девять из десяти возвращаются к следующей серии. Не потому что их уговорили. А потому что мозг не может отпустить незавершённую историю. Для сравнения: средний «полезный» пост удерживает 10-15% аудитории. Разница — в шесть раз.</p>
+      </div>
+    </div>
+
+    <div class="proof-stat reveal">
+      <div class="stat-num">90%</div>
+      <div>
+        <p><strong>Billion Dollar Boy</strong> в 2025 году опубликовал исследование: 90% криейторов, которые строят блог на «полезном контенте», выгорают. Не потому что ленивые. А потому что формат требует бесконечного количества новых тем — каждый день придумывай, каждый день выдавай, каждый день начинай с нуля.</p>
+      </div>
+    </div>
+
+    <div class="bridge-box reveal">
+      <p>Сериальный формат работает наоборот. Вы не придумываете тему каждый день. Вы рассказываете одну историю — свою — серия за серией. Каждая серия вытекает из предыдущей. Не беговая дорожка — а маршрут с началом, серединой и концом.</p>
+      <p>Два факта. Формат, который вам советовали 8 лет, <strong style="color:var(--red);">сжигает 9 из 10</strong>. Формат, о котором вам не говорили, <strong style="color:var(--green);">удерживает 9 из 10</strong>.</p>
+      <p style="margin-bottom:0;">Вы восемь лет были во втором.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ RESULT PROJECTION ============ -->
+<section class="result-section">
+  <div class="container">
+
+    <div class="reveal">
+      <p>Через три недели вы откроете телефон утром — и увидите комментарий от незнакомой женщины: «Не могу уснуть, жду вторую часть». Вы не покупали рекламу. Не просили подписаться. Она нашла вас сама — потому что ваша история зацепила её так, что она не смогла пройти мимо.</p>
+      <p><strong>Вот как мы к этому придём.</strong></p>
+    </div>
+
+    <div class="result-timeline reveal">
+      <div class="milestone">
+        <div class="milestone-label">Через 3–5 дней</div>
+        <p>Вы записываете ролик вечером — по готовому сценарию, не из головы. Выкладываете. Утром открываете телефон — комментарии: «Не могу уснуть, жду вторую часть», «Как будто про меня». Не от подруг. От незнакомых людей, которых вы никогда не просили подписаться.</p>
+      </div>
+      <div class="milestone">
+        <div class="milestone-label">Через 2 недели</div>
+        <p>Первые 500 подписчиков, которые возвращаются сами. Не потому что вы постите каждый день — а потому что они не могут остановиться.</p>
+      </div>
+      <div class="milestone">
+        <div class="milestone-label">Через месяц</div>
+        <p>Сообщение в директ: «Сколько стоит ваша консультация?» Вы не продавали. Они сами спросили.</p>
+      </div>
+      <div class="milestone">
+        <div class="milestone-label">Через 2–3 месяца</div>
+        <p>50&nbsp;000 рублей на карте, которые заработали вы. Не он. Вы. Это не миллионы — но это подушка. Не мягкая — а та, на которой вы впервые за долгое время заснёте спокойно. Это выбор: остаться или уйти — по своей воле, а не из страха. Это вечер, когда вы укладываете детей и не считаете дни до конца денег.</p>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <p>Раньше вы выкладывали полезный пост — тишина. Теперь вы выкладываете часть своей истории — и люди возвращаются. Разница не в вас. <strong>Разница в формате.</strong></p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ PRODUCT REVEAL ============ -->
+<section class="product-section">
+  <div class="container">
+
+    <h2 class="reveal" style="margin-top:1.5rem;">Практикум<br><span class="gold-text">«Сериальный Блог»</span></h2>
+
+    <div class="reveal">
+      <p>Я не сразу собрала это в систему.</p>
+      <p>Первый год в сериальном формате я действовала интуитивно. Рассказывала то, что болит — и смотрела, на что реагируют. Иногда попадала. Иногда — тишина. Без понимания, почему одна серия набирает тысячи просмотров, а следующая — сто.</p>
+      <p>Я пыталась найти готовое решение. Курсы по рилсам — они учат снимать, монтировать, подбирать музыку. Но ни один не учит строить сериал из своей жизни. Курсы по сторителлингу — для писателей, не для мам с телефоном в руке. Маркетинговые наставничества — воронки, прогревы, «дай пользу». Всё то, что я делала восемь лет. Всё то, что не работало.</p>
+      <p>Готового решения не было. Потому что индустрия считает, что мамам с телефоном нужны «советы по рилсам». А не система, которая превращает их историю в оружие. Никто не соединял эти вещи вместе: принцип, который я нашла случайно, и формат коротких роликов для обычных женщин без продакшн-студии.</p>
+      <p>Тогда я начала разбирать по частям то, что получилось у меня случайно, — и превращать в систему, которую можно повторить.</p>
+      <p>Первые версии не работали. Я давала шаблоны подругам — они не понимали, с чего начать. Слишком много свободы. Я добавляла структуру — они жаловались, что «не чувствуют себя в этом». Слишком жёстко. Три итерации ушло только на то, чтобы найти баланс: достаточно шаблона, чтобы не бояться камеры, и достаточно свободы, чтобы история оставалась вашей.</p>
+      <p>И тогда всё сложилось.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal" style="text-align:center; max-width:600px; margin: 0 auto 2rem;">
+      <p>Чтобы запустить свой сериал, нужны три вещи: история (у вас она уже есть), структура (чтобы не бояться камеры) и формула (чтобы понимать, что выстрелит). Я упаковала все три в одну систему — <strong>практикум «Сериальный Блог»</strong>.</p>
+      <p>Но у вас наверняка есть вопросы. Те самые, из-за которых вы до сих пор не нажали «запись».</p>
+      <p>Какую историю рассказывать — если кажется, что ваша жизнь слишком обычная?</p>
+      <p>Что говорить в камеру — если от одной мысли об этом руки трясутся?</p>
+      <p>Как сделать так, чтобы люди не просто посмотрели — а вернулись завтра?</p>
+      <p>Как выстроить профиль — чтобы новый подписчик сразу понял: тут сериал, и он ещё не закончился?</p>
+      <p>Как понять, какой ролик «выстрелит» — до того, как вы потратите вечер на запись?</p>
+      <p>И откуда брать темы через месяц — когда «всё уже рассказала»?</p>
+      <p>На каждый из этих вопросов — конкретный ответ. С шаблоном. С примером. С готовым сценарием, который вы берёте и записываете.</p>
+      <p><strong>Первый ролик — через 3-5 дней. Серия из 10 — за 2-3 недели. Первые «не могу остановиться» в комментариях — после третьего ролика.</strong></p>
+    </div>
+
+    <div class="module-card reveal">
+      <div class="module-label">Урок 1</div>
+      <h4>«Распаковка уязвимости»</h4>
+      <p>Вы считаете, что ваша жизнь слишком обычная? Через 40 минут вы будете знать, какая история из неё заставит чужих людей написать «как будто про меня». То, что вы считали слабостью, станет тем, от чего невозможно отписаться.</p>
+    </div>
+
+    <div class="module-card reveal">
+      <div class="module-label">Урок 2</div>
+      <h4>«Сериальная упаковка профиля»</h4>
+      <p>Ваш профиль сейчас выглядит как «эксперт по всему». После этого урока он будет говорить: «Здесь сериал — и он ещё не закончился». Новый подписчик затянется в вашу историю с первой секунды.</p>
+    </div>
+
+    <div class="module-card reveal">
+      <div class="module-label">Урок 3</div>
+      <h4>«10 сценариев-сериалов»</h4>
+      <p>Руки трясутся перед камерой? Вы берёте готовый каркас, вставляете свою историю — и точно знаете, что скажете в следующие 60 секунд. С клиффхэнгерами, эмоциональными крючками и точками обрыва в нужных местах. Камера перестаёт пугать, когда есть сценарий.</p>
+    </div>
+
+    <div class="module-card reveal">
+      <div class="module-label">Урок 4</div>
+      <h4>«Формула залетного ролика»</h4>
+      <p>Как понять, какой ролик выстрелит — до того, как вы потратите вечер на запись? Не гадание, не интуиция — математика, которая убирает из вашей жизни ролики «в пустоту».</p>
+    </div>
+
+    <div class="module-card reveal">
+      <div class="module-label">Урок 5</div>
+      <h4>«Генератор идей на 30 дней»</h4>
+      <p>Через месяц кажется, что «всё уже рассказала»? Этот урок показывает, откуда брать темы из вашей жизни, из комментариев, из того, что кажется слишком обычным. Без нейросетей. Без мучений перед пустым экраном.</p>
+    </div>
+
+    <h3 class="reveal" style="margin-top:2.5rem;">+ Три инструмента, которые я отдавала отдельно за деньги:</h3>
+
+    <div class="bonus-card reveal">
+      <div><strong>«Карта вашей истории»</strong> — заполняете за вечер, и у вас на руках полная карта: что рассказывать, в каком порядке, где ставить клиффхэнгер. Больше не нужно сидеть перед камерой и думать «а о чём говорить?».</div>
+    </div>
+    <div class="bonus-card reveal">
+      <div><strong>«Детектор вирусной темы»</strong> — чек-лист из 12 пунктов. Прежде чем записать ролик — прогоните тему через детектор. Если набрали меньше 7 из 12 — не записывайте. Сэкономите вечер и нервы.</div>
+    </div>
+    <div class="bonus-card reveal">
+      <div><strong>«Банк готовых сценариев»</strong> — 10 шаблонов рилс, по которым я запускала свой сериал. Берёте каркас, заполняете своей историей за 10 минут. С пометками: где пауза, где эмоция, где обрыв.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ PLACEHOLDER: CASES ============ -->
+<section>
+  <div class="container">
+    <div class="bridge-box reveal" style="border-color: rgba(144, 102, 204, 0.2);">
+      <p style="color:var(--text-dim); margin-bottom:0;">[Здесь будут кейсы участниц — 3-5 отзывов с конкретными результатами]</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OFFER ============ -->
+<section style="background: linear-gradient(180deg, transparent, rgba(212, 148, 42, 0.04) 50%, transparent); padding: 5rem 0;">
+  <div class="container">
+
+    <h2 class="reveal" style="text-align:center;">Предложение</h2>
+
+    <div class="reveal">
+      <p>Если покупать каждый элемент отдельно — коуч-сессия, SMM-консультация, 10 сценариев от копирайтера, аналитика блога, контент-план — выйдет <strong>больше 65&nbsp;000 рублей</strong>. Наставничества с похожим обещанием стоят от 50 до 450 тысяч. И в них нет ни одного готового сценария. Зато есть 40 уроков, которые 97% людей не проходят до конца — потому что формат не для людей, а для отчётности.</p>
+      <p>Практикум «Сериальный Блог» стоит не 65&nbsp;000. И не 50&nbsp;000.</p>
+    </div>
+
+    <div class="bridge-box reveal" style="border-color: rgba(212, 148, 42, 0.3);">
+      <p style="margin-bottom:0;"><strong>[ЦЕНА И УСЛОВИЯ — будут добавлены]</strong></p>
+    </div>
+
+    <div class="reveal" style="margin-top:1.5rem;">
+      <p>Почему так мало? Потому что это первый запуск в таком формате — мне нужны ваши результаты и отзывы. Те, кто получает результат сейчас, становятся кейсами, с которыми я запущу следующий поток. Поэтому мне выгодно дать вам максимум за минимальную цену — и убедиться, что вы дойдёте до конца.</p>
+    </div>
+
+    <div class="cta-section reveal">
+      <a href="#" class="cta-btn">Получить доступ к практикуму</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ FAQ-OBJECTIONS ============ -->
+<section>
+  <div class="container">
+
+    <div class="reveal">
+      <p>Но я понимаю: вы уже слышали обещания. И у вас есть вопросы. Давайте разберём их.</p>
+    </div>
+
+    <div class="faq-item open reveal">
+      <div class="faq-q">«Я уже покупала курсы — не помогло»</div>
+      <div class="faq-a">
+        <p>Именно. 97% людей не проходят онлайн-курсы до конца. Потому что 40 уроков по часу — это не обучение. Это Netflix для совести. Здесь — 5 коротких уроков и 10 готовых сценариев. Вы не смотрите — вы делаете. Первый ролик — через 3-5 дней. Не через месяц.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <div class="faq-q">«Кому я нужна? Моя жизнь обычная»</div>
+      <div class="faq-a">
+        <p>Диккенс писал про обычных людей — сирот, клерков, бедняков. И продавал по 100 000 экземпляров в неделю. Люди, которые стояли на пристани в Нью-Йорке и кричали «Малышка Нелл жива?!» — не ждали историю супергероя. Они ждали историю, в которой узнавали себя. Ваша «обычная» жизнь — это и есть сериал. Вам просто не показали, как его рассказать.</p>
+      </div>
+    </div>
+
+    <div class="faq-item reveal">
+      <div class="faq-q">«У меня нет времени — четверо детей»</div>
+      <div class="faq-a">
+        <p>У меня тоже четверо. Я записывала первые ролики, когда младший засыпал. По одному в день, по готовому сценарию, по 60 секунд. За 9 месяцев этот метод принёс мне 1,5 миллиона в месяц — начиная с тех самых 15 минут по вечерам. Сценарий перед глазами. Слова готовы. Осталось нажать «запись».</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <h3 class="reveal">Этот практикум НЕ для вас, если:</h3>
+
+    <div class="why3-grid reveal">
+      <div class="why3-item">
+        <div class="why3-icon bad">&#10007;</div>
+        <div>Вы ищете «волшебную кнопку» — нажала и деньги посыпались. Здесь нужно записать 10 роликов за 3 недели.</div>
+      </div>
+      <div class="why3-item">
+        <div class="why3-icon bad">&#10007;</div>
+        <div>Вы не готовы рассказывать свою историю. Сериальный формат работает на уязвимости — если вы хотите оставаться «идеальной» в кадре, это не ваш инструмент.</div>
+      </div>
+      <div class="why3-item">
+        <div class="why3-icon bad">&#10007;</div>
+        <div>Вы хотите миллион за неделю. Реалистичный результат — 50-100 тысяч в месяц через 2-3 месяца системной работы.</div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <p>Если узнали себя в одном из трёх пунктов — пожалуйста, не покупайте. Этот метод работает. Но только для тех, кто готов действовать.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ COMPARISON ============ -->
+<section>
+  <div class="container">
+
+    <h3 class="reveal" style="text-align:center;">А теперь — посмотрите на две картинки</h3>
+
+    <div class="pain-highlight reveal">
+      <p><strong>Без системы</strong> — через месяц: блог на том же месте. Те же 40 просмотров. То же чувство, что «я не такая, как они». Муж снова скажет: «Ну что, помогли тебе твои курсы?» И вам снова нечего ответить. Ещё один месяц, когда ничего не изменилось. А за ним — ещё один. Каждый день без системы — это день, когда ваша история остаётся нерассказанной. А кто-то другой — с меньшим опытом, с меньшей болью, с меньшей историей — рассказывает свою. И собирает вашу аудиторию.</p>
+    </div>
+
+    <div class="step-card reveal">
+      <p><strong class="gold">С системой</strong> — через месяц: 10 роликов по готовым сценариям. Комментарии от незнакомых людей: «Не отпускает, жду завтра». Подписчики, которые пришли сами. И первое сообщение в директ: «Сколько стоит ваша консультация?» Вы не продавали. Они сами спросили. Вечером вы укладываете детей, открываете телефон — уведомление: продажа на 4&nbsp;700&#8381;. Не миллионы. Но это ваши деньги. От вашей истории. И в этот момент — впервые за долгое время — вы чувствуете: я могу. Не «когда-нибудь смогу». Могу сейчас. Через три месяца, когда подруга спросит «Как дела?» — вы не переведёте тему. Вы расскажете. Потому что раздавать листовки на перекрёстке — закончилось. Теперь у вас свой сериал, и зрители приходят сами.</p>
+    </div>
+
+    <div class="cta-section reveal">
+      <a href="#" class="cta-btn">Начать сегодня — с гарантией результата</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ GUARANTEE ============ -->
+<section>
+  <div class="container">
+    <div class="guarantee-box reveal">
+      <div class="guarantee-icon">&#128737;</div>
+      <h3>Гарантия результата — 21 день</h3>
+      <p style="margin-top:1rem;">Если через 21 день вы прошли все шаги практикума и не увидели результат — ни одного нового подписчика, ни одного комментария «жду продолжения» — я верну вам 100% оплаты. Без вопросов. Без «а вы точно всё сделали?». Единственное условие: вы действительно прошли все шаги. Не посмотрели — а сделали.</p>
+      <p style="color:var(--text-dim); margin-bottom:0;">Я могу дать такую гарантию по одной причине: этот метод работает не на алгоритмах, которые меняются каждый месяц. Он работает на биологии мозга. Эффекту Зейгарник — 100 лет. Принципу Диккенса — 200. Netflix строит на нём империю. Ваш мозг не изменился за последние 200 лет. Метод тоже не сломается.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DREAM STATE ============ -->
+<section class="dream">
+  <div class="container">
+
+    <div class="reveal">
+      <p>Вы дочитали до этого места. Это уже кое-что говорит о вас.</p>
+      <p>Это говорит, что внутри — не смирение. А решение, которое ещё не оформилось в слова.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>Практикум «Сериальный Блог» доступен прямо сейчас. Но я не знаю, как долго он будет в этом формате и по этой цене. Когда набирается достаточно учениц — я закрываю набор и перерабатываю программу под следующий поток. Это не маркетинговый трюк. Это формат: я работаю с теми, кто внутри, а не продаю бесконечно.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p><strong>Через три месяца вы окажетесь в одном из двух мест.</strong></p>
+      <p>В первом — всё то же самое. Телефон с сохранёнными курсами. Блог, который давно замолчал. Тот же вечер, те же мысли, то же молчание в ответ на «Ну что, помогли тебе твои курсы?». Ещё один сезон, когда ваша история осталась нерассказанной.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p>Во втором — вы открываете директ и видите сообщение от незнакомой женщины: «Ваша история — как будто про меня. Сколько стоит ваша консультация?» Вы отвечаете — спокойно, без заискивания, потому что это не первое такое сообщение за неделю.</p>
+      <p>Вечером укладываете детей. Младший засыпает. Вы берёте телефон — не чтобы бесцельно листать ленту, а чтобы проверить: +47 подписчиков за день. Комментарий: «Когда третья серия?» Уведомление: оплата 4&nbsp;700&#8381;.</p>
+      <p>Вы откладываете телефон. И впервые за долгое время не считаете, хватит ли до конца месяца. Не потому что денег стало много. А потому что они — <strong>ваши</strong>. Заработанные вашей историей. Той самой, которую вы считали слишком обычной. Той самой, которую он считал глупостью.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="reveal">
+      <p><strong>И в этот момент вы чувствуете: я доказала.</strong> Не ему. Себе. Что я — не приложение к квартире. Не «мама в декрете». Не та, которая «опять в телефоне сидит». Я — женщина, которая обеспечивает себя и своих детей. Сама. Как всегда.</p>
+      <p>Это не фантазия. Это путь, который я прошла — начиная с тех же 20&nbsp;000 на карте и того же страха.</p>
+    </div>
+
+    <div class="cta-section reveal">
+      <a href="#" class="cta-btn">Начать свой сериал — получить доступ к практикуму</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ PS ============ -->
+<section class="ps-section">
+  <div class="container">
+    <div class="ps reveal">
+      <strong>P.S.</strong> Помните гарантию: если через 21 день вы прошли все шаги и не увидели результат — 100% возврат, без вопросов. Вы рискуете только тем, что через три недели у вас будет серия роликов, которую ждут. А если нет — деньги вернутся. Единственный реальный риск — не попробовать. И через год обнаружить, что вы всё ещё считаете чужие деньги.
+    </div>
+    <div class="ps reveal">
+      <strong>P.P.S.</strong> Я не продаю «секрет миллиона». Я продаю систему, которая превращает вашу историю в доход. 50–100 тысяч в месяц — через 2–3 месяца работы. Не обещание — маршрут. Тот самый, который начался для меня с ролика в три часа ночи на кухне. У вас есть телефон. У вас есть история. Осталось нажать «запись». Но сначала — получите сценарий.
+    </div>
+
+    <div class="cta-section reveal">
+      <a href="#" class="cta-btn">Получить 10 готовых сценариев — начать сегодня</a>
+    </div>
+  </div>
+</section>
+
+<div style="height: 4rem;"></div>
+
+<!-- ============ JS ============ -->
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // FAQ toggle
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      item.classList.toggle('open');
+    });
+  });
+</script>
+
+</body>
+</html>

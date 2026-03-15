@@ -29,6 +29,17 @@
         "NO_COLOR": "1"
       },
       "timeout": 120
+    },
+    "research": {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.11/bin/python3",
+      "args": [
+        "scripts/research_server.py"
+      ],
+      "cwd": "/Users/ilaija/Documents/ my-first-project",
+      "env": {
+        "NO_COLOR": "1"
+      },
+      "timeout": 30
     }
   }
 }

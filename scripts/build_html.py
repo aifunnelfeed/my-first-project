@@ -91,8 +91,10 @@ def _preprocess(text: str) -> str:
     - **P.S.**/**P.P.S.** → P.S./P.P.S.
     - ## FAQ → ### FAQ
     """
-    # 1. Strip meta-title block at start of file
+    # 1. Strip meta-title line at start of file (# Финал: ... or # Title\n---\n)
     text = re.sub(r"^#[^\n]+\n+---\n+", "", text)
+    # Also strip standalone meta-title line (when --- is not immediately after)
+    text = re.sub(r"^#\s+Финал:[^\n]+\n+", "", text)
 
     # 2. Convert ## HEADLINE with A/B variants to # heading
     m = re.search(r"##\s+HEADLINE\s*\n+(.*?)(?=\n---)", text, re.DOTALL)
@@ -120,9 +122,13 @@ def _preprocess(text: str) -> str:
                 hero = f"# {a.group(1).strip()}"
         text = hero + text[m.end() :]
 
-    # 3. Convert **[CTA TEXT]** → ### [CTA TEXT]
+    # 3. Convert **[CTA TEXT]** and **→ [КНОПКА: TEXT]** → ### [CTA TEXT]
     text = re.sub(
         r"^\*\*\[(.+?)\]\*\*\s*$", r"### [\1]", text, flags=re.MULTILINE
+    )
+    # Convert **→ [КНОПКА: TEXT]** → ### [TEXT]
+    text = re.sub(
+        r"^\*\*→\s*\[КНОПКА:\s*(.+?)\]\*\*\s*$", r"### [\1]", text, flags=re.MULTILINE
     )
 
     # 4. Convert bold P.S./P.P.S. to plain (P.P.S. before P.S. to avoid partial match)
@@ -194,6 +200,12 @@ def _parse_hero(chunk: str) -> tuple[Section, str | None]:
     if h1:
         section.heading = h1.group(1).strip()
         chunk = chunk[: h1.start()] + chunk[h1.end() :]
+    else:
+        # No H1 — use first paragraph as heading
+        paragraphs_check = re.split(r"\n\n+", chunk.strip())
+        if paragraphs_check:
+            section.heading = paragraphs_check[0].strip()
+            chunk = "\n\n".join(paragraphs_check[1:])
 
     h3 = RE_H3.search(chunk)
     if h3:

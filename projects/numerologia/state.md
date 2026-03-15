@@ -1,8 +1,8 @@
 # Состояние проекта: Нумерология
 
-## Текущий стейт: DELIVERY
+## Текущий стейт: REVIEW
 ## Фаза: —
-## Текущий блок: Final Self-Check PASS
+## Текущий блок: —
 ## Формат: landing
 
 ## Пройденные стейты
@@ -11,8 +11,8 @@
 - [x] RESEARCH
 - [x] STRATEGY
 - [x] EXECUTION
-- [ ] DEBUGGING
-- [ ] DELIVERY
+- [x] DEBUGGING
+- [x] DELIVERY
 - [ ] REVIEW
 
 ## Блоки EXECUTION
