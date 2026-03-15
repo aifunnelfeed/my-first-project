@@ -36,6 +36,7 @@
 | P  | Reader Simulation | `agents/P_reader_simulation.md` | DELIVERY (после Launch Critic) | READER MONOLOGUE (BUY/LEAVE/MAYBE) |
 | Q  | Fresh Eyes Review | `agents/Q_fresh_eyes.md` | STATE=REVIEW (первый шаг) | FRESH EYES REPORT (12 критериев, /10) |
 | R  | Mini Fresh Eyes | `agents/R_mini_fresh_eyes.md` | EXECUTION (3 точки) | MINI FRESH EYES (5 критериев, OK/⚠️) |
+| S  | Audience Depth | `agents/S_audience_depth.md` | STATE=RESEARCH (после A, до H) | AUDIENCE DEPTH PROFILE (8 секций) |
 
 **Загрузка промптов:** при dispatch субагента прочитай его файл из `blocks/agents/` и используй промпт-шаблон из файла.
 
@@ -47,9 +48,12 @@
 **STATE=RESEARCH (полный ресерч):**
 - Если WebSearch доступен → dispatch A + B + C параллельно
 - Пока субагенты работают → главный агент выполняет JTBD_DECODER + SCHWARTZ_MATRIX
-- По возвращении A+B+C → dispatch H (Research Assembler) с выходами A+B+C
+- По возвращении A+B+C → dispatch S (Audience Depth) с выходом A + brief-context + флаг HYPOTHESIS-HEAVY
+- По возвращении S → dispatch H (Research Assembler) с выходами A+B+C+S
 - H возвращает готовый research_raw.md → DOUBLE FILTER (секция 7.4)
+- После research_raw.md → DATA_CONFIDENCE_CHECK (секция 7.20) → показ пользователю
 - Если нужен PROOF_RESEARCH → dispatch D (обычно позже, внутри EXECUTION)
+- Fallback S: если Agent tool недоступен → сокращённый AUDIENCE_DEPTH in-context (True Fears 2 слоя, Internal Dialogue 5 фраз, Failed Methods 3, Decision Model)
 
 **STATE=EXECUTION (PHASE C):**
 - Data gap типа B (нужен WebSearch) → dispatch E (Research-Mini)
@@ -159,6 +163,7 @@
 - P → 3 персоны in-context (PRIMARY-BURNED + PRIMARY-другая модель + SECONDARY)
 - Q → сокращённый Fresh Eyes in-context (5 критериев)
 - R → пропустить (advisory)
+- S → сокращённый AUDIENCE_DEPTH in-context (True Fears 2 слоя, Internal Dialogue 5 фраз, Failed Methods 3, Decision Model)
 
 ---
 
@@ -315,3 +320,84 @@
 2. Все OK → одна строка: "Mini Fresh Eyes #{N}: ✓ OK"
 3. Есть ⚠️ → показать REPORT → спросить: "Исправить или продолжить?"
 4. R = ADVISORY, не блокирует процесс
+
+---
+
+#### I) Audience Depth Pipeline (субагент S)
+
+**ЦЕЛЬ:** Построить глубинный психографический профиль ЦА — истинные страхи, модель решений, триггерные события, провалившиеся методы, внутренний диалог.
+
+**ПАЙПЛАЙН:**
+1. STATE=RESEARCH, после возвращения A+B+C → dispatch S с выходом A + brief-context + HYPOTHESIS-HEAVY
+2. S работает последовательно (НЕ параллельно) — ему нужен выход A как входные данные
+3. По возвращении S → передать выход S в H вместе с A+B+C
+4. Результаты S интегрируются в research_raw.md (секция 7 — AUDIENCE DEPTH PROFILE)
+5. После research_raw.md → DATA_CONFIDENCE_CHECK (секция 7.20)
+6. Результаты показываются пользователю вместе с остальным ресерчем
+
+**Backwards compatibility:** Если S не запускался → H работает как раньше (3 входа: A+B+C), секция 7 отсутствует в research_raw.md.
+
+---
+
+### 7.20. DATA_CONFIDENCE_CHECK_V1
+КОД ДОСТУПА: [DATA_CONFIDENCE_CHECK_V1]
+
+**ТРИГГЕР:** Автоматически после сборки research_raw.md субагентом H. Выполняется главным агентом (не субагентом).
+
+**ЦЕЛЬ:** Оценить качество и полноту данных об аудитории перед переходом в STRATEGY. Advisory — НЕ блокирует переход.
+
+**ПРОТОКОЛ:**
+
+Оцени 6 категорий данных по 3 колонкам:
+
+| Категория | Источники | Покрытие | Уверенность |
+|-----------|-----------|----------|-------------|
+| JTBD (работа, контекст, барьеры) | {перечислить} | full / partial / missing | HIGH / MED / LOW |
+| VOC (голос клиента, цитаты) | {перечислить} | full / partial / missing | HIGH / MED / LOW |
+| Fears / Desires (DRE + DES + True Fears) | {перечислить} | full / partial / missing | HIGH / MED / LOW |
+| Competitors (конкуренты + слабости) | {перечислить} | full / partial / missing | HIGH / MED / LOW |
+| Scene Bank (сцены из жизни ЦА) | {перечислить} | full / partial / missing | HIGH / MED / LOW |
+| Decision Model (тип + факторы решения) | {перечислить} | full / partial / missing | HIGH / MED / LOW |
+
+**КРИТЕРИИ ОЦЕНКИ:**
+
+| Уверенность | Источники | Покрытие | SIM-доля |
+|-------------|-----------|----------|----------|
+| HIGH | ≥3 источника | full | SIM < 20% |
+| MED | 1-2 источника | partial | SIM 20-40% |
+| LOW | 0 источников | missing | SIM > 40% |
+
+**ФОРМАТ ВЫВОДА:**
+
+```
+📊 DATA CONFIDENCE CHECK
+
+| Категория | Источники | Покрытие | Уверенность |
+|-----------|-----------|----------|-------------|
+| ... | ... | ... | ... |
+
+Общий вердикт: {HIGH / MED / LOW} (по наихудшей категории)
+LOW-категории: {список, если есть}
+```
+
+**ДЕЙСТВИЯ ПРИ LOW ≥ 3 КАТЕГОРИЙ:**
+
+```
+⚠️ DATA CONFIDENCE: LOW ({N} из 6 категорий с низкой уверенностью)
+
+Варианты:
+A) Вы дополните данные — скажите, что можете предоставить по категориям: {список LOW}
+B) Продолжить с гипотезами — LOW-данные пометятся [ТРЕБУЕТ ПОДТВЕРЖДЕНИЯ] в strategy.md
+C) Запросить конкретные данные у эксперта — я сформирую список вопросов
+D) Дополнительный таргетированный ресерч по LOW-категориям (dispatch E / повторный S)
+```
+
+**СОХРАНЕНИЕ:**
+- Таблица записывается в research.md (после SUMMARY)
+- Таблица дублируется в state.md → секция "Data Confidence"
+
+**ПРАВИЛА:**
+1. DATA_CONFIDENCE_CHECK = advisory. НЕ блокирует переход в STRATEGY.
+2. Если пользователь выбрал B (продолжить с гипотезами) — записать в state.md: `DATA_CONFIDENCE: ACCEPTED_WITH_HYPOTHESES`
+3. Если HYPOTHESIS-HEAVY + LOW ≥ 3 — рекомендовать вариант A или C (усиленная рекомендация, но не блокировка)
+4. Выполняется ОДИН раз за RESEARCH (не повторяется при мини-циклах)

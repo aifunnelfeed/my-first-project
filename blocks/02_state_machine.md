@@ -34,13 +34,16 @@ STATE: INPUT | QUERY | RESEARCH | STRATEGY | EXECUTION | DEBUGGING | DELIVERY | 
 | A: VOC Mining | Дословные цитаты клиентов | brief-context + search templates | Теггированные цитаты (VOC) |
 | B: Competitor + Market | Конкуренты + цифры рынка | brief-context + competitor list | Таблицы конкурентов + STAT |
 | C: Curiosity + Corruption | Забытые решения + виновники | brief-context + проблема | Углы для Big Idea |
+| S: Audience Depth | Глубинный профиль ЦА | выход A + brief-context + HYPOTHESIS-HEAVY | 8 секций профиля (True Fears, Dream Dict, etc.) |
 
 **Последовательность:**
 1. Прочитай brief.md, сформируй краткий контекст (3-5 предложений)
 2. Запусти субагентов A, B, C параллельно (через Agent tool, `subagent_type="general-purpose"`)
 3. Пока субагенты работают — выполни JTBD_DECODER + SCHWARTZ_MATRIX (они требуют brief.md напрямую)
-4. Получи результаты субагентов A+B+C → dispatch H (Research Assembler) с выходами A+B+C → блок 11, секция 7.12
+3b. По возвращении A+B+C → dispatch S (Audience Depth) с выходом A + brief-context + флаг HYPOTHESIS-HEAVY (из brief.md, [HYPOTHESIS_HEAVY_V1] блок 04)
+4. По возвращении S → dispatch H (Research Assembler) с выходами A+B+C+S → блок 11, секция 7.12
 5. Получи готовый `research_raw.md` от H → покажи пользователю для одобрения ([RESULT_PIPELINE_V1], блок 11, секция 7.11)
+5b. DATA_CONFIDENCE_CHECK ([DATA_CONFIDENCE_CHECK_V1], блок 11 секция 7.20): оцени качество данных по 6 категориям → покажи таблицу пользователю
 6. Одобренные данные → `research.md` (финальный формат с тегами)
 7. Заполни UNFAIR_ADVANTAGE_MINER на основе всех собранных данных
 
@@ -158,6 +161,9 @@ TRIGGER: Любая попытка перехода STRATEGY → EXECUTION.
 
 INPUT → (мало данных) QUERY → RESEARCH → STRATEGY → **STRATEGY GATE** → EXECUTION
 INPUT → (достаточно данных) RESEARCH → STRATEGY → **STRATEGY GATE** → EXECUTION
+
+**DATA_CONFIDENCE_CHECK (между RESEARCH и STRATEGY):**
+После сборки research_raw.md → автоматическая оценка качества данных по [DATA_CONFIDENCE_CHECK_V1] (блок 11, секция 7.20). Advisory — НЕ блокирует переход в STRATEGY. Таблица сохраняется в research.md + state.md.
 
 **ЗАПРЕТ:** Переход к STRATEGY без прохождения RESEARCH запрещён. RESEARCH — обязательный стейт для верификации данных эксперта.
 

@@ -55,6 +55,9 @@ C) STRATEGY: данных достаточно — строю стратегию
   3. Эмоциональная награда: {что почувствует}
   4. Обновление идентичности: {кем станет}
 - Пул сцен: → см. SCENE_BANK в research.md ([SCENE_BANK_V1], блок 05 секция 2.13)
+- Если в research.md есть AUDIENCE DEPTH (секция 7) → добавить:
+  - Decision Model: {тип — ANALYST/SOCIAL/IMPULSIVE/METHODICAL} + топ-3 фактора решения
+  - RAS Triggers: {топ-5 слов-ловушек для headlines}
 
 **B) AWARENESS LEVEL (выбери 1)**
 1 Unaware — не осознаёт проблему
@@ -75,7 +78,7 @@ C) STRATEGY: данных достаточно — строю стратегию
 (только если подтверждено фактами/источниками)
 
 **D2) VALUE EQUATION (Hormozi):**
-- Dream Outcome: [конкретная картинка результата — «отпуск, а не самолёт». Сцена, не абстракция]
+- Dream Outcome: [конкретная картинка результата — «отпуск, а не самолёт». Сцена, не абстракция. Если в research.md есть AUDIENCE DEPTH → использовать Dream Dictionary (adjectives + nouns + identity shift) для языка мечты]
 - Perceived Likelihood: [что повышает веру в результат — proof, mechanism, гарантия, track record]
 - Time Delay: [первый результат / полный результат — конкретные сроки]
 - Effort & Sacrifice: [что НЕ нужно делать, что минимально, какие жертвы сняты]
@@ -197,6 +200,10 @@ Quick Win — не враньё про мгновенность. Это деко
 - **PRIMARY:** {1-2 предложения — кто, почему primary, доминирующая модель решений}
 - **SECONDARY:** {1-2 предложения — кто, почему secondary, чем отличаются от primary}
 - **ACCEPTABLE_LOSS:** {1-2 предложения — кто, почему допустимая потеря}
+
+Если в research.md есть AUDIENCE DEPTH (секция 7) → обогатить сегменты:
+- Decision Model → PRIMARY: доминирующая модель решений (ANALYST/SOCIAL/IMPULSIVE/METHODICAL)
+- Anti-Segment → ACCEPTABLE_LOSS: добавить Red Flags из Anti-Segment профиля
 
 → Используется в [AUDIENCE_SIMULATION_V1] (блок 11, секция 7.16) для генерации персон.
 → Заполняется в STATE=STRATEGY (PHASE A или PHASE B).

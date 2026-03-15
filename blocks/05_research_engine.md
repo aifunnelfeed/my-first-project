@@ -396,3 +396,42 @@ D. **HABIT (ПРИВЫЧКА)** — "Может, и так сойдет?"
 **СОХРАНЕНИЕ:** Секция SCENE_BANK записывается в `research.md` после Evidence Map.
 
 → Используется в [IMAGE_ALLOCATION_MAP] (блок 03, поле O) для распределения сцен по блокам текста.
+
+---
+
+### 2.14. ПРОТОКОЛ ГЛУБИНЫ АУДИТОРИИ (AUDIENCE_DEPTH_PROTOCOL_V1)
+КОД ДОСТУПА: [AUDIENCE_DEPTH_PROTOCOL_V1]
+
+**ПРОБЛЕМА:** Стандартный VOC-ресерч (субагент A) собирает дословные цитаты клиентов, но не раскрывает глубинную психографику: истинные страхи (4 слоя), модель принятия решений, триггерные события покупки, провалившиеся попытки и их эмоциональный осадок. Три источника ненадёжности данных об аудитории:
+1. Эксперт может не знать свою аудиторию или заблуждаться
+2. Касдев даёт поверхностные данные (люди не раскрывают истинных мотивов)
+3. Ресерч может подхватить нерелевантные/неактуальные данные
+
+**РЕШЕНИЕ:** Субагент S (Audience Depth) — гибридный агент, работающий после VOC Mining (A). Использует данные A как основу, дополняет через WebSearch, синтезирует недостающее (макс. 30% SIM). Промпт-шаблон: `blocks/agents/S_audience_depth.md` секция 7.19.
+
+**ВЫХОД:** 8 секций глубинного профиля (True Fears, Dream Dictionary, Shock Events, Failed Methods, Internal Dialogue, Decision Model, RAS Triggers, Anti-Segment).
+
+**ИНТЕГРАЦИЯ С ДРУГИМИ ПРОТОКОЛАМИ:**
+
+| Секция S | Куда интегрируется | Как используется |
+|----------|-------------------|-----------------|
+| Shock Events | SCENE_BANK (секция 2.13) | Дополнительные сцены: событие + контекст → визуальная картинка |
+| Failed Methods | JTBD MAP (секция 2.1) | CURRENT ALTERNATIVES — что пробовали + почему не сработало |
+| True Fears (4 слоя) | DRE Depth (блок 07, секция 4.3) | Глубинные слои боли: Surface → Social → Existential → Identity |
+| Dream Dictionary | DES Depth + Strategy Skeleton D2 | Язык мечты: adjectives + nouns + identity shift для Dream Outcome |
+| Decision Model | Strategy Skeleton A + M | Тип покупателя → PRIMARY segment + стиль принятия решений |
+| Internal Dialogue | RMBC Agitation (блок 07) | Точные фразы для агитации — на языке клиента, не маркетолога |
+| RAS Triggers | Headlines + Hooks (блок 07) | Слова-ловушки для заголовков, тем писем, буллетов |
+| Anti-Segment | Strategy Skeleton M | ACCEPTABLE_LOSS — кого осознанно теряем |
+
+**ПРАВИЛА ТЕГИРОВАНИЯ:**
+- [VOC] — из данных субагента A (реальные цитаты)
+- [RESEARCH] — найдено через WebSearch (с URL)
+- [SIM] — синтезировано на основе паттернов
+- Ограничение: SIM ≤ 30% от общего объёма
+
+**FALLBACK (Agent tool недоступен):**
+Сокращённый AUDIENCE_DEPTH in-context: True Fears (2 слоя), Internal Dialogue (5 фраз), Failed Methods (3), Decision Model. Остальные секции — при наличии данных из VOC.
+
+→ Запускается в STATE=RESEARCH по протоколу [DISPATCH_RULES_V1] (блок 11, секция 7.3).
+→ Результат передаётся в H (Research Assembler) как 4-й вход.
