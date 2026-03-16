@@ -410,6 +410,17 @@ Knowledge base работает через **локальную эмбеддин
 - Установлен через `pypandoc` (pip)
 - Pandoc НЕ читает PDF, только создаёт. Для PDF → text используй `pdfplumber`.
 
+## Режим ресерча
+
+При команде **"Режим ресерча"** — прочитай `CLAUDE_RESEARCH.md` и работай по его инструкциям.
+- Блоки: `research-engine/blocks/`
+- Проекты: `research-engine/projects/`
+- Агенты: `research-engine/blocks/agents/`
+- Стейт-машина: INPUT → COLLECTION → SYNTHESIS → SIMULATION → VALIDATION → DELIVERY
+- Выход: секционный `research_pack/` (11 файлов)
+
+Research Engine — автономная система маркетинговых исследований. Работает независимо от Copycraft. На выходе даёт готовый датасет, который можно передать в Copycraft как INPUT или использовать как самостоятельный продукт.
+
 ## Ключевые запреты
 
 1. Не придумывай факты, цифры, кейсы — только из источников или подтверждённые пользователем
