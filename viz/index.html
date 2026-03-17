@@ -512,6 +512,109 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
+  /* ─── Tooltip ────────────────────────────────────── */
+  .dag-tooltip {
+    position: fixed;
+    z-index: 1000;
+    pointer-events: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    min-width: 180px;
+    max-width: 260px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 1px rgba(79,195,247,0.2);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    backdrop-filter: blur(8px);
+  }
+  .dag-tooltip.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .dag-tooltip-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid var(--border);
+  }
+  .dag-tooltip-id {
+    font-size: 18px;
+    font-weight: 800;
+    min-width: 28px;
+  }
+  .dag-tooltip-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .dag-tooltip-status {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: auto;
+  }
+  .dag-tooltip-status.idle    { color: var(--text-dim); background: var(--surface2); }
+  .dag-tooltip-status.working { color: var(--accent);   background: rgba(79,195,247,0.12); }
+  .dag-tooltip-status.done    { color: var(--green);    background: rgba(102,187,106,0.12); }
+  .dag-tooltip-status.error   { color: var(--red);      background: rgba(239,83,80,0.12); }
+  .dag-tooltip-status.waiting { color: var(--orange);   background: rgba(255,167,38,0.12); }
+  .dag-tooltip-label {
+    font-size: 11px;
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .dag-tooltip-label:empty { display: none; }
+  .dag-tooltip-meta {
+    font-size: 9px;
+    color: var(--text-dim);
+    margin-top: 6px;
+  }
+
+  /* ─── Status icons inside node ─────────────────── */
+  .dag-node-status-icon {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    border: 2px solid var(--surface);
+    line-height: 1;
+  }
+  .dag-node.idle .dag-node-status-icon { display: none; }
+  .dag-node.working .dag-node-status-icon {
+    background: var(--accent);
+    color: var(--bg);
+    animation: icon-spin 1s linear infinite;
+  }
+  .dag-node.done .dag-node-status-icon {
+    background: var(--green);
+    color: var(--bg);
+  }
+  .dag-node.error .dag-node-status-icon {
+    background: var(--red);
+    color: var(--bg);
+  }
+  .dag-node.waiting .dag-node-status-icon {
+    background: var(--orange);
+    color: var(--bg);
+  }
+  @keyframes icon-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
   /* ─── Scrollbar ──────────────────────────────────── */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
@@ -747,6 +850,17 @@
   </div>
 </div>
 
+<!-- TOOLTIP -->
+<div class="dag-tooltip" id="dagTooltip">
+  <div class="dag-tooltip-header">
+    <span class="dag-tooltip-id" id="ttId"></span>
+    <span class="dag-tooltip-name" id="ttName"></span>
+    <span class="dag-tooltip-status" id="ttStatus"></span>
+  </div>
+  <div class="dag-tooltip-label" id="ttLabel"></div>
+  <div class="dag-tooltip-meta" id="ttMeta"></div>
+</div>
+
 <!-- DEMO -->
 <div class="demo-bar">
   <span class="label">Demo:</span>
@@ -969,6 +1083,63 @@ function renderMetrics(data) {
   document.getElementById('eventsGaugeText').textContent = log.length;
 }
 
+// ─── Status Icons ────────────────────────────────────────
+const STATUS_ICONS = {
+  idle:    '',
+  working: '⟳',
+  done:    '✓',
+  error:   '!',
+  waiting: '◷'
+};
+
+// ─── Tooltip ─────────────────────────────────────────────
+const tooltip = document.getElementById('dagTooltip');
+let ttTimeout = null;
+
+function showTooltip(e, id, agentDefs, agentStates) {
+  clearTimeout(ttTimeout);
+  const def = agentDefs[id] || { name: id };
+  const st = (agentStates && agentStates[id]) || { status: 'idle', label: '' };
+  const status = st.status || 'idle';
+
+  document.getElementById('ttId').textContent = id;
+  document.getElementById('ttId').style.color =
+    status === 'working' ? 'var(--accent)' :
+    status === 'done'    ? 'var(--green)' :
+    status === 'error'   ? 'var(--red)' :
+    status === 'waiting' ? 'var(--orange)' : 'var(--text-dim)';
+  document.getElementById('ttName').textContent = def.name;
+  const statusEl = document.getElementById('ttStatus');
+  statusEl.textContent = STATUS_LABELS[status] || status;
+  statusEl.className = 'dag-tooltip-status ' + status;
+  document.getElementById('ttLabel').textContent = st.label || '';
+  document.getElementById('ttMeta').textContent =
+    status === 'idle' ? 'Не активен' :
+    status === 'working' ? 'Выполняет задачу...' :
+    status === 'done' ? 'Завершён' :
+    status === 'error' ? 'Ошибка — требует внимания' :
+    status === 'waiting' ? 'Ожидает зависимости' : '';
+
+  // Position
+  const rect = e.currentTarget.getBoundingClientRect();
+  const ttW = 220;
+  let left = rect.left + rect.width / 2 - ttW / 2;
+  let top = rect.top - 8;
+
+  // Keep within viewport
+  if (left < 8) left = 8;
+  if (left + ttW > window.innerWidth - 8) left = window.innerWidth - ttW - 8;
+
+  tooltip.style.left = left + 'px';
+  tooltip.style.top = top + 'px';
+  tooltip.style.transform = 'translateY(-100%)';
+  tooltip.classList.add('visible');
+}
+
+function hideTooltip() {
+  ttTimeout = setTimeout(() => tooltip.classList.remove('visible'), 100);
+}
+
 // ─── Render DAG ──────────────────────────────────────────
 function renderDAG(containerId, svgId, dagLayout, agentDefs, agentStates) {
   const container = document.getElementById(containerId);
@@ -991,6 +1162,7 @@ function renderDAG(containerId, svgId, dagLayout, agentDefs, agentStates) {
     const def = agentDefs[id] || { name: id };
     const st = (agentStates && agentStates[id]) || { status: 'idle', label: '' };
     const status = st.status || 'idle';
+    const icon = STATUS_ICONS[status] || '';
 
     const node = document.createElement('div');
     node.className = `dag-node ${status}`;
@@ -1001,15 +1173,20 @@ function renderDAG(containerId, svgId, dagLayout, agentDefs, agentStates) {
     node.innerHTML = `
       <div class="dag-node-circle">
         <div class="dag-node-id">${id}</div>
+        ${icon ? `<div class="dag-node-status-icon">${icon}</div>` : ''}
       </div>
       <div class="dag-node-name">${def.name}</div>
       <div class="dag-node-label">${st.label || ''}</div>
     `;
 
+    // Tooltip events
+    node.addEventListener('mouseenter', (e) => showTooltip(e, id, agentDefs, agentStates));
+    node.addEventListener('mouseleave', hideTooltip);
+
     container.appendChild(node);
   });
 
-  // Edges (SVG)
+  // Edges (SVG) — bezier curves
   svg.innerHTML = '';
   dagLayout.edges.forEach(([from, to]) => {
     const fromPos = dagLayout.nodes[from];
@@ -1031,14 +1208,20 @@ function renderDAG(containerId, svgId, dagLayout, agentDefs, agentStates) {
       edgeCls += ' active-source';
     }
 
-    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-    line.setAttribute('x1', fromPos.x);
-    line.setAttribute('y1', fromPos.y);
-    line.setAttribute('x2', toPos.x);
-    line.setAttribute('y2', toPos.y);
-    line.setAttribute('class', edgeCls);
-    line.setAttribute('vector-effect', 'non-scaling-stroke');
-    svg.appendChild(line);
+    // Bezier curve: vertical bias for top→bottom flow
+    const dx = toPos.x - fromPos.x;
+    const dy = toPos.y - fromPos.y;
+    const curveStrength = Math.min(Math.abs(dy) * 0.4, 15);
+    const cx1 = fromPos.x;
+    const cy1 = fromPos.y + curveStrength;
+    const cx2 = toPos.x;
+    const cy2 = toPos.y - curveStrength;
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', `M ${fromPos.x} ${fromPos.y} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${toPos.x} ${toPos.y}`);
+    path.setAttribute('class', edgeCls);
+    path.setAttribute('vector-effect', 'non-scaling-stroke');
+    svg.appendChild(path);
   });
 }
 
