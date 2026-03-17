@@ -1002,6 +1002,7 @@ function renderDAG(containerId, svgId, dagLayout, agentDefs, agentStates) {
     line.setAttribute('x2', toPos.x);
     line.setAttribute('y2', toPos.y);
     line.setAttribute('class', edgeCls);
+    line.setAttribute('vector-effect', 'non-scaling-stroke');
     svg.appendChild(line);
   });
 }
