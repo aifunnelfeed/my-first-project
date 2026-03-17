@@ -26,6 +26,7 @@
 | U | agents/U_belief_mapper.md | Belief Mapper | SYNTHESIS (опционально) |
 | V | agents/V_adversarial_persona.md | Adversarial Persona | SIMULATION |
 | W | agents/W_persona_simulator.md | Persona Simulator | SIMULATION |
+| DR | agents/DR_deep_researcher.md | Deep Researcher | COLLECTION (Wave 4, manual) |
 
 ## Автозагрузка по стейту
 

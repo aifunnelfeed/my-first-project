@@ -108,6 +108,7 @@ VALIDATION → DELIVERY          (после подтверждения поль
 **USER APPROVAL GATES:**
 - COLLECTION → SYNTHESIS: пользователь должен одобрить collection.md
 - VALIDATION → DELIVERY: пользователь должен подтвердить готовность
+- DR (Deep Researcher): ВСЕГДА требует подтверждения пользователя перед запуском
 - Все остальные переходы — автоматические (но state.md обновляется)
 
 ---
@@ -128,6 +129,14 @@ VALIDATION → DELIVERY          (после подтверждения поль
 7. **Результаты показываются пользователю ПЕРЕД интеграцией** в файлы проекта.
 8. **Язык.** Субагент работает на языке проекта.
 
+**Особое правило для DR (Deep Researcher):**
+DR — единственный субагент, который НИКОГДА не запускается автоматически. Перед каждым dispatch DR главный агент ОБЯЗАН:
+1. Показать пользователю причину (LOW confidence / BLIND_SPOT / запрос)
+2. Предложить конкретную тему бурения
+3. Спросить глубину (15 / 30 / 50 итераций, по умолчанию 15)
+4. Получить явное подтверждение: "Да, запусти DR"
+Без подтверждения → DR НЕ запускается, даже при LOW confidence по всем категориям.
+
 ---
 
 ### 2.2. РЕЕСТР СУБАГЕНТОВ
@@ -144,6 +153,7 @@ VALIDATION → DELIVERY          (после подтверждения поль
 | U | Belief Mapper | `agents/U_belief_mapper.md` | SYNTHESIS (опцион.) | collection.md | Structured Belief Map |
 | V | Adversarial Persona | `agents/V_adversarial_persona.md` | SIMULATION | synthesis.md | Vulnerability Map + attack vectors |
 | W | Persona Simulator | `agents/W_persona_simulator.md` | SIMULATION | synthesis.md | Per-persona scorecard (3 теста) |
+| DR | Deep Researcher | `agents/DR_deep_researcher.md` | COLLECTION Wave 4 (manual) | collection_raw.md + DATA_CONFIDENCE | Deep Research Report (верифицированные факты + журнал) |
 
 ---
 
@@ -174,6 +184,16 @@ VALIDATION → DELIVERY          (после подтверждения поль
 DATA_CONFIDENCE_CHECK_V2 (главный агент, не субагент)
   ↓
 Показ пользователю → фильтрация → collection.md
+
+--- ОПЦИОНАЛЬНО: ВОЛНА 4 (только по запросу пользователя) ---
+
+Если DATA_CONFIDENCE показал LOW по 1+ категории ИЛИ пользователь запросил:
+  → Главный агент СПРАШИВАЕТ: "Запустить Deep Research по {LOW-категория}?"
+  → Пользователь подтверждает тему + глубину
+  → dispatch DR (Deep Researcher) — тема + известные данные + пробелы
+  → DR возвращает верифицированные факты
+  → Интеграция в collection.md + повторный DATA_CONFIDENCE_CHECK
+  → Показ пользователю
 ```
 
 **FALLBACK (Agent tool недоступен):**
@@ -181,6 +201,7 @@ DATA_CONFIDENCE_CHECK_V2 (главный агент, не субагент)
 - S → сокращённый AUDIENCE_DEPTH in-context (True Fears 2 слоя, Internal Dialogue 5 фраз, Failed Methods 3, Decision Model)
 - T → сокращённый TREND ANALYSIS in-context (3 тренда, 1 сезонность)
 - H → главный агент собирает collection_raw.md вручную
+- DR → сокращённый Deep Research in-context (5-8 итеративных циклов, журнал сокращённый)
 
 **STATE=SYNTHESIS:**
 - Главный агент выполняет все интерпретации (блок 05)
@@ -218,7 +239,9 @@ DATA_CONFIDENCE_CHECK_V2 (главный агент, не субагент)
    - 📌 Добавить (свои данные — автоматически S1)
 5. Одобренные данные → `collection.md` (финальный формат с тегами)
 6. DATA_CONFIDENCE_CHECK_V2
-7. Git commit: `research({slug}): collection`
+7. Если LOW ≥ 1 → предложить пользователю вариант E) Deep Research (dispatch DR)
+8. Если пользователь подтвердил DR → dispatch DR → интеграция результатов → повторный DATA_CONFIDENCE_CHECK
+9. Git commit: `research({slug}): collection` (или `research({slug}): collection + deep-research {тема}`)
 
 **ФОРМАТ collection_raw.md:**
 ```markdown
@@ -274,6 +297,7 @@ A) Дополните данные — скажите, что можете пр�
 B) Продолжить с гипотезами — LOW-данные пометятся [HYPOTHESIS] в synthesis.md
 C) Запросить данные у эксперта — я сформирую список вопросов
 D) Дополнительный ресерч по LOW-категориям (повторный dispatch A/B/C/S/T)
+E) Deep Research по конкретной LOW-категории (dispatch DR — требует подтверждения)
 ```
 
 **SIMULATION все персоны < 2 баллов по тесту:**
