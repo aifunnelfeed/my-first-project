@@ -339,33 +339,52 @@
 
   .dag-node.working .dag-node-circle {
     border-color: var(--accent);
-    background: rgba(79, 195, 247, 0.1);
-    box-shadow: 0 0 16px var(--accent-glow), 0 0 32px rgba(79, 195, 247, 0.1);
+    background: rgba(79, 195, 247, 0.12);
+    box-shadow: 0 0 20px var(--accent-glow), 0 0 50px rgba(79, 195, 247, 0.15), inset 0 0 12px rgba(79, 195, 247, 0.1);
     animation: node-pulse 2s ease-in-out infinite;
+  }
+  .dag-node.working .dag-node-circle::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 1.5px solid var(--accent);
+    opacity: 0;
+    animation: ring-ping 2s ease-out infinite;
   }
   .dag-node.working .dag-node-id { color: var(--accent); }
   .dag-node.working .dag-node-name { color: var(--accent); }
 
   .dag-node.done .dag-node-circle {
     border-color: var(--green);
-    background: rgba(102, 187, 106, 0.1);
-    box-shadow: 0 0 8px var(--green-glow);
+    background: rgba(102, 187, 106, 0.12);
+    box-shadow: 0 0 14px var(--green-glow), 0 0 30px rgba(102, 187, 106, 0.1);
+    animation: node-breathe-green 3s ease-in-out infinite;
   }
   .dag-node.done .dag-node-id { color: var(--green); }
 
   .dag-node.error .dag-node-circle {
     border-color: var(--red);
-    background: rgba(239, 83, 80, 0.1);
-    box-shadow: 0 0 12px var(--red-glow);
-    animation: node-shake 0.4s ease;
+    background: rgba(239, 83, 80, 0.12);
+    box-shadow: 0 0 18px var(--red-glow), 0 0 40px rgba(239, 83, 80, 0.12);
+    animation: node-shake 0.4s ease, node-breathe-red 1.5s ease-in-out infinite 0.4s;
   }
   .dag-node.error .dag-node-id { color: var(--red); }
 
   .dag-node.waiting .dag-node-circle {
     border-color: var(--orange);
-    background: rgba(255, 167, 38, 0.08);
-    box-shadow: 0 0 10px var(--orange-glow);
-    animation: node-pulse-orange 3s ease-in-out infinite;
+    background: rgba(255, 167, 38, 0.1);
+    box-shadow: 0 0 14px var(--orange-glow), 0 0 30px rgba(255, 167, 38, 0.08);
+    animation: node-pulse-orange 2.5s ease-in-out infinite;
+  }
+  .dag-node.waiting .dag-node-circle::after {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    border: 1.5px dashed var(--orange);
+    opacity: 0.4;
+    animation: ring-spin 8s linear infinite;
   }
   .dag-node.waiting .dag-node-id { color: var(--orange); }
   .dag-node.waiting .dag-node-label { color: var(--orange); }
@@ -454,12 +473,28 @@
     50% { box-shadow: 0 0 35px var(--accent-glow), 0 0 60px rgba(79, 195, 247, 0.1); }
   }
   @keyframes node-pulse {
-    0%, 100% { box-shadow: 0 0 16px var(--accent-glow); }
-    50% { box-shadow: 0 0 28px var(--accent-glow), 0 0 48px rgba(79, 195, 247, 0.15); }
+    0%, 100% { box-shadow: 0 0 20px var(--accent-glow), 0 0 50px rgba(79, 195, 247, 0.15), inset 0 0 12px rgba(79, 195, 247, 0.1); }
+    50% { box-shadow: 0 0 35px var(--accent-glow), 0 0 70px rgba(79, 195, 247, 0.25), inset 0 0 18px rgba(79, 195, 247, 0.15); }
   }
   @keyframes node-pulse-orange {
-    0%, 100% { box-shadow: 0 0 10px var(--orange-glow); }
-    50% { box-shadow: 0 0 20px var(--orange-glow); }
+    0%, 100% { box-shadow: 0 0 14px var(--orange-glow), 0 0 30px rgba(255, 167, 38, 0.08); }
+    50% { box-shadow: 0 0 24px var(--orange-glow), 0 0 50px rgba(255, 167, 38, 0.15); }
+  }
+  @keyframes node-breathe-green {
+    0%, 100% { box-shadow: 0 0 14px var(--green-glow), 0 0 30px rgba(102, 187, 106, 0.1); }
+    50% { box-shadow: 0 0 22px var(--green-glow), 0 0 45px rgba(102, 187, 106, 0.18); }
+  }
+  @keyframes node-breathe-red {
+    0%, 100% { box-shadow: 0 0 18px var(--red-glow), 0 0 40px rgba(239, 83, 80, 0.12); }
+    50% { box-shadow: 0 0 28px var(--red-glow), 0 0 55px rgba(239, 83, 80, 0.2); }
+  }
+  @keyframes ring-ping {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(1.8); opacity: 0; }
+  }
+  @keyframes ring-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
   @keyframes node-shake {
     0%, 100% { transform: translateX(0); }
