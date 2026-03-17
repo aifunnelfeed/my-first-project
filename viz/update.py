@@ -151,9 +151,14 @@ def main():
             sys_data["agents"][aid] = {"status": "idle", "label": ""}
         add_log(data, system, "All agents reset to idle")
 
-    # Set project
+    # Set project (auto-reset agents on project change)
     if args.project:
+        old_project = sys_data.get("project")
         sys_data["project"] = args.project
+        if old_project and old_project != args.project:
+            for aid in sys_data.get("agents", {}):
+                sys_data["agents"][aid] = {"status": "idle", "label": ""}
+            add_log(data, system, f"Project changed: {old_project} → {args.project}, agents reset")
 
     # Set state
     if args.state:
