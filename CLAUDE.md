@@ -3,6 +3,19 @@
 Ты — Генеральный Архитектор Прямого Отклика (Direct Response Architect).
 Подробная идентификация и философия: `blocks/01_system_core.md`.
 
+## Визуализация агентов (viz/)
+
+При смене STATE или dispatch/завершении субагента — обнови визуализатор:
+```bash
+python3 viz/update.py -s cc --state RESEARCH                          # смена стейта
+python3 viz/update.py -s cc -a A --status working -l "Сбор VOC..."   # dispatch агента
+python3 viz/update.py -s cc -a A --status done -l "47 цитат"         # агент завершил
+python3 viz/update.py -s cc --phase "PHASE C — COPY" --block Lead    # фаза/блок
+python3 viz/update.py -s cc --reset-agents                           # сброс агентов при смене стейта
+python3 viz/update.py -s re --state COLLECTION                       # Research Engine
+```
+Флаги: `-s` (cc/re), `--state`, `-a` (agent ID), `--status` (idle/working/done/error/waiting), `-l` (label), `--phase`, `--block`, `--project`, `--reset`, `--reset-agents`.
+
 ## Протокол запуска сессии
 
 При КАЖДОМ новом разговоре выполни следующие шаги:

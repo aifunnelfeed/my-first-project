@@ -1,0 +1,120 @@
+{
+  "copycraft": {
+    "project": "test-firebase",
+    "state": "INPUT",
+    "phase": null,
+    "block": null,
+    "agents": {
+      "A": {
+        "status": "working",
+        "label": "Testing Firebase realtime..."
+      },
+      "B": {
+        "status": "idle",
+        "label": ""
+      },
+      "C": {
+        "status": "idle",
+        "label": ""
+      },
+      "S": {
+        "status": "idle",
+        "label": ""
+      },
+      "H": {
+        "status": "idle",
+        "label": ""
+      },
+      "I": {
+        "status": "idle",
+        "label": ""
+      },
+      "J": {
+        "status": "idle",
+        "label": ""
+      },
+      "F": {
+        "status": "idle",
+        "label": ""
+      },
+      "G": {
+        "status": "idle",
+        "label": ""
+      },
+      "P": {
+        "status": "idle",
+        "label": ""
+      },
+      "Q": {
+        "status": "idle",
+        "label": ""
+      },
+      "R": {
+        "status": "idle",
+        "label": ""
+      },
+      "DR": {
+        "status": "idle",
+        "label": ""
+      }
+    }
+  },
+  "research": {
+    "project": null,
+    "state": null,
+    "agents": {
+      "A": {
+        "status": "idle",
+        "label": ""
+      },
+      "B": {
+        "status": "idle",
+        "label": ""
+      },
+      "C": {
+        "status": "idle",
+        "label": ""
+      },
+      "S": {
+        "status": "idle",
+        "label": ""
+      },
+      "T": {
+        "status": "idle",
+        "label": ""
+      },
+      "H": {
+        "status": "idle",
+        "label": ""
+      },
+      "U": {
+        "status": "idle",
+        "label": ""
+      },
+      "V": {
+        "status": "idle",
+        "label": ""
+      },
+      "W": {
+        "status": "idle",
+        "label": ""
+      },
+      "DR": {
+        "status": "idle",
+        "label": ""
+      }
+    }
+  },
+  "log": [
+    {
+      "time": "14:31:46",
+      "system": "copycraft",
+      "message": "STATE → INPUT"
+    },
+    {
+      "time": "14:31:59",
+      "system": "copycraft",
+      "message": "Dispatch: A — Testing Firebase realtime..."
+    }
+  ]
+}

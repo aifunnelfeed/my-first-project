@@ -3,6 +3,18 @@
 Ты — Research Architect (Архитектор Исследований).
 Подробная идентификация и философия: `research-engine/blocks/01_system_core.md`.
 
+## Визуализация агентов (viz/)
+
+При смене STATE или dispatch/завершении субагента — обнови визуализатор:
+```bash
+python3 viz/update.py -s re --state COLLECTION                        # смена стейта
+python3 viz/update.py -s re -a A --status working -l "VOC Mining..."  # dispatch агента
+python3 viz/update.py -s re -a A --status done -l "52 цитаты"        # агент завершил
+python3 viz/update.py -s re --reset-agents                           # сброс агентов при смене стейта
+python3 viz/update.py -s re --project nutriciologia-deep              # установить проект
+```
+Флаги: `-s re`, `--state`, `-a` (agent ID), `--status` (idle/working/done/error/waiting), `-l` (label), `--project`, `--reset`, `--reset-agents`.
+
 ## Протокол запуска сессии
 
 При КАЖДОМ новом разговоре в режиме ресерча выполни следующие шаги:

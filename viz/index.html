@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Copycraft + Research Engine — Agent Visualizer</title>
+<style>
+  :root {
+    --bg: #0a0e17;
+    --surface: #131a2b;
+    --surface2: #1a2340;
+    --border: #243054;
+    --text: #c8d6e5;
+    --text-dim: #5e6e85;
+    --accent: #4fc3f7;
+    --accent-glow: rgba(79, 195, 247, 0.3);
+    --green: #66bb6a;
+    --green-glow: rgba(102, 187, 106, 0.3);
+    --orange: #ffa726;
+    --orange-glow: rgba(255, 167, 38, 0.3);
+    --red: #ef5350;
+    --purple: #ab47bc;
+    --purple-glow: rgba(171, 71, 188, 0.3);
+    --yellow: #ffee58;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 32px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .header h1 {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+  .header h1 span { color: var(--accent); }
+  .status-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    display: inline-block;
+    margin-right: 8px;
+    animation: pulse-dot 2s infinite;
+  }
+  .status-dot.offline { background: var(--red); animation: none; }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  /* Main layout */
+  .main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    min-height: calc(100vh - 65px);
+  }
+
+  /* System panel */
+  .system-panel {
+    padding: 24px;
+    border-right: 1px solid var(--border);
+  }
+  .system-panel:last-child { border-right: none; }
+
+  .system-title {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .system-title .icon { font-size: 18px; }
+  .system-subtitle {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+  }
+
+  /* State machine */
+  .state-machine {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .state-node {
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    position: relative;
+    transition: all 0.4s ease;
+  }
+  .state-node.completed {
+    background: rgba(102, 187, 106, 0.1);
+    border-color: var(--green);
+    color: var(--green);
+  }
+  .state-node.active {
+    background: rgba(79, 195, 247, 0.15);
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow: 0 0 20px var(--accent-glow), inset 0 0 20px rgba(79, 195, 247, 0.05);
+    animation: state-glow 2s ease-in-out infinite;
+  }
+  .state-arrow {
+    display: flex;
+    align-items: center;
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+  .state-arrow.completed { color: var(--green); }
+  .state-arrow.active { color: var(--accent); }
+
+  /* Project info */
+  .project-info {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 24px;
+    font-size: 12px;
+  }
+  .project-info .label { color: var(--text-dim); }
+  .project-info .value { color: var(--accent); font-weight: 600; }
+
+  /* Agent grid */
+  .agents-title {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+  }
+  .agent-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 10px;
+  }
+
+  /* Agent card */
+  .agent-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .agent-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: transparent;
+    transition: background 0.4s;
+  }
+  .agent-card .agent-id {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    transition: color 0.4s;
+  }
+  .agent-card .agent-name {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .agent-card .agent-status {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    display: inline-block;
+    font-weight: 600;
+  }
+  .agent-card .agent-label {
+    font-size: 9px;
+    color: var(--text-dim);
+    margin-top: 6px;
+    font-style: italic;
+    min-height: 13px;
+  }
+
+  /* Agent states */
+  .agent-card.idle .agent-id { color: var(--text-dim); }
+  .agent-card.idle .agent-status {
+    background: rgba(94, 110, 133, 0.2);
+    color: var(--text-dim);
+  }
+
+  .agent-card.working {
+    border-color: var(--accent);
+    box-shadow: 0 0 24px var(--accent-glow);
+    animation: agent-breathe 2s ease-in-out infinite;
+  }
+  .agent-card.working::before { background: var(--accent); }
+  .agent-card.working .agent-id { color: var(--accent); }
+  .agent-card.working .agent-status {
+    background: rgba(79, 195, 247, 0.2);
+    color: var(--accent);
+  }
+
+  .agent-card.done {
+    border-color: var(--green);
+    box-shadow: 0 0 12px var(--green-glow);
+  }
+  .agent-card.done::before { background: var(--green); }
+  .agent-card.done .agent-id { color: var(--green); }
+  .agent-card.done .agent-status {
+    background: rgba(102, 187, 106, 0.2);
+    color: var(--green);
+  }
+
+  .agent-card.error {
+    border-color: var(--red);
+    box-shadow: 0 0 12px rgba(239, 83, 80, 0.3);
+  }
+  .agent-card.error::before { background: var(--red); }
+  .agent-card.error .agent-id { color: var(--red); }
+  .agent-card.error .agent-status {
+    background: rgba(239, 83, 80, 0.2);
+    color: var(--red);
+  }
+
+  .agent-card.waiting {
+    border-color: var(--orange);
+    box-shadow: 0 0 12px var(--orange-glow);
+    animation: agent-breathe-orange 3s ease-in-out infinite;
+  }
+  .agent-card.waiting::before { background: var(--orange); }
+  .agent-card.waiting .agent-id { color: var(--orange); }
+  .agent-card.waiting .agent-status {
+    background: rgba(255, 167, 38, 0.2);
+    color: var(--orange);
+  }
+
+  /* Event log */
+  .log-section {
+    grid-column: 1 / -1;
+    padding: 20px 32px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    max-height: 220px;
+    overflow-y: auto;
+  }
+  .log-title {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-dim);
+    margin-bottom: 12px;
+  }
+  .log-entry {
+    font-size: 11px;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(36, 48, 84, 0.5);
+    display: flex;
+    gap: 12px;
+    animation: log-fade-in 0.3s ease;
+  }
+  .log-entry .log-time { color: var(--text-dim); min-width: 70px; }
+  .log-entry .log-system {
+    min-width: 80px;
+    font-weight: 600;
+    font-size: 10px;
+    text-transform: uppercase;
+  }
+  .log-entry .log-system.cc { color: var(--accent); }
+  .log-entry .log-system.re { color: var(--purple); }
+  .log-entry .log-msg { color: var(--text); }
+  .log-empty {
+    color: var(--text-dim);
+    font-size: 11px;
+    font-style: italic;
+  }
+
+  /* Demo controls */
+  .demo-bar {
+    padding: 12px 32px;
+    border-top: 1px solid var(--border);
+    background: var(--surface2);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .demo-bar .label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    margin-right: 8px;
+  }
+  .demo-btn {
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 11px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .demo-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .demo-btn.active {
+    background: rgba(79, 195, 247, 0.15);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* Animations */
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  @keyframes state-glow {
+    0%, 100% { box-shadow: 0 0 20px var(--accent-glow); }
+    50% { box-shadow: 0 0 35px var(--accent-glow), 0 0 60px rgba(79, 195, 247, 0.1); }
+  }
+  @keyframes agent-breathe {
+    0%, 100% { box-shadow: 0 0 24px var(--accent-glow); }
+    50% { box-shadow: 0 0 40px var(--accent-glow), 0 0 60px rgba(79, 195, 247, 0.15); }
+  }
+  @keyframes agent-breathe-orange {
+    0%, 100% { box-shadow: 0 0 12px var(--orange-glow); }
+    50% { box-shadow: 0 0 24px var(--orange-glow); }
+  }
+  @keyframes log-fade-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1><span>M.O.C.</span> Agent Visualizer</h1>
+  <div class="header-right">
+    <span><span class="status-dot" id="statusDot"></span><span id="statusText">polling state.json...</span></span>
+    <span id="lastUpdate">—</span>
+  </div>
+</div>
+
+<div class="main">
+  <!-- COPYCRAFT -->
+  <div class="system-panel">
+    <div class="system-title"><span class="icon">&#9998;</span> Copycraft</div>
+    <div class="system-subtitle">Маркетинговая Операционная Система — 8 стейтов, 13 агентов</div>
+
+    <div class="project-info" id="ccProject">
+      <span class="label">Проект:</span> <span class="value" id="ccProjectName">—</span>
+      &nbsp;&nbsp;
+      <span class="label">Стейт:</span> <span class="value" id="ccState">—</span>
+      &nbsp;&nbsp;
+      <span class="label" id="ccPhaseLabel" style="display:none">Фаза:</span> <span class="value" id="ccPhase"></span>
+    </div>
+
+    <div class="state-machine" id="ccStateMachine"></div>
+
+    <div class="agents-title">Агенты</div>
+    <div class="agent-grid" id="ccAgents"></div>
+  </div>
+
+  <!-- RESEARCH ENGINE -->
+  <div class="system-panel">
+    <div class="system-title"><span class="icon">&#128269;</span> Research Engine</div>
+    <div class="system-subtitle">Deep Research — 6 стейтов, 10 агентов</div>
+
+    <div class="project-info" id="reProject">
+      <span class="label">Проект:</span> <span class="value" id="reProjectName">—</span>
+      &nbsp;&nbsp;
+      <span class="label">Стейт:</span> <span class="value" id="reState">—</span>
+    </div>
+
+    <div class="state-machine" id="reStateMachine"></div>
+
+    <div class="agents-title">Агенты</div>
+    <div class="agent-grid" id="reAgents"></div>
+  </div>
+
+  <!-- LOG -->
+  <div class="log-section">
+    <div class="log-title">Event Log</div>
+    <div id="logEntries"><div class="log-empty">Нет событий. Обновите state.json или запустите демо.</div></div>
+  </div>
+</div>
+
+<!-- DEMO -->
+<div class="demo-bar">
+  <span class="label">Demo:</span>
+  <button class="demo-btn" onclick="demoReset()">Reset</button>
+  <button class="demo-btn" onclick="demoResearch()">Copycraft: RESEARCH</button>
+  <button class="demo-btn" onclick="demoExecution()">Copycraft: EXECUTION</button>
+  <button class="demo-btn" onclick="demoDelivery()">Copycraft: DELIVERY</button>
+  <button class="demo-btn" onclick="demoRECollection()">Research: COLLECTION</button>
+  <button class="demo-btn" onclick="demoRESimulation()">Research: SIMULATION</button>
+</div>
+
+<script type="module">
+// ─── Firebase ────────────────────────────────────────────
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-database.js";
+
+const FIREBASE_CONFIG = {
+  databaseURL: "https://copycraft-aef75-default-rtdb.asia-southeast1.firebasedatabase.app"
+};
+
+// ─── Config ──────────────────────────────────────────────
+const CC_STATES = ['INPUT','QUERY','RESEARCH','STRATEGY','EXECUTION','DEBUGGING','DELIVERY','REVIEW'];
+const RE_STATES = ['INPUT','COLLECTION','SYNTHESIS','SIMULATION','VALIDATION','DELIVERY'];
+
+const CC_AGENTS = {
+  A:  { name: 'VOC Mining' },
+  B:  { name: 'Competitor & Market' },
+  C:  { name: 'Curiosity & Corruption' },
+  S:  { name: 'Audience Depth' },
+  H:  { name: 'Research Assembler' },
+  I:  { name: 'KB-Scout' },
+  J:  { name: 'Alternatives Scout' },
+  F:  { name: 'Block Critic (34Q)' },
+  G:  { name: 'Launch Critic (30Q)' },
+  P:  { name: 'Reader Persona' },
+  Q:  { name: 'Fresh Eyes' },
+  R:  { name: 'Mini Fresh Eyes' },
+  DR: { name: 'Deep Researcher' }
+};
+
+const RE_AGENTS = {
+  A:  { name: 'VOC Mining' },
+  B:  { name: 'Competitor & Market' },
+  C:  { name: 'Curiosity & Corruption' },
+  S:  { name: 'Audience Depth' },
+  T:  { name: 'Trend Mapper' },
+  H:  { name: 'Research Assembler' },
+  U:  { name: 'Belief Mapper' },
+  V:  { name: 'Adversarial Persona' },
+  W:  { name: 'Persona Simulator' },
+  DR: { name: 'Deep Researcher' }
+};
+
+const STATUS_LABELS = {
+  idle: 'IDLE',
+  working: 'WORKING',
+  done: 'DONE',
+  error: 'ERROR',
+  waiting: 'WAITING'
+};
+
+// ─── State ───────────────────────────────────────────────
+let currentState = null;
+let useFirebase = false;
+
+// ─── Init ────────────────────────────────────────────────
+function init() {
+  renderStateMachine('ccStateMachine', CC_STATES, null);
+  renderStateMachine('reStateMachine', RE_STATES, null);
+  renderAgents('ccAgents', CC_AGENTS, {});
+  renderAgents('reAgents', RE_AGENTS, {});
+
+  // Try Firebase first, fallback to local polling
+  try {
+    const app = initializeApp(FIREBASE_CONFIG);
+    const db = getDatabase(app);
+    const stateRef = ref(db, 'state');
+    onValue(stateRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        useFirebase = true;
+        applyState(data);
+        document.getElementById('statusDot').className = 'status-dot';
+        document.getElementById('statusText').textContent = 'Firebase realtime';
+        document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+      }
+    }, (error) => {
+      console.warn('Firebase error, falling back to local polling:', error);
+      pollLocal();
+    });
+    // Also start local polling as backup (stops if Firebase works)
+    setTimeout(() => { if (!useFirebase) pollLocal(); }, 3000);
+  } catch(e) {
+    console.warn('Firebase init failed, using local polling:', e);
+    pollLocal();
+  }
+}
+
+function renderStateMachine(containerId, states, activeState) {
+  const el = document.getElementById(containerId);
+  const completedStates = activeState ? states.slice(0, states.indexOf(activeState)) : [];
+  el.innerHTML = states.map((s, i) => {
+    const isActive = s === activeState;
+    const isCompleted = completedStates.includes(s);
+    const cls = isActive ? 'active' : isCompleted ? 'completed' : '';
+    const arrow = i < states.length - 1
+      ? `<span class="state-arrow ${isCompleted ? 'completed' : isActive ? 'active' : ''}">&rarr;</span>`
+      : '';
+    return `<span class="state-node ${cls}">${s}</span>${arrow}`;
+  }).join('');
+}
+
+function renderAgents(containerId, agentDefs, agentStates) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = Object.entries(agentDefs).map(([id, def]) => {
+    const st = agentStates[id] || { status: 'idle', label: '' };
+    return `
+      <div class="agent-card ${st.status}" id="agent-${containerId}-${id}">
+        <div class="agent-id">${id}</div>
+        <div class="agent-name">${def.name}</div>
+        <div class="agent-status">${STATUS_LABELS[st.status] || st.status}</div>
+        <div class="agent-label">${st.label || ''}</div>
+      </div>`;
+  }).join('');
+}
+
+function renderLog(log) {
+  const el = document.getElementById('logEntries');
+  if (!log || log.length === 0) {
+    el.innerHTML = '<div class="log-empty">Нет событий. Обновите state.json или запустите демо.</div>';
+    return;
+  }
+  // Show last 30 entries, newest first
+  const entries = log.slice(-30).reverse();
+  el.innerHTML = entries.map(e => `
+    <div class="log-entry">
+      <span class="log-time">${e.time || ''}</span>
+      <span class="log-system ${e.system === 'copycraft' ? 'cc' : 're'}">${e.system === 'copycraft' ? 'COPYCRAFT' : 'RESEARCH'}</span>
+      <span class="log-msg">${e.message || ''}</span>
+    </div>
+  `).join('');
+}
+
+// ─── Local Poll (fallback) ───────────────────────────────
+async function pollLocal() {
+  if (useFirebase) return; // Firebase took over
+  try {
+    const resp = await fetch('state.json?_=' + Date.now());
+    if (!resp.ok) throw new Error(resp.status);
+    const data = await resp.json();
+    applyState(data);
+    document.getElementById('statusDot').className = 'status-dot';
+    document.getElementById('statusText').textContent = 'local polling';
+    document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+  } catch(e) {
+    document.getElementById('statusDot').className = 'status-dot offline';
+    document.getElementById('statusText').textContent = 'offline';
+  }
+  if (!useFirebase) setTimeout(pollLocal, 2000);
+}
+
+function applyState(data) {
+  currentState = data;
+
+  // Copycraft
+  const cc = data.copycraft || {};
+  document.getElementById('ccProjectName').textContent = cc.project || '—';
+  document.getElementById('ccState').textContent = cc.state || '—';
+  if (cc.phase) {
+    document.getElementById('ccPhaseLabel').style.display = 'inline';
+    document.getElementById('ccPhase').textContent = cc.phase;
+  } else {
+    document.getElementById('ccPhaseLabel').style.display = 'none';
+    document.getElementById('ccPhase').textContent = '';
+  }
+  renderStateMachine('ccStateMachine', CC_STATES, cc.state);
+  renderAgents('ccAgents', CC_AGENTS, cc.agents || {});
+
+  // Research Engine
+  const re = data.research || {};
+  document.getElementById('reProjectName').textContent = re.project || '—';
+  document.getElementById('reState').textContent = re.state || '—';
+  renderStateMachine('reStateMachine', RE_STATES, re.state);
+  renderAgents('reAgents', RE_AGENTS, re.agents || {});
+
+  // Log
+  renderLog(data.log || []);
+}
+
+// ─── Demo Scenarios ──────────────────────────────────────
+function ts() {
+  return new Date().toLocaleTimeString('ru', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+}
+
+function demoReset() {
+  applyState({
+    copycraft: { project: null, state: null, agents: {} },
+    research: { project: null, state: null, agents: {} },
+    log: []
+  });
+}
+
+function demoResearch() {
+  const t = ts();
+  applyState({
+    copycraft: {
+      project: 'nutriciologia',
+      state: 'RESEARCH',
+      phase: null,
+      agents: {
+        A: { status: 'working', label: 'Сбор VOC...' },
+        B: { status: 'working', label: 'Анализ конкурентов...' },
+        C: { status: 'working', label: 'Поиск углов...' },
+        S: { status: 'waiting', label: 'Ждёт выход A' },
+        H: { status: 'idle', label: '' },
+        I: { status: 'idle', label: '' },
+        J: { status: 'idle', label: '' },
+        F: { status: 'idle', label: '' },
+        G: { status: 'idle', label: '' },
+        P: { status: 'idle', label: '' },
+        Q: { status: 'idle', label: '' },
+        R: { status: 'idle', label: '' },
+        DR: { status: 'idle', label: '' }
+      }
+    },
+    research: { project: null, state: null, agents: {} },
+    log: [
+      { time: t, system: 'copycraft', message: 'STATE → RESEARCH' },
+      { time: t, system: 'copycraft', message: 'Dispatch: A (VOC Mining), B (Competitor), C (Curiosity) — Wave 1' },
+      { time: t, system: 'copycraft', message: 'S (Audience Depth) waiting for A output...' }
+    ]
+  });
+  // Phase 2: after 3 sec
+  setTimeout(() => {
+    const t2 = ts();
+    applyState({
+      copycraft: {
+        project: 'nutriciologia',
+        state: 'RESEARCH',
+        phase: null,
+        agents: {
+          A: { status: 'done', label: '47 VOC цитат' },
+          B: { status: 'done', label: '12 конкурентов' },
+          C: { status: 'done', label: '3 угла' },
+          S: { status: 'working', label: 'Глубинный профиль...' },
+          H: { status: 'waiting', label: 'Ждёт A+B+C+S' },
+          I: { status: 'idle', label: '' },
+          J: { status: 'idle', label: '' },
+          F: { status: 'idle', label: '' },
+          G: { status: 'idle', label: '' },
+          P: { status: 'idle', label: '' },
+          Q: { status: 'idle', label: '' },
+          R: { status: 'idle', label: '' },
+          DR: { status: 'idle', label: '' }
+        }
+      },
+      research: { project: null, state: null, agents: {} },
+      log: [
+        { time: t, system: 'copycraft', message: 'STATE → RESEARCH' },
+        { time: t, system: 'copycraft', message: 'Dispatch: A, B, C — Wave 1' },
+        { time: t2, system: 'copycraft', message: 'A done: 47 VOC quotes collected' },
+        { time: t2, system: 'copycraft', message: 'B done: 12 competitors analyzed' },
+        { time: t2, system: 'copycraft', message: 'C done: 3 curiosity angles found' },
+        { time: t2, system: 'copycraft', message: 'Dispatch: S (Audience Depth) — Wave 2' },
+        { time: t2, system: 'copycraft', message: 'H waiting for all inputs...' }
+      ]
+    });
+  }, 3000);
+  // Phase 3: after 6 sec
+  setTimeout(() => {
+    const t3 = ts();
+    applyState({
+      copycraft: {
+        project: 'nutriciologia',
+        state: 'RESEARCH',
+        phase: null,
+        agents: {
+          A: { status: 'done', label: '47 VOC цитат' },
+          B: { status: 'done', label: '12 конкурентов' },
+          C: { status: 'done', label: '3 угла' },
+          S: { status: 'done', label: '8 секций профиля' },
+          H: { status: 'working', label: 'Сборка research_raw.md...' },
+          I: { status: 'idle', label: '' },
+          J: { status: 'idle', label: '' },
+          F: { status: 'idle', label: '' },
+          G: { status: 'idle', label: '' },
+          P: { status: 'idle', label: '' },
+          Q: { status: 'idle', label: '' },
+          R: { status: 'idle', label: '' },
+          DR: { status: 'idle', label: '' }
+        }
+      },
+      research: { project: null, state: null, agents: {} },
+      log: [
+        { time: t, system: 'copycraft', message: 'STATE → RESEARCH' },
+        { time: t, system: 'copycraft', message: 'Dispatch: A, B, C — Wave 1' },
+        { time: t, system: 'copycraft', message: 'Wave 1 complete' },
+        { time: t, system: 'copycraft', message: 'Dispatch: S — Wave 2' },
+        { time: t3, system: 'copycraft', message: 'S done: 8-section audience profile' },
+        { time: t3, system: 'copycraft', message: 'Dispatch: H (Assembler) — Wave 3' },
+        { time: t3, system: 'copycraft', message: 'H assembling research_raw.md...' }
+      ]
+    });
+  }, 6000);
+}
+
+function demoExecution() {
+  const t = ts();
+  applyState({
+    copycraft: {
+      project: 'nutriciologia',
+      state: 'EXECUTION',
+      phase: 'PHASE C — COPY',
+      block: 'Lead',
+      agents: {
+        A: { status: 'idle', label: '' },
+        B: { status: 'idle', label: '' },
+        C: { status: 'idle', label: '' },
+        S: { status: 'idle', label: '' },
+        H: { status: 'idle', label: '' },
+        I: { status: 'idle', label: '' },
+        J: { status: 'idle', label: '' },
+        F: { status: 'working', label: 'Проверка Lead (34Q)...' },
+        G: { status: 'idle', label: '' },
+        P: { status: 'idle', label: '' },
+        Q: { status: 'idle', label: '' },
+        R: { status: 'waiting', label: 'Запуск после PASS Lead' },
+        DR: { status: 'idle', label: '' }
+      }
+    },
+    research: { project: null, state: null, agents: {} },
+    log: [
+      { time: t, system: 'copycraft', message: 'STATE → EXECUTION (PHASE C)' },
+      { time: t, system: 'copycraft', message: 'Block: Lead — copy written' },
+      { time: t, system: 'copycraft', message: 'Dispatch: F (Block Critic) — 34 questions' },
+      { time: t, system: 'copycraft', message: 'R (Mini Fresh Eyes) queued after F verdict' }
+    ]
+  });
+  setTimeout(() => {
+    const t2 = ts();
+    applyState({
+      copycraft: {
+        project: 'nutriciologia',
+        state: 'EXECUTION',
+        phase: 'PHASE C — COPY',
+        block: 'Lead',
+        agents: {
+          A: { status: 'idle', label: '' },
+          B: { status: 'idle', label: '' },
+          C: { status: 'idle', label: '' },
+          S: { status: 'idle', label: '' },
+          H: { status: 'idle', label: '' },
+          I: { status: 'idle', label: '' },
+          J: { status: 'idle', label: '' },
+          F: { status: 'done', label: 'PASS — 31/34' },
+          G: { status: 'idle', label: '' },
+          P: { status: 'idle', label: '' },
+          Q: { status: 'idle', label: '' },
+          R: { status: 'working', label: 'Экспресс-рецензия Lead...' },
+          DR: { status: 'idle', label: '' }
+        }
+      },
+      research: { project: null, state: null, agents: {} },
+      log: [
+        { time: t, system: 'copycraft', message: 'STATE → EXECUTION (PHASE C), Block: Lead' },
+        { time: t, system: 'copycraft', message: 'Dispatch: F (Block Critic)' },
+        { time: t2, system: 'copycraft', message: 'F verdict: PASS (31/34)' },
+        { time: t2, system: 'copycraft', message: 'Dispatch: R (Mini Fresh Eyes) — checkpoint #1' }
+      ]
+    });
+  }, 4000);
+}
+
+function demoDelivery() {
+  const t = ts();
+  applyState({
+    copycraft: {
+      project: 'nutriciologia',
+      state: 'DELIVERY',
+      phase: 'LAUNCH CRITIC',
+      agents: {
+        A: { status: 'idle', label: '' },
+        B: { status: 'idle', label: '' },
+        C: { status: 'idle', label: '' },
+        S: { status: 'idle', label: '' },
+        H: { status: 'idle', label: '' },
+        I: { status: 'idle', label: '' },
+        J: { status: 'idle', label: '' },
+        F: { status: 'idle', label: '' },
+        G: { status: 'working', label: 'Launch Critic (30Q + 3 ADVISORY)...' },
+        P: { status: 'waiting', label: 'Audience Simulation after G' },
+        Q: { status: 'idle', label: '' },
+        R: { status: 'idle', label: '' },
+        DR: { status: 'idle', label: '' }
+      }
+    },
+    research: { project: null, state: null, agents: {} },
+    log: [
+      { time: t, system: 'copycraft', message: 'STATE → DELIVERY' },
+      { time: t, system: 'copycraft', message: 'final.md assembled, Repetition Scan passed' },
+      { time: t, system: 'copycraft', message: 'Dispatch: G (Launch Critic) — 30Q + 3 ADVISORY' },
+      { time: t, system: 'copycraft', message: 'P (Reader Persona) queued after G' }
+    ]
+  });
+  setTimeout(() => {
+    const t2 = ts();
+    applyState({
+      copycraft: {
+        project: 'nutriciologia',
+        state: 'DELIVERY',
+        phase: 'AUDIENCE SIMULATION',
+        agents: {
+          A: { status: 'idle', label: '' },
+          B: { status: 'idle', label: '' },
+          C: { status: 'idle', label: '' },
+          S: { status: 'idle', label: '' },
+          H: { status: 'idle', label: '' },
+          I: { status: 'idle', label: '' },
+          J: { status: 'idle', label: '' },
+          F: { status: 'idle', label: '' },
+          G: { status: 'done', label: 'PASS — 28/30' },
+          P: { status: 'working', label: '5 персон тестируют текст...' },
+          Q: { status: 'idle', label: '' },
+          R: { status: 'idle', label: '' },
+          DR: { status: 'idle', label: '' }
+        }
+      },
+      research: { project: null, state: null, agents: {} },
+      log: [
+        { time: t, system: 'copycraft', message: 'STATE → DELIVERY' },
+        { time: t, system: 'copycraft', message: 'Dispatch: G (Launch Critic)' },
+        { time: t2, system: 'copycraft', message: 'G verdict: PASS (28/30), 3 ADVISORY notes' },
+        { time: t2, system: 'copycraft', message: 'Dispatch: P ×5 (Audience Simulation)' },
+        { time: t2, system: 'copycraft', message: 'Simulating: Анна (скептик), Марина (новичок), Дмитрий (профи)...' }
+      ]
+    });
+  }, 4000);
+}
+
+function demoRECollection() {
+  const t = ts();
+  applyState({
+    copycraft: { project: null, state: null, agents: {} },
+    research: {
+      project: 'nutriciologia-deep',
+      state: 'COLLECTION',
+      agents: {
+        A: { status: 'working', label: 'VOC Mining...' },
+        B: { status: 'working', label: 'Market scan...' },
+        C: { status: 'working', label: 'Curiosity angles...' },
+        S: { status: 'waiting', label: 'Wave 2 — ждёт A' },
+        T: { status: 'waiting', label: 'Wave 2 — ждёт B' },
+        H: { status: 'idle', label: '' },
+        U: { status: 'idle', label: '' },
+        V: { status: 'idle', label: '' },
+        W: { status: 'idle', label: '' },
+        DR: { status: 'idle', label: '' }
+      }
+    },
+    log: [
+      { time: t, system: 'research', message: 'STATE → COLLECTION (STANDARD depth)' },
+      { time: t, system: 'research', message: 'Wave 1: dispatch A + B + C' },
+      { time: t, system: 'research', message: 'Wave 2 queued: S (needs A), T (needs B)' }
+    ]
+  });
+  setTimeout(() => {
+    const t2 = ts();
+    applyState({
+      copycraft: { project: null, state: null, agents: {} },
+      research: {
+        project: 'nutriciologia-deep',
+        state: 'COLLECTION',
+        agents: {
+          A: { status: 'done', label: '52 цитаты' },
+          B: { status: 'done', label: '15 конкурентов' },
+          C: { status: 'done', label: '4 угла' },
+          S: { status: 'working', label: 'Audience Depth...' },
+          T: { status: 'working', label: 'Trend mapping...' },
+          H: { status: 'waiting', label: 'Wave 3 — ждёт S+T' },
+          U: { status: 'idle', label: '' },
+          V: { status: 'idle', label: '' },
+          W: { status: 'idle', label: '' },
+          DR: { status: 'idle', label: '' }
+        }
+      },
+      log: [
+        { time: t, system: 'research', message: 'STATE → COLLECTION' },
+        { time: t, system: 'research', message: 'Wave 1: dispatch A + B + C' },
+        { time: t2, system: 'research', message: 'Wave 1 complete: A(52 VOC), B(15 comp), C(4 angles)' },
+        { time: t2, system: 'research', message: 'Wave 2: dispatch S + T' },
+        { time: t2, system: 'research', message: 'H queued for Wave 3' }
+      ]
+    });
+  }, 3500);
+}
+
+function demoRESimulation() {
+  const t = ts();
+  applyState({
+    copycraft: { project: null, state: null, agents: {} },
+    research: {
+      project: 'nutriciologia-deep',
+      state: 'SIMULATION',
+      agents: {
+        A: { status: 'idle', label: '' },
+        B: { status: 'idle', label: '' },
+        C: { status: 'idle', label: '' },
+        S: { status: 'idle', label: '' },
+        T: { status: 'idle', label: '' },
+        H: { status: 'idle', label: '' },
+        U: { status: 'idle', label: '' },
+        V: { status: 'working', label: 'Скептик #1 тестирует...' },
+        W: { status: 'working', label: '6 персон симулируют...' },
+        DR: { status: 'idle', label: '' }
+      }
+    },
+    log: [
+      { time: t, system: 'research', message: 'STATE → SIMULATION' },
+      { time: t, system: 'research', message: 'Dispatch: W ×6 (Persona Simulator)' },
+      { time: t, system: 'research', message: 'Dispatch: V ×2 (Adversarial Persona)' },
+      { time: t, system: 'research', message: 'Running 3 tests per persona: Problem Recognition, Mechanism Credibility, Offer Attractiveness' }
+    ]
+  });
+}
+
+// ─── Expose demo functions to window (module scope) ──────
+window.demoReset = demoReset;
+window.demoResearch = demoResearch;
+window.demoExecution = demoExecution;
+window.demoDelivery = demoDelivery;
+window.demoRECollection = demoRECollection;
+window.demoRESimulation = demoRESimulation;
+
+// ─── Start ───────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
