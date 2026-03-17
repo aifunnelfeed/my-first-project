@@ -19,6 +19,7 @@
     --orange: #ffa726;
     --orange-glow: rgba(255, 167, 38, 0.3);
     --red: #ef5350;
+    --red-glow: rgba(239, 83, 80, 0.3);
     --purple: #ab47bc;
     --purple-glow: rgba(171, 71, 188, 0.3);
     --yellow: #ffee58;
@@ -34,12 +35,12 @@
     overflow-x: hidden;
   }
 
-  /* Header */
+  /* ─── Header ─────────────────────────────────────── */
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 32px;
+    padding: 16px 32px;
     border-bottom: 1px solid var(--border);
     background: var(--surface);
   }
@@ -66,17 +67,75 @@
     color: var(--text-dim);
   }
 
-  /* Main layout */
+  /* ─── Metrics Bar ────────────────────────────────── */
+  .metrics-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .metric-card {
+    background: var(--surface);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .metric-gauge {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+  }
+  .metric-gauge svg { width: 48px; height: 48px; }
+  .metric-gauge .gauge-bg {
+    fill: none;
+    stroke: var(--surface2);
+    stroke-width: 4;
+  }
+  .metric-gauge .gauge-fill {
+    fill: none;
+    stroke-width: 4;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.8s ease, stroke 0.4s ease;
+  }
+  .metric-gauge .gauge-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .metric-info { min-width: 0; }
+  .metric-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  .metric-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+
+  /* ─── Main layout ────────────────────────────────── */
   .main {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0;
-    min-height: calc(100vh - 65px);
+    min-height: calc(100vh - 65px - 77px - 220px - 48px);
   }
 
-  /* System panel */
+  /* ─── System panel ───────────────────────────────── */
   .system-panel {
-    padding: 24px;
+    padding: 20px 24px;
     border-right: 1px solid var(--border);
   }
   .system-panel:last-child { border-right: none; }
@@ -86,7 +145,7 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 2px;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -95,20 +154,20 @@
   .system-subtitle {
     font-size: 11px;
     color: var(--text-dim);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 
-  /* State machine */
+  /* ─── State machine ──────────────────────────────── */
   .state-machine {
     display: flex;
-    gap: 6px;
-    margin-bottom: 28px;
+    gap: 4px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
   }
   .state-node {
-    padding: 6px 14px;
+    padding: 5px 10px;
     border-radius: 6px;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.5px;
     background: var(--surface2);
@@ -133,146 +192,191 @@
     display: flex;
     align-items: center;
     color: var(--text-dim);
-    font-size: 14px;
+    font-size: 12px;
   }
   .state-arrow.completed { color: var(--green); }
   .state-arrow.active { color: var(--accent); }
 
-  /* Project info */
+  /* ─── Project info ───────────────────────────────── */
   .project-info {
     background: var(--surface2);
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 12px 16px;
-    margin-bottom: 24px;
+    padding: 10px 14px;
+    margin-bottom: 18px;
     font-size: 12px;
   }
   .project-info .label { color: var(--text-dim); }
   .project-info .value { color: var(--accent); font-weight: 600; }
 
-  /* Agent grid */
-  .agents-title {
-    font-size: 12px;
+  /* ─── DAG Container ──────────────────────────────── */
+  .dag-section-title {
+    font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     color: var(--text-dim);
-    margin-bottom: 14px;
+    margin-bottom: 10px;
   }
-  .agent-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: 10px;
-  }
-
-  /* Agent card */
-  .agent-card {
+  .dag-container {
+    position: relative;
+    width: 100%;
+    height: 380px;
     background: var(--surface2);
     border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 14px;
-    text-align: center;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
     overflow: hidden;
   }
-  .agent-card::before {
-    content: '';
+  .dag-edges {
     position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: transparent;
-    transition: background 0.4s;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
   }
-  .agent-card .agent-id {
-    font-size: 22px;
+
+  /* ─── DAG Wave labels ────────────────────────────── */
+  .dag-wave-label {
+    position: absolute;
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    opacity: 0.5;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    left: 4px;
+  }
+
+  /* ─── DAG Edge styles ────────────────────────────── */
+  .dag-edge {
+    stroke: var(--border);
+    stroke-width: 1.5;
+    fill: none;
+    transition: stroke 0.4s, opacity 0.4s;
+    opacity: 0.4;
+  }
+  .dag-edge.active-source {
+    stroke: var(--accent);
+    opacity: 0.7;
+    stroke-width: 2;
+  }
+  .dag-edge.flowing {
+    stroke: var(--green);
+    opacity: 0.9;
+    stroke-width: 2;
+    stroke-dasharray: 6 4;
+    animation: edge-flow 0.6s linear infinite;
+  }
+  .dag-edge.completed {
+    stroke: var(--green);
+    opacity: 0.5;
+    stroke-width: 1.5;
+  }
+  .dag-edge.has-error {
+    stroke: var(--red);
+    opacity: 0.8;
+    stroke-width: 2;
+  }
+
+  /* ─── DAG Node ───────────────────────────────────── */
+  .dag-node {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 72px;
+    cursor: default;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .dag-node-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 4px;
+    transition: all 0.4s ease;
+    position: relative;
+  }
+  .dag-node-id {
+    font-size: 14px;
     font-weight: 700;
-    margin-bottom: 4px;
+    color: var(--text-dim);
     transition: color 0.4s;
   }
-  .agent-card .agent-name {
-    font-size: 9px;
+  .dag-node-name {
+    font-size: 8px;
+    color: var(--text-dim);
+    line-height: 1.2;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--text-dim);
-    margin-bottom: 8px;
-    line-height: 1.3;
+    letter-spacing: 0.3px;
+    max-width: 72px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .agent-card .agent-status {
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 10px;
-    display: inline-block;
-    font-weight: 600;
-  }
-  .agent-card .agent-label {
-    font-size: 9px;
-    color: var(--text-dim);
-    margin-top: 6px;
-    font-style: italic;
-    min-height: 13px;
-  }
-
-  /* Agent states */
-  .agent-card.idle .agent-id { color: var(--text-dim); }
-  .agent-card.idle .agent-status {
-    background: rgba(94, 110, 133, 0.2);
-    color: var(--text-dim);
-  }
-
-  .agent-card.working {
-    border-color: var(--accent);
-    box-shadow: 0 0 24px var(--accent-glow);
-    animation: agent-breathe 2s ease-in-out infinite;
-  }
-  .agent-card.working::before { background: var(--accent); }
-  .agent-card.working .agent-id { color: var(--accent); }
-  .agent-card.working .agent-status {
-    background: rgba(79, 195, 247, 0.2);
+  .dag-node-label {
+    font-size: 8px;
     color: var(--accent);
+    font-style: italic;
+    margin-top: 1px;
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  .agent-card.done {
+  /* DAG Node states */
+  .dag-node.idle .dag-node-circle {
+    border-color: var(--border);
+    background: var(--surface);
+  }
+  .dag-node.idle .dag-node-id { color: var(--text-dim); }
+
+  .dag-node.working .dag-node-circle {
+    border-color: var(--accent);
+    background: rgba(79, 195, 247, 0.1);
+    box-shadow: 0 0 16px var(--accent-glow), 0 0 32px rgba(79, 195, 247, 0.1);
+    animation: node-pulse 2s ease-in-out infinite;
+  }
+  .dag-node.working .dag-node-id { color: var(--accent); }
+  .dag-node.working .dag-node-name { color: var(--accent); }
+
+  .dag-node.done .dag-node-circle {
     border-color: var(--green);
-    box-shadow: 0 0 12px var(--green-glow);
+    background: rgba(102, 187, 106, 0.1);
+    box-shadow: 0 0 8px var(--green-glow);
   }
-  .agent-card.done::before { background: var(--green); }
-  .agent-card.done .agent-id { color: var(--green); }
-  .agent-card.done .agent-status {
-    background: rgba(102, 187, 106, 0.2);
-    color: var(--green);
-  }
+  .dag-node.done .dag-node-id { color: var(--green); }
 
-  .agent-card.error {
+  .dag-node.error .dag-node-circle {
     border-color: var(--red);
-    box-shadow: 0 0 12px rgba(239, 83, 80, 0.3);
+    background: rgba(239, 83, 80, 0.1);
+    box-shadow: 0 0 12px var(--red-glow);
+    animation: node-shake 0.4s ease;
   }
-  .agent-card.error::before { background: var(--red); }
-  .agent-card.error .agent-id { color: var(--red); }
-  .agent-card.error .agent-status {
-    background: rgba(239, 83, 80, 0.2);
-    color: var(--red);
-  }
+  .dag-node.error .dag-node-id { color: var(--red); }
 
-  .agent-card.waiting {
+  .dag-node.waiting .dag-node-circle {
     border-color: var(--orange);
-    box-shadow: 0 0 12px var(--orange-glow);
-    animation: agent-breathe-orange 3s ease-in-out infinite;
+    background: rgba(255, 167, 38, 0.08);
+    box-shadow: 0 0 10px var(--orange-glow);
+    animation: node-pulse-orange 3s ease-in-out infinite;
   }
-  .agent-card.waiting::before { background: var(--orange); }
-  .agent-card.waiting .agent-id { color: var(--orange); }
-  .agent-card.waiting .agent-status {
-    background: rgba(255, 167, 38, 0.2);
-    color: var(--orange);
-  }
+  .dag-node.waiting .dag-node-id { color: var(--orange); }
+  .dag-node.waiting .dag-node-label { color: var(--orange); }
 
-  /* Event log */
+  /* ─── Event log ──────────────────────────────────── */
   .log-section {
     grid-column: 1 / -1;
-    padding: 20px 32px;
+    padding: 16px 32px;
     border-top: 1px solid var(--border);
     background: var(--surface);
-    max-height: 220px;
+    max-height: 200px;
     overflow-y: auto;
   }
   .log-title {
@@ -281,19 +385,19 @@
     text-transform: uppercase;
     letter-spacing: 1.5px;
     color: var(--text-dim);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
   .log-entry {
     font-size: 11px;
-    padding: 4px 0;
+    padding: 3px 0;
     border-bottom: 1px solid rgba(36, 48, 84, 0.5);
     display: flex;
     gap: 12px;
     animation: log-fade-in 0.3s ease;
   }
-  .log-entry .log-time { color: var(--text-dim); min-width: 70px; }
+  .log-entry .log-time { color: var(--text-dim); min-width: 65px; }
   .log-entry .log-system {
-    min-width: 80px;
+    min-width: 75px;
     font-weight: 600;
     font-size: 10px;
     text-transform: uppercase;
@@ -307,9 +411,9 @@
     font-style: italic;
   }
 
-  /* Demo controls */
+  /* ─── Demo bar ───────────────────────────────────── */
   .demo-bar {
-    padding: 12px 32px;
+    padding: 10px 32px;
     border-top: 1px solid var(--border);
     background: var(--surface2);
     display: flex;
@@ -325,12 +429,12 @@
     margin-right: 8px;
   }
   .demo-btn {
-    padding: 5px 12px;
+    padding: 4px 10px;
     border-radius: 6px;
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text);
-    font-size: 11px;
+    font-size: 10px;
     font-family: inherit;
     cursor: pointer;
     transition: all 0.2s;
@@ -339,13 +443,8 @@
     border-color: var(--accent);
     color: var(--accent);
   }
-  .demo-btn.active {
-    background: rgba(79, 195, 247, 0.15);
-    border-color: var(--accent);
-    color: var(--accent);
-  }
 
-  /* Animations */
+  /* ─── Animations ─────────────────────────────────── */
   @keyframes pulse-dot {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.4; }
@@ -354,20 +453,31 @@
     0%, 100% { box-shadow: 0 0 20px var(--accent-glow); }
     50% { box-shadow: 0 0 35px var(--accent-glow), 0 0 60px rgba(79, 195, 247, 0.1); }
   }
-  @keyframes agent-breathe {
-    0%, 100% { box-shadow: 0 0 24px var(--accent-glow); }
-    50% { box-shadow: 0 0 40px var(--accent-glow), 0 0 60px rgba(79, 195, 247, 0.15); }
+  @keyframes node-pulse {
+    0%, 100% { box-shadow: 0 0 16px var(--accent-glow); }
+    50% { box-shadow: 0 0 28px var(--accent-glow), 0 0 48px rgba(79, 195, 247, 0.15); }
   }
-  @keyframes agent-breathe-orange {
-    0%, 100% { box-shadow: 0 0 12px var(--orange-glow); }
-    50% { box-shadow: 0 0 24px var(--orange-glow); }
+  @keyframes node-pulse-orange {
+    0%, 100% { box-shadow: 0 0 10px var(--orange-glow); }
+    50% { box-shadow: 0 0 20px var(--orange-glow); }
+  }
+  @keyframes node-shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-3px); }
+    40% { transform: translateX(3px); }
+    60% { transform: translateX(-2px); }
+    80% { transform: translateX(2px); }
+  }
+  @keyframes edge-flow {
+    from { stroke-dashoffset: 20; }
+    to { stroke-dashoffset: 0; }
   }
   @keyframes log-fade-in {
     from { opacity: 0; transform: translateY(-4px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Scrollbar */
+  /* ─── Scrollbar ──────────────────────────────────── */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
@@ -375,6 +485,7 @@
 </head>
 <body>
 
+<!-- HEADER -->
 <div class="header">
   <h1><span>M.O.C.</span> Agent Visualizer</h1>
   <div class="header-right">
@@ -383,6 +494,72 @@
   </div>
 </div>
 
+<!-- METRICS -->
+<div class="metrics-bar" id="metricsBar">
+  <!-- Critic Score -->
+  <div class="metric-card">
+    <div class="metric-gauge">
+      <svg viewBox="0 0 48 48">
+        <circle class="gauge-bg" cx="24" cy="24" r="20"/>
+        <circle class="gauge-fill" id="criticGaugeFill" cx="24" cy="24" r="20"
+          stroke-dasharray="125.66" stroke-dashoffset="125.66"
+          transform="rotate(-90 24 24)"/>
+      </svg>
+      <div class="gauge-text" id="criticGaugeText">—</div>
+    </div>
+    <div class="metric-info">
+      <div class="metric-value" id="criticValue">—</div>
+      <div class="metric-label" id="criticLabel">Last Critic</div>
+    </div>
+  </div>
+  <!-- Current Block / Phase -->
+  <div class="metric-card">
+    <div class="metric-gauge">
+      <svg viewBox="0 0 48 48">
+        <circle class="gauge-bg" cx="24" cy="24" r="20"/>
+        <circle class="gauge-fill" id="blockGaugeFill" cx="24" cy="24" r="20"
+          stroke-dasharray="125.66" stroke-dashoffset="125.66"
+          transform="rotate(-90 24 24)" stroke="var(--purple)"/>
+      </svg>
+      <div class="gauge-text" id="blockGaugeText" style="font-size:16px">—</div>
+    </div>
+    <div class="metric-info">
+      <div class="metric-value" id="blockValue">—</div>
+      <div class="metric-label">Current Phase</div>
+    </div>
+  </div>
+  <!-- Active Agents -->
+  <div class="metric-card">
+    <div class="metric-gauge">
+      <svg viewBox="0 0 48 48">
+        <circle class="gauge-bg" cx="24" cy="24" r="20"/>
+        <circle class="gauge-fill" id="agentsGaugeFill" cx="24" cy="24" r="20"
+          stroke-dasharray="125.66" stroke-dashoffset="125.66"
+          transform="rotate(-90 24 24)" stroke="var(--orange)"/>
+      </svg>
+      <div class="gauge-text" id="agentsGaugeText">0</div>
+    </div>
+    <div class="metric-info">
+      <div class="metric-value" id="agentsValue">0 / 23</div>
+      <div class="metric-label">Active Agents</div>
+    </div>
+  </div>
+  <!-- Log Events -->
+  <div class="metric-card">
+    <div class="metric-gauge">
+      <svg viewBox="0 0 48 48">
+        <circle class="gauge-bg" cx="24" cy="24" r="20"/>
+      </svg>
+      <div class="gauge-text" id="eventsGaugeText" style="font-size:14px">0</div>
+    </div>
+    <div class="metric-info">
+      <div class="metric-value" id="eventsValue">0 events</div>
+      <div class="metric-label">Event Log</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
 <div class="main">
   <!-- COPYCRAFT -->
   <div class="system-panel">
@@ -399,8 +576,10 @@
 
     <div class="state-machine" id="ccStateMachine"></div>
 
-    <div class="agents-title">Агенты</div>
-    <div class="agent-grid" id="ccAgents"></div>
+    <div class="dag-section-title">Agent Graph</div>
+    <div class="dag-container" id="ccDAG">
+      <svg class="dag-edges" id="ccEdges" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+    </div>
   </div>
 
   <!-- RESEARCH ENGINE -->
@@ -416,8 +595,10 @@
 
     <div class="state-machine" id="reStateMachine"></div>
 
-    <div class="agents-title">Агенты</div>
-    <div class="agent-grid" id="reAgents"></div>
+    <div class="dag-section-title">Agent Graph</div>
+    <div class="dag-container" id="reDAG">
+      <svg class="dag-edges" id="reEdges" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+    </div>
   </div>
 
   <!-- LOG -->
@@ -431,11 +612,11 @@
 <div class="demo-bar">
   <span class="label">Demo:</span>
   <button class="demo-btn" onclick="demoReset()">Reset</button>
-  <button class="demo-btn" onclick="demoResearch()">Copycraft: RESEARCH</button>
-  <button class="demo-btn" onclick="demoExecution()">Copycraft: EXECUTION</button>
-  <button class="demo-btn" onclick="demoDelivery()">Copycraft: DELIVERY</button>
-  <button class="demo-btn" onclick="demoRECollection()">Research: COLLECTION</button>
-  <button class="demo-btn" onclick="demoRESimulation()">Research: SIMULATION</button>
+  <button class="demo-btn" onclick="demoResearch()">CC: RESEARCH</button>
+  <button class="demo-btn" onclick="demoExecution()">CC: EXECUTION</button>
+  <button class="demo-btn" onclick="demoDelivery()">CC: DELIVERY</button>
+  <button class="demo-btn" onclick="demoRECollection()">RE: COLLECTION</button>
+  <button class="demo-btn" onclick="demoRESimulation()">RE: SIMULATION</button>
 </div>
 
 <script type="module">
@@ -453,14 +634,14 @@ const RE_STATES = ['INPUT','COLLECTION','SYNTHESIS','SIMULATION','VALIDATION','D
 
 const CC_AGENTS = {
   A:  { name: 'VOC Mining' },
-  B:  { name: 'Competitor & Market' },
-  C:  { name: 'Curiosity & Corruption' },
+  B:  { name: 'Competitor' },
+  C:  { name: 'Curiosity' },
   S:  { name: 'Audience Depth' },
-  H:  { name: 'Research Assembler' },
+  H:  { name: 'Assembler' },
   I:  { name: 'KB-Scout' },
-  J:  { name: 'Alternatives Scout' },
-  F:  { name: 'Block Critic (34Q)' },
-  G:  { name: 'Launch Critic (30Q)' },
+  J:  { name: 'Alternatives' },
+  F:  { name: 'Block Critic' },
+  G:  { name: 'Launch Critic' },
   P:  { name: 'Reader Persona' },
   Q:  { name: 'Fresh Eyes' },
   R:  { name: 'Mini Fresh Eyes' },
@@ -469,37 +650,347 @@ const CC_AGENTS = {
 
 const RE_AGENTS = {
   A:  { name: 'VOC Mining' },
-  B:  { name: 'Competitor & Market' },
-  C:  { name: 'Curiosity & Corruption' },
+  B:  { name: 'Competitor' },
+  C:  { name: 'Curiosity' },
   S:  { name: 'Audience Depth' },
   T:  { name: 'Trend Mapper' },
-  H:  { name: 'Research Assembler' },
+  H:  { name: 'Assembler' },
   U:  { name: 'Belief Mapper' },
-  V:  { name: 'Adversarial Persona' },
-  W:  { name: 'Persona Simulator' },
+  V:  { name: 'Adversarial' },
+  W:  { name: 'Persona Sim' },
   DR: { name: 'Deep Researcher' }
 };
 
+// ─── DAG Layouts ─────────────────────────────────────────
+// Positions: percentage-based [x, y] within the container
+// viewBox is 0 0 100 100 for SVG edges
+const CC_DAG = {
+  nodes: {
+    A:  { x: 14, y: 13 },
+    B:  { x: 38, y: 13 },
+    C:  { x: 62, y: 13 },
+    S:  { x: 26, y: 33 },
+    H:  { x: 44, y: 53 },
+    I:  { x: 68, y: 33 },
+    J:  { x: 88, y: 33 },
+    F:  { x: 14, y: 73 },
+    R:  { x: 38, y: 73 },
+    G:  { x: 62, y: 73 },
+    P:  { x: 86, y: 73 },
+    Q:  { x: 14, y: 92 },
+    DR: { x: 88, y: 53 }
+  },
+  edges: [
+    ['A', 'S'],
+    ['A', 'H'],
+    ['B', 'H'],
+    ['C', 'H'],
+    ['S', 'H'],
+    ['F', 'R'],
+    ['G', 'P']
+  ],
+  waves: [
+    { label: 'RESEARCH', y: 13 },
+    { label: 'DEPTH', y: 33 },
+    { label: 'ASSEMBLY', y: 53 },
+    { label: 'CRITICS', y: 73 },
+    { label: 'REVIEW', y: 92 }
+  ]
+};
+
+const RE_DAG = {
+  nodes: {
+    A:  { x: 14, y: 13 },
+    B:  { x: 40, y: 13 },
+    C:  { x: 66, y: 13 },
+    S:  { x: 22, y: 38 },
+    T:  { x: 52, y: 38 },
+    H:  { x: 40, y: 62 },
+    U:  { x: 78, y: 38 },
+    V:  { x: 22, y: 85 },
+    W:  { x: 52, y: 85 },
+    DR: { x: 82, y: 62 }
+  },
+  edges: [
+    ['A', 'S'],
+    ['A', 'H'],
+    ['B', 'T'],
+    ['B', 'H'],
+    ['C', 'H'],
+    ['S', 'H'],
+    ['T', 'H']
+  ],
+  waves: [
+    { label: 'WAVE 1', y: 13 },
+    { label: 'WAVE 2', y: 38 },
+    { label: 'ASSEMBLY', y: 62 },
+    { label: 'SIMULATION', y: 85 }
+  ]
+};
+
 const STATUS_LABELS = {
-  idle: 'IDLE',
-  working: 'WORKING',
-  done: 'DONE',
-  error: 'ERROR',
-  waiting: 'WAITING'
+  idle: 'IDLE', working: 'WORKING', done: 'DONE', error: 'ERROR', waiting: 'WAITING'
 };
 
 // ─── State ───────────────────────────────────────────────
 let currentState = null;
 let useFirebase = false;
 
+// ─── Gauge helper ────────────────────────────────────────
+const GAUGE_CIRCUMFERENCE = 2 * Math.PI * 20; // ~125.66
+
+function setGauge(fillId, ratio, color) {
+  const el = document.getElementById(fillId);
+  if (!el) return;
+  const offset = GAUGE_CIRCUMFERENCE * (1 - Math.max(0, Math.min(1, ratio)));
+  el.style.strokeDashoffset = offset;
+  if (color) el.setAttribute('stroke', color);
+}
+
+// ─── Parse critic score from label ───────────────────────
+function parseCriticScore(label) {
+  if (!label) return null;
+  const m = label.match(/(\d+)\s*\/\s*(\d+)/);
+  if (m) return { score: parseInt(m[1]), total: parseInt(m[2]) };
+  return null;
+}
+
+// ─── Render Metrics ──────────────────────────────────────
+function renderMetrics(data) {
+  const cc = data.copycraft || {};
+  const re = data.research || {};
+  const ccAgents = cc.agents || {};
+  const reAgents = re.agents || {};
+  const log = data.log || [];
+
+  // 1. Critic Score — check F then G
+  let criticResult = null;
+  let criticAgent = null;
+  for (const [id, ag] of Object.entries(ccAgents)) {
+    if ((id === 'F' || id === 'G') && ag.status === 'done' && ag.label) {
+      const parsed = parseCriticScore(ag.label);
+      if (parsed) { criticResult = parsed; criticAgent = id; }
+    }
+  }
+  const criticEl = document.getElementById('criticValue');
+  const criticGaugeText = document.getElementById('criticGaugeText');
+  if (criticResult) {
+    const pct = criticResult.score / criticResult.total;
+    const color = pct >= 0.85 ? 'var(--green)' : pct >= 0.7 ? 'var(--orange)' : 'var(--red)';
+    criticEl.textContent = `${criticResult.score}/${criticResult.total}`;
+    criticEl.style.color = color;
+    criticGaugeText.textContent = Math.round(pct * 100) + '%';
+    criticGaugeText.style.color = color;
+    setGauge('criticGaugeFill', pct, color);
+    document.getElementById('criticLabel').textContent =
+      criticAgent === 'G' ? 'Launch Critic' : 'Block Critic';
+  } else {
+    criticEl.textContent = '—';
+    criticEl.style.color = '';
+    criticGaugeText.textContent = '—';
+    criticGaugeText.style.color = '';
+    setGauge('criticGaugeFill', 0);
+    document.getElementById('criticLabel').textContent = 'Last Critic';
+  }
+
+  // 2. Current Phase / Block
+  const blockVal = document.getElementById('blockValue');
+  const blockGText = document.getElementById('blockGaugeText');
+  if (cc.block) {
+    blockVal.textContent = cc.block;
+    blockGText.textContent = cc.block.charAt(0);
+    const stIdx = CC_STATES.indexOf(cc.state);
+    setGauge('blockGaugeFill', stIdx >= 0 ? (stIdx + 1) / CC_STATES.length : 0, 'var(--purple)');
+  } else if (cc.state) {
+    blockVal.textContent = cc.state;
+    blockGText.textContent = cc.state.charAt(0);
+    const stIdx = CC_STATES.indexOf(cc.state);
+    setGauge('blockGaugeFill', stIdx >= 0 ? (stIdx + 1) / CC_STATES.length : 0, 'var(--purple)');
+  } else if (re.state) {
+    blockVal.textContent = re.state;
+    blockGText.textContent = re.state.charAt(0);
+    const stIdx = RE_STATES.indexOf(re.state);
+    setGauge('blockGaugeFill', stIdx >= 0 ? (stIdx + 1) / RE_STATES.length : 0, 'var(--purple)');
+  } else {
+    blockVal.textContent = '—';
+    blockGText.textContent = '—';
+    setGauge('blockGaugeFill', 0);
+  }
+
+  // 3. Active Agents
+  let active = 0, total = 0;
+  for (const ag of Object.values(ccAgents)) { total++; if (ag.status && ag.status !== 'idle') active++; }
+  for (const ag of Object.values(reAgents)) { total++; if (ag.status && ag.status !== 'idle') active++; }
+  document.getElementById('agentsValue').textContent = `${active} / ${total || 23}`;
+  document.getElementById('agentsGaugeText').textContent = active;
+  setGauge('agentsGaugeFill', total ? active / total : 0, active > 0 ? 'var(--orange)' : 'var(--border)');
+
+  // 4. Log Events
+  document.getElementById('eventsValue').textContent = `${log.length} events`;
+  document.getElementById('eventsGaugeText').textContent = log.length;
+}
+
+// ─── Render DAG ──────────────────────────────────────────
+function renderDAG(containerId, svgId, dagLayout, agentDefs, agentStates) {
+  const container = document.getElementById(containerId);
+  const svg = document.getElementById(svgId);
+
+  // Clear existing nodes (keep SVG)
+  container.querySelectorAll('.dag-node, .dag-wave-label').forEach(el => el.remove());
+
+  // Wave labels
+  dagLayout.waves.forEach(w => {
+    const lbl = document.createElement('div');
+    lbl.className = 'dag-wave-label';
+    lbl.style.top = w.y + '%';
+    lbl.textContent = w.label;
+    container.appendChild(lbl);
+  });
+
+  // Nodes
+  Object.entries(dagLayout.nodes).forEach(([id, pos]) => {
+    const def = agentDefs[id] || { name: id };
+    const st = (agentStates && agentStates[id]) || { status: 'idle', label: '' };
+    const status = st.status || 'idle';
+
+    const node = document.createElement('div');
+    node.className = `dag-node ${status}`;
+    node.style.left = pos.x + '%';
+    node.style.top = pos.y + '%';
+    node.id = `dag-${containerId}-${id}`;
+
+    node.innerHTML = `
+      <div class="dag-node-circle">
+        <div class="dag-node-id">${id}</div>
+      </div>
+      <div class="dag-node-name">${def.name}</div>
+      <div class="dag-node-label">${st.label || ''}</div>
+    `;
+
+    container.appendChild(node);
+  });
+
+  // Edges (SVG)
+  svg.innerHTML = '';
+  dagLayout.edges.forEach(([from, to]) => {
+    const fromPos = dagLayout.nodes[from];
+    const toPos = dagLayout.nodes[to];
+    if (!fromPos || !toPos) return;
+
+    const fromSt = (agentStates && agentStates[from]) ? agentStates[from].status : 'idle';
+    const toSt = (agentStates && agentStates[to]) ? agentStates[to].status : 'idle';
+
+    // Determine edge class
+    let edgeCls = 'dag-edge';
+    if (fromSt === 'error' || toSt === 'error') {
+      edgeCls += ' has-error';
+    } else if (fromSt === 'done' && toSt === 'working') {
+      edgeCls += ' flowing';
+    } else if (fromSt === 'done' && toSt === 'done') {
+      edgeCls += ' completed';
+    } else if (fromSt === 'working' || fromSt === 'done') {
+      edgeCls += ' active-source';
+    }
+
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', fromPos.x);
+    line.setAttribute('y1', fromPos.y);
+    line.setAttribute('x2', toPos.x);
+    line.setAttribute('y2', toPos.y);
+    line.setAttribute('class', edgeCls);
+    svg.appendChild(line);
+  });
+}
+
+// ─── Render State Machine ────────────────────────────────
+function renderStateMachine(containerId, states, activeState) {
+  const el = document.getElementById(containerId);
+  const completedStates = activeState ? states.slice(0, states.indexOf(activeState)) : [];
+  el.innerHTML = states.map((s, i) => {
+    const isActive = s === activeState;
+    const isCompleted = completedStates.includes(s);
+    const cls = isActive ? 'active' : isCompleted ? 'completed' : '';
+    const arrow = i < states.length - 1
+      ? `<span class="state-arrow ${isCompleted ? 'completed' : isActive ? 'active' : ''}">&rarr;</span>`
+      : '';
+    return `<span class="state-node ${cls}">${s}</span>${arrow}`;
+  }).join('');
+}
+
+// ─── Render Log ──────────────────────────────────────────
+function renderLog(log) {
+  const el = document.getElementById('logEntries');
+  if (!log || log.length === 0) {
+    el.innerHTML = '<div class="log-empty">Нет событий. Обновите state.json или запустите демо.</div>';
+    return;
+  }
+  const entries = log.slice(-30).reverse();
+  el.innerHTML = entries.map(e => `
+    <div class="log-entry">
+      <span class="log-time">${e.time || ''}</span>
+      <span class="log-system ${e.system === 'copycraft' ? 'cc' : 're'}">${e.system === 'copycraft' ? 'COPYCRAFT' : 'RESEARCH'}</span>
+      <span class="log-msg">${e.message || ''}</span>
+    </div>
+  `).join('');
+}
+
+// ─── Apply State ─────────────────────────────────────────
+function applyState(data) {
+  currentState = data;
+
+  // Copycraft
+  const cc = data.copycraft || {};
+  document.getElementById('ccProjectName').textContent = cc.project || '—';
+  document.getElementById('ccState').textContent = cc.state || '—';
+  if (cc.phase) {
+    document.getElementById('ccPhaseLabel').style.display = 'inline';
+    document.getElementById('ccPhase').textContent = cc.phase;
+  } else {
+    document.getElementById('ccPhaseLabel').style.display = 'none';
+    document.getElementById('ccPhase').textContent = '';
+  }
+  renderStateMachine('ccStateMachine', CC_STATES, cc.state);
+  renderDAG('ccDAG', 'ccEdges', CC_DAG, CC_AGENTS, cc.agents || {});
+
+  // Research Engine
+  const re = data.research || {};
+  document.getElementById('reProjectName').textContent = re.project || '—';
+  document.getElementById('reState').textContent = re.state || '—';
+  renderStateMachine('reStateMachine', RE_STATES, re.state);
+  renderDAG('reDAG', 'reEdges', RE_DAG, RE_AGENTS, re.agents || {});
+
+  // Metrics
+  renderMetrics(data);
+
+  // Log
+  renderLog(data.log || []);
+}
+
+// ─── Local Poll (fallback) ───────────────────────────────
+async function pollLocal() {
+  if (useFirebase) return;
+  try {
+    const resp = await fetch('state.json?_=' + Date.now());
+    if (!resp.ok) throw new Error(resp.status);
+    const data = await resp.json();
+    applyState(data);
+    document.getElementById('statusDot').className = 'status-dot';
+    document.getElementById('statusText').textContent = 'local polling';
+    document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+  } catch(e) {
+    document.getElementById('statusDot').className = 'status-dot offline';
+    document.getElementById('statusText').textContent = 'offline';
+  }
+  if (!useFirebase) setTimeout(pollLocal, 2000);
+}
+
 // ─── Init ────────────────────────────────────────────────
 function init() {
   renderStateMachine('ccStateMachine', CC_STATES, null);
   renderStateMachine('reStateMachine', RE_STATES, null);
-  renderAgents('ccAgents', CC_AGENTS, {});
-  renderAgents('reAgents', RE_AGENTS, {});
+  renderDAG('ccDAG', 'ccEdges', CC_DAG, CC_AGENTS, {});
+  renderDAG('reDAG', 'reEdges', RE_DAG, RE_AGENTS, {});
 
-  // Try Firebase first, fallback to local polling
   try {
     const app = initializeApp(FIREBASE_CONFIG);
     const db = getDatabase(app);
@@ -517,103 +1008,11 @@ function init() {
       console.warn('Firebase error, falling back to local polling:', error);
       pollLocal();
     });
-    // Also start local polling as backup (stops if Firebase works)
     setTimeout(() => { if (!useFirebase) pollLocal(); }, 3000);
   } catch(e) {
     console.warn('Firebase init failed, using local polling:', e);
     pollLocal();
   }
-}
-
-function renderStateMachine(containerId, states, activeState) {
-  const el = document.getElementById(containerId);
-  const completedStates = activeState ? states.slice(0, states.indexOf(activeState)) : [];
-  el.innerHTML = states.map((s, i) => {
-    const isActive = s === activeState;
-    const isCompleted = completedStates.includes(s);
-    const cls = isActive ? 'active' : isCompleted ? 'completed' : '';
-    const arrow = i < states.length - 1
-      ? `<span class="state-arrow ${isCompleted ? 'completed' : isActive ? 'active' : ''}">&rarr;</span>`
-      : '';
-    return `<span class="state-node ${cls}">${s}</span>${arrow}`;
-  }).join('');
-}
-
-function renderAgents(containerId, agentDefs, agentStates) {
-  const el = document.getElementById(containerId);
-  el.innerHTML = Object.entries(agentDefs).map(([id, def]) => {
-    const st = agentStates[id] || { status: 'idle', label: '' };
-    return `
-      <div class="agent-card ${st.status}" id="agent-${containerId}-${id}">
-        <div class="agent-id">${id}</div>
-        <div class="agent-name">${def.name}</div>
-        <div class="agent-status">${STATUS_LABELS[st.status] || st.status}</div>
-        <div class="agent-label">${st.label || ''}</div>
-      </div>`;
-  }).join('');
-}
-
-function renderLog(log) {
-  const el = document.getElementById('logEntries');
-  if (!log || log.length === 0) {
-    el.innerHTML = '<div class="log-empty">Нет событий. Обновите state.json или запустите демо.</div>';
-    return;
-  }
-  // Show last 30 entries, newest first
-  const entries = log.slice(-30).reverse();
-  el.innerHTML = entries.map(e => `
-    <div class="log-entry">
-      <span class="log-time">${e.time || ''}</span>
-      <span class="log-system ${e.system === 'copycraft' ? 'cc' : 're'}">${e.system === 'copycraft' ? 'COPYCRAFT' : 'RESEARCH'}</span>
-      <span class="log-msg">${e.message || ''}</span>
-    </div>
-  `).join('');
-}
-
-// ─── Local Poll (fallback) ───────────────────────────────
-async function pollLocal() {
-  if (useFirebase) return; // Firebase took over
-  try {
-    const resp = await fetch('state.json?_=' + Date.now());
-    if (!resp.ok) throw new Error(resp.status);
-    const data = await resp.json();
-    applyState(data);
-    document.getElementById('statusDot').className = 'status-dot';
-    document.getElementById('statusText').textContent = 'local polling';
-    document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
-  } catch(e) {
-    document.getElementById('statusDot').className = 'status-dot offline';
-    document.getElementById('statusText').textContent = 'offline';
-  }
-  if (!useFirebase) setTimeout(pollLocal, 2000);
-}
-
-function applyState(data) {
-  currentState = data;
-
-  // Copycraft
-  const cc = data.copycraft || {};
-  document.getElementById('ccProjectName').textContent = cc.project || '—';
-  document.getElementById('ccState').textContent = cc.state || '—';
-  if (cc.phase) {
-    document.getElementById('ccPhaseLabel').style.display = 'inline';
-    document.getElementById('ccPhase').textContent = cc.phase;
-  } else {
-    document.getElementById('ccPhaseLabel').style.display = 'none';
-    document.getElementById('ccPhase').textContent = '';
-  }
-  renderStateMachine('ccStateMachine', CC_STATES, cc.state);
-  renderAgents('ccAgents', CC_AGENTS, cc.agents || {});
-
-  // Research Engine
-  const re = data.research || {};
-  document.getElementById('reProjectName').textContent = re.project || '—';
-  document.getElementById('reState').textContent = re.state || '—';
-  renderStateMachine('reStateMachine', RE_STATES, re.state);
-  renderAgents('reAgents', RE_AGENTS, re.agents || {});
-
-  // Log
-  renderLog(data.log || []);
 }
 
 // ─── Demo Scenarios ──────────────────────────────────────
@@ -633,98 +1032,74 @@ function demoResearch() {
   const t = ts();
   applyState({
     copycraft: {
-      project: 'nutriciologia',
-      state: 'RESEARCH',
-      phase: null,
+      project: 'nutriciologia', state: 'RESEARCH', phase: null,
       agents: {
         A: { status: 'working', label: 'Сбор VOC...' },
         B: { status: 'working', label: 'Анализ конкурентов...' },
         C: { status: 'working', label: 'Поиск углов...' },
         S: { status: 'waiting', label: 'Ждёт выход A' },
-        H: { status: 'idle', label: '' },
-        I: { status: 'idle', label: '' },
-        J: { status: 'idle', label: '' },
-        F: { status: 'idle', label: '' },
-        G: { status: 'idle', label: '' },
-        P: { status: 'idle', label: '' },
-        Q: { status: 'idle', label: '' },
-        R: { status: 'idle', label: '' },
+        H: { status: 'idle', label: '' }, I: { status: 'idle', label: '' },
+        J: { status: 'idle', label: '' }, F: { status: 'idle', label: '' },
+        G: { status: 'idle', label: '' }, P: { status: 'idle', label: '' },
+        Q: { status: 'idle', label: '' }, R: { status: 'idle', label: '' },
         DR: { status: 'idle', label: '' }
       }
     },
     research: { project: null, state: null, agents: {} },
     log: [
       { time: t, system: 'copycraft', message: 'STATE → RESEARCH' },
-      { time: t, system: 'copycraft', message: 'Dispatch: A (VOC Mining), B (Competitor), C (Curiosity) — Wave 1' },
-      { time: t, system: 'copycraft', message: 'S (Audience Depth) waiting for A output...' }
+      { time: t, system: 'copycraft', message: 'Dispatch: A + B + C — Wave 1' },
+      { time: t, system: 'copycraft', message: 'S waiting for A output...' }
     ]
   });
-  // Phase 2: after 3 sec
   setTimeout(() => {
     const t2 = ts();
     applyState({
       copycraft: {
-        project: 'nutriciologia',
-        state: 'RESEARCH',
-        phase: null,
+        project: 'nutriciologia', state: 'RESEARCH', phase: null,
         agents: {
           A: { status: 'done', label: '47 VOC цитат' },
           B: { status: 'done', label: '12 конкурентов' },
           C: { status: 'done', label: '3 угла' },
           S: { status: 'working', label: 'Глубинный профиль...' },
           H: { status: 'waiting', label: 'Ждёт A+B+C+S' },
-          I: { status: 'idle', label: '' },
-          J: { status: 'idle', label: '' },
-          F: { status: 'idle', label: '' },
-          G: { status: 'idle', label: '' },
-          P: { status: 'idle', label: '' },
-          Q: { status: 'idle', label: '' },
-          R: { status: 'idle', label: '' },
-          DR: { status: 'idle', label: '' }
+          I: { status: 'idle', label: '' }, J: { status: 'idle', label: '' },
+          F: { status: 'idle', label: '' }, G: { status: 'idle', label: '' },
+          P: { status: 'idle', label: '' }, Q: { status: 'idle', label: '' },
+          R: { status: 'idle', label: '' }, DR: { status: 'idle', label: '' }
         }
       },
       research: { project: null, state: null, agents: {} },
       log: [
         { time: t, system: 'copycraft', message: 'STATE → RESEARCH' },
-        { time: t, system: 'copycraft', message: 'Dispatch: A, B, C — Wave 1' },
-        { time: t2, system: 'copycraft', message: 'A done: 47 VOC quotes collected' },
-        { time: t2, system: 'copycraft', message: 'B done: 12 competitors analyzed' },
-        { time: t2, system: 'copycraft', message: 'C done: 3 curiosity angles found' },
-        { time: t2, system: 'copycraft', message: 'Dispatch: S (Audience Depth) — Wave 2' },
+        { time: t, system: 'copycraft', message: 'Dispatch: A + B + C — Wave 1' },
+        { time: t2, system: 'copycraft', message: 'Wave 1 complete: A(47), B(12), C(3)' },
+        { time: t2, system: 'copycraft', message: 'Dispatch: S — Wave 2' },
         { time: t2, system: 'copycraft', message: 'H waiting for all inputs...' }
       ]
     });
   }, 3000);
-  // Phase 3: after 6 sec
   setTimeout(() => {
     const t3 = ts();
     applyState({
       copycraft: {
-        project: 'nutriciologia',
-        state: 'RESEARCH',
-        phase: null,
+        project: 'nutriciologia', state: 'RESEARCH', phase: null,
         agents: {
           A: { status: 'done', label: '47 VOC цитат' },
           B: { status: 'done', label: '12 конкурентов' },
           C: { status: 'done', label: '3 угла' },
           S: { status: 'done', label: '8 секций профиля' },
           H: { status: 'working', label: 'Сборка research_raw.md...' },
-          I: { status: 'idle', label: '' },
-          J: { status: 'idle', label: '' },
-          F: { status: 'idle', label: '' },
-          G: { status: 'idle', label: '' },
-          P: { status: 'idle', label: '' },
-          Q: { status: 'idle', label: '' },
-          R: { status: 'idle', label: '' },
-          DR: { status: 'idle', label: '' }
+          I: { status: 'idle', label: '' }, J: { status: 'idle', label: '' },
+          F: { status: 'idle', label: '' }, G: { status: 'idle', label: '' },
+          P: { status: 'idle', label: '' }, Q: { status: 'idle', label: '' },
+          R: { status: 'idle', label: '' }, DR: { status: 'idle', label: '' }
         }
       },
       research: { project: null, state: null, agents: {} },
       log: [
         { time: t, system: 'copycraft', message: 'STATE → RESEARCH' },
-        { time: t, system: 'copycraft', message: 'Dispatch: A, B, C — Wave 1' },
-        { time: t, system: 'copycraft', message: 'Wave 1 complete' },
-        { time: t, system: 'copycraft', message: 'Dispatch: S — Wave 2' },
+        { time: t, system: 'copycraft', message: 'Wave 1 + 2 complete' },
         { time: t3, system: 'copycraft', message: 'S done: 8-section audience profile' },
         { time: t3, system: 'copycraft', message: 'Dispatch: H (Assembler) — Wave 3' },
         { time: t3, system: 'copycraft', message: 'H assembling research_raw.md...' }
@@ -737,53 +1112,40 @@ function demoExecution() {
   const t = ts();
   applyState({
     copycraft: {
-      project: 'nutriciologia',
-      state: 'EXECUTION',
-      phase: 'PHASE C — COPY',
-      block: 'Lead',
+      project: 'nutriciologia', state: 'EXECUTION',
+      phase: 'PHASE C — COPY', block: 'Lead',
       agents: {
-        A: { status: 'idle', label: '' },
-        B: { status: 'idle', label: '' },
-        C: { status: 'idle', label: '' },
-        S: { status: 'idle', label: '' },
-        H: { status: 'idle', label: '' },
-        I: { status: 'idle', label: '' },
+        A: { status: 'idle', label: '' }, B: { status: 'idle', label: '' },
+        C: { status: 'idle', label: '' }, S: { status: 'idle', label: '' },
+        H: { status: 'idle', label: '' }, I: { status: 'idle', label: '' },
         J: { status: 'idle', label: '' },
         F: { status: 'working', label: 'Проверка Lead (34Q)...' },
-        G: { status: 'idle', label: '' },
-        P: { status: 'idle', label: '' },
+        G: { status: 'idle', label: '' }, P: { status: 'idle', label: '' },
         Q: { status: 'idle', label: '' },
-        R: { status: 'waiting', label: 'Запуск после PASS Lead' },
+        R: { status: 'waiting', label: 'После PASS Lead' },
         DR: { status: 'idle', label: '' }
       }
     },
     research: { project: null, state: null, agents: {} },
     log: [
-      { time: t, system: 'copycraft', message: 'STATE → EXECUTION (PHASE C)' },
-      { time: t, system: 'copycraft', message: 'Block: Lead — copy written' },
+      { time: t, system: 'copycraft', message: 'STATE → EXECUTION (PHASE C), Block: Lead' },
       { time: t, system: 'copycraft', message: 'Dispatch: F (Block Critic) — 34 questions' },
-      { time: t, system: 'copycraft', message: 'R (Mini Fresh Eyes) queued after F verdict' }
+      { time: t, system: 'copycraft', message: 'R queued after F verdict' }
     ]
   });
   setTimeout(() => {
     const t2 = ts();
     applyState({
       copycraft: {
-        project: 'nutriciologia',
-        state: 'EXECUTION',
-        phase: 'PHASE C — COPY',
-        block: 'Lead',
+        project: 'nutriciologia', state: 'EXECUTION',
+        phase: 'PHASE C — COPY', block: 'Lead',
         agents: {
-          A: { status: 'idle', label: '' },
-          B: { status: 'idle', label: '' },
-          C: { status: 'idle', label: '' },
-          S: { status: 'idle', label: '' },
-          H: { status: 'idle', label: '' },
-          I: { status: 'idle', label: '' },
+          A: { status: 'idle', label: '' }, B: { status: 'idle', label: '' },
+          C: { status: 'idle', label: '' }, S: { status: 'idle', label: '' },
+          H: { status: 'idle', label: '' }, I: { status: 'idle', label: '' },
           J: { status: 'idle', label: '' },
           F: { status: 'done', label: 'PASS — 31/34' },
-          G: { status: 'idle', label: '' },
-          P: { status: 'idle', label: '' },
+          G: { status: 'idle', label: '' }, P: { status: 'idle', label: '' },
           Q: { status: 'idle', label: '' },
           R: { status: 'working', label: 'Экспресс-рецензия Lead...' },
           DR: { status: 'idle', label: '' }
@@ -791,7 +1153,7 @@ function demoExecution() {
       },
       research: { project: null, state: null, agents: {} },
       log: [
-        { time: t, system: 'copycraft', message: 'STATE → EXECUTION (PHASE C), Block: Lead' },
+        { time: t, system: 'copycraft', message: 'STATE → EXECUTION, Block: Lead' },
         { time: t, system: 'copycraft', message: 'Dispatch: F (Block Critic)' },
         { time: t2, system: 'copycraft', message: 'F verdict: PASS (31/34)' },
         { time: t2, system: 'copycraft', message: 'Dispatch: R (Mini Fresh Eyes) — checkpoint #1' }
@@ -804,53 +1166,38 @@ function demoDelivery() {
   const t = ts();
   applyState({
     copycraft: {
-      project: 'nutriciologia',
-      state: 'DELIVERY',
-      phase: 'LAUNCH CRITIC',
+      project: 'nutriciologia', state: 'DELIVERY', phase: 'LAUNCH CRITIC',
       agents: {
-        A: { status: 'idle', label: '' },
-        B: { status: 'idle', label: '' },
-        C: { status: 'idle', label: '' },
-        S: { status: 'idle', label: '' },
-        H: { status: 'idle', label: '' },
-        I: { status: 'idle', label: '' },
-        J: { status: 'idle', label: '' },
-        F: { status: 'idle', label: '' },
-        G: { status: 'working', label: 'Launch Critic (30Q + 3 ADVISORY)...' },
-        P: { status: 'waiting', label: 'Audience Simulation after G' },
-        Q: { status: 'idle', label: '' },
-        R: { status: 'idle', label: '' },
+        A: { status: 'idle', label: '' }, B: { status: 'idle', label: '' },
+        C: { status: 'idle', label: '' }, S: { status: 'idle', label: '' },
+        H: { status: 'idle', label: '' }, I: { status: 'idle', label: '' },
+        J: { status: 'idle', label: '' }, F: { status: 'idle', label: '' },
+        G: { status: 'working', label: 'Launch Critic (30Q)...' },
+        P: { status: 'waiting', label: 'After G' },
+        Q: { status: 'idle', label: '' }, R: { status: 'idle', label: '' },
         DR: { status: 'idle', label: '' }
       }
     },
     research: { project: null, state: null, agents: {} },
     log: [
       { time: t, system: 'copycraft', message: 'STATE → DELIVERY' },
-      { time: t, system: 'copycraft', message: 'final.md assembled, Repetition Scan passed' },
       { time: t, system: 'copycraft', message: 'Dispatch: G (Launch Critic) — 30Q + 3 ADVISORY' },
-      { time: t, system: 'copycraft', message: 'P (Reader Persona) queued after G' }
+      { time: t, system: 'copycraft', message: 'P queued after G' }
     ]
   });
   setTimeout(() => {
     const t2 = ts();
     applyState({
       copycraft: {
-        project: 'nutriciologia',
-        state: 'DELIVERY',
-        phase: 'AUDIENCE SIMULATION',
+        project: 'nutriciologia', state: 'DELIVERY', phase: 'AUDIENCE SIMULATION',
         agents: {
-          A: { status: 'idle', label: '' },
-          B: { status: 'idle', label: '' },
-          C: { status: 'idle', label: '' },
-          S: { status: 'idle', label: '' },
-          H: { status: 'idle', label: '' },
-          I: { status: 'idle', label: '' },
-          J: { status: 'idle', label: '' },
-          F: { status: 'idle', label: '' },
+          A: { status: 'idle', label: '' }, B: { status: 'idle', label: '' },
+          C: { status: 'idle', label: '' }, S: { status: 'idle', label: '' },
+          H: { status: 'idle', label: '' }, I: { status: 'idle', label: '' },
+          J: { status: 'idle', label: '' }, F: { status: 'idle', label: '' },
           G: { status: 'done', label: 'PASS — 28/30' },
-          P: { status: 'working', label: '5 персон тестируют текст...' },
-          Q: { status: 'idle', label: '' },
-          R: { status: 'idle', label: '' },
+          P: { status: 'working', label: '5 персон тестируют...' },
+          Q: { status: 'idle', label: '' }, R: { status: 'idle', label: '' },
           DR: { status: 'idle', label: '' }
         }
       },
@@ -858,9 +1205,8 @@ function demoDelivery() {
       log: [
         { time: t, system: 'copycraft', message: 'STATE → DELIVERY' },
         { time: t, system: 'copycraft', message: 'Dispatch: G (Launch Critic)' },
-        { time: t2, system: 'copycraft', message: 'G verdict: PASS (28/30), 3 ADVISORY notes' },
-        { time: t2, system: 'copycraft', message: 'Dispatch: P ×5 (Audience Simulation)' },
-        { time: t2, system: 'copycraft', message: 'Simulating: Анна (скептик), Марина (новичок), Дмитрий (профи)...' }
+        { time: t2, system: 'copycraft', message: 'G verdict: PASS (28/30)' },
+        { time: t2, system: 'copycraft', message: 'Dispatch: P ×5 (Audience Simulation)' }
       ]
     });
   }, 4000);
@@ -871,23 +1217,20 @@ function demoRECollection() {
   applyState({
     copycraft: { project: null, state: null, agents: {} },
     research: {
-      project: 'nutriciologia-deep',
-      state: 'COLLECTION',
+      project: 'nutriciologia-deep', state: 'COLLECTION',
       agents: {
         A: { status: 'working', label: 'VOC Mining...' },
         B: { status: 'working', label: 'Market scan...' },
-        C: { status: 'working', label: 'Curiosity angles...' },
-        S: { status: 'waiting', label: 'Wave 2 — ждёт A' },
-        T: { status: 'waiting', label: 'Wave 2 — ждёт B' },
-        H: { status: 'idle', label: '' },
-        U: { status: 'idle', label: '' },
-        V: { status: 'idle', label: '' },
-        W: { status: 'idle', label: '' },
+        C: { status: 'working', label: 'Curiosity...' },
+        S: { status: 'waiting', label: 'Ждёт A' },
+        T: { status: 'waiting', label: 'Ждёт B' },
+        H: { status: 'idle', label: '' }, U: { status: 'idle', label: '' },
+        V: { status: 'idle', label: '' }, W: { status: 'idle', label: '' },
         DR: { status: 'idle', label: '' }
       }
     },
     log: [
-      { time: t, system: 'research', message: 'STATE → COLLECTION (STANDARD depth)' },
+      { time: t, system: 'research', message: 'STATE → COLLECTION' },
       { time: t, system: 'research', message: 'Wave 1: dispatch A + B + C' },
       { time: t, system: 'research', message: 'Wave 2 queued: S (needs A), T (needs B)' }
     ]
@@ -897,25 +1240,23 @@ function demoRECollection() {
     applyState({
       copycraft: { project: null, state: null, agents: {} },
       research: {
-        project: 'nutriciologia-deep',
-        state: 'COLLECTION',
+        project: 'nutriciologia-deep', state: 'COLLECTION',
         agents: {
           A: { status: 'done', label: '52 цитаты' },
           B: { status: 'done', label: '15 конкурентов' },
           C: { status: 'done', label: '4 угла' },
           S: { status: 'working', label: 'Audience Depth...' },
           T: { status: 'working', label: 'Trend mapping...' },
-          H: { status: 'waiting', label: 'Wave 3 — ждёт S+T' },
+          H: { status: 'waiting', label: 'Ждёт S+T' },
           U: { status: 'idle', label: '' },
-          V: { status: 'idle', label: '' },
-          W: { status: 'idle', label: '' },
+          V: { status: 'idle', label: '' }, W: { status: 'idle', label: '' },
           DR: { status: 'idle', label: '' }
         }
       },
       log: [
         { time: t, system: 'research', message: 'STATE → COLLECTION' },
-        { time: t, system: 'research', message: 'Wave 1: dispatch A + B + C' },
-        { time: t2, system: 'research', message: 'Wave 1 complete: A(52 VOC), B(15 comp), C(4 angles)' },
+        { time: t, system: 'research', message: 'Wave 1: A + B + C' },
+        { time: t2, system: 'research', message: 'Wave 1 complete: A(52), B(15), C(4)' },
         { time: t2, system: 'research', message: 'Wave 2: dispatch S + T' },
         { time: t2, system: 'research', message: 'H queued for Wave 3' }
       ]
@@ -928,31 +1269,26 @@ function demoRESimulation() {
   applyState({
     copycraft: { project: null, state: null, agents: {} },
     research: {
-      project: 'nutriciologia-deep',
-      state: 'SIMULATION',
+      project: 'nutriciologia-deep', state: 'SIMULATION',
       agents: {
-        A: { status: 'idle', label: '' },
-        B: { status: 'idle', label: '' },
-        C: { status: 'idle', label: '' },
-        S: { status: 'idle', label: '' },
-        T: { status: 'idle', label: '' },
-        H: { status: 'idle', label: '' },
+        A: { status: 'idle', label: '' }, B: { status: 'idle', label: '' },
+        C: { status: 'idle', label: '' }, S: { status: 'idle', label: '' },
+        T: { status: 'idle', label: '' }, H: { status: 'idle', label: '' },
         U: { status: 'idle', label: '' },
-        V: { status: 'working', label: 'Скептик #1 тестирует...' },
-        W: { status: 'working', label: '6 персон симулируют...' },
+        V: { status: 'working', label: 'Скептик тестирует...' },
+        W: { status: 'working', label: '6 персон...' },
         DR: { status: 'idle', label: '' }
       }
     },
     log: [
       { time: t, system: 'research', message: 'STATE → SIMULATION' },
       { time: t, system: 'research', message: 'Dispatch: W ×6 (Persona Simulator)' },
-      { time: t, system: 'research', message: 'Dispatch: V ×2 (Adversarial Persona)' },
-      { time: t, system: 'research', message: 'Running 3 tests per persona: Problem Recognition, Mechanism Credibility, Offer Attractiveness' }
+      { time: t, system: 'research', message: 'Dispatch: V ×2 (Adversarial Persona)' }
     ]
   });
 }
 
-// ─── Expose demo functions to window (module scope) ──────
+// ─── Expose demo functions ───────────────────────────────
 window.demoReset = demoReset;
 window.demoResearch = demoResearch;
 window.demoExecution = demoExecution;

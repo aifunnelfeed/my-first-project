@@ -1,0 +1,245 @@
+{
+  "copycraft": {
+    "project": "nutriciologia",
+    "state": "EXECUTION",
+    "phase": "PHASE C — COPY",
+    "block": "Lead",
+    "agents": {
+      "A": {
+        "status": "idle",
+        "label": ""
+      },
+      "B": {
+        "status": "idle",
+        "label": ""
+      },
+      "C": {
+        "status": "idle",
+        "label": ""
+      },
+      "S": {
+        "status": "idle",
+        "label": ""
+      },
+      "H": {
+        "status": "idle",
+        "label": ""
+      },
+      "I": {
+        "status": "idle",
+        "label": ""
+      },
+      "J": {
+        "status": "idle",
+        "label": ""
+      },
+      "F": {
+        "status": "done",
+        "label": "PASS — 31/34"
+      },
+      "G": {
+        "status": "idle",
+        "label": ""
+      },
+      "P": {
+        "status": "idle",
+        "label": ""
+      },
+      "Q": {
+        "status": "idle",
+        "label": ""
+      },
+      "R": {
+        "status": "done",
+        "label": "OK"
+      },
+      "DR": {
+        "status": "idle",
+        "label": ""
+      }
+    }
+  },
+  "research": {
+    "project": null,
+    "state": null,
+    "agents": {
+      "A": {
+        "status": "idle",
+        "label": ""
+      },
+      "B": {
+        "status": "idle",
+        "label": ""
+      },
+      "C": {
+        "status": "idle",
+        "label": ""
+      },
+      "S": {
+        "status": "idle",
+        "label": ""
+      },
+      "T": {
+        "status": "idle",
+        "label": ""
+      },
+      "H": {
+        "status": "idle",
+        "label": ""
+      },
+      "U": {
+        "status": "idle",
+        "label": ""
+      },
+      "V": {
+        "status": "idle",
+        "label": ""
+      },
+      "W": {
+        "status": "idle",
+        "label": ""
+      },
+      "DR": {
+        "status": "idle",
+        "label": ""
+      }
+    }
+  },
+  "log": [
+    {
+      "time": "14:36:56",
+      "system": "copycraft",
+      "message": "STATE → INPUT"
+    },
+    {
+      "time": "14:37:01",
+      "system": "copycraft",
+      "message": "STATE: INPUT → QUERY"
+    },
+    {
+      "time": "14:37:07",
+      "system": "copycraft",
+      "message": "All agents reset to idle"
+    },
+    {
+      "time": "14:37:07",
+      "system": "copycraft",
+      "message": "STATE: QUERY → RESEARCH"
+    },
+    {
+      "time": "14:37:08",
+      "system": "copycraft",
+      "message": "Dispatch: A — Сбор VOC..."
+    },
+    {
+      "time": "14:37:09",
+      "system": "copycraft",
+      "message": "Dispatch: B — Анализ конкурентов..."
+    },
+    {
+      "time": "14:37:10",
+      "system": "copycraft",
+      "message": "Dispatch: C — Поиск углов..."
+    },
+    {
+      "time": "14:37:12",
+      "system": "copycraft",
+      "message": "S waiting — Ждёт выход A"
+    },
+    {
+      "time": "14:37:18",
+      "system": "copycraft",
+      "message": "A done — 47 VOC цитат"
+    },
+    {
+      "time": "14:37:20",
+      "system": "copycraft",
+      "message": "B done — 12 конкурентов"
+    },
+    {
+      "time": "14:37:22",
+      "system": "copycraft",
+      "message": "C done — 3 угла"
+    },
+    {
+      "time": "14:37:24",
+      "system": "copycraft",
+      "message": "Dispatch: S — Глубинный профиль ЦА..."
+    },
+    {
+      "time": "14:37:30",
+      "system": "copycraft",
+      "message": "S done — 8 секций профиля"
+    },
+    {
+      "time": "14:37:32",
+      "system": "copycraft",
+      "message": "Dispatch: H — Сборка research_raw.md..."
+    },
+    {
+      "time": "14:37:38",
+      "system": "copycraft",
+      "message": "H done — research_raw.md готов"
+    },
+    {
+      "time": "14:37:42",
+      "system": "copycraft",
+      "message": "All agents reset to idle"
+    },
+    {
+      "time": "14:37:42",
+      "system": "copycraft",
+      "message": "STATE: RESEARCH → STRATEGY"
+    },
+    {
+      "time": "14:37:43",
+      "system": "copycraft",
+      "message": "Dispatch: I — Поиск формул в KB..."
+    },
+    {
+      "time": "14:37:45",
+      "system": "copycraft",
+      "message": "Dispatch: J — 12 альтернатив..."
+    },
+    {
+      "time": "14:37:51",
+      "system": "copycraft",
+      "message": "I done — 5 формул"
+    },
+    {
+      "time": "14:37:53",
+      "system": "copycraft",
+      "message": "J done — 3 Big Idea, 4 Lead, 5 Hook"
+    },
+    {
+      "time": "14:37:57",
+      "system": "copycraft",
+      "message": "All agents reset to idle"
+    },
+    {
+      "time": "14:37:57",
+      "system": "copycraft",
+      "message": "STATE: STRATEGY → EXECUTION"
+    },
+    {
+      "time": "14:37:59",
+      "system": "copycraft",
+      "message": "Dispatch: F — Block Critic: Lead (34Q)..."
+    },
+    {
+      "time": "14:38:06",
+      "system": "copycraft",
+      "message": "F done — PASS — 31/34"
+    },
+    {
+      "time": "14:38:08",
+      "system": "copycraft",
+      "message": "Dispatch: R — Mini Fresh Eyes: Lead..."
+    },
+    {
+      "time": "14:38:13",
+      "system": "copycraft",
+      "message": "R done — OK"
+    }
+  ]
+}
