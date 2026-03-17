@@ -985,6 +985,56 @@ const STATUS_LABELS = {
   idle: 'IDLE', working: 'WORKING', done: 'DONE', error: 'ERROR', waiting: 'WAITING'
 };
 
+// ─── OS Notifications ────────────────────────────────────
+let notificationsEnabled = false;
+
+function initNotifications() {
+  if (!('Notification' in window)) return;
+  if (Notification.permission === 'granted') {
+    notificationsEnabled = true;
+  } else if (Notification.permission !== 'denied') {
+    Notification.requestPermission().then(p => { notificationsEnabled = p === 'granted'; });
+  }
+}
+
+function notify(title, body) {
+  if (!notificationsEnabled || document.hasFocus()) return;
+  new Notification(title, { body, icon: '🔔' });
+}
+
+function checkNotifications(oldData, newData) {
+  if (!oldData) return;
+  const systems = [
+    { key: 'copycraft', label: 'Copycraft', defs: CC_AGENTS },
+    { key: 'research',  label: 'Research',  defs: RE_AGENTS }
+  ];
+  for (const sys of systems) {
+    const oldAgents = (oldData[sys.key] || {}).agents || {};
+    const newAgents = (newData[sys.key] || {}).agents || {};
+    for (const [id, ag] of Object.entries(newAgents)) {
+      const oldSt = (oldAgents[id] || {}).status || 'idle';
+      const newSt = ag.status || 'idle';
+      if (oldSt === newSt) continue;
+      const name = (sys.defs[id] || {}).name || id;
+      // Error — always notify
+      if (newSt === 'error') {
+        notify(`⚠️ ${sys.label}: ${name} ERROR`, ag.label || 'Ошибка агента');
+      }
+      // Critic done (F or G)
+      if (newSt === 'done' && (id === 'F' || id === 'G')) {
+        const verdict = ag.label || 'done';
+        notify(`${sys.label}: ${name}`, verdict);
+      }
+    }
+    // State change
+    const oldState = (oldData[sys.key] || {}).state;
+    const newState = (newData[sys.key] || {}).state;
+    if (newState && oldState !== newState) {
+      notify(`${sys.label}`, `STATE → ${newState}`);
+    }
+  }
+}
+
 // ─── State ───────────────────────────────────────────────
 let currentState = null;
 let useFirebase = false;
@@ -1259,6 +1309,7 @@ function renderLog(log) {
 
 // ─── Apply State ─────────────────────────────────────────
 function applyState(data) {
+  checkNotifications(currentState, data);
   currentState = data;
 
   // Copycraft
@@ -1313,6 +1364,8 @@ function init() {
   renderStateMachine('reStateMachine', RE_STATES, null);
   renderDAG('ccDAG', 'ccEdges', CC_DAG, CC_AGENTS, {});
   renderDAG('reDAG', 'reEdges', RE_DAG, RE_AGENTS, {});
+
+  initNotifications();
 
   try {
     const app = initializeApp(FIREBASE_CONFIG);
